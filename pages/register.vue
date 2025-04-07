@@ -5,7 +5,7 @@
             <h1 class="font-h1 mt-8 md:text-2xl font-bold text-zinc-50">Inscription gratuite</h1>
             <p class="mt-2 text-md text-zinc-200">
                 Déjà inscrit?
-                <span class="text-purple-600 font-semibold transform cursor-pointer hover:text-purple-300">
+                <span class="text-purple-700 shadow-2xl shadow-green-700 font-semibold transform cursor-pointer hover:text-purple-300">
                     Connectez-vous
                 </span>
                 à votre compte
@@ -24,7 +24,7 @@
             </div>
 
             <div class="text-zinc-100 mt-6">
-                <button class="w-full mt-4 bg-[#9333ea] text-lg px-4 py-2 rounded-2xl font-bold space-x-4">
+                <button class="w-full mt-4 bg-purple-900 text-lg px-4 py-2 rounded-2xl font-bold space-x-4">
                     <span>Inscription</span>
                     <span>➤</span>
                 </button>
