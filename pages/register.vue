@@ -53,19 +53,22 @@
 <script setup>
     const email = ref('')
     const password = ref('')
+    const { $toast } = useNuxtApp()
 
     async function submit() {
-        console.log(email.value)
-        console.log(password.value)
+        try {
+            const response = await $fetch('/api/user', {
+                method: 'POST',
+                body: {
+                    email: email.value,
+                    password: password.value,
+                },
+            })
 
-        const response = await $fetch('/api/user', {
-            method: 'POST',
-            body: {
-                email: email.value,
-                password: password.value,
-            },
-        })
-
-        console.log('response', response)
+            $toast.success("L'utilisateur a été créé")
+        } catch (error) {
+            console.log('error: ', error.response?._data?.message)
+            $toast.error(error.response?._data?.message)
+        }
     }
 </script>
