@@ -1,6 +1,6 @@
 <template>
     <div class="h-screen bg-[#1c044f] flex font-h1">
-        <div class="bg-slate-900 w-[516px] p-12 flex flex-col justify-center">
+        <div class="bg-slate-900 md:w-[516px] p-12 flex flex-col justify-center">
             <Logo />
             <h1 class="font-h1 mt-8 md:text-2xl font-bold text-zinc-50">Inscription gratuite</h1>
             <p class="mt-2 text-md text-zinc-200">
@@ -44,8 +44,7 @@
             </form>
         </div>
 
-        <div class="bg-purple-900 w-full text-zinc-100">
-            <h1 class="text-3xl font-bold font-h1 p-8">Register</h1>
+        <div class="bg-purple-900 w-full text-zinc-100 hidden md:block">
         </div>
     </div>
 </template>
@@ -66,6 +65,10 @@
             })
 
             $toast.success("L'utilisateur a été créé")
+            setTimeout(() => {
+                navigateTo('/')
+            }, 2000) 
+
         } catch (error) {
             console.log('error: ', error.response?._data?.message)
             $toast.error(error.response?._data?.message)

@@ -2,6 +2,9 @@
 import prisma from "../utils/prisma";
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
+import { SignJWT } from "jose";
+
+const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
 export default defineEventHandler(async (event) => {
     try {
@@ -38,7 +41,23 @@ export default defineEventHandler(async (event) => {
             },
         });
 
-        return { data: "success!", user };
+        const token = await new SignJWT({ userId: user.id })
+            .setProtectedHeader({ alg: 'HS256' })
+            .setIssuedAt()
+            .setExpirationTime('7d')
+            .sign(secret);
+
+        
+        setCookie(event, 'NoteJWT', token)
+
+        return {
+            data: "success!",
+            token,
+            user: {
+                id: user.id,
+                email: user.email,
+            }
+        };
     } catch (error) {
         console.error("Prisma error:", error.code);
 
