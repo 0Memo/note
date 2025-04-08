@@ -25,21 +25,27 @@ export default defineEventHandler(async (event) => {
             minSymbols: 0,
         })) {
             throw createError({
-                statusCode: 400,
+                statusCode: 401,
                 message: "Le mot de passe doit avoir 8 caractères min.",
             })
         }
 
-        const salt = await bcrypt.genSalt(10);
-        const passwordHash = await bcrypt.hash(body.password, salt);
-
-        const user = await prisma.user.create({
-            data: {
+        const user = await prisma.user.findUnique({
+            where: {
                 email: body.email,
-                password: passwordHash,
-                salt: salt,
             },
         });
+
+        const isValid = await bcrypt.compare(body.password, user.password);
+
+        console.log('isValid:', isValid);
+
+        if(!isValid) {
+            throw createError({
+                statusCode: 400,
+                message: "Identifiant ou mot de passe incorrect",
+            });
+        }
 
         const token = await new SignJWT({ userId: user.id })
             .setProtectedHeader({ alg: 'HS256' })

@@ -5,10 +5,11 @@
             <h1 class="font-h1 mt-8 md:text-2xl font-bold text-zinc-50">Inscription gratuite</h1>
             <p class="mt-2 text-md text-zinc-200">
                 Déjà inscrit?
-                <span
+                <nuxt-link
+                    to="/login"
                     class="text-purple-700 shadow-2xl shadow-green-700 font-semibold transform cursor-pointer hover:text-purple-300">
                     Connectez-vous
-                </span>
+                </nuxt-link>
                 à votre compte
             </p>
 
