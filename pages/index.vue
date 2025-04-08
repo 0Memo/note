@@ -1,13 +1,13 @@
 <template>
     <div class="h-screen bg-[#1c044f] flex">
-        <div class="bg-[#030303] md:w-[338px] p-8 overflow-y-scroll md:overflow-y-auto font-h1">
+        <div class="bg-[#030303] md:w-[338px] p-8 overflow-y-scroll md:overflow-y-auto">
             <Logo />
 
-            <p class="text-md font-semibold text-zinc-200 mt-10">Aujourd'hui</p>
-            <div class="text-zinc-200 mt-10 ml-2 text-sm">
+            <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">Aujourd'hui</p>
+            <div class="text-zinc-200 mt-10 ml-2 text-sm font-bodyTest">
                 <div class="bg-[#581C87] rounded-lg p-4">
                     <h3 class="font-bold">Je viens tout juste de...</h3>
-                    <div class="space-x-8">
+                    <div class="space-x-4">
                         <span>Aujourd'hui</span>
                         <span class="text-zinc-400">Bibliothèque...</span>
                     </div>
@@ -21,36 +21,36 @@
                 </div>
             </div>
 
-            <p class="text-md font-semibold text-zinc-200 mt-10">Hier</p>
-            <div class="text-zinc-200 mt-10 ml-4 text-sm">
+            <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">Hier</p>
+            <div class="text-zinc-200 mt-10 ml-4 text-sm font-bodyTest">
                 <div class="p-4">
                     <h3 class="font-bold">Je viens tout juste de...</h3>
-                    <div class="space-x-8">
+                    <div class="space-x-4">
                         <span>Hier</span>
                         <span class="text-zinc-400">Bibliothèque...</span>
                     </div>
                 </div>
                 <div class="p-4">
                     <h3 class="font-bold">Je viens tout juste de...</h3>
-                    <div class="space-x-8">
+                    <div class="space-x-4">
                         <span>Hier</span>
                         <span class="text-zinc-400">Appel...</span>
                     </div>
                 </div>
             </div>
 
-            <p class="text-md font-semibold text-zinc-200 mt-10">30 jours préc.</p>
-            <div class="text-zinc-200 mt-10 ml-4 text-sm">
+            <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">30 jours préc.</p>
+            <div class="text-zinc-200 mt-10 ml-4 text-sm font-bodyTest">
                 <div class="p-4">
                     <h3 class="font-bold">Je viens tout juste de...</h3>
-                    <div class="space-x-8">
+                    <div class="space-x-4">
                         <span>03/02/2025</span>
                         <span class="text-zinc-400">Bibliothèque...</span>
                     </div>
                 </div>
                 <div class="p-4">
                     <h3 class="font-bold">Je viens tout juste de...</h3>
-                    <div class="space-x-8">
+                    <div class="space-x-4">
                         <span>02/02/2025</span>
                         <span class="text-zinc-400">Appel...</span>
                     </div>
