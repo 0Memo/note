@@ -3,56 +3,80 @@
         <div class="bg-[#030303] md:w-[338px] p-8 overflow-y-scroll md:overflow-y-auto">
             <Logo />
 
-            <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">Aujourd'hui</p>
-            <div class="text-zinc-200 mt-10 ml-2 text-sm font-bodyTest">
-                <div class="bg-[#581C87] rounded-lg p-4">
-                    <h3 class="font-bold">Je viens tout juste de...</h3>
-                    <div class="space-x-4">
-                        <span>Aujourd'hui</span>
-                        <span class="text-zinc-400">Bibliothèque...</span>
-                    </div>
-                </div>
-                <div class="p-4">
-                    <h3 class="font-bold">Je viens tout juste de...</h3>
-                    <div class="space-x-8">
-                        <span>Aujourd'hui</span>
-                        <span class="text-zinc-400">Appel...</span>
-                    </div>
-                </div>
-            </div>
-
-            <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">Hier</p>
-            <div class="text-zinc-200 mt-10 ml-4 text-sm font-bodyTest">
-                <div class="p-4">
-                    <h3 class="font-bold">Je viens tout juste de...</h3>
-                    <div class="space-x-4">
-                        <span>Hier</span>
-                        <span class="text-zinc-400">Bibliothèque...</span>
-                    </div>
-                </div>
-                <div class="p-4">
-                    <h3 class="font-bold">Je viens tout juste de...</h3>
-                    <div class="space-x-4">
-                        <span>Hier</span>
-                        <span class="text-zinc-400">Appel...</span>
+            <div>
+                <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">Aujourd'hui</p>
+                <div class="text-zinc-200 mt-10 ml-2 space-y-2 text-sm font-bodyTest">
+                    <div
+                        v-for="note in todaysNotes"
+                        class="rounded-lg p-4 cursor-pointer"
+                        :class="{
+                            'bg-[#581C87]' : note.id === selectedNote.id,
+                            'hover:bg-[#581C87]/50' : note.id !== selectedNote.id,
+                        }"
+                        @click="selectedNote = note"
+                    >
+                        <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
+                        <div class="space-x-4 truncate">
+                            <span>{{
+                                    new Date(note.updatedAt).toDateString() === 
+                                    new Date().toDateString()
+                                        ? "Aujourd'hui"
+                                        : formatDate(note.updatedAt)
+                                }}</span>
+                            <span class="text-zinc-400">...{{ note.text.substring(30, 50) }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">30 jours préc.</p>
-            <div class="text-zinc-200 mt-10 ml-4 text-sm font-bodyTest">
-                <div class="p-4">
-                    <h3 class="font-bold">Je viens tout juste de...</h3>
-                    <div class="space-x-4">
-                        <span>03/02/2025</span>
-                        <span class="text-zinc-400">Bibliothèque...</span>
+            <div>
+                <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">Hier</p>
+                <div class="text-zinc-200 mt-10 ml-2 space-y-2 text-sm font-bodyTest">
+                    <div
+                        v-for="note in yesterdaysNotes"
+                        class="rounded-lg p-4 cursor-pointer"
+                        :class="{
+                            'bg-[#581C87]' : note.id === selectedNote.id,
+                            'hover:bg-[#581C87]/50' : note.id !== selectedNote.id,
+                        }"
+                        @click="selectedNote = note"
+                    >
+                        <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
+                        <div class="space-x-4 truncate">
+                            <span>{{
+                                    new Date(note.updatedAt).toDateString() === 
+                                    new Date().toDateString()
+                                        ? "Aujourd'hui"
+                                        : formatDate(note.updatedAt)
+                                }}</span>
+                            <span class="text-zinc-400">...{{ note.text.substring(30, 50) }}</span>
+                        </div>
                     </div>
                 </div>
-                <div class="p-4">
-                    <h3 class="font-bold">Je viens tout juste de...</h3>
-                    <div class="space-x-4">
-                        <span>02/02/2025</span>
-                        <span class="text-zinc-400">Appel...</span>
+            </div>
+
+            <div>
+                <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">préc.</p>
+                <div class="text-zinc-200 mt-10 ml-2 space-y-2 text-sm font-bodyTest">
+                    <div
+                        v-for="note in earlierNotes"
+                        class="rounded-lg p-4 cursor-pointer"
+                        :class="{
+                            'bg-[#581C87]' : note.id === selectedNote.id,
+                            'hover:bg-[#581C87]/50' : note.id !== selectedNote.id,
+                        }"
+                        @click="selectedNote = note"
+                    >
+                        <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
+                        <div class="space-x-4 truncate">
+                            <span>{{
+                                    new Date(note.updatedAt).toDateString() === 
+                                    new Date().toDateString()
+                                        ? "Aujourd'hui"
+                                        : formatDate(note.updatedAt)
+                                }}</span>
+                            <span class="text-zinc-400">...{{ note.text.substring(30, 50) }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -68,17 +92,81 @@
             </div>
 
             <div class="text-zinc-200 p-8 max-w-[40%] mx-auto font-bodyTest">
-                <p class="text-zinc-100 mb-8 text-lg">8 avril 2025</p>
-                <p class="text-zinc-100 my-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                <p class="text-zinc-100 my-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                <p class="text-zinc-100">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                <p class="text-zinc-100 mb-8 text-lg">
+                    {{
+                        new Date(selectedNote.updatedAt).toDateString() === 
+                        new Date().toDateString()
+                            ? "Aujourd'hui"
+                            : formatDate(selectedNote.updatedAt)
+                    }}
+                </p>
+                <p class="text-zinc-100 my-4">
+                    {{ selectedNote.text }}
+                </p>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
+    const notes = ref([])
+    const selectedNote = ref({})
+
     definePageMeta({
         middleware: ['auth'],
     })
+
+    const todaysNotes = computed(() => {
+        return notes.value
+            .filter((note) => {
+                const noteDate = new Date(note.updatedAt)
+                return noteDate
+                    .toDateString() === new Date()
+                    .toDateString()
+            })
+    })
+
+    const yesterdaysNotes = computed(() => {
+        const yesterday = new Date()
+        yesterday.
+            setDate(yesterday.getDate() - 1)
+        return notes.value
+            .filter((note) => {
+                const noteDate = new Date(note.updatedAt)
+                return noteDate
+                        .toDateString() === yesterday
+                        .toDateString()
+            })
+    })
+
+    const earlierNotes = computed(() => {
+        const yesterday = new Date()
+        yesterday
+            .setDate(yesterday.getDate() - 1)
+        
+        return notes.value
+            .filter((note) => {
+                const noteDate = new Date(note.updatedAt)
+                return (
+                    noteDate < yesterday &&
+                    noteDate
+                        .toDateString() !== yesterday.toDateString()
+                )
+            })
+            .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)) 
+    })
+
+    onMounted(async() => {
+        notes.value = await $fetch('/api/notes')
+
+        if(notes.value.length > 0) selectedNote.value = notes.value[0]
+    })
+
+    function formatDate(dateStr) {
+        const date = new Date(dateStr)
+        const year = date.getFullYear()
+        const month = String(date.getMonth() + 1).padStart(2, '0')
+        const day = String(date.getDate()).padStart(2, '0')
+        return `${day}/${month}/${year}`
+    }
 </script>
