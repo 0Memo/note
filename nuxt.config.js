@@ -12,17 +12,16 @@ export default defineNuxtConfig({
   build: {
     // Ensure Prisma is not bundled for client-side
     transpile: ["@prisma/client"],
-    // You can also exclude Prisma from the client bundle
+    // Exclude Prisma from the client bundle if not SSR
     extend(config, { isServer }) {
       if (!isServer) {
-        // Exclude Prisma client from client-side bundle
         config.externals = config.externals || {};
         config.externals["@prisma/client"] = "commonjs @prisma/client";
       }
     },
     vite: {
       optimizeDeps: {
-        exclude: ["@prisma/client"],
+        exclude: ["@prisma/client"], // Ensure Prisma is not bundled
       },
     },
   },
