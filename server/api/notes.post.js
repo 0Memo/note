@@ -1,4 +1,4 @@
-import prisma from "../utils/prisma"
+import prisma from "../../lib/prisma"
 import { jwtVerify } from "jose"
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET);

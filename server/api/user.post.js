@@ -1,8 +1,8 @@
 // /api/user POST
-import prisma from "../utils/prisma";
-import bcrypt from 'bcryptjs';
-import validator from 'validator';
-import { SignJWT } from "jose";
+import prisma from "../../lib/prisma"
+import bcrypt from 'bcryptjs'
+import validator from 'validator'
+import { SignJWT } from "jose"
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
