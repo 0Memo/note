@@ -3,10 +3,14 @@
     "env": {
         "PRISMA_CLIENT_ENGINE_TYPE": "binary"
     },
-    "routes": [
+    "builds": [
         {
-            "src": "/(.*)",
-            "dest": "/"
+            "src": "index.js",
+            "use": "@vercel/node",
+            "config": {
+                "includeFiles": ["./prisma/**", "./dist/**"]
+            }
         }
-    ]
+    ],
+    "ignoreBuilds": ["**/node_modules/@prisma/client/**/*"]
 }

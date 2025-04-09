@@ -20,5 +20,10 @@ export default defineNuxtConfig({
         config.externals["@prisma/client"] = "commonjs @prisma/client";
       }
     },
+    vite: {
+      optimizeDeps: {
+        exclude: ["@prisma/client"],
+      },
+    },
   },
 });
