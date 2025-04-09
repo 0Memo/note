@@ -17,13 +17,16 @@
                     >
                         <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
                         <div class="space-x-4 truncate">
-                            <span>{{
-                                    new Date(note.updatedAt).toDateString() === 
-                                    new Date().toDateString()
-                                        ? "Aujourd'hui"
-                                        : formatDate(note.updatedAt)
-                                }}</span>
-                            <span class="text-zinc-400">...{{ note.text.substring(30, 50) }}</span>
+                            <span>
+                                {{
+                                    formatDate(note.updatedAt)
+                                }}
+                            </span>
+                            <span
+                                v-if="note.text.length > 50"
+                                class="text-zinc-400"
+                            >...{{ note.text.substring(30, 50) }}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -49,7 +52,11 @@
                                         ? "Aujourd'hui"
                                         : formatDate(note.updatedAt)
                                 }}</span>
-                            <span class="text-zinc-400">...{{ note.text.substring(30, 50) }}</span>
+                            <span
+                                v-if="note.text.length > 50"
+                                class="text-zinc-400"
+                            >...{{ note.text.substring(30, 50) }}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -75,7 +82,11 @@
                                         ? "Aujourd'hui"
                                         : formatDate(note.updatedAt)
                                 }}</span>
-                            <span class="text-zinc-400">...{{ note.text.substring(30, 50) }}</span>
+                            <span
+                                v-if="note.text.length > 50"
+                                class="text-zinc-400"
+                            >...{{ note.text.substring(30, 50) }}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -84,7 +95,11 @@
 
         <div class="w-full bg-purple-900 overflow-y-scroll md:overflow-y-auto">
             <div class="text-zinc-300 flex p-8 justify-between items-start">
-                <button class="inline-flex gap-3 font-bold text-zinc-3000 hover:text-zinc-50">
+                <button
+                    class="inline-flex gap-3 font-bold
+                    text-zinc-3000 hover:text-zinc-50"
+                    @click="createNewNote"
+                >
                     <Pencil />
                     <span class="mt-0.5 font-h1">Note</span>
                 </button>
@@ -95,19 +110,20 @@
                 <div v-if="selectedNote && selectedNote.id">
                     <p class="text-zinc-100 mb-8 text-lg">
                         {{
-                            new Date(selectedNote.updatedAt).toDateString() === 
-                            new Date().toDateString()
-                                ? "Aujourd'hui"
-                                : formatDate(selectedNote.updatedAt)
+                            formatDate(selectedNote.updatedAt)
                         }}
                     </p>
                     <textarea
+                        ref="textarea"
                         v-model="updatedNote"
                         name="note"
                         id="note"
                         class="text-zinc-100 my-4 bg-transparent rounded-md p-4 -ml-5 border-[0.5px] border-purple-800
                         focus:outline-none focus:bg-[#030303] w-full min-h-[300px] cursor-pointer"
-                        @input="updateNote"
+                        @input="() => {
+                            debouncedFn()
+                            selectedNote.text = updatedNote
+                        }"
                     >
                         {{ selectedNote.text }}
                     </textarea>
@@ -124,10 +140,26 @@
     const updatedNote = ref('')
     const notes = ref([])
     const selectedNote = ref({})
+    const textarea = ref(null)
 
     definePageMeta({
         middleware: ['auth'],
     })
+
+    async function createNewNote() {
+        try {
+            const newNote = await $fetch(`/api/notes`, {
+                method: 'POST',
+            })
+
+            notes.value.unshift(newNote)
+            selectedNote.value = notes.value[0]
+            updatedNote.value = ''
+            textarea.value.focus()
+        } catch (error) {
+            console.log('error', error)
+        }
+    }
 
     const debouncedFn = useDebounceFn(async() => {
         await updateNote()
@@ -154,6 +186,7 @@
                     .toDateString() === new Date()
                     .toDateString()
             })
+            .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
     })
 
     const yesterdaysNotes = computed(() => {
@@ -167,6 +200,7 @@
                         .toDateString() === yesterday
                         .toDateString()
             })
+            .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
     })
 
     const earlierNotes = computed(() => {
@@ -183,7 +217,7 @@
                         .toDateString() !== yesterday.toDateString()
                 )
             })
-            .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)) 
+            .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
     })
 
     onMounted(async() => {
@@ -193,6 +227,8 @@
             selectedNote.value = notes.value.slice().sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))[0]
             updatedNote.value = selectedNote.value.text
         }
+
+        textarea.value.focus()
     })
 
     watch(selectedNote, (newNote) => {
