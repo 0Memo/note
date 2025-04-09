@@ -1,9 +1,12 @@
 {
     "version": 2,
+    "env": {
+        "PRISMA_CLIENT_ENGINE_TYPE": "binary"
+    },
     "routes": [
         {
-        "src": "/(.*)",
-        "dest": "/"
+            "src": "/(.*)",
+            "dest": "/"
         }
     ]
 }
