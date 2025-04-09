@@ -176,7 +176,7 @@
     const selectedNote = ref({})
     const textarea = ref(null)
     const sidebarOpen = ref(false)
-const isDesktop = ref(false)
+    const isDesktop = ref(false)
     import { useToast } from 'vue-toast-notification'
 
     const $toast = useToast()
