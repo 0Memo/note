@@ -1,8 +1,28 @@
-// /api/notes return all the notes
+import { jwtVerify } from 'jose'
 
 export default defineEventHandler(async(event) => {
     try {
-        const notes = await prisma.note.findMany();
+        const cookies = parseCookies(event)
+        const token = cookies.NoteJWT
+
+        if(!token) {
+            throw createError({
+                statusCode: 401,
+                statusMessage: 'Non connecté'
+            })
+        }
+
+        const { payload } = await jwtVerify(
+            token,
+            new TextEncoder().encode(process.env.JWT_SECRET)
+        );
+        const userId = payload.userId;
+
+        const notes = await prisma.note.findMany({
+            where: {
+                userId,
+            }
+        });
 
         return notes
     } catch (error) {

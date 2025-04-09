@@ -92,29 +92,59 @@
             </div>
 
             <div class="text-zinc-200 p-8 max-w-[40%] mx-auto font-bodyTest">
-                <p class="text-zinc-100 mb-8 text-lg">
-                    {{
-                        new Date(selectedNote.updatedAt).toDateString() === 
-                        new Date().toDateString()
-                            ? "Aujourd'hui"
-                            : formatDate(selectedNote.updatedAt)
-                    }}
-                </p>
-                <p class="text-zinc-100 my-4">
-                    {{ selectedNote.text }}
-                </p>
+                <div v-if="selectedNote && selectedNote.id">
+                    <p class="text-zinc-100 mb-8 text-lg">
+                        {{
+                            new Date(selectedNote.updatedAt).toDateString() === 
+                            new Date().toDateString()
+                                ? "Aujourd'hui"
+                                : formatDate(selectedNote.updatedAt)
+                        }}
+                    </p>
+                    <textarea
+                        v-model="updatedNote"
+                        name="note"
+                        id="note"
+                        class="text-zinc-100 my-4 bg-transparent rounded-md p-4 -ml-5 border-[0.5px] border-purple-800
+                        focus:outline-none focus:bg-[#030303] w-full min-h-[300px] cursor-pointer"
+                        @input="updateNote"
+                    >
+                        {{ selectedNote.text }}
+                    </textarea>
+                </div>
+                <div v-else class="text-zinc-400 italic text-center mt-10">
+                    Pas de note encore...
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
+    const updatedNote = ref('')
     const notes = ref([])
     const selectedNote = ref({})
 
     definePageMeta({
         middleware: ['auth'],
     })
+
+    const debouncedFn = useDebounceFn(async() => {
+        await updateNote()
+    }, 1000)
+
+    async function updateNote() {
+        try {
+            await $fetch(`/api/notes/${selectedNote.value.id}`, {
+                method: 'PATCH',
+                body: {
+                    updatedNote: updatedNote.value,
+                }
+            })
+        } catch (error) {
+            console.log('error', error)
+        }
+    }
 
     const todaysNotes = computed(() => {
         return notes.value
@@ -159,7 +189,14 @@
     onMounted(async() => {
         notes.value = await $fetch('/api/notes')
 
-        if(notes.value.length > 0) selectedNote.value = notes.value[0]
+        if (notes.value.length > 0) {
+            selectedNote.value = notes.value.slice().sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))[0]
+            updatedNote.value = selectedNote.value.text
+        }
+    })
+
+    watch(selectedNote, (newNote) => {
+        updatedNote.value = newNote?.text || ''
     })
 
     function formatDate(dateStr) {
