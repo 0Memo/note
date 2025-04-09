@@ -3,16 +3,15 @@ import { jwtVerify } from "jose"
 
 export default defineEventHandler(async (event) => {
     try {
-        const body = await readBody(event)
-        const id = getRouterParam(event, 'id')
+        const id = getRouterParam(event, "id")
 
         const cookies = parseCookies(event)
         const token = cookies.NoteJWT
 
-        if(!token) {
+        if (!token) {
             throw createError({
                 statusCode: 401,
-                statusMessage: 'Édition non autorisée'
+                statusMessage: "Mise à jour non autorisée",
             })
         }
 
@@ -22,35 +21,32 @@ export default defineEventHandler(async (event) => {
         );
         const userId = payload.userId;
 
-        const noteToUpdate = await prisma.note.findUnique({
+        const noteToDelete = await prisma.note.findUnique({
             where: {
                 id: Number(id),
-            }
-        })
+            },
+        });
 
-        if(!noteToUpdate) {
+        if(!noteToDelete) {
             throw createError({
-                status: 401,
-                statusMessage: 'Note inexistante',
+                statusCode: 401,
+                statusMessage: "Note inexistante",
             })
         }
 
-        if(noteToUpdate.userId !== userId) {
+        if(noteToDelete.userId !== userId) {
             throw createError({
-                status: 401,
+                statusCode: 401,
                 statusMessage: "Permission refusée",
             })
         }
 
-        await prisma.note.update({
+        await prisma.note.delete({
             where: {
                 id: Number(id),
             },
-            data: {
-                text: body.updatedNote,
-            }
-        })
-    } catch (error) {
-        throw error
+        });
+    } catch (err) {
+        console.log(err);
     }
-})
+});
