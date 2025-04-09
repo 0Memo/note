@@ -11,6 +11,5 @@
                 "includeFiles": ["./prisma/**", "./dist/**"]
             }
         }
-    ],
-    "ignoreBuilds": ["**/node_modules/@prisma/client/**/*"]
+    ]
 }
