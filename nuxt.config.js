@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
   css: [
-    "~/assets/main.css",
+    "~/assets/styles/global.css",
   ],
   modules: ["@vueuse/nuxt"],
   nitro: {
