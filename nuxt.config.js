@@ -8,21 +8,11 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  modules: ["@prisma/nuxt", "@vueuse/nuxt"],
-  build: {
-    // Ensure Prisma is not bundled for client-side
-    transpile: ["@prisma/client"],
-    // Exclude Prisma from the client bundle if not SSR
-    extend(config, { isServer }) {
-      if (!isServer) {
-        config.externals = config.externals || {};
-        config.externals["@prisma/client"] = "commonjs @prisma/client";
-      }
+  modules: ["@vueuse/nuxt"],
+  nitro: {
+    externals: {
+      external: ["@prisma/client", ".prisma/client"],
     },
-    vite: {
-      optimizeDeps: {
-        exclude: ["@prisma/client"], // Ensure Prisma is not bundled
-      },
-    },
+    moduleSideEffects: ["@prisma/client"],
   },
 });

@@ -67,7 +67,7 @@
 
             $toast.success("L'utilisateur a été créé")
             setTimeout(() => {
-                navigateTo('/')
+                navigateTo('/login')
             }, 2000) 
 
         } catch (error) {

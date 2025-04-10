@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "ES2021",
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "types": ["node"],
+        "allowJs": true,
+        "checkJs": false,
+        "resolveJsonModule": true
+    },
+    "include": ["server/lib/**/*"]
+}

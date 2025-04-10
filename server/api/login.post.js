@@ -1,5 +1,5 @@
 // /api/user POST
-import prisma from "../../lib/prisma.js"
+import prisma from "~/server/lib/prisma"
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
 import { SignJWT } from "jose";
