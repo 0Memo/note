@@ -3,10 +3,17 @@
         "target": "ES2021",
         "module": "ESNext",
         "moduleResolution": "Node",
-        "types": ["node"],
         "allowJs": true,
         "checkJs": false,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "types": ["node"]
     },
-    "include": ["server/lib/**/*"]
+    "include": [
+        "types/**/*.d.ts",
+        "types/nuxt-env.d.ts"
+    ],
+    "exclude": [
+        "server/lib/**/*"
+    ],
+    "typeRoots": ["./node_modules/@types", "./types"]
 }

@@ -6,7 +6,7 @@
             <div class="flex justify-end gap-3 text-zinc-50">
                 <button @click="$emit('cancel')" class="px-4 py-2 border-2 border-transparent rounded bg-red-600 hover:bg-zinc-50 hover:text-red-600 hover:border-red-600">Non</button>
                 <button @click="$emit('confirm')" class="px-4 py-2 border-2 border-transparent rounded bg-green-600 hover:bg-zinc-50 hover:text-green-600 hover:border-green-600">Oui</button>
-        </div>
+            </div>
         </div>
     </div>
 </template>

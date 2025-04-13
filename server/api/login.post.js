@@ -1,5 +1,5 @@
 // /api/user POST
-import prisma from "~/server/lib/prisma"
+import { getPrisma } from "../lib/prisma"
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
 import { SignJWT } from "jose";
@@ -7,8 +7,11 @@ import { SignJWT } from "jose";
 const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
 export default defineEventHandler(async (event) => {
+    const prisma = await getPrisma();
+    
     try {
         const body = await readBody(event);
+        console.log("Request body:", body);
 
         if (!validator.isEmail(body.email)) {
             throw createError({
@@ -30,11 +33,23 @@ export default defineEventHandler(async (event) => {
             })
         }
 
+        console.log(
+            "typeof prisma.user.findUnique:",
+            typeof prisma?.user?.findUnique
+        );
+
         const user = await prisma.user.findUnique({
             where: {
                 email: body.email,
             },
         });
+
+        if (!user) {
+            throw createError({
+                statusCode: 400,
+                message: "Identifiant ou mot de passe incorrect",
+            });
+        }
 
         const isValid = await bcrypt.compare(body.password, user.password);
 
@@ -65,14 +80,15 @@ export default defineEventHandler(async (event) => {
             }
         };
     } catch (error) {
-        console.error("Prisma error:", error.code);
+        console.log(error.code)
 
         if (error.code === 'P2002') {
             throw createError({
                 statusCode: 409,
-                message: 'Cet e-mail existe déjà.',
+                message: 'An email with this address already exists.',
             })
         }
+
         throw error
     }
 })

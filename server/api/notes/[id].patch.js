@@ -1,7 +1,9 @@
-import prisma from '~/server/lib/prisma'
+import { getPrisma } from "../../lib/prisma"
 import { jwtVerify } from "jose"
 
 export default defineEventHandler(async (event) => {
+    const prisma = await getPrisma();
+    
     try {
         const body = await readBody(event)
         const id = getRouterParam(event, 'id')
@@ -21,35 +23,36 @@ export default defineEventHandler(async (event) => {
             new TextEncoder().encode(process.env.JWT_SECRET)
         );
         const userId = payload.userId;
+        if (import.meta.server) {
+            const noteToUpdate = await prisma.note.findUnique({
+                where: {
+                    id: Number(id),
+                }
+            })
 
-        const noteToUpdate = await prisma.note.findUnique({
-            where: {
-                id: Number(id),
+            if(!noteToUpdate) {
+                throw createError({
+                    status: 401,
+                    statusMessage: 'Note inexistante',
+                })
             }
-        })
 
-        if(!noteToUpdate) {
-            throw createError({
-                status: 401,
-                statusMessage: 'Note inexistante',
+            if(noteToUpdate.userId !== userId) {
+                throw createError({
+                    status: 401,
+                    statusMessage: "Permission refusée",
+                })
+            }
+
+            await prisma.note.update({
+                where: {
+                    id: Number(id),
+                },
+                data: {
+                    text: body.updatedNote,
+                }
             })
         }
-
-        if(noteToUpdate.userId !== userId) {
-            throw createError({
-                status: 401,
-                statusMessage: "Permission refusée",
-            })
-        }
-
-        await prisma.note.update({
-            where: {
-                id: Number(id),
-            },
-            data: {
-                text: body.updatedNote,
-            }
-        })
     } catch (error) {
         throw error
     }

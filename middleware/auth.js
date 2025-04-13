@@ -1,7 +1,7 @@
 import { jwtVerify } from 'jose'
 
 export default defineNuxtRouteMiddleware(async (event) =>{
-    if (process.client) return
+    if (import.meta.client) return
     console.log('middleWare fired')
 
     const jwt = useCookie('NoteJWT')

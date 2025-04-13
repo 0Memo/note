@@ -1,6 +1,9 @@
+import { getPrisma } from "../lib/prisma"
 import { jwtVerify } from 'jose'
 
 export default defineEventHandler(async(event) => {
+    const prisma = await getPrisma();
+    
     try {
         const cookies = parseCookies(event)
         const token = cookies.NoteJWT
@@ -20,11 +23,11 @@ export default defineEventHandler(async(event) => {
 
         const notes = await prisma.note.findMany({
             where: {
-                userId,
-            }
+            userId,
+            },
         });
-
         return notes
+
     } catch (error) {
         console.error("Prisma error:", error.code);
 
