@@ -47,6 +47,10 @@ export default defineNuxtConfig({
     includeFiles: ["prisma/**", "node_modules/.prisma/**"],
   },
 
+  build: {
+    publicPath: '/_nuxt/',
+  },
+
   vite: {
     ssr: {
       noExternal: ["@prisma/client", ".prisma/client"],
