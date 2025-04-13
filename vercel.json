@@ -1,3 +1,13 @@
 {
-    "version": 2
+    "version": 2,
+    "builds": [
+        {
+        "src": "nuxt.config.*",
+        "use": "@nuxt/vercel-builder",
+        "config": {
+            "includeFiles": ["prisma/**", "node_modules/.prisma/**"]
+        }
+        }
+    ],
+    "buildCommand": "npx prisma generate && npm run build"
 }
