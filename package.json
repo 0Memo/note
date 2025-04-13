@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "generate": "prisma generate",
-    "build": "npm run generate && nuxt build",
+    "build": "nuxt build",
     "dev": "nuxt dev",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"

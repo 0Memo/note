@@ -12,10 +12,14 @@ export default defineNuxtConfig({
     head: {
       title: "Memo's Notes",
       meta: [
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { hid: 'description', name: 'description', content: 'Best app ever built with Nuxt 3' },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        {
+          hid: "description",
+          name: "description",
+          content: "Best app ever built with Nuxt 3",
+        },
       ],
-    }
+    },
   },
   compatibilityDate: "2024-11-01",
   css: ["@/assets/styles/global.css"],
@@ -40,6 +44,7 @@ export default defineNuxtConfig({
       inline: ["@prisma/client", ".prisma/client"],
       external: ["@prisma/client", ".prisma/client"],
     },
+    includeFiles: ["prisma/**", "node_modules/.prisma/**"],
   },
 
   vite: {
