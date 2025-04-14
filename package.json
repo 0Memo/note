@@ -5,11 +5,13 @@
   "scripts": {
     "generate": "prisma generate",
     "build": "nuxt build",
+    "vercel-build": "nuxt build",
     "dev": "nuxt dev",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxtjs/vercel-builder": "^0.25.0",
     "@vueuse/core": "^13.1.0",
     "@vueuse/nuxt": "^13.1.0",
     "bcryptjs": "^3.0.2",
