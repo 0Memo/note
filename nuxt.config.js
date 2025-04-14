@@ -14,6 +14,7 @@ export default defineNuxtConfig({
   },
 
   css: ["@/assets/styles/global.css"],
+
   modules: ["@vueuse/nuxt"],
 
   postcss: {
@@ -26,9 +27,9 @@ export default defineNuxtConfig({
   nitro: {
     preset: "vercel",
     externals: {
-      inline: [], // nothing inlined
+      inline: [],
     },
-    moduleSideEffects: ["@prisma/client"], // help Vite/Nitro avoid tree-shaking issues
+    moduleSideEffects: ["@prisma/client"],
   },
 
   vite: {
