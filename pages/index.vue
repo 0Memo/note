@@ -26,7 +26,7 @@
                             'bg-[#581C87]' : note.id === selectedNote.id,
                             'hover:bg-[#581C87]/50' : note.id !== selectedNote.id,
                         }"
-                        @click="selectedNote(note)"
+                        @click="handleNoteClick(note)"
                     >
                         <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
                         <div class="space-x-4 truncate">
@@ -55,7 +55,7 @@
                             'bg-[#581C87]' : note.id === selectedNote.id,
                             'hover:bg-[#581C87]/50' : note.id !== selectedNote.id,
                         }"
-                        @click="selectedNote(note)"
+                        @click="handleNoteClick(note)"
                     >
                         <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
                         <div class="space-x-4 truncate">
@@ -85,7 +85,7 @@
                             'bg-[#581C87]' : note.id === selectedNote.id,
                             'hover:bg-[#581C87]/50' : note.id !== selectedNote.id,
                         }"
-                        @click="selectedNote(note)"
+                        @click="handleNoteClick(note)"
                     >
                         <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
                         <div class="space-x-4 truncate">
@@ -170,6 +170,7 @@
 
 <script setup>
     import ConfirmModal from '@/components/ConfirmModal.vue'
+    import { nextTick } from 'vue'
 
     const updatedNote = ref('')
     const notes = ref([])
@@ -294,7 +295,11 @@
             updatedNote.value = selectedNote.value.text
         }
 
-        textarea.value.focus()
+        nextTick(() => {
+            if (textarea.value) {
+                textarea.value.focus()
+            }
+        })
     })
 
     watch(selectedNote, (newNote) => {
@@ -324,6 +329,7 @@
 
     function handleNoteClick(note) {
         selectedNote.value = note
+        updatedNote.value = note.text
         if (!isDesktop.value) sidebarOpen.value = false
     }
 </script>

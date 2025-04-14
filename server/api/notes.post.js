@@ -1,9 +1,9 @@
-import { getPrisma } from "../lib/prisma"
 import { jwtVerify } from "jose"
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET)
 
 export default defineEventHandler(async (event) => {
+    const { getPrisma } = await import("../lib/prisma");
     const prisma = await getPrisma();
     
     try {

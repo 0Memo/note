@@ -1,11 +1,4 @@
-import { fileURLToPath } from "url";
-import { defineNuxtConfig } from "nuxt/config";
-
-const isClient = process.env.NUXT_TARGET === "client";
-
-const emptyPrisma = fileURLToPath(
-  new URL("./utils/empty-prisma.js", import.meta.url)
-);
+// nuxt.config.ts
 
 export default defineNuxtConfig({
   app: {
@@ -21,7 +14,7 @@ export default defineNuxtConfig({
       ],
     },
   },
-  compatibilityDate: "2024-11-01",
+
   css: ["@/assets/styles/global.css"],
   modules: ["@vueuse/nuxt"],
 
@@ -32,34 +25,22 @@ export default defineNuxtConfig({
     },
   },
 
-  alias: isClient
-    ? {
-        "@prisma/client": emptyPrisma,
-        ".prisma/client": emptyPrisma,
-      }
-    : {},
-
   nitro: {
+    preset: "vercel",
     externals: {
-      inline: ["@prisma/client", ".prisma/client"],
-      external: ["@prisma/client", ".prisma/client"],
+      inline: [], // nothing inlined
     },
-    includeFiles: ["prisma/**", "node_modules/.prisma/**"],
-  },
-
-  build: {
-    publicPath: '/_nuxt/',
+    moduleSideEffects: ["@prisma/client"], // help Vite/Nitro avoid tree-shaking issues
   },
 
   vite: {
-    ssr: {
-      noExternal: ["@prisma/client", ".prisma/client"],
-    },
-    optimizeDeps: {
-      exclude: ["@prisma/client", ".prisma/client"],
-    },
-    define: {
-      __PRISMA_CLIENT__: true,
+    resolve: {
+      alias: {
+        ".prisma/client/index-browser":
+          "./node_modules/.prisma/client/index-browser.js",
+      },
     },
   },
+
+  compatibilityDate: "2025-04-14",
 });

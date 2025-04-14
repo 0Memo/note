@@ -1,10 +1,6 @@
 {
     "version": 2,
-    "buildCommand": "npx prisma generate && npm run build",
     "routes": [
-        {
-        "src": "/(.*)",
-        "dest": "/"
-        }
+        { "src": "/(.*)", "dest": ".output/server/index.mjs" }
     ]
 }

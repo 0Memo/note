@@ -1,9 +1,9 @@
-import { getPrisma } from "../../lib/prisma"
 import { jwtVerify } from "jose"
 
 export default defineEventHandler(async (event) => {
+    const { getPrisma } = await import("../../lib/prisma");
     const prisma = await getPrisma();
-    
+
     try {
         const body = await readBody(event)
         const id = getRouterParam(event, 'id')
