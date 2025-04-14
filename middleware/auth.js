@@ -1,6 +1,6 @@
 import { jwtVerify } from 'jose'
 
-export default defineNuxtRouteMiddleware(async (event) =>{
+export default defineNuxtRouteMiddleware(async () =>{
     if (import.meta.client) return
     console.log('middleWare fired')
 
