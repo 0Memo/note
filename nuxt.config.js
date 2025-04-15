@@ -25,11 +25,15 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: "node",
+    preset: "node-server",
     externals: {
       inline: [],
     },
     moduleSideEffects: ["@prisma/client"],
+  },
+  server: {
+    port: process.env.PORT ? parseInt(process.env.PORT) : 3000,
+    host: '0.0.0.0'
   },
 
   vite: {
