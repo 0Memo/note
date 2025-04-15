@@ -1,6 +1,4 @@
 export default defineNuxtConfig({
-  ssr: true,
-  
   app: {
     head: {
       title: "Memo's Notes",
