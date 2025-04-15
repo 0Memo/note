@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "generate": "prisma generate",
-    "build": "nuxt build",
+    "build": "prisma generate && nuxt build",
+    "start": "node .output/server/index.mjs",
     "vercel-build": "nuxt build",
     "dev": "nuxt dev",
     "preview": "nuxt preview",
