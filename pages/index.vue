@@ -1,7 +1,7 @@
 <template>
     <div class="h-screen bg-[#1c044f] flex">
         <div
-            class="md:hidden fixed top-0 left-0 right-0 z-50 bg-transparent flex items-center justify-center px-6 py-4 shadow-md mb-20"
+            class="md:hidden fixed top-0 left-0 right-0 z-[100] bg-[#1c044f] flex items-center justify-center px-6 py-4 shadow-md"
         >
             <NavbarLogo @click="toggleSidebar" class="cursor-pointer" />
         </div>
@@ -107,7 +107,7 @@
         </div>
 
         <div class="w-full bg-purple-900 overflow-y-scroll md:overflow-y-auto">
-            <div class="text-zinc-300 flex p-8 justify-between items-start">
+            <div class="text-zinc-300 flex p-8 justify-between items-start mt-16 md:mt-0">
                 <button
                     class="inline-flex gap-3 font-bold
                     text-zinc-3000 hover:text-zinc-50"
