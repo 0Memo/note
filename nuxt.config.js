@@ -26,19 +26,6 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: "vercel",
-    externals: {
-      inline: [],
-    },
-    moduleSideEffects: ["@prisma/client"],
-  },
-
-  vite: {
-    resolve: {
-      alias: {
-        ".prisma/client/index-browser":
-          "./node_modules/.prisma/client/index-browser.js",
-      },
-    },
   },
 
   compatibilityDate: "2025-04-14",

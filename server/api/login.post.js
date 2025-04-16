@@ -1,14 +1,12 @@
 // /api/user POST
-import bcrypt from 'bcryptjs';
-import validator from 'validator';
-import { SignJWT } from "jose";
+import bcrypt from 'bcryptjs'
+import validator from 'validator'
+import { SignJWT } from "jose"
+import prisma from "../utils/db"
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
 export default defineEventHandler(async (event) => {
-    const { getPrisma } = await import("../lib/prisma");
-    const prisma = await getPrisma();
-
     try {
         const body = await readBody(event);
         console.log("Request body:", body);

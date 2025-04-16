@@ -1,9 +1,7 @@
 import { jwtVerify } from "jose"
+import prisma from "../../utils/db"
 
 export default defineEventHandler(async (event) => {
-    const { getPrisma } = await import("../../lib/prisma");
-    const prisma = await getPrisma();
-
     try {
         const id = getRouterParam(event, "id")
 
@@ -48,7 +46,10 @@ export default defineEventHandler(async (event) => {
                 id: Number(id),
             },
         });
-    } catch (err) {
-        console.log(err);
+
+        return { success: true };
+    } catch (error) {
+        console.error("Database error:", error);
+        throw error
     }
 });

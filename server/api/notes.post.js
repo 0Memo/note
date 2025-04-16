@@ -1,11 +1,9 @@
 import { jwtVerify } from "jose"
+import prisma from "../utils/db"
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET)
 
-export default defineEventHandler(async (event) => {
-    const { getPrisma } = await import("../lib/prisma");
-    const prisma = await getPrisma();
-    
+export default defineEventHandler(async (event) => {    
     try {
         const cookies = parseCookies(event)
         const token = cookies.NoteJWT
