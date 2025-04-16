@@ -145,6 +145,7 @@
                         v-model="updatedNote"
                         name="note"
                         id="note"
+                        placeholder="Veuillez saisir votre texte ici..."
                         class="text-zinc-100 my-4 bg-transparent rounded-md p-4 -ml-36 md:-ml-5 border-[0.5px] border-purple-800
                         focus:outline-none focus:bg-[#030303] w-96 md:w-full min-h-[300px] cursor-pointer"
                         @input="() => {
