@@ -30,7 +30,7 @@
                         }"
                         @click="handleNoteClick(note)"
                     >
-                        <h3 class="font-bold truncate">{{ note.text.substring(0, 30) || 'Note sans titre' }}</h3>
+                        <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
                         <div class="space-x-4 truncate">
                             <span>
                                 {{
@@ -59,7 +59,7 @@
                         }"
                         @click="handleNoteClick(note)"
                     >
-                        <h3 class="font-bold truncate">{{ note.text.substring(0, 30) || 'Note sans titre' }}</h3>
+                        <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
                         <div class="space-x-4 truncate">
                             <span>{{
                                     new Date(note.updatedAt).toDateString() === 
@@ -89,7 +89,7 @@
                         }"
                         @click="handleNoteClick(note)"
                     >
-                        <h3 class="font-bold truncate">{{ note.text.substring(0, 30) || 'Note sans titre' }}</h3>
+                        <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
                         <div class="space-x-4 truncate">
                             <span>{{
                                     new Date(note.updatedAt).toDateString() === 
@@ -140,27 +140,20 @@
                             formatDate(selectedNote.updatedAt)
                         }}
                     </p>
-                    <div class="relative">
-                        <textarea
-                            ref="textarea"
-                            v-model="updatedNote"
-                            name="note"
-                            id="note"
-                            :placeholder="isNewNote ? 'Veuillez saisir votre texte ici...' : ''"
-                            class="text-zinc-100 my-4 bg-transparent rounded-md p-4 -ml-36 md:-ml-5 border-[0.5px] border-purple-800
-                            focus:outline-none focus:bg-[#030303] w-96 md:w-full min-h-[300px] cursor-pointer"
-                            @input="() => {
-                                debouncedFn()
-                                selectedNote.text = updatedNote
-                            }"
-                        ></textarea>
-                        <div 
-                            v-if="isNewNote && !updatedNote" 
-                            class="absolute top-8 left-4 -ml-36 md:-ml-5 pointer-events-none"
-                        >
-                            <span>Veuillez saisir votre texte ici</span>
-                        </div>
-                    </div>
+                    <textarea
+                        ref="textarea"
+                        v-model="updatedNote"
+                        name="note"
+                        id="note"
+                        class="text-zinc-100 my-4 bg-transparent rounded-md p-4 -ml-36 md:-ml-5 border-[0.5px] border-purple-800
+                        focus:outline-none focus:bg-[#030303] w-96 md:w-full min-h-[300px] cursor-pointer"
+                        @input="() => {
+                            debouncedFn()
+                            selectedNote.text = updatedNote
+                        }"
+                    >
+                        {{ selectedNote.text }}
+                    </textarea>
                 </div>
                 <div v-else class="text-zinc-400 italic text-center mt-10">
                     Pas de note encore...
@@ -179,11 +172,7 @@
 
 <script setup>
     import ConfirmModal from '@/components/ConfirmModal.vue'
-    import { nextTick, ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
-    import { useDebounceFn } from '@vueuse/core'
-    import { useCookie } from 'nuxt/app'
-    import { navigateTo } from 'nuxt/app'
-    import { useFetch } from 'nuxt/app'
+    import { nextTick } from 'vue'
 
     const updatedNote = ref('')
     const notes = ref([])
@@ -191,7 +180,6 @@
     const textarea = ref(null)
     const sidebarOpen = ref(false)
     const isDesktop = ref(false)
-    const isNewNote = ref(false)
     import { useToast } from 'vue-toast-notification'
 
     const $toast = useToast()
@@ -217,7 +205,6 @@
             notes.value = notes.value.filter(n => n.id !== selectedNote.value.id)
             selectedNote.value = notes.value[0] || {}
             updatedNote.value = selectedNote.value?.text || ''
-            isNewNote.value = false
             $toast.success("Note supprimée avec succès.")
         } catch (error) {
             console.error("Erreur suppression:", error)
@@ -234,7 +221,6 @@
             notes.value.unshift(newNote)
             selectedNote.value = notes.value[0]
             updatedNote.value = ''
-            isNewNote.value = true
             textarea.value.focus()
         } catch (error) {
             console.log('error', error)
@@ -243,9 +229,6 @@
 
     const debouncedFn = useDebounceFn(async() => {
         await updateNote()
-        if (updatedNote.value.trim() !== '') {
-            isNewNote.value = false
-        }
     }, 1000)
 
     async function updateNote() {
@@ -307,14 +290,7 @@
         updateScreenSize()
         window.addEventListener('resize', updateScreenSize)
 
-        const { data: fetchedNotes, error } = await useFetch('/api/notes')
-
-        if (error.value) {
-            console.error("Erreur lors du chargement des notes:", error.value)
-            return
-        }
-
-        notes.value = fetchedNotes.value
+        notes.value = await $fetch('/api/notes')
 
         if (notes.value.length > 0) {
             selectedNote.value = notes.value.slice().sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))[0]
@@ -330,7 +306,6 @@
 
     watch(selectedNote, (newNote) => {
         updatedNote.value = newNote?.text || ''
-        isNewNote.value = newNote?.text === ''
     })
 
     function formatDate(dateStr) {
@@ -357,7 +332,6 @@
     function handleNoteClick(note) {
         selectedNote.value = note
         updatedNote.value = note.text
-        isNewNote.value = note.text === ''
         if (!isDesktop.value) sidebarOpen.value = false
     }
 </script>
