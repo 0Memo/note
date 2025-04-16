@@ -1,7 +1,7 @@
 <template>
     <div class="h-screen bg-[#1c044f] flex">
         <div
-            class="md:hidden fixed top-0 left-0 right-0 z-[100] bg-[#1c044f] flex items-center justify-center px-6 py-4 shadow-md"
+            class="md:hidden fixed top-0 left-0 right-0 z-[100] bg-[#581C87] flex items-center justify-center px-6 py-4 shadow-md"
         >
             <NavbarLogo @click="toggleSidebar" class="cursor-pointer" />
         </div>
