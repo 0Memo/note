@@ -116,7 +116,6 @@
                     @click="createNewNote"
                 >
                     <Pencil />
-                    <span class="mt-0.5 font-h1">Note</span>
                 </button>
                 <ConfirmModal
                     :visible="showConfirmModal"
