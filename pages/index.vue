@@ -194,7 +194,6 @@
     import { useCookie } from 'nuxt/app'
     import { navigateTo } from 'nuxt/app'
     import { useToast } from 'vue-toast-notification'
-    import { definePageMeta } from '#app'
     import { $fetch } from 'ofetch'
 
     const updatedNote = ref('')
