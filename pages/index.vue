@@ -55,7 +55,7 @@
                         <!-- Delete button revealed on swipe - ONLY on mobile -->
                         <div 
                             v-if="!isDesktop && swipedNoteId === note.id"
-                            class="absolute top-0 right-0 bottom-0 w-[70px] bg-red-700 flex items-center justify-center"
+                            class="absolute top-0 right-0 bottom-0 w-[70px] bg-red-600 flex items-center justify-center"
                             @click.stop="confirmDeleteNote(note)"
                         >
                             <TrashIcon class="text-white" />
@@ -316,12 +316,19 @@
 
     async function updateNote() {
         try {
-            await $fetch(`/api/notes/${selectedNote.value.id}`, {
+            const response = await $fetch(`/api/notes/${selectedNote.value.id}`, {
                 method: 'PATCH',
                 body: {
                     updatedNote: updatedNote.value,
                 }
             })
+        
+            // Update the local note's updatedAt property to reflect the server change
+            const updatedNoteIndex = notes.value.findIndex(n => n.id === selectedNote.value.id)
+            if (updatedNoteIndex !== -1) {
+                notes.value[updatedNoteIndex].updatedAt = new Date().toISOString()
+                selectedNote.value.updatedAt = new Date().toISOString()
+            }
         } catch (error) {
             console.log('error', error)
         }
@@ -484,7 +491,3 @@
         if (!isDesktop.value) sidebarOpen.value = false
     }
 </script>
-
-<style>
-/* Add any additional styles here */
-</style>
