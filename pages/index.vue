@@ -1,5 +1,8 @@
 <template>
     <div class="h-screen bg-[#1c044f] flex">
+        <div class="absolute inset-0 pointer-events-none z-[1]">
+            <Easter />
+        </div>
         <div
             class="md:hidden fixed top-0 left-0 right-0 z-[100] bg-[#581C87] flex items-center justify-between px-6 py-4 shadow-md cursor-pointer"
             @click="toggleSidebar"
