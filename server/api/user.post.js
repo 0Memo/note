@@ -30,14 +30,12 @@ export default defineEventHandler(async (event) => {
             })
         }
 
-        const salt = await bcrypt.genSalt(10);
-        const passwordHash = await bcrypt.hash(body.password, salt);
+        const passwordHash = await bcrypt.hash(body.password, 10);
 
         const user = await prisma.user.create({
             data: {
                 email: body.email,
                 password: passwordHash,
-                salt: salt,
             },
         });
 

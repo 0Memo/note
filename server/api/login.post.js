@@ -37,8 +37,11 @@ export default defineEventHandler(async (event) => {
         );
 
         const user = await prisma.user.findUnique({
-            where: {
-                email: body.email,
+            where: { email: body.email },
+            select: {
+                id: true,
+                email: true,
+                password: true,
             },
         });
 
@@ -50,8 +53,9 @@ export default defineEventHandler(async (event) => {
         }
 
         const isValid = await bcrypt.compare(body.password, user.password);
-
+        
         console.log('isValid:', isValid);
+        console.log("Stored password hash from DB:", user?.password);
 
         if(!isValid) {
             throw createError({

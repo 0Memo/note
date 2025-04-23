@@ -78,48 +78,91 @@ export async function deleteNote(id) {
 const prisma = {
     user: {
         findUnique: async ({ where }) => {
-        if (where.email) {
-            return findUserByEmail(where.email);
-        }
-        if (where.id) {
-            const [rows] = await pool.execute("SELECT * FROM User WHERE id = ?", [
-            where.id,
-            ]);
-            return rows[0] || null;
-        }
-        return null;
+            if (where.email) {
+                return findUserByEmail(where.email);
+            }
+            if (where.id) {
+                const [rows] = await pool.execute("SELECT * FROM User WHERE id = ?", [
+                where.id,
+                ]);
+                return rows[0] || null;
+            }
+            return null;
         },
         create: async ({ data }) => {
-        return createUser(data.email, data.password, data.salt);
+            return createUser(data.email, data.password, data.salt);
+        },
+        findFirst: async ({ where }) => {
+            if (where.resetToken && where.resetTokenExpiry?.gte) {
+                const [rows] = await pool.execute(
+                "SELECT * FROM User WHERE resetToken = ? AND resetTokenExpiry >= ? LIMIT 1",
+                [where.resetToken, where.resetTokenExpiry.gte]
+                );
+                return rows[0] || null;
+            }
+            return null;
+        },
+        update: async ({ where, data }) => {
+            if (where.email) {
+                await pool.execute(
+                "UPDATE User SET resetToken = ?, resetTokenExpiry = ?, updatedAt = NOW() WHERE email = ?",
+                [data.resetToken, data.resetTokenExpiry, where.email]
+                );
+
+                const [rows] = await pool.execute("SELECT * FROM User WHERE email = ?", [
+                where.email,
+                ]);
+                return rows[0] || null;
+            } else if (where.id) {
+                const [result] = await pool.execute(
+                    "UPDATE User SET password = ?, updatedAt = NOW() WHERE id = ?",
+                    [data.password, where.id]
+                );
+
+                console.log("🔁 Update result:", result);
+                console.log("🧠 Affected rows:", result.affectedRows);
+
+                const [rows] = await pool.execute("SELECT * FROM User WHERE id = ?", [where.id]);
+
+                console.log("📦 Password in DB after update:", rows[0]?.password);
+
+                if (result.affectedRows === 0) {
+                    console.warn("⚠️ No user updated — possibly wrong ID:", where.id);
+                }
+                
+                return rows[0] || null;
+            }
+
+            return null;
         },
     },
     note: {
         findMany: async ({ where }) => {
-        if (where.userId) {
-            return findNotesByUserId(where.userId);
-        }
-        return [];
+            if (where.userId) {
+                return findNotesByUserId(where.userId);
+            }
+            return [];
         },
         findUnique: async ({ where }) => {
-        if (where.id) {
-            return findNoteById(where.id);
-        }
-        return null;
+            if (where.id) {
+                return findNoteById(where.id);
+            }
+            return null;
         },
         create: async ({ data }) => {
-        return createNote(data.userId, data.text);
+            return createNote(data.userId, data.text);
         },
         update: async ({ where, data }) => {
-        if (where.id) {
-            return updateNote(where.id, data.text);
-        }
-        return null;
+            if (where.id) {
+                return updateNote(where.id, data.text);
+            }
+            return null;
         },
         delete: async ({ where }) => {
-        if (where.id) {
-            return deleteNote(where.id);
-        }
-        return null;
+            if (where.id) {
+                return deleteNote(where.id);
+            }
+            return null;
         },
     },
 };
