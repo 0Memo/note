@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
         },
     });
 
-    const resetUrl = `http://localhost:3000/reset-password?token=${token}`;
+    const resetUrl = `https://notes-memo.vercel.app/reset-password?token=${token}`;
 
     await sendMail({
         to: email,
