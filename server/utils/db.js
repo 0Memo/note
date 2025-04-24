@@ -21,8 +21,8 @@ export async function findUserByEmail(email) {
 
 export async function createUser(email, password, salt) {
     const [result] = await pool.execute(
-        "INSERT INTO User (email, password, salt, createdAt, updatedAt) VALUES (?, ?, ?, NOW(), NOW())",
-        [email, password, salt]
+        "INSERT INTO User (email, password, createdAt, updatedAt) VALUES (?, ?, NOW(), NOW())",
+        [email, password]
     );
 
     // Get the inserted user
