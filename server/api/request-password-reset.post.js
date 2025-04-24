@@ -31,8 +31,8 @@ export default defineEventHandler(async (event) => {
 
     await sendMail({
         to: email,
-        subject: "Réinitialisation du mot de passe",
-        html: `<p>Voici votre lien de réinitialisation :</p><a href="${resetUrl}">${resetUrl}</a>`,
+        subject: t.subject,
+        html: t.body(resetUrl),
     });
 
     return { message: t.response };
@@ -44,8 +44,10 @@ const getPreferredLocale = (event) => {
     if (!acceptLanguage) return "en";
     const preferred = acceptLanguage
         .split(",")
-        .map((lang) => lang.split(";")[0].trim());
-    return preferred.find((lang) => supportedLocales.includes(lang)) || "en";
+        .map((lang) => lang.split(";")[0].trim().split("-")[0]);
+    return preferred
+        .map((lang) => lang.split("-")[0])
+        .find((lang) => supportedLocales.includes(lang)) || "en";
 };
 
 const translations = {
