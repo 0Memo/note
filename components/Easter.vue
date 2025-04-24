@@ -1,6 +1,6 @@
 <template>
     <div class="easter-container">
-        <h2 class="easter-heading">Joyeuse Pâques!</h2>
+        <h2 class="easter-heading">{{ $t('easter') }}</h2>
         <div class="set">
             <div>
             <img
@@ -129,3 +129,8 @@
         </div>
     </div>
 </template>
+
+<script setup>
+    import { useI18n } from 'vue-i18n'
+    const { t } = useI18n()
+</script>

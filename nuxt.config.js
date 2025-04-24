@@ -1,3 +1,5 @@
+import { resolve } from "path";
+
 export default defineNuxtConfig({
   app: {
     head: {
@@ -15,7 +17,28 @@ export default defineNuxtConfig({
 
   css: ["@/assets/styles/global.css"],
 
-  modules: ["@vueuse/nuxt"],
+  modules: ["@vueuse/nuxt", "@nuxtjs/i18n"],
+
+  i18n: {
+    strategy: "prefix_except_default",
+    defaultLocale: "en",
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: "i18n_redirected",
+      redirectOn: "root",
+    },
+    locales: [
+      { code: "es", language: "es-ES", name: "Español" },
+      { code: "fr", language: "fr-FR", name: "Français" },
+      { code: "pt", language: "pt-BR", name: "Português" },
+      { code: "en", language: "en-US", name: "English" },
+      { code: "it", language: "it-IT", name: "Italiano" },
+      { code: "sv", language: "sv-SE", name: "Svenska" },
+      { code: "ro", language: "ro-RO", name: "Română" },
+    ],
+    lazy: false,
+    vueI18n: resolve("i18n/config.js"),
+  },
 
   postcss: {
     plugins: {
@@ -27,6 +50,8 @@ export default defineNuxtConfig({
   nitro: {
     preset: "vercel",
   },
+
+  plugins: ["~/plugins/init-locale.client.js"],
 
   compatibilityDate: "2025-04-14",
 });

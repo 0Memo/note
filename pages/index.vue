@@ -20,9 +20,74 @@
             }"
         >
             <Logo @click="toggleSidebar" class="cursor-pointer" />
+            <div class="text-white flex flex-wrap justify-center gap-2 mt-8 md:mt-6">
+                <button @click="changeLocale('en')">
+                    <img
+                        src="https://flagcdn.com/w20/us.png"
+                        srcset="https://flagcdn.com/w40/us.png 2x"
+                        width="20"
+                        height="13"
+                        alt="United States"
+                    >
+                </button>
+                <button @click="changeLocale('es')">
+                    <img
+                        src="https://flagcdn.com/w20/es.png"
+                        srcset="https://flagcdn.com/w40/es.png 2x"
+                        width="20"
+                        height="13"
+                        alt="Spain"
+                    >
+                </button>
+                <button @click="changeLocale('fr')">
+                    <img
+                        src="https://flagcdn.com/w20/fr.png"
+                        srcset="https://flagcdn.com/w40/fr.png 2x"
+                        width="20"
+                        height="13"
+                        alt="France"
+                    >
+                </button>
+                <button @click="changeLocale('it')">
+                    <img
+                        src="https://flagcdn.com/w20/it.png"
+                        srcset="https://flagcdn.com/w40/it.png 2x"
+                        width="20"
+                        height="13"
+                        alt="Italy"
+                    >
+                </button>
+                <button @click="changeLocale('pt')">
+                    <img
+                        src="https://flagcdn.com/w20/br.png"
+                        srcset="https://flagcdn.com/w40/br.png 2x"
+                        width="20"
+                        height="13"
+                        alt="Brazil"
+                    >
+                </button>
+                <button @click="changeLocale('ro')">
+                    <img
+                        src="https://flagcdn.com/w20/ro.png"
+                        srcset="https://flagcdn.com/w40/ro.png 2x"
+                        width="20"
+                        height="13"
+                        alt="Romania"
+                    >
+                </button>
+                <button @click="changeLocale('sv')">
+                    <img
+                        src="https://flagcdn.com/w20/se.png"
+                        srcset="https://flagcdn.com/w40/se.png 2x"
+                        width="20"
+                        height="13"
+                        alt="Sweden"
+                    >
+                </button>
+            </div>
 
             <div>
-                <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">Aujourd'hui</p>
+                <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">{{ $t('notes.today') }}</p>
                 <div class="text-zinc-200 mt-10 ml-2 space-y-2 text-sm font-bodyTest">
                     <div
                         v-for="note in todaysNotes"
@@ -68,7 +133,7 @@
             </div>
 
             <div>
-                <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">Hier</p>
+                <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">{{ $t('notes.yesterday') }}</p>
                 <div class="text-zinc-200 mt-10 ml-2 space-y-2 text-sm font-bodyTest">
                     <div
                         v-for="note in yesterdaysNotes"
@@ -117,7 +182,7 @@
             </div>
 
             <div>
-                <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">préc.</p>
+                <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">{{ $t('notes.previous') }}</p>
                 <div class="text-zinc-200 mt-10 ml-2 space-y-2 text-sm font-bodyTest">
                     <div
                         v-for="note in earlierNotes"
@@ -177,8 +242,8 @@
                 </button>
                 <ConfirmModal
                     :visible="showConfirmModal"
-                    title="Suppression définitive"
-                    message="Confirmer ?"
+                    :title="$t('modal.definitive')"
+                    :message="$t('modal.confirm')"
                     @confirm="handleConfirmDelete"
                     @cancel="showConfirmModal = false"
                 />
@@ -214,7 +279,7 @@
                     </textarea>
                 </div>
                 <div v-else class="text-zinc-400 italic text-center mt-10">
-                    Pas de note encore...
+                    {{ $t('notes.nothing') }}
                 </div>
             </div>
             <button
@@ -229,11 +294,18 @@
 </template>
 
 <script setup>
+    import { useI18n } from 'vue-i18n'
+
     import ConfirmModal from '@/components/ConfirmModal.vue'
     import { nextTick, ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
     import { useDebounceFn } from '@vueuse/core'
     import { useToast } from 'vue-toast-notification'
+    import { useRouter } from 'vue-router'
+    import { useLocalePath } from '#i18n'
 
+    const { t, locale } = useI18n()
+    const localePath = useLocalePath()
+    const router = useRouter()
     const updatedNote = ref('')
     const notes = ref([])
     const selectedNote = ref({})
@@ -251,6 +323,12 @@
     const touchEndX = ref(0)
     const minSwipeDistance = 50 // minimum distance required for a swipe
 
+    function changeLocale(newLocale) {
+        locale.value = newLocale
+        $toast.success(`${t('toast.language')}${newLocale}`)
+        router.push({ path: `/${newLocale}` })
+    }
+
     definePageMeta({
         middleware: ['auth'],
     })
@@ -258,7 +336,7 @@
     function logout() {
         const jwtCookie = useCookie('NoteJWT')
         jwtCookie.value = null
-        navigateTo('/login')
+        navigateTo(localePath('/login'))
     }
 
     const confirmDeleteNote = (note) => {
@@ -286,10 +364,10 @@
             }
             
             noteToDelete.value = null
-            $toast.success("Note supprimée avec succès.")
+            $toast.success(t('toast.noteDeletion'))
         } catch (error) {
             console.error("Erreur suppression:", error)
-            $toast.error("Erreur lors de la suppression.")
+            $toast.error(t('toast.deletionError'))
         }
     }
 
@@ -462,7 +540,7 @@
         const year = date.getFullYear()
         const month = String(date.getMonth() + 1).padStart(2, '0')
         const day = String(date.getDate()).padStart(2, '0')
-        return `${day}/${month}/${year}`
+        return `${year}/${month}/${day}`
     }
 
     onBeforeUnmount(() => {
