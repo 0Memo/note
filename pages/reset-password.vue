@@ -98,12 +98,13 @@
 
 <script setup>
     import { useI18n } from 'vue-i18n'
-    import { useRouter } from 'vue-router'
+    import { useRouter, useRoute } from 'vue-router'
     import { useLocalePath } from '#i18n'
 
     const { t, locale } = useI18n()
     const localePath = useLocalePath()
     const router = useRouter()
+    const route = useRoute()
     const token = computed(() => route.query.token)
     const password = ref('')
     const { $toast } = useNuxtApp()

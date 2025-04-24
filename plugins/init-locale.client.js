@@ -1,5 +1,5 @@
 export default defineNuxtPlugin((nuxtApp) => {
-  const { $i18n } = nuxtApp;
+    const { $i18n } = nuxtApp;
     const route = useRoute();
 
     const savedLocale = localStorage.getItem("locale");
