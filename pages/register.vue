@@ -132,7 +132,7 @@
         localStorage.setItem('locale', newLocale)
         $toast.success(`${t('toast.language')}${newLocale}`)
 
-        const path = newLocale === 'en' ? '/register' : `/${newLocale}/register`
+        const path = `/${newLocale}/register`
         router.push({ path })
     }
 

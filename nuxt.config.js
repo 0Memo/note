@@ -20,7 +20,7 @@ export default defineNuxtConfig({
   modules: ["@vueuse/nuxt", "@nuxtjs/i18n"],
 
   i18n: {
-    strategy: "prefix_except_default",
+    strategy: "prefix",
     defaultLocale: "en",
     detectBrowserLanguage: {
       useCookie: true,

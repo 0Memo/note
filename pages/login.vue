@@ -138,7 +138,7 @@
         localStorage.setItem('locale', newLocale)
         $toast.success(`${t('toast.language')}${newLocale}`)
 
-        const path = newLocale === 'en' ? '/login' : `/${newLocale}/login`
+        const path = `/${newLocale}/login`
         router.push({ path })
     }
 
