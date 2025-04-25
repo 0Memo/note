@@ -1,6 +1,6 @@
 <template>
     <div class="h-screen bg-[#1c044f] flex font-h1">
-        <div class="bg-[#030303] md:w-[516px] p-12 flex flex-col justify-center">
+        <div class="bg-[#030303] w-full md:w-[516px] p-12 flex flex-col justify-center">
             <Logo />
             <div class="text-white -ml-16 md:-ml-32 flex flex-wrap justify-center gap-2 mt-8 md:mt-6">
                 <button @click="changeLocale('en')">
@@ -114,7 +114,7 @@
         localStorage.setItem('locale', newLocale)
         $toast.success(`${t('toast.language')}${newLocale}`)
 
-        const path = newLocale === 'en' ? '/reset-password' : `/${newLocale}/reset-password`
+        const path = `/${newLocale}/reset-password`
         router.push({ path })
     }
 

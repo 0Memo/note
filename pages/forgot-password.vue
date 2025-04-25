@@ -1,6 +1,6 @@
 <template>
     <div class="h-screen bg-[#1c044f] flex font-h1">
-        <div class="bg-[#030303] md:w-[516px] p-12 flex flex-col justify-center">
+        <div class="bg-[#030303] w-full md:w-[516px] p-12 flex flex-col justify-center">
             <Logo />
             <div class="text-white -ml-16 md:-ml-32 flex flex-wrap justify-center gap-2 mt-8 md:mt-6">
                 <button @click="changeLocale('en')">
@@ -75,7 +75,6 @@
                     class="text-purple-700 shadow-2xl shadow-green-700 font-semibold transform cursor-pointer hover:text-purple-300">
                     {{ $t('forgotPassword.backToLogin') }}
                 </nuxt-link>
-                
             </p>
 
             <form @submit.prevent="handleSubmit">
@@ -91,7 +90,7 @@
                     >
                 </div>
 
-                <div class="text-zinc-100 mt-3">
+                <div class="text-zinc-100 mt-6">
                     <button class="w-full mt-4 bg-purple-900 text-lg px-4 py-2 rounded-2xl font-bold space-x-4">
                         <span>{{ $t('forgotPassword.send') }}</span>
                         <span>➤</span>
@@ -121,7 +120,7 @@
         localStorage.setItem('locale', newLocale)
         $toast.success(`${t('toast.language')}${newLocale}`)
 
-        const path = newLocale === 'en' ? '/forgot-password' : `/${newLocale}/forgot-password`
+        const path = `/${newLocale}/forgot-password`
         router.push({ path })
     }
 

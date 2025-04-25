@@ -1,6 +1,6 @@
 <template>
     <div class="h-screen bg-[#1c044f] flex font-h1">
-        <div class="bg-slate-900 md:w-[516px] p-12 flex flex-col justify-center">
+        <div class="bg-[#030303] w-full md:w-[516px] p-12 flex flex-col justify-center">
             <Logo />
             <div class="text-white -ml-16 md:-ml-32 flex flex-wrap justify-center gap-2 mt-8 md:mt-6">
                 <button @click="changeLocale('en')">
@@ -87,7 +87,8 @@
                         class="w-full border-2 border-zinc-500
                         rounded-lg h-10 placeholder:text-zinc-500
                         px-3 bg-zinc-800 text-zinc-100"
-                        placeholder="email@example.com">
+                        placeholder="email@example.com"
+                    >
                 </div>
 
                 <div class="mt-8">
