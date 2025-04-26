@@ -93,7 +93,7 @@ export default defineI18nConfig(() => ({
                 validate: "Validar"
             },
             notes: {
-                nothing: "Pas de note encore...",
+                nothing: "Nada todavía...",
                 today: "Hoy",
                 yesterday: "Ayer",
                 previous: "Prev."
@@ -151,7 +151,7 @@ export default defineI18nConfig(() => ({
                 validate: "Validar"
             },
             notes: {
-                nothing: "Pas de note encore...",
+                nothing: "Nada ainda...",
                 today: "Hoje",
                 yesterday: "Ontem",
                 previous: "Prev."

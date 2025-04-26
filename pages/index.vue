@@ -158,7 +158,7 @@
                                 <span>{{
                                         new Date(note.updatedAt).toDateString() === 
                                         new Date().toDateString()
-                                            ? "Aujourd'hui"
+                                            ? $t('notes.today')
                                             : formatDate(note.updatedAt)
                                     }}</span>
                                 <span
@@ -207,7 +207,7 @@
                                 <span>{{
                                         new Date(note.updatedAt).toDateString() === 
                                         new Date().toDateString()
-                                            ? "Aujourd'hui"
+                                            ? $t('notes.today')
                                             : formatDate(note.updatedAt)
                                     }}</span>
                                 <span
@@ -259,7 +259,10 @@
                 <div v-if="selectedNote && selectedNote.id">
                     <p class="text-zinc-100 mb-8 text-lg">
                         {{
-                            formatDate(selectedNote.updatedAt)
+                            new Date(selectedNote.updatedAt).toDateString() === 
+                            new Date().toDateString()
+                                ? $t('notes.today')
+                                : new Date(selectedNote.updatedAt).toLocaleDateString()
                         }}
                     </p>
                     <textarea
