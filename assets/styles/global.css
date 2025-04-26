@@ -6,13 +6,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
 #loader {
     border: 8px solid #f3f3f3;
     border-top: 8px solid #581C87;
     border-radius: 50%;
     width: 200px;
     height: 200px;
-    animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite,
+        fadeIn 0.5s ease-in-out;
     margin-top: 10px;
 }
 

@@ -110,7 +110,10 @@
             </form>
 
             <p class="mt-6 ml-1 text-md text-zinc-300">
-                <nuxt-link :to="localePath('/forgot-password')" class="text-purple-700 shadow-2xl shadow-green-700 font-semibold transform cursor-pointer hover:text-purple-300">
+                <nuxt-link
+                    :to="localePath('/forgot-password')"
+                    class="text-purple-700 shadow-2xl shadow-green-700 font-semibold
+                    transform cursor-pointer hover:text-purple-300">
                     {{ $t('login.forgottenPassword') }}
                 </nuxt-link>
             </p>
@@ -118,7 +121,8 @@
             <div
                 v-if="isLoading"
                 class="absolute inset-0 flex items-center
-                justify-center bg-black bg-opacity-50 z-50"
+                justify-center bg-black bg-opacity-50 z-50
+                transition-opacity duration-500 ease-in-out"
             >
                 <div id="loader"></div>
             </div>

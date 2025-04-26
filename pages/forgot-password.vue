@@ -101,7 +101,8 @@
             <div
                 v-if="isLoading"
                 class="absolute inset-0 flex items-center
-                justify-center bg-black bg-opacity-50 z-50"
+                justify-center bg-black bg-opacity-50 z-50
+                transition-opacity duration-500 ease-in-out"
             >
                 <div id="loader"></div>
             </div>
