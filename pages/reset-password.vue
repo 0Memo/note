@@ -89,6 +89,14 @@
                     </button>
                 </div>
             </form>
+
+            <div
+                v-if="isLoading"
+                class="absolute inset-0 flex items-center
+                justify-center bg-black bg-opacity-50 z-50"
+            >
+                <div id="loader"></div>
+            </div>
         </div>
 
         <div class="bg-purple-900 w-full text-zinc-100 hidden md:block">
@@ -108,6 +116,7 @@
     const token = computed(() => route.query.token)
     const password = ref('')
     const { $toast } = useNuxtApp()
+    const isLoading = ref(false)
 
     function changeLocale(newLocale) {
         locale.value = newLocale
@@ -119,20 +128,24 @@
     }
 
     async function submit() {
-    try {
-        await $fetch('/api/reset-password', {
-        method: 'POST',
-        body: {
-            token: token.value,
-            newPassword: password.value,
-        },
-        })
+        isLoading.value = true
 
-        $toast.success(t('toast.passwordChange'))
-        navigateTo(localePath('/login'))
-    } catch (error) {
-        console.error(error)
-        $toast.error(t('toast.noteDeletion'))
-    }
+        try {
+            await $fetch('/api/reset-password', {
+            method: 'POST',
+            body: {
+                token: token.value,
+                newPassword: password.value,
+            },
+            })
+
+            $toast.success(t('toast.passwordChange'))
+            navigateTo(localePath('/login'))
+        } catch (error) {
+            console.error(error)
+            $toast.error(t('toast.noteDeletion'))
+        } finally {
+            isLoading.value = false
+        }
     }
 </script>

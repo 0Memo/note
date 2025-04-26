@@ -109,6 +109,14 @@
                     </button>
                 </div>
             </form>
+
+            <div
+                v-if="isLoading"
+                class="absolute inset-0 flex items-center
+                justify-center bg-black bg-opacity-50 z-50"
+            >
+                <div id="loader"></div>
+            </div>
         </div>
 
         <div class="bg-purple-900 w-full text-zinc-100 hidden md:block">
@@ -127,6 +135,7 @@
     const email = ref('')
     const password = ref('')
     const { $toast } = useNuxtApp()
+    const isLoading = ref(false)
 
     function changeLocale(newLocale) {
         locale.value = newLocale
@@ -138,6 +147,8 @@
     }
 
     async function submit() {
+        isLoading.value = true
+
         try {
             const response = await $fetch('/api/user', {
                 method: 'POST',
@@ -155,6 +166,8 @@
         } catch (error) {
             console.log('error: ', error.response?._data?.message)
             $toast.error(error.response?._data?.message)
+        } finally {
+            isLoading.value = false
         }
     }
 </script>
