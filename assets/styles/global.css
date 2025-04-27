@@ -39,6 +39,7 @@
 .text-skeleton {
     background-color: #e0e0e0;
     height: 20px;
+    width: 50%;
     border-radius: 4px;
     animation: pulse 1.5s infinite;
 }
@@ -46,8 +47,27 @@
 .note-skeleton {
     background-color: #e0e0e0;
     height: 60px;
+    width: 50%;
     border-radius: 4px;
     animation: pulse 1.5s infinite;
+}
+
+.main-text-skeleton {
+    background-color: #e0e0e0;
+    height: 20px;
+    width: 350px;
+    border-radius: 4px;
+    animation: pulse 1.5s infinite;
+    margin: 0 auto;
+}
+
+.main-note-skeleton {
+    background-color: #e0e0e0;
+    height: 300px;
+    width: 350px;
+    border-radius: 4px;
+    animation: pulse 1.5s infinite;
+    margin: 0 auto;
 }
 
 @keyframes pulse {

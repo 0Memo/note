@@ -268,36 +268,48 @@
                 </button>
             </div>
 
-            <div class="text-zinc-200 p-8 max-w-[40%] mx-auto font-bodyTest">
-                <div v-if="selectedNote && selectedNote.id">
-                    <p class="text-zinc-100 mb-8 text-lg">
-                        {{
-                            new Date(selectedNote.updatedAt).toDateString() === 
-                            new Date().toDateString()
-                                ? $t('notes.today')
-                                : new Date(selectedNote.updatedAt).toLocaleDateString()
-                        }}
-                    </p>
-                    <textarea
-                        ref="textarea"
-                        v-model="updatedNote"
-                        name="note"
-                        id="note"
-                        placeholder="Veuillez saisir votre texte ici..."
-                        class="text-zinc-100 my-4 bg-transparent rounded-md p-4 -ml-36 md:-ml-5 border-[0.5px] border-purple-800
-                        focus:outline-none focus:bg-[#030303] w-96 md:w-full min-h-[300px] cursor-pointer"
-                        @input="() => {
-                            debouncedFn()
-                            selectedNote.text = updatedNote
-                        }"
-                    >
-                        {{ selectedNote.text }}
-                    </textarea>
+            <template v-if="isLoading">
+                <div class="space-y-8 mt-10">
+                    <div v-for="n in 1" :key="n" class="space-y-4">
+                    <div class="main-text-skeleton"></div>
+                    <div class="main-note-skeleton"></div>
+                    </div>
                 </div>
-                <div v-else class="text-zinc-400 italic text-center mt-10">
-                    {{ $t('notes.nothing') }}
+            </template>
+
+            <template v-else>
+                <div class="text-zinc-200 p-8 max-w-[40%] mx-auto font-bodyTest">
+                    <div v-if="selectedNote && selectedNote.id">
+                        <p class="text-zinc-100 mb-8 text-lg">
+                            {{
+                                new Date(selectedNote.updatedAt).toDateString() === 
+                                new Date().toDateString()
+                                    ? $t('notes.today')
+                                    : new Date(selectedNote.updatedAt).toLocaleDateString()
+                            }}
+                        </p>
+                        <textarea
+                            ref="textarea"
+                            v-model="updatedNote"
+                            name="note"
+                            id="note"
+                            placeholder="Veuillez saisir votre texte ici..."
+                            class="text-zinc-100 my-4 bg-transparent rounded-md p-4 -ml-36 md:-ml-5 border-[0.5px] border-purple-800
+                            focus:outline-none focus:bg-[#030303] w-96 md:w-full min-h-[300px] cursor-pointer"
+                            @input="() => {
+                                debouncedFn()
+                                selectedNote.text = updatedNote
+                            }"
+                        >
+                            {{ selectedNote.text }}
+                        </textarea>
+                    </div>
+                    <div v-else class="text-zinc-400 italic text-center mt-10">
+                        {{ $t('notes.nothing') }}
+                    </div>
                 </div>
-            </div>
+            </template>
+            
             <button
                 class="text-zinc-300 text-sm
                 font-bold absolute right-0 bottom-0 p-8"
