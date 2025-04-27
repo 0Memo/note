@@ -87,149 +87,161 @@
                 </button>
             </div>
 
-            <div>
-                <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">{{ $t('notes.today') }}</p>
-                <div class="text-zinc-200 mt-10 ml-2 space-y-2 text-sm font-bodyTest">
-                    <div
-                        v-for="note in todaysNotes"
-                        :key="note.id"
-                        class="relative overflow-hidden"
-                    >
-                        <!-- Swipeable note container -->
-                        <div
-                            class="rounded-lg p-4 cursor-pointer transition-transform duration-300"
-                            :class="{
-                                'bg-[#581C87]': note.id === selectedNote.id,
-                                'hover:bg-[#581C87]/50': note.id !== selectedNote.id,
-                                'transform translate-x-[-70px]': swipedNoteId === note.id && !isDesktop,
-                            }"
-                            @click="handleNoteClick(note)"
-                            @touchstart="handleTouchStart($event, note.id)"
-                            @touchmove="handleTouchMove($event, note.id)"
-                            @touchend="handleTouchEnd(note.id)"
-                        >
-                            <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
-                            <div class="space-x-4 truncate">
-                                <span>
-                                    {{ formatDate(note.updatedAt) }}
-                                </span>
-                                <span
-                                    v-if="note.text.length > 50"
-                                    class="text-zinc-400"
-                                >...{{ note.text.substring(30, 50) }}
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <!-- Delete button revealed on swipe - ONLY on mobile -->
-                        <div 
-                            v-if="!isDesktop && swipedNoteId === note.id"
-                            class="absolute top-0 right-0 bottom-0 w-[70px] bg-red-600 flex items-center justify-center"
-                            @click.stop="confirmDeleteNote(note)"
-                        >
-                            <TrashIcon class="text-white" />
-                        </div>
+            <template v-if="isLoading">
+                <!-- Show a few skeleton loaders -->
+                <div class="space-y-10 my-10">
+                    <div v-for="n in 3" :key="n" class="space-y-4">
+                        <div class="text-skeleton"></div>
+                        <div class="note-skeleton"></div>
                     </div>
                 </div>
-            </div>
+            </template>
 
-            <div>
-                <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">{{ $t('notes.yesterday') }}</p>
-                <div class="text-zinc-200 mt-10 ml-2 space-y-2 text-sm font-bodyTest">
-                    <div
-                        v-for="note in yesterdaysNotes"
-                        :key="note.id"
-                        class="relative overflow-hidden"
-                    >
-                        <!-- Swipeable note container -->
+            <template v-else>
+                <div>
+                    <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">{{ $t('notes.today') }}</p>
+                    <div class="text-zinc-200 mt-10 ml-2 space-y-2 text-sm font-bodyTest">
                         <div
-                            class="rounded-lg p-4 cursor-pointer transition-transform duration-300"
-                            :class="{
-                                'bg-[#581C87]': note.id === selectedNote.id,
-                                'hover:bg-[#581C87]/50': note.id !== selectedNote.id,
-                                'transform translate-x-[-70px]': swipedNoteId === note.id && !isDesktop,
-                            }"
-                            @click="handleNoteClick(note)"
-                            @touchstart="handleTouchStart($event, note.id)"
-                            @touchmove="handleTouchMove($event, note.id)"
-                            @touchend="handleTouchEnd(note.id)"
+                            v-for="note in todaysNotes"
+                            :key="note.id"
+                            class="relative overflow-hidden"
                         >
-                            <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
-                            <div class="space-x-4 truncate">
-                                <span>{{
-                                        new Date(note.updatedAt).toDateString() === 
-                                        new Date().toDateString()
-                                            ? $t('notes.today')
-                                            : formatDate(note.updatedAt)
-                                    }}</span>
-                                <span
-                                    v-if="note.text.length > 50"
-                                    class="text-zinc-400"
-                                >...{{ note.text.substring(30, 50) }}
-                                </span>
+                            <!-- Swipeable note container -->
+                            <div
+                                class="rounded-lg p-4 cursor-pointer transition-transform duration-300"
+                                :class="{
+                                    'bg-[#581C87]': note.id === selectedNote.id,
+                                    'hover:bg-[#581C87]/50': note.id !== selectedNote.id,
+                                    'transform translate-x-[-70px]': swipedNoteId === note.id && !isDesktop,
+                                }"
+                                @click="handleNoteClick(note)"
+                                @touchstart="handleTouchStart($event, note.id)"
+                                @touchmove="handleTouchMove($event, note.id)"
+                                @touchend="handleTouchEnd(note.id)"
+                            >
+                                <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
+                                <div class="space-x-4 truncate">
+                                    <span>
+                                        {{ formatDate(note.updatedAt) }}
+                                    </span>
+                                    <span
+                                        v-if="note.text.length > 50"
+                                        class="text-zinc-400"
+                                    >...{{ note.text.substring(30, 50) }}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <!-- Delete button revealed on swipe - ONLY on mobile -->
-                        <div 
-                            v-if="!isDesktop && swipedNoteId === note.id"
-                            class="absolute top-0 right-0 bottom-0 w-[70px] bg-red-600 flex items-center justify-center"
-                            @click.stop="confirmDeleteNote(note)"
-                        >
-                            <TrashIcon class="text-white" />
+                            
+                            <!-- Delete button revealed on swipe - ONLY on mobile -->
+                            <div 
+                                v-if="!isDesktop && swipedNoteId === note.id"
+                                class="absolute top-0 right-0 bottom-0 w-[70px] bg-red-600 flex items-center justify-center"
+                                @click.stop="confirmDeleteNote(note)"
+                            >
+                                <TrashIcon class="text-white" />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div>
-                <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">{{ $t('notes.previous') }}</p>
-                <div class="text-zinc-200 mt-10 ml-2 space-y-2 text-sm font-bodyTest">
-                    <div
-                        v-for="note in earlierNotes"
-                        :key="note.id"
-                        class="relative overflow-hidden"
-                    >
-                        <!-- Swipeable note container -->
+                
+                <div>
+                    <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">{{ $t('notes.yesterday') }}</p>
+                    <div class="text-zinc-200 mt-10 ml-2 space-y-2 text-sm font-bodyTest">
                         <div
-                            class="rounded-lg p-4 cursor-pointer transition-transform duration-300"
-                            :class="{
-                                'bg-[#581C87]': note.id === selectedNote.id,
-                                'hover:bg-[#581C87]/50': note.id !== selectedNote.id,
-                                'transform translate-x-[-70px]': swipedNoteId === note.id && !isDesktop,
-                            }"
-                            @click="handleNoteClick(note)"
-                            @touchstart="handleTouchStart($event, note.id)"
-                            @touchmove="handleTouchMove($event, note.id)"
-                            @touchend="handleTouchEnd(note.id)"
+                            v-for="note in yesterdaysNotes"
+                            :key="note.id"
+                            class="relative overflow-hidden"
                         >
-                            <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
-                            <div class="space-x-4 truncate">
-                                <span>{{
-                                        new Date(note.updatedAt).toDateString() === 
-                                        new Date().toDateString()
-                                            ? $t('notes.today')
-                                            : formatDate(note.updatedAt)
-                                    }}</span>
-                                <span
-                                    v-if="note.text.length > 50"
-                                    class="text-zinc-400"
-                                >...{{ note.text.substring(30, 50) }}
-                                </span>
+                            <!-- Swipeable note container -->
+                            <div
+                                class="rounded-lg p-4 cursor-pointer transition-transform duration-300"
+                                :class="{
+                                    'bg-[#581C87]': note.id === selectedNote.id,
+                                    'hover:bg-[#581C87]/50': note.id !== selectedNote.id,
+                                    'transform translate-x-[-70px]': swipedNoteId === note.id && !isDesktop,
+                                }"
+                                @click="handleNoteClick(note)"
+                                @touchstart="handleTouchStart($event, note.id)"
+                                @touchmove="handleTouchMove($event, note.id)"
+                                @touchend="handleTouchEnd(note.id)"
+                            >
+                                <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
+                                <div class="space-x-4 truncate">
+                                    <span>{{
+                                            new Date(note.updatedAt).toDateString() === 
+                                            new Date().toDateString()
+                                                ? $t('notes.today')
+                                                : formatDate(note.updatedAt)
+                                        }}</span>
+                                    <span
+                                        v-if="note.text.length > 50"
+                                        class="text-zinc-400"
+                                    >...{{ note.text.substring(30, 50) }}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <!-- Delete button revealed on swipe - ONLY on mobile -->
-                        <div 
-                            v-if="!isDesktop && swipedNoteId === note.id"
-                            class="absolute top-0 right-0 bottom-0 w-[70px] bg-red-600 flex items-center justify-center"
-                            @click.stop="confirmDeleteNote(note)"
-                        >
-                            <TrashIcon class="text-white" />
+                            
+                            <!-- Delete button revealed on swipe - ONLY on mobile -->
+                            <div 
+                                v-if="!isDesktop && swipedNoteId === note.id"
+                                class="absolute top-0 right-0 bottom-0 w-[70px] bg-red-600 flex items-center justify-center"
+                                @click.stop="confirmDeleteNote(note)"
+                            >
+                                <TrashIcon class="text-white" />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                
+                <div>
+                    <p class="text-md font-semibold text-zinc-200 mt-10 font-h1">{{ $t('notes.previous') }}</p>
+                    <div class="text-zinc-200 mt-10 ml-2 space-y-2 text-sm font-bodyTest">
+                        <div
+                            v-for="note in earlierNotes"
+                            :key="note.id"
+                            class="relative overflow-hidden"
+                        >
+                            <!-- Swipeable note container -->
+                            <div
+                                class="rounded-lg p-4 cursor-pointer transition-transform duration-300"
+                                :class="{
+                                    'bg-[#581C87]': note.id === selectedNote.id,
+                                    'hover:bg-[#581C87]/50': note.id !== selectedNote.id,
+                                    'transform translate-x-[-70px]': swipedNoteId === note.id && !isDesktop,
+                                }"
+                                @click="handleNoteClick(note)"
+                                @touchstart="handleTouchStart($event, note.id)"
+                                @touchmove="handleTouchMove($event, note.id)"
+                                @touchend="handleTouchEnd(note.id)"
+                            >
+                                <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
+                                <div class="space-x-4 truncate">
+                                    <span>{{
+                                            new Date(note.updatedAt).toDateString() === 
+                                            new Date().toDateString()
+                                                ? $t('notes.today')
+                                                : formatDate(note.updatedAt)
+                                        }}</span>
+                                    <span
+                                        v-if="note.text.length > 50"
+                                        class="text-zinc-400"
+                                    >...{{ note.text.substring(30, 50) }}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <!-- Delete button revealed on swipe - ONLY on mobile -->
+                            <div 
+                                v-if="!isDesktop && swipedNoteId === note.id"
+                                class="absolute top-0 right-0 bottom-0 w-[70px] bg-red-600 flex items-center justify-center"
+                                @click.stop="confirmDeleteNote(note)"
+                            >
+                                <TrashIcon class="text-white" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
         </div>
 
         <div class="w-full bg-purple-900 overflow-y-scroll md:overflow-y-auto">
@@ -316,6 +328,7 @@
     const textarea = ref(null)
     const sidebarOpen = ref(false)
     const isDesktop = ref(false)
+    const isLoading = ref(true)
 
     const $toast = useToast()
     const showConfirmModal = ref(false)
@@ -521,12 +534,25 @@
         window.addEventListener('resize', updateScreenSize)
         window.addEventListener('click', resetSwipe)
 
-        notes.value = await $fetch('/api/notes')
+        isLoading.value = true
 
-        if (notes.value.length > 0) {
-            selectedNote.value = notes.value.slice().sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))[0]
-            updatedNote.value = selectedNote.value.text
+        try{
+            const fetchedNotes = await $fetch('/api/notes')
+
+            notes.value = fetchedNotes
+            if (notes.value.length > 0) {
+                selectedNote.value = notes.value
+                    .slice()
+                    .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))[0]
+                updatedNote.value = selectedNote.value.text
+            }
+
+            await new Promise(resolve => setTimeout(resolve, 500))
+
+        } finally {
+            isLoading.value = false
         }
+        
 
         nextTick(() => {
             if (textarea.value) {

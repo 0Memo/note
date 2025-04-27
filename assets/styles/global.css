@@ -6,6 +6,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Spinner */
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -30,6 +32,36 @@
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* Skeleton Loader */
+
+.text-skeleton {
+    background-color: #e0e0e0;
+    height: 20px;
+    border-radius: 4px;
+    animation: pulse 1.5s infinite;
+}
+
+.note-skeleton {
+    background-color: #e0e0e0;
+    height: 60px;
+    border-radius: 4px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 /* Easter animation
