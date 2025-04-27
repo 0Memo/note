@@ -39,7 +39,7 @@
 .text-skeleton {
     background-color: #e0e0e0;
     height: 20px;
-    width: 50%;
+    width: 70px;
     border-radius: 4px;
     animation: pulse 1.5s infinite;
 }
@@ -47,7 +47,7 @@
 .note-skeleton {
     background-color: #e0e0e0;
     height: 60px;
-    width: 50%;
+    width: 215px;
     border-radius: 4px;
     animation: pulse 1.5s infinite;
 }
@@ -55,7 +55,7 @@
 .main-text-skeleton {
     background-color: #e0e0e0;
     height: 20px;
-    width: 350px;
+    width: 100px;
     border-radius: 4px;
     animation: pulse 1.5s infinite;
     margin: 0 auto;
