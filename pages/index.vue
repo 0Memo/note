@@ -1,7 +1,5 @@
 <template>
     <div class="h-screen bg-[#1c044f] flex">
-
-        <MouseTrail />
         <!-- Easter 
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Easter />
@@ -124,7 +122,7 @@
                                 <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
                                 <div class="space-x-4 truncate">
                                     <span>
-                                        {{ formatDate(note.updatedAt) }}
+                                        {{ formatOrToday(note.updatedAt) }}
                                     </span>
                                     <span
                                         v-if="note.text.length > 50"
@@ -169,12 +167,7 @@
                             >
                                 <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
                                 <div class="space-x-4 truncate">
-                                    <span>{{
-                                            new Date(note.updatedAt).toDateString() === 
-                                            new Date().toDateString()
-                                                ? $t('notes.today')
-                                                : formatDate(note.updatedAt)
-                                        }}</span>
+                                    <span>{{ formatOrToday(note.updatedAt) }}</span>
                                     <span
                                         v-if="note.text.length > 50"
                                         class="text-zinc-400"
@@ -218,12 +211,7 @@
                             >
                                 <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
                                 <div class="space-x-4 truncate">
-                                    <span>{{
-                                            new Date(note.updatedAt).toDateString() === 
-                                            new Date().toDateString()
-                                                ? $t('notes.today')
-                                                : formatDate(note.updatedAt)
-                                        }}
+                                    <span>{{ formatOrToday(note.updatedAt) }}
                                     </span>
                                     <span
                                         v-if="note.text.length > 50"
@@ -320,7 +308,6 @@
 </template>
 
 <script setup>
-    import MouseTrail from '@/components/MouseTrail.vue'
     import { useI18n } from 'vue-i18n'
     import ConfirmModal from '@/components/ConfirmModal.vue'
     import { nextTick, ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
@@ -574,14 +561,6 @@
     watch(selectedNote, (newNote) => {
         updatedNote.value = newNote?.text || ''
     })
-
-    function formatDate(dateStr) {
-        const date = new Date(dateStr)
-        const year = date.getFullYear()
-        const month = String(date.getMonth() + 1).padStart(2, '0')
-        const day = String(date.getDate()).padStart(2, '0')
-        return `${year}/${month}/${day}`
-    }
 
     function formatOrToday(dateStr) {
         const date = new Date(dateStr)
