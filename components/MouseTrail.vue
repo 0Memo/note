@@ -64,17 +64,17 @@
     export default {
         data() {
             return {
-            points: [],
-            sparkles: [],
-            mouse: { x: 0, y: 0 },
-            isActive: false,
-            timer: null,
-            animationFrame: null,
-            maxPoints: 6,
-            svgWidth: window.innerWidth,
-            svgHeight: window.innerHeight,
-            pathData: '',
-            isMobile: false
+                points: [],
+                sparkles: [],
+                mouse: { x: 0, y: 0 },
+                isActive: false,
+                timer: null,
+                animationFrame: null,
+                maxPoints: 6,
+                svgWidth: 0,
+                svgHeight: 0,
+                pathData: '',
+                isMobile: false
             }
         },
         mounted() {
@@ -87,7 +87,7 @@
             
             // Add event listeners
             window.addEventListener('mousemove', this.handleMouseMove)
-            window.addEventListener('touchmove', this.handleTouchMove)
+            window.addEventListener('touchmove', this.handleTouchMove, { passive: false })
             window.addEventListener('resize', this.handleResize)
             
             // Start animation loop
@@ -96,7 +96,7 @@
         beforeDestroy() {
             // Clean up
             window.removeEventListener('mousemove', this.handleMouseMove)
-            window.removeEventListener('touchmove', this.handleTouchMove)
+            window.addEventListener('touchmove', this.handleTouchMove, { passive: false })
             window.removeEventListener('resize', this.handleResize)
             
             if (this.animationFrame) {

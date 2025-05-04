@@ -1,5 +1,8 @@
 <template>
     <div class="h-screen bg-[#1c044f] flex">
+        <ClientOnly>
+            <MouseTrail />
+        </ClientOnly>
         <!-- Easter 
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Easter />
@@ -308,6 +311,7 @@
 </template>
 
 <script setup>
+    import MouseTrail from '@/components/MouseTrail.vue'
     import { useI18n } from 'vue-i18n'
     import ConfirmModal from '@/components/ConfirmModal.vue'
     import { nextTick, ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
