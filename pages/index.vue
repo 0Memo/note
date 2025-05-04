@@ -125,7 +125,7 @@
                                 <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
                                 <div class="space-x-4 truncate">
                                     <span>
-                                        {{ formatOrToday(note.updatedAt) }}
+                                        {{ formatDate(note.updatedAt) }}
                                     </span>
                                     <span
                                         v-if="note.text.length > 50"
@@ -170,7 +170,7 @@
                             >
                                 <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
                                 <div class="space-x-4 truncate">
-                                    <span>{{ formatOrToday(note.updatedAt) }}</span>
+                                    <span>{{ formatDate(note.updatedAt) }}</span>
                                     <span
                                         v-if="note.text.length > 50"
                                         class="text-zinc-400"
@@ -214,7 +214,7 @@
                             >
                                 <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
                                 <div class="space-x-4 truncate">
-                                    <span>{{ formatOrToday(note.updatedAt) }}
+                                    <span>{{ formatDate(note.updatedAt) }}
                                     </span>
                                     <span
                                         v-if="note.text.length > 50"
@@ -275,7 +275,7 @@
                 <div class="text-zinc-200 p-8 max-w-[40%] mx-auto font-bodyTest">
                     <div v-if="selectedNote && selectedNote.id">
                         <p class="text-zinc-100 mb-8 text-lg">
-                            {{ formatOrToday(selectedNote.updatedAt) }}
+                            <span>༄&nbsp;{{ formatOrToday(selectedNote.updatedAt) }}</span>
                         </p>
                         <textarea
                             ref="textarea"
@@ -283,8 +283,8 @@
                             name="note"
                             id="note"
                             placeholder="Veuillez saisir votre texte ici..."
-                            class="text-zinc-100 my-4 bg-transparent rounded-md p-4 -ml-36 md:-ml-5 border-[0.5px] border-purple-800
-                            focus:outline-none focus:bg-[#030303] w-96 md:w-full min-h-[300px] cursor-pointer"
+                            class="text-[#030303] my-4 bg-[#d5c7e2] rounded-md p-4 -ml-36 md:-ml-5 border-[0.5px] border-purple-900
+                            focus:outline-none focus:text-[#d5c7e2] focus:bg-[#030303] shadow-lg w-96 md:w-full min-h-[300px] cursor-text"
                             @input="() => {
                                 debouncedFn()
                                 selectedNote.text = updatedNote
@@ -565,6 +565,14 @@
     watch(selectedNote, (newNote) => {
         updatedNote.value = newNote?.text || ''
     })
+
+    function formatDate(dateStr) {
+        const date = new Date(dateStr)
+        const year = date.getFullYear()
+        const month = String(date.getMonth() + 1).padStart(2, '0')
+        const day = String(date.getDate()).padStart(2, '0')
+        return `${year}/${month}/${day}`
+    }
 
     function formatOrToday(dateStr) {
         const date = new Date(dateStr)
