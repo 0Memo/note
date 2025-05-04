@@ -1,5 +1,7 @@
 <template>
     <div class="h-screen bg-[#1c044f] flex">
+
+        <MouseTrail />
         <!-- Easter 
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Easter />
@@ -221,7 +223,8 @@
                                             new Date().toDateString()
                                                 ? $t('notes.today')
                                                 : formatDate(note.updatedAt)
-                                        }}</span>
+                                        }}
+                                    </span>
                                     <span
                                         v-if="note.text.length > 50"
                                         class="text-zinc-400"
@@ -281,12 +284,7 @@
                 <div class="text-zinc-200 p-8 max-w-[40%] mx-auto font-bodyTest">
                     <div v-if="selectedNote && selectedNote.id">
                         <p class="text-zinc-100 mb-8 text-lg">
-                            {{
-                                new Date(selectedNote.updatedAt).toDateString() === 
-                                new Date().toDateString()
-                                    ? $t('notes.today')
-                                    : new Date(selectedNote.updatedAt).toLocaleDateString()
-                            }}
+                            {{ formatOrToday(selectedNote.updatedAt) }}
                         </p>
                         <textarea
                             ref="textarea"
@@ -322,8 +320,8 @@
 </template>
 
 <script setup>
+    import MouseTrail from '@/components/MouseTrail.vue'
     import { useI18n } from 'vue-i18n'
-
     import ConfirmModal from '@/components/ConfirmModal.vue'
     import { nextTick, ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
     import { useDebounceFn } from '@vueuse/core'
@@ -579,6 +577,25 @@
 
     function formatDate(dateStr) {
         const date = new Date(dateStr)
+        const year = date.getFullYear()
+        const month = String(date.getMonth() + 1).padStart(2, '0')
+        const day = String(date.getDate()).padStart(2, '0')
+        return `${year}/${month}/${day}`
+    }
+
+    function formatOrToday(dateStr) {
+        const date = new Date(dateStr)
+        const today = new Date()
+
+        const isSameDay =
+            date.getFullYear() === today.getFullYear() &&
+            date.getMonth() === today.getMonth() &&
+            date.getDate() === today.getDate()
+
+        if (isSameDay) {
+            return t('notes.today') // Localized "Today"
+        }
+
         const year = date.getFullYear()
         const month = String(date.getMonth() + 1).padStart(2, '0')
         const day = String(date.getDate()).padStart(2, '0')
