@@ -102,7 +102,7 @@
 
             <template v-else>
                 <div
-                    class="notes-container max-h-[500px] overflow-y-auto"
+                    class="notes-container max-h-[550px] md:max-h-full overflow-y-auto"
                     ref="notesContainer"
                     @touchstart="handleTouchStartY"
                     @touchmove="handleTouchMoveY"
