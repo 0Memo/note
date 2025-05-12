@@ -290,7 +290,7 @@
                             v-model="updatedNote"
                             name="note"
                             id="note"
-                            placeholder="Veuillez saisir votre texte ici..."
+                            :placeholder="$t('notes.text')"
                             class="text-[#030303] my-4 bg-[#d5c7e2] rounded-md p-4 -ml-36 md:-ml-5 border-[0.5px] border-purple-900
                             focus:outline-none focus:text-[#d5c7e2] focus:bg-[#030303] shadow-lg w-96 md:w-full min-h-[300px] cursor-text"
                             @input="() => {
