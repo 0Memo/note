@@ -283,7 +283,7 @@
                     @cancel="showConfirmModal = false"
                 />
                 <button
-                    class="hover:stroke-zinc-500 shadow-lg"
+                    class="hover:text-zinc-500 shadow-lg"
                     @click="showConfirmModal = true"
                 >
                     <TrashIcon class="w-10 h-10" />
@@ -302,10 +302,8 @@
             <template v-else>
                 <div class="text-zinc-200 p-8 max-w-[40%] mx-auto font-bodyTest">
                     <div v-if="selectedNote && selectedNote.id">
-                        <p class="text-white mb-8 text-lg">
-                            <span>
-                                <span class="text-3xl relative top-2.5 md:top-0">༄</span>&nbsp;{{ formatOrToday(selectedNote.updatedAt) }}
-                            </span>
+                        <p class="text-white mb-8 text-lg flex flex-row">
+                            <Microphone class="w-8 h-8 text-white font-bold relative -top-2"/>&nbsp;{{ formatOrToday(selectedNote.updatedAt) }}
                         </p>
                         <textarea
                             ref="textarea"
@@ -331,7 +329,7 @@
 
             <button
                 @click="toggleMouseTrail"
-                class="text-white font-bold absolute right-0 top-40 md:inset-y-0 p-8"
+                class="text-white font-bold absolute right-0 top-40 md:top-80 p-8 hover:text-zinc-500"
                 :title="showMouseTrail ? 'Disable Mouse Trail' : 'Enable Mouse Trail'"
             >
                 <!-- Replace with your preferred icon -->
@@ -344,7 +342,7 @@
             </button>
             
             <button
-                class="text-white font-bold absolute right-0 bottom-0 p-8"
+                class="text-white font-bold absolute right-0 bottom-0 p-8 hover:text-zinc-500"
                 @click="logout"
             >
                 <Logout class="w-10 h-10" />
