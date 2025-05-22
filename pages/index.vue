@@ -300,25 +300,23 @@
             </template>
 
             <template v-else>
-                <div class="text-zinc-200 p-8 max-w-[40%] mx-auto font-bodyTest">
+                <div class="text-white p-8 max-w-[40%] mx-auto font-bodyTest">
                     <div v-if="selectedNote && selectedNote.id">
-                        <p class="text-white mb-8 text-lg flex flex-row">
-                            <Microphone class="w-8 h-8 text-white font-bold relative -top-2"/>&nbsp;{{ formatOrToday(selectedNote.updatedAt) }}
+                        <p class="mb-8 text-lg flex flex-row items-center gap-2">
+                            <button @click="startTranscription" class="focus:outline-none">
+                                <Microphone class="w-8 h-8 text-white font-bold relative -top-2"/>
+                            </button>
+                            &nbsp;{{ formatOrToday(selectedNote.updatedAt) }}
                         </p>
                         <textarea
-                            ref="textarea"
                             v-model="updatedNote"
                             name="note"
                             id="note"
                             :placeholder="$t('notes.text')"
                             class="text-[#030303] my-4 bg-[#d5c7e2] rounded-md p-4 -ml-36 md:-ml-5 border-[0.5px] border-purple-900
                             focus:outline-none focus:text-[#d5c7e2] focus:bg-[#030303] shadow-lg w-96 md:w-full min-h-[300px] cursor-text"
-                            @input="() => {
-                                debouncedFn()
-                                selectedNote.text = updatedNote
-                            }"
+                            @input="debouncedFn"
                         >
-                            {{ selectedNote.text }}
                         </textarea>
                     </div>
                     <div v-else class="text-zinc-400 italic text-center mt-10">
@@ -334,10 +332,14 @@
             >
                 <!-- Replace with your preferred icon -->
                 <span v-if="showMouseTrail">
-                    <MouseTrailOff class="w-10 h-10" />
+                    <ClientOnly>
+                        <MouseTrailOff class="w-10 h-10" />
+                    </ClientOnly>
                 </span>
                 <span v-else>
-                    <MouseTrailOn class="w-10 h-10" />
+                    <ClientOnly>
+                        <MouseTrailOn class="w-10 h-10" />
+                    </ClientOnly>
                 </span>
             </button>
             
@@ -386,6 +388,7 @@
     const scrollPosition = ref(0);
     const minSwipeDistance = 50 // minimum distance required for a swipe
     const showMouseTrail = ref(false)
+    const speechText = ref('')
 
     function toggleMouseTrail() {
         showMouseTrail.value = !showMouseTrail.value
@@ -574,6 +577,81 @@
         }
     }
 
+    let isRecognizing = false
+
+    function startTranscription() {
+        if (isRecognizing) return
+
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+        if (!SpeechRecognition) {
+            $toast.error('Speech recognition not supported in this browser.')
+            return
+        }
+
+        const recognition = new SpeechRecognition()
+        isRecognizing = true
+
+        recognition.lang = {
+            fr: 'fr-FR', es: 'es-ES', pt: 'pt-BR',
+            it: 'it-IT', ro: 'ro-RO', sv: 'sv-SE'
+        }[locale.value] || 'en-US'
+        recognition.interimResults = false
+        recognition.maxAlternatives = 1
+        recognition.continuous = false // set to true if you want longer listening
+        recognition.onspeechend = () => recognition.stop()
+
+        recognition.onresult = async (event) => {
+            const transcript = event.results[0][0].transcript
+            updatedNote.value += (updatedNote.value ? '\n' : '') + transcript
+
+            if (selectedNote.value) {
+                selectedNote.value.text = updatedNote.value;
+                selectedNote.value.updatedAt = new Date().toISOString(); // Update date to now
+                
+                // Optionally update the local notes array date too for UI update
+                const idx = notes.value.findIndex(n => n.id === selectedNote.value.id);
+                if (idx !== -1) {
+                notes.value[idx].updatedAt = selectedNote.value.updatedAt;
+                }
+            }
+            $toast.success(t('toast.transcribed'))
+            isRecognizing = false
+
+            try {
+                await updateNote()
+            } catch (e) {
+                console.error("Error updating note after speech:", e)
+            }
+        }
+
+        recognition.onerror = (event) => {
+            console.error('Speech recognition error:', event.error)
+            isRecognizing = false
+
+            switch (event.error) {
+            case 'no-speech':
+                $toast.error(t('toast.noSpeech') || 'No speech detected. Please try again.')
+                break
+            case 'audio-capture':
+                $toast.error(t('toast.audioError') || 'No microphone was found.')
+                break
+            case 'not-allowed':
+                $toast.error(t('toast.permissionError') || 'Microphone access was denied.')
+                break
+            default:
+                $toast.error(t('toast.speechError') || 'An unknown speech recognition error occurred.')
+                break
+            }
+        }
+
+        recognition.onend = () => {
+            isRecognizing = false
+        }
+
+        recognition.start()
+        $toast.info('Listening... 🎤 Please speak clearly.')
+    }
+
     const todaysNotes = computed(() => {
         return notes.value
             .filter((note) => {
@@ -650,6 +728,12 @@
 
     watch(selectedNote, (newNote) => {
         updatedNote.value = newNote?.text || ''
+    })
+
+    watch(updatedNote, (newText) => {
+        if (selectedNote.value) {
+            selectedNote.value.text = newText
+        }
     })
 
     function formatDate(dateStr) {

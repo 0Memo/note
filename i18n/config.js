@@ -55,7 +55,12 @@ export default defineI18nConfig(() => ({
                 linkError: "Le lien est invalide ou a expiré",
                 resetLink: "Un lien de rénitialisation a été envoyé à votre adresse mail",
                 noteDeletion: "La note a été supprimée avec succès!",
-                deletionError: "Erreur lors de la suppression"
+                deletionError: "Erreur lors de la suppression",
+                speechError: "La reconnaissance vocale a échoué",
+                noSpeech: "Pas d'audio détecté. Veuillez réessayer.",
+                audioError: "Aucun microphone n'a été trouvé.",
+                permissionError: "Accès au microphone refusé.",
+                transcribed: "Discours transcrit avec succès!"
             },
             easter: "Joyeuses Pâques!",
             halloween: "Joyeux Halloween!",
@@ -114,7 +119,12 @@ export default defineI18nConfig(() => ({
                 linkError: "Enlace inválido o expirado",
                 resetLink: "Se le ha enviado al correo un enlace para restablecer la contraseña",
                 noteDeletion: "¡Se ha eliminado la nota con éxito!",
-                deletionError: "Error al elimiar la nota"
+                deletionError: "Error al elimiar la nota",
+                speechError: "El reconocimiento de voz falló",
+                noSpeech: "No se detectó voz. Inténtelo de nuevo",
+                audioError: "No se encontró micrófono",
+                permissionError: "Acceso al micrófono denegado.",
+                transcribed: "¡Voz transcrita con éxito!"
             },
             easter: "¡Felices Pascuas!",
             halloween: "¡Feliz Halloween!",
@@ -173,7 +183,12 @@ export default defineI18nConfig(() => ({
                 linkError: "Link inválido ou expirado",
                 resetLink: "Um link de redefinição foi enviado para o seu e-mail",
                 noteDeletion: "Nota excluída com sucesso!",
-                deletionError: "Erro ao excluir a nota"
+                deletionError: "Erro ao excluir a nota",
+                speechError: "Falha no reconhecimento de voz",
+                noSpeech: "Nenhuma fala detectada. Tente novamente",
+                audioError: "Nenhum microfone encontrado",
+                permissionError: "Accesso ao microphone negado",
+                transcribed: "Fala transcrita com sucesso!"
             },
             easter: "Feliz Páscoa!",
             halloween: "Feliz Halloween!",
@@ -232,7 +247,12 @@ export default defineI18nConfig(() => ({
                 linkError: "Invalid or expired link",
                 resetLink: "Un lien de rénitialisation a été envoyé à votre adresse mail",
                 noteDeletion: "Note has been successfully deleted!",
-                deletionError: "Error deleting the note"
+                deletionError: "Error deleting the note",
+                speechError: "Speech recognition failed.",
+                noSpeech: "No speech detected. Please try again.",
+                audioError: "No microphone was found.",
+                permissionError: "Microphone access was denied.",
+                transcribed: "Speech successfully transcribed!"
             },
             easter: "Happy Easter!",
             halloween: "Happy Halloween!",
@@ -291,7 +311,12 @@ export default defineI18nConfig(() => ({
                 linkError: "Link non valido o scaduto",
                 resetLink: "Un link per reimpostare la password è stato inviato al tuo indirizzo email",
                 noteDeletion: "Nota eliminata con successo!",
-                deletionError: "Errore durante l'eliminazione della nota"
+                deletionError: "Errore durante l'eliminazione della nota",
+                speechError: "Il riconoscimento vocale è fallito",
+                noSpeech: "Nessun discorso rilevato. Riprova",
+                audioError: "Nessun microfono trovato",
+                permissionError: "Accesso al microfono negato",
+                transcribed: "Voce trascritta con successo!"
             },
             easter: "Buona Pasqua!",
             halloween: "Buon Halloween!",
@@ -350,7 +375,12 @@ export default defineI18nConfig(() => ({
                 linkError: "Ogiltig eller utgången länk",
                 resetLink: "En återställningslänk har skickats till din e-postadress",
                 noteDeletion: "Anteckningen har raderats!",
-                deletionError: "Fel vid radering av anteckningen"
+                deletionError: "Fel vid radering av anteckningen",
+                speechError: "Röstigenkänningen misslyckades",
+                noSpeech: "Ingen röst upptäcktes. Försök igen",
+                audioError: "Ingen mikrofon hittades",
+                permissionError: "Åtkomst till mikrofon nekades",
+                transcribed: "Rösten transkriberades framgångsrikt!"
             },
             easter: "Glad Påsk!",
             halloween: "Glad Halloween!",
@@ -409,7 +439,12 @@ export default defineI18nConfig(() => ({
                 linkError: "Link invalid sau expirat",
                 resetLink: "Un link de resetare a fost trimit pe adresa ta de e-mail",
                 noteDeletion: "Nota a fost ștearsă cu succes!",
-                deletionError: "Eroare la ștergerea notei"
+                deletionError: "Eroare la ștergerea notei",
+                speechError: "Recunoașterea vocală a eșuat",
+                noSpeech: "Nu a fost detectată nicio voce. Încearcă din nou",
+                audioError: "Nu a fost găsit niciun microfon",
+                permissionError: "Accesul la microfon a fost refuzat",
+                transcribed: "Vocea a fost transcrisă cu succes!"
             },
             easter: "Paște Fericit!",
             halloween: "Halloween Fericit!",
