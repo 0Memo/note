@@ -1,7 +1,7 @@
 <template>
     <div class="h-screen bg-[#1c044f] flex">
         <ClientOnly>
-            <MouseTrail />
+            <MouseTrail v-if="showMouseTrail" />
         </ClientOnly>
         <!-- Easter 
         <div class="absolute inset-0 pointer-events-none z-[1]">
@@ -240,7 +240,8 @@
                                 >
                                     <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
                                     <div class="space-x-4 truncate">
-                                        <span>{{ formatDate(note.updatedAt) }}
+                                        <span>
+                                            {{ formatDate(note.updatedAt) }}
                                         </span>
                                         <span
                                             v-if="note.text.length > 50"
@@ -266,13 +267,13 @@
         </div>
 
         <div class="w-full bg-purple-900 overflow-y-scroll md:overflow-y-auto">
-            <div class="text-zinc-300 flex p-8 justify-between items-start mt-16 md:mt-0">
+            <div class="text-white flex p-8 justify-between items-start mt-16 md:mt-0">
                 <button
                     class="inline-flex gap-3 font-bold
-                    text-zinc-3000 hover:text-zinc-50"
+                    text-white hover:text-zinc-500 shadow-lg"
                     @click="createNewNote"
                 >
-                    <Pencil />
+                    <Pencil class="w-10 h-10" />
                 </button>
                 <ConfirmModal
                     :visible="showConfirmModal"
@@ -282,18 +283,18 @@
                     @cancel="showConfirmModal = false"
                 />
                 <button
-                    class="hover:stroke-zinc-50"
+                    class="hover:stroke-zinc-500 shadow-lg"
                     @click="showConfirmModal = true"
                 >
-                    <TrashIcon />
+                    <TrashIcon class="w-10 h-10" />
                 </button>
             </div>
 
             <template v-if="isLoading">
                 <div class="space-y-8 mt-10">
                     <div v-for="n in 1" :key="n" class="space-y-4">
-                    <div class="main-text-skeleton"></div>
-                    <div class="main-note-skeleton"></div>
+                        <div class="main-text-skeleton"></div>
+                        <div class="main-note-skeleton"></div>
                     </div>
                 </div>
             </template>
@@ -301,8 +302,10 @@
             <template v-else>
                 <div class="text-zinc-200 p-8 max-w-[40%] mx-auto font-bodyTest">
                     <div v-if="selectedNote && selectedNote.id">
-                        <p class="text-zinc-100 mb-8 text-lg">
-                            <span>༄&nbsp;{{ formatOrToday(selectedNote.updatedAt) }}</span>
+                        <p class="text-white mb-8 text-lg">
+                            <span>
+                                <span class="text-3xl relative top-2.5 md:top-0">༄</span>&nbsp;{{ formatOrToday(selectedNote.updatedAt) }}
+                            </span>
                         </p>
                         <textarea
                             ref="textarea"
@@ -325,13 +328,26 @@
                     </div>
                 </div>
             </template>
+
+            <button
+                @click="toggleMouseTrail"
+                class="text-white font-bold absolute right-0 top-40 md:inset-y-0 p-8"
+                :title="showMouseTrail ? 'Disable Mouse Trail' : 'Enable Mouse Trail'"
+            >
+                <!-- Replace with your preferred icon -->
+                <span v-if="showMouseTrail">
+                    <MouseTrailOff class="w-10 h-10" />
+                </span>
+                <span v-else>
+                    <MouseTrailOn class="w-10 h-10" />
+                </span>
+            </button>
             
             <button
-                class="text-zinc-300 text-sm
-                font-bold absolute right-0 bottom-0 p-8"
+                class="text-white font-bold absolute right-0 bottom-0 p-8"
                 @click="logout"
             >
-                <Logout class="hover:text-zinc-50" />
+                <Logout class="w-10 h-10" />
             </button>
         </div>
     </div>
@@ -371,6 +387,11 @@
     const notesContainer = ref(null);
     const scrollPosition = ref(0);
     const minSwipeDistance = 50 // minimum distance required for a swipe
+    const showMouseTrail = ref(false)
+
+    function toggleMouseTrail() {
+        showMouseTrail.value = !showMouseTrail.value
+    }
 
     function changeLocale(newLocale) {
         locale.value = newLocale
