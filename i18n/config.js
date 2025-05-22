@@ -35,7 +35,7 @@ export default defineI18nConfig(() => ({
                 validate: "Valider"
             },
             notes: {
-                text: "Veuillez saisir votre texte ici...",
+                text: "༄ Veuillez saisir votre texte ici... ༄",
                 nothing: "Pas de note encore...",
                 today: "Aujourd'hui",
                 yesterday: "Hier",
@@ -94,7 +94,7 @@ export default defineI18nConfig(() => ({
                 validate: "Validar"
             },
             notes: {
-                text: "Escriba su texto aquí...",
+                text: "༄ Escriba su texto aquí... ༄",
                 nothing: "Nada todavía...",
                 today: "Hoy",
                 yesterday: "Ayer",
@@ -153,7 +153,7 @@ export default defineI18nConfig(() => ({
                 validate: "Validar"
             },
             notes: {
-                text: "Escreva seu texto aqui...",
+                text: "༄ Escreva seu texto aqui... ༄",
                 nothing: "Nada ainda...",
                 today: "Hoje",
                 yesterday: "Ontem",
@@ -212,7 +212,7 @@ export default defineI18nConfig(() => ({
                 validate: "Validate"
             },
             notes: {
-                text: "Write your text here...",
+                text: "༄ Write your text here... ༄",
                 nothing: "Nothing yet...",
                 today: "Today",
                 yesterday: "Yesterday",
@@ -271,7 +271,7 @@ export default defineI18nConfig(() => ({
                 validate: "Conferma"
             },
             notes: {
-                text: "Scrivi qui il tuo testo...",
+                text: "༄ Scrivi qui il tuo testo... ༄",
                 nothing: "Ancora niente...",
                 today: "Oggi",
                 yesterday: "Ieri",
@@ -330,7 +330,7 @@ export default defineI18nConfig(() => ({
                 validate: "Bekräfta"
             },
             notes: {
-                text: "Skriv in din text här...",
+                text: "༄ Skriv in din text här... ༄",
                 nothing: "Inget än...",
                 today: "Idag",
                 yesterday: "Igår",
@@ -389,7 +389,7 @@ export default defineI18nConfig(() => ({
                 validate: "Confirmă"
             },
             notes: {
-                text: "Scrie-ți textul aici...",
+                text: "༄ Scrie-ți textul aici... ༄",
                 nothing: "Încă nimic...",
                 today: "Astăzi",
                 yesterday: "Ieri",
