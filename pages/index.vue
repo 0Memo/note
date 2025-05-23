@@ -327,7 +327,7 @@
 
             <button
                 @click="toggleMouseTrail"
-                class="text-white font-bold absolute right-0 top-40 md:top-80 p-8 hover:text-zinc-500"
+                class="text-white font-bold absolute left-0 md:left-[300px] bottom-0 p-8 hover:text-zinc-500"
                 :title="showMouseTrail ? 'Disable Mouse Trail' : 'Enable Mouse Trail'"
             >
                 <!-- Replace with your preferred icon -->
