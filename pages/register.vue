@@ -120,7 +120,7 @@
             </div>
         </div>
 
-        <div class="bg-purple-900 w-full text-zinc-100 hidden md:block">
+        <div class="bg-[#1d073a] w-full text-zinc-100 hidden md:block">
         </div>
     </div>
 </template>
