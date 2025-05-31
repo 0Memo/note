@@ -45,7 +45,29 @@ export default defineI18nConfig(() => ({
                 definitive: "Suppression définitive",
                 confirm: "Confirmer?",
                 yes: "Oui",
-                no: "Non"
+                no: "Non",
+                privacy: {
+                    title: "Politique de confidentialité",
+                    explanation: "Cette politique de confidentialité explique comment Notes collecte, utilise et stocke les données des utilisateurs.",
+                    collect: "1. Quelles informations nous collectons",
+                    choice: "Si vous choisissez de connecter votre Google Agenda, nous demandons l'accès à votre compte Google via OAuth. Plus précisément, nous demandons la portée Google suivante : https://www.googleapis.com/auth/calendar.events",
+                    data: "2. Comment nous utilisons vos données",
+                    permission: "Nous utilisons cette autorisation uniquement pour créer, mettre à jour ou supprimer des événements de calendrier représentant vos notes personnelles. Nous n'accédons pas, ne stockons pas et n'analysons pas d'autres événements de votre calendrier.",
+                    storage: "3. Stockage des données",
+                    token: "Vos jetons OAuth sont stockés en toute sécurité sur nos serveurs ou dans des cookies sécurisés, et ne sont jamais partagés avec des tiers.",
+                    compliance: "4. Conformité à l'utilisation limitée",
+                    requirements: "L'utilisation des API Google par notre application respecte les exigences d'utilisation limitée de Google : nous accédons uniquement aux informations nécessaires pour fournir les fonctionnalités que vous demandez explicitement, et nous ne partageons jamais vos données.",
+                    contact: "5. Contact",
+                    questions: "Si vous avez des questions concernant cette politique de confidentialité, vous pouvez nous contacter à",
+                    back: "Retour"
+                },
+                terms: {
+                    title: "Conditions d'utilisation",
+                    use: "En utilisant Notes, vous acceptez d'utiliser le service de manière responsable et de ne pas abuser de ses fonctionnalités à des fins non autorisées ou nuisibles.",
+                    features: "Nous nous réservons le droit de modifier ou d'interrompre des fonctionnalités à tout moment. L'utilisation continue de l'application après des mises à jour implique l'acceptation des modifications.",
+                    app: "Notre application est fournie « telle quelle » sans aucune garantie. Vous utilisez notre application à vos propres risques.",
+                    back: "Retour"
+                }
             },
             toast: {
                 register: "L'utilisateur a été créé",
@@ -60,7 +82,22 @@ export default defineI18nConfig(() => ({
                 noSpeech: "Pas d'audio détecté. Veuillez réessayer.",
                 audioError: "Aucun microphone n'a été trouvé.",
                 permissionError: "Accès au microphone refusé.",
-                transcribed: "Discours transcrit avec succès!"
+                listening: "À l'écoute... 🎤 Veuillez parler clairement.",
+                transcribed: "Discours transcrit avec succès!",
+                speechRecognition: "La reconnaissance vocale n'est pas prise en charge dans ce navigateur.",
+                calendar: {
+                    warning: "Votre consentement sera requis pour connecter Google Agenda",
+                    connectFirst: "Veuillez d'abord vous connecter à Google Agenda.",
+                    expired: "La connexion à l'agenda a expiré. Veuillez vous reconnecter.",
+                    sync: "Note synchronisée avec Google Agenda",
+                    failed: "Échec de la synchronisation de la note avec Google Agenda : ",
+                    connectionFailed: "Échec de la connexion à Google Agenda. Veuillez réessayer.",
+                    checkFailed: "Échec de la vérification des événements du calendrier : ",
+                    notConnected: "Agenda non connecté",
+                    token: "Le jeton Google Agenda a expiré. Veuillez vous reconnecter.",
+                    refreshToken: "Jeton de rafraîchissement manquant. Veuillez révoquer l'accès et vous reconnecter.",
+                    success: "Connexion réussie à Google Agenda !"
+                },
             },
             easter: "Joyeuses Pâques!",
             halloween: "Joyeux Halloween!",
@@ -109,7 +146,29 @@ export default defineI18nConfig(() => ({
                 definitive: "Supresión definitiva",
                 confirm: "¿Confirmar?",
                 yes: "Sí",
-                no: "No"
+                no: "No",
+                privacy: {
+                    title: "Política de privacidad",
+                    explanation: "Esta Política de Privacidad explica cómo Notes recopila, utiliza y almacena los datos del usuario.",
+                    collect: "1. Qué información recopilamos",
+                    choice: "Si decides conectar tu Google Calendar, solicitamos acceso a tu cuenta de Google a través de OAuth. Específicamente, solicitamos el siguiente alcance de Google: https://www.googleapis.com/auth/calendar.events",
+                    data: "2. Cómo usamos tus datos",
+                    permission: "Usamos este permiso solo para crear, actualizar o eliminar eventos del calendario que representan tus notas personales. No accedemos, almacenamos ni analizamos ningún otro evento en tu calendario.",
+                    storage: "3. Almacenamiento de datos",
+                    token: "Tus tokens OAuth se almacenan de forma segura en nuestros servidores o en cookies seguras, y nunca se comparten con terceros.",
+                    compliance: "4. Cumplimiento de uso limitado",
+                    requirements: "El uso de las API de Google por parte de nuestra aplicación se adhiere a los requisitos de uso limitado de Google: solo accedemos a la información necesaria para proporcionar las funciones que solicitas explícitamente, y nunca compartimos tus datos.",
+                    contact: "5. Contacto",
+                    questions: "Si tienes preguntas sobre esta Política de Privacidad, puedes contactarnos en",
+                    back: "Volver"
+                },
+                terms: {
+                    title: "Términos de servicio",
+                    use: "Al usar Notes, aceptas utilizar el servicio de manera responsable y no hacer un uso indebido de ninguna función para fines no autorizados o perjudiciales.",
+                    features: "Nos reservamos el derecho de modificar o descontinuar funciones en cualquier momento. El uso continuado de la aplicación después de las actualizaciones implica la aceptación de los cambios.",
+                    app: "Nuestra aplicación se proporciona “tal cual” sin garantías de ningún tipo. El uso de nuestra aplicación es bajo tu propio riesgo.",
+                    back: "Volver"
+                }
             },
             toast: {
                 register: "El usuario ha sido creado",
@@ -117,14 +176,29 @@ export default defineI18nConfig(() => ({
                 welcome: "¡Bienvenido!",
                 passwordChange: "¡La contraseña ha sido cambiada con éxito!",
                 linkError: "Enlace inválido o expirado",
-                resetLink: "Se le ha enviado al correo un enlace para restablecer la contraseña",
+                resetLink: "Se te ha enviado al correo un enlace para restablecer la contraseña",
                 noteDeletion: "¡Se ha eliminado la nota con éxito!",
-                deletionError: "Error al elimiar la nota",
+                deletionError: "Error al eliminar la nota",
                 speechError: "El reconocimiento de voz falló",
-                noSpeech: "No se detectó voz. Inténtelo de nuevo",
+                noSpeech: "No se detectó voz. Inténtalo de nuevo",
                 audioError: "No se encontró micrófono",
                 permissionError: "Acceso al micrófono denegado.",
-                transcribed: "¡Voz transcrita con éxito!"
+                listening: "Escuchando... 🎤 Por favor habla claramente.",
+                transcribed: "¡Voz transcrita con éxito!",
+                speechRecognition: "El reconocimiento de voz no es compatible con este navegador.",
+                calendar: {
+                    warning: "Se requerirá tu consentimiento para conectar con Google Calendar",
+                    connectFirst: "Por favor, conéctate primero a Google Calendar.",
+                    expired: "La conexión al calendario ha expirado. Por favor, vuelve a conectar.",
+                    sync: "Nota sincronizada con Google Calendar",
+                    failed: "No se pudo sincronizar la nota con Google Calendar: ",
+                    connectionFailed: "No se pudo conectar con Google Calendar. Por favor, inténtalo de nuevo.",
+                    checkFailed: "No se pudieron comprobar los eventos del calendario: ",
+                    notConnected: "Calendario no conectado",
+                    token: "El token de Google Calendar ha expirado. Por favor, vuelve a conectar.",
+                    refreshToken: "Falta el token de actualización. Por favor, revoca el acceso y vuelve a conectar.",
+                    success: "¡Conexión exitosa con Google Calendar!"
+                },
             },
             easter: "¡Felices Pascuas!",
             halloween: "¡Feliz Halloween!",
@@ -173,7 +247,29 @@ export default defineI18nConfig(() => ({
                 definitive: "Supressão definitiva",
                 confirm: "Confirmar?",
                 yes: "Sim",
-                no: "Não"
+                no: "Não",
+                privacy: {
+                    title: "Política de Privacidade",
+                    explanation: "Esta Política de Privacidade explica como o Notes coleta, usa e armazena os dados dos usuários.",
+                    collect: "1. Quais informações coletamos",
+                    choice: "Se você optar por conectar seu Google Agenda, solicitamos acesso à sua conta do Google via OAuth. Especificamente, solicitamos o seguinte escopo do Google: https://www.googleapis.com/auth/calendar.events",
+                    data: "2. Como usamos seus dados",
+                    permission: "Usamos essa permissão apenas para criar, atualizar ou excluir eventos de calendário que representem suas notas pessoais. Não acessamos, armazenamos ou analisamos quaisquer outros eventos em seu calendário.",
+                    storage: "3. Armazenamento de dados",
+                    token: "Seus tokens OAuth são armazenados com segurança em nossos servidores ou em cookies seguros, e nunca são compartilhados com terceiros.",
+                    compliance: "4. Conformidade com uso limitado",
+                    requirements: "O uso das APIs do Google por nosso aplicativo está em conformidade com os requisitos de uso limitado do Google: acessamos apenas as informações necessárias para fornecer os recursos que você solicita explicitamente e nunca compartilhamos seus dados.",
+                    contact: "5. Contato",
+                    questions: "Se você tiver dúvidas sobre esta Política de Privacidade, pode nos contatar em",
+                    back: "Voltar"
+                },
+                terms: {
+                    title: "Termos de Serviço",
+                    use: "Ao usar o Notes, você concorda em utilizar o serviço de forma responsável e não abusar de nenhum recurso para fins não autorizados ou prejudiciais.",
+                    features: "Reservamo-nos o direito de modificar ou descontinuar recursos a qualquer momento. O uso contínuo do aplicativo após atualizações implica aceitação das alterações.",
+                    app: "Nosso aplicativo é fornecido \"como está\", sem garantias de qualquer tipo. O uso do nosso aplicativo é por sua conta e risco.",
+                    back: "Voltar"
+                }
             },
             toast: {
                 register: "Usuário criado com sucesso",
@@ -188,7 +284,22 @@ export default defineI18nConfig(() => ({
                 noSpeech: "Nenhuma fala detectada. Tente novamente",
                 audioError: "Nenhum microfone encontrado",
                 permissionError: "Accesso ao microphone negado",
-                transcribed: "Fala transcrita com sucesso!"
+                listening: "Ouvindo... 🎤 Por favor fale claramente.",
+                transcribed: "Fala transcrita com sucesso!",
+                speechRecognition: "Reconhecimento de voz não é compatível com este navegador.",
+                calendar: {
+                    warning: "Seu consentimento será necessário para conectar ao Google Agenda",
+                    connectFirst: "Conecte-se primeiro ao Google Agenda.",
+                    expired: "A conexão com o calendário expirou. Conecte-se novamente.",
+                    sync: "Nota sincronizada com o Google Agenda",
+                    failed: "Falha ao sincronizar a nota com o Google Agenda: ",
+                    connectionFailed: "Falha ao conectar ao Google Agenda. Tente novamente.",
+                    checkFailed: "Falha ao verificar os eventos do calendário: ",
+                    notConnected: "Calendário não conectado",
+                    token: "O token do Google Agenda expirou. Conecte-se novamente.",
+                    refreshToken: "Token de atualização ausente. Revogue o acesso e conecte-se novamente.",
+                    success: "Conectado com sucesso ao Google Agenda!"
+                },
             },
             easter: "Feliz Páscoa!",
             halloween: "Feliz Halloween!",
@@ -237,7 +348,29 @@ export default defineI18nConfig(() => ({
                 definitive: "Definitive deletion",
                 confirm: "Confirm?",
                 yes: "Yes",
-                no: "No"
+                no: "No",
+                privacy: {
+                    title: "Privacy policy",
+                    explanation: "This Privacy Policy explains how Notes collects, uses, and stores user data.",
+                    collect: "1. What Information We Collect",
+                    choice: "If you choose to connect your Google Calendar, we request access to your Google account via OAuth. Specifically, we request the following Google scope: https://www.googleapis.com/auth/calendar.events",
+                    data: "2. How We Use Your Data",
+                    permission: "We use this permission only to create, update, or delete calendar events that represent your personal notes. We do not access, store, or analyze any other events in your calendar.",
+                    storage: "3. Data Storage",
+                    token: "Your OAuth tokens are stored securely on our servers or in secure cookies, and are never shared with third parties.",
+                    compliance: "4. Limited Use Compliance",
+                    requirements: "Our app's use of Google APIs adheres to Google's Limited Use requirements: We only access information necessary to provide the features you explicitly request, and we never share your data.",
+                    contact: "5. Contact",
+                    questions: "If you have questions about this Privacy Policy, you can contact us at",
+                    back: "Back"
+                },
+                terms: {
+                    title: "Terms of service",
+                    use: "By using Notes, you agree to use the service responsibly and not misuse any features for unauthorized or harmful purposes.",
+                    features: "We reserve the right to modify or discontinue features at any time. Continued use of the app after updates implies acceptance of the changes.",
+                    app: "Our app is provided “as is” without warranties of any kind. Your use of our app is at your own risk.",
+                    back: "Back"
+                }
             },
             toast: {
                 register: "User has been created",
@@ -252,7 +385,22 @@ export default defineI18nConfig(() => ({
                 noSpeech: "No speech detected. Please try again.",
                 audioError: "No microphone was found.",
                 permissionError: "Microphone access was denied.",
-                transcribed: "Speech successfully transcribed!"
+                listening: "Listening... 🎤 Please speak clearly.",
+                transcribed: "Speech successfully transcribed!",
+                speechRecognition: "Speech recognition not supported in this browser.",
+                calendar: {
+                    warning: "Your consent will be required to connect to Google Calendar",
+                    connectFirst: "Please connect to Google Calendar first.",
+                    expired: "Calendar connection expired. Please reconnect.",
+                    sync: "Note synced to Google Calendar",
+                    failed: "Failed to sync note to Google Calendar: ",
+                    connectionFailed: "Failed to connect to Google Calendar. Please try again.",
+                    checkFailed: "Failed to check calendar events: ",
+                    notConnected: "Calendar not connected",
+                    token: "Google Calendar token expired. Please reconnect.",
+                    refreshToken: "Missing refresh token. Please revoke access and reconnect.",
+                    success: "Successfully connected to Google Calendar!"
+                },
             },
             easter: "Happy Easter!",
             halloween: "Happy Halloween!",
@@ -301,7 +449,29 @@ export default defineI18nConfig(() => ({
                 definitive: "Eliminazione definitiva",
                 confirm: "Confermi?",
                 yes: "Sì",
-                no: "No"
+                no: "No",
+                privacy: {
+                    title: "Informativa sulla Privacy",
+                    explanation: "Questa Informativa sulla Privacy spiega come Notes raccoglie, utilizza e conserva i dati degli utenti.",
+                    collect: "1. Quali informazioni raccogliamo",
+                    choice: "Se scegli di collegare il tuo Google Calendar, richiediamo l'accesso al tuo account Google tramite OAuth. In particolare, richiediamo il seguente ambito di Google: https://www.googleapis.com/auth/calendar.events",
+                    data: "2. Come utilizziamo i tuoi dati",
+                    permission: "Utilizziamo questa autorizzazione solo per creare, aggiornare o eliminare eventi del calendario che rappresentano le tue note personali. Non accediamo, memorizziamo o analizziamo altri eventi nel tuo calendario.",
+                    storage: "3. Conservazione dei dati",
+                    token: "I tuoi token OAuth sono conservati in modo sicuro sui nostri server o in cookie sicuri e non vengono mai condivisi con terze parti.",
+                    compliance: "4. Conformità all'uso limitato",
+                    requirements: "L'uso delle API di Google da parte della nostra applicazione è conforme ai requisiti di uso limitato di Google: accediamo solo alle informazioni necessarie per fornire le funzionalità che richiedi esplicitamente e non condividiamo mai i tuoi dati.",
+                    "contact": "5. Contatto",
+                    questions: "Se hai domande su questa Informativa sulla Privacy, puoi contattarci all'indirizzo",
+                    back: "Indietro"
+                },
+                terms: {
+                    title: "Termini di Servizio",
+                    use: "Utilizzando Notes, accetti di utilizzare il servizio in modo responsabile e di non abusare di alcuna funzionalità per scopi non autorizzati o dannosi.",
+                    features: "Ci riserviamo il diritto di modificare o interrompere le funzionalità in qualsiasi momento. L'uso continuato dell'app dopo gli aggiornamenti implica l'accettazione delle modifiche.",
+                    app: "La nostra applicazione è fornita \"così com'è\" senza garanzie di alcun tipo. L'uso della nostra applicazione è a tuo rischio.",
+                    back: "Indietro"
+                }
             },
             toast: {
                 register: "Utente creato con successo",
@@ -316,7 +486,22 @@ export default defineI18nConfig(() => ({
                 noSpeech: "Nessun discorso rilevato. Riprova",
                 audioError: "Nessun microfono trovato",
                 permissionError: "Accesso al microfono negato",
-                transcribed: "Voce trascritta con successo!"
+                listening: "Ascoltando... 🎤 Per favore, parla chiaramente.",
+                transcribed: "Voce trascritta con successo!",
+                speechRecognition: "Il riconoscimento vocale non è supportato da questo browser.",
+                calendar: {
+                    warning: "Il tuo consenso sarà richiesto per connettersi a Google Calendar",
+                    connectFirst: "Collegati prima a Google Calendar.",
+                    "expired": "La connessione al calendario è scaduta. Riconnettiti.",
+                    sync: "Nota sincronizzata con Google Calendar",
+                    failed: "Impossibile sincronizzare la nota con Google Calendar: ",
+                    connectionFailed: "Impossibile connettersi a Google Calendar. Riprova.",
+                    checkFailed: "Impossibile controllare gli eventi del calendario: ",
+                    notConnected: "Calendario non connesso",
+                    token: "Il token di Google Calendar è scaduto. Riconnettiti.",
+                    refreshToken: "Token di aggiornamento mancante. Revoca l'accesso e riconnettiti.",
+                    success: "Connessione riuscita a Google Calendar!"
+                }
             },
             easter: "Buona Pasqua!",
             halloween: "Buon Halloween!",
@@ -365,7 +550,29 @@ export default defineI18nConfig(() => ({
                 definitive: "Slutgiltig radering",
                 confirm: "Bekräfta?",
                 yes: "Ja",
-                no: "Nej"
+                no: "Nej",
+                privacy: {
+                    title: "Integritetspolicy",
+                    explanation: "Denna integritetspolicy förklarar hur Notes samlar in, använder och lagrar användardata.",
+                    collect: "1. Vilken information vi samlar in",
+                    choice: "Om du väljer att ansluta din Google Kalender begär vi åtkomst till ditt Google-konto via OAuth. Specifikt begär vi följande Google-behörighet: https://www.googleapis.com/auth/calendar.events",
+                    data: "2. Hur vi använder dina data",
+                    permission: "Vi använder denna behörighet endast för att skapa, uppdatera eller ta bort kalenderhändelser som representerar dina personliga anteckningar. Vi får inte åtkomst till, lagrar eller analyserar några andra händelser i din kalender.",
+                    storage: "3. Datainlagring",
+                    token: "Dina OAuth-token lagras säkert på våra servrar eller i säkra cookies och delas aldrig med tredje part.",
+                    compliance: "4. Efterlevnad av begränsad användning",
+                    requirements: "Vår apps användning av Googles API:er följer Googles krav för begränsad användning: Vi får endast åtkomst till den information som är nödvändig för att tillhandahålla de funktioner du uttryckligen begär och delar aldrig dina data.",
+                    contact: "5. Kontakt",
+                    questions: "Om du har frågor om denna integritetspolicy kan du kontakta oss på",
+                    back: "Tillbaka"
+                },
+                terms: {
+                    title: "Användarvillkor",
+                    use: "Genom att använda Notes samtycker du till att använda tjänsten ansvarsfullt och att inte missbruka några funktioner för obehöriga eller skadliga ändamål.",
+                    features: "Vi förbehåller oss rätten att ändra eller avbryta funktioner när som helst. Fortsatt användning av appen efter uppdateringar innebär att du accepterar ändringarna.",
+                    app: "Vår app tillhandahålls \"i befintligt skick\" utan några garantier. Användningen av vår app sker på egen risk.",
+                    back: "Tillbaka"
+                }
             },
             toast: {
                 register: "Användare har skapats",
@@ -380,7 +587,22 @@ export default defineI18nConfig(() => ({
                 noSpeech: "Ingen röst upptäcktes. Försök igen",
                 audioError: "Ingen mikrofon hittades",
                 permissionError: "Åtkomst till mikrofon nekades",
-                transcribed: "Rösten transkriberades framgångsrikt!"
+                listening: "Lyssnar... 🎤 Tala tydligt.",
+                transcribed: "Rösten transkriberades framgångsrikt!",
+                speechRecognition: "Röstigenkänning stöds inte i den här webbläsaren.",
+                calendar: {
+                    warning: "Ditt samtycke krävs för att ansluta till Google Kalender",
+                    connectFirst: "Anslut först till Google Kalender.",
+                    expired: "Kalenderanslutningen har löpt ut. Anslut igen.",
+                    sync: "Anteckning synkroniserad med Google Kalender",
+                    failed: "Kunde inte synkronisera anteckningen med Google Kalender: ",
+                    connectionFailed: "Kunde inte ansluta till Google Kalender. Försök igen.",
+                    checkFailed: "Kunde inte kontrollera kalenderevenemang: ",
+                    notConnected: "Kalendern är inte ansluten",
+                    token: "Google Kalender-token har löpt ut. Anslut igen.",
+                    refreshToken: "Uppdateringstoken saknas. Återkalla åtkomsten och anslut igen.",
+                    success: "Ansluten till Google Kalender!"
+                },
             },
             easter: "Glad Påsk!",
             halloween: "Glad Halloween!",
@@ -429,7 +651,29 @@ export default defineI18nConfig(() => ({
                 definitive: "Ștergere definitivă",
                 confirm: "Confirmi?",
                 yes: "Da",
-                no: "Nu"
+                no: "Nu",
+                privacy: {
+                    title: "Politica de Confidențialitate",
+                    explanation: "Această Politică de Confidențialitate explică modul în care Notes colectează, utilizează și stochează datele utilizatorilor.",
+                    collect: "1. Ce informații colectăm",
+                    choice: "Dacă alegi să îți conectezi Google Calendar, solicităm acces la contul tău Google prin OAuth. Mai exact, solicităm următorul domeniu Google: https://www.googleapis.com/auth/calendar.events",
+                    data: "2. Cum folosim datele tale",
+                    permission: "Folosim această permisiune doar pentru a crea, actualiza sau șterge evenimente din calendar care reprezintă notele tale personale. Nu accesăm, stocăm sau analizăm alte evenimente din calendarul tău.",
+                    storage: "3. Stocarea datelor",
+                    token: "Token-urile tale OAuth sunt stocate în siguranță pe serverele noastre sau în cookie-uri securizate și nu sunt niciodată partajate cu terți.",
+                    compliance: "4. Conformitate cu utilizarea limitată",
+                    requirements: "Utilizarea API-urilor Google de către aplicația noastră respectă cerințele de utilizare limitată ale Google: accesăm doar informațiile necesare pentru a furniza funcțiile pe care le soliciți explicit și nu partajăm niciodată datele tale.",
+                    contact: "5. Contact",
+                    questions: "Dacă ai întrebări despre această Politică de Confidențialitate, ne poți contacta la",
+                    back: "Înapoi"
+                },
+                terms: {
+                    title: "Termeni de Serviciu",
+                    use: "Prin utilizarea Notes, ești de acord să folosești serviciul în mod responsabil și să nu abuzezi de nicio funcționalitate în scopuri neautorizate sau dăunătoare.",
+                    features: "Ne rezervăm dreptul de a modifica sau întrerupe funcționalitățile în orice moment. Continuarea utilizării aplicației după actualizări implică acceptarea modificărilor.",
+                    app: "Aplicația noastră este oferită „ca atare”, fără garanții de niciun fel. Utilizarea aplicației este pe propriul tău risc.",
+                    back: "Înapoi"
+                }
             },
             toast: {
                 register: "Utilizatorul a fost creat",
@@ -444,7 +688,22 @@ export default defineI18nConfig(() => ({
                 noSpeech: "Nu a fost detectată nicio voce. Încearcă din nou",
                 audioError: "Nu a fost găsit niciun microfon",
                 permissionError: "Accesul la microfon a fost refuzat",
-                transcribed: "Vocea a fost transcrisă cu succes!"
+                listening: "Ascultând... 🎤 Te rog să vorbești clar.",
+                transcribed: "Vocea a fost transcrisă cu succes!",
+                speechRecognition: "Recunoașterea vocală nu este compatibilă cu acest browser.",
+                calendar: {
+                    warning: "Consimțământul tău va fi necesar pentru a te conecta la Google Calendar",
+                    connectFirst: "Te rugăm să te conectezi mai întâi la Google Calendar.",
+                    expired: "Conexiunea cu calendarul a expirat. Te rugăm să te reconectezi.",
+                    sync: "Notiță sincronizată cu Google Calendar",
+                    failed: "Nu s-a putut sincroniza nota cu Google Calendar: ",
+                    connectionFailed: "Conectarea la Google Calendar a eșuat. Încearcă din nou.",
+                    checkFailed: "Nu s-au putut verifica evenimentele din calendar: ",
+                    notConnected: "Calendarul nu este conectat",
+                    token: "Tokenul Google Calendar a expirat. Te rugăm să te reconectezi.",
+                    refreshToken: "Lipsește tokenul de reîmprospătare. Revocă accesul și reconectează-te.",
+                    success: "Conectare reușită la Google Calendar!"
+                },
             },
             easter: "Paște Fericit!",
             halloween: "Halloween Fericit!",

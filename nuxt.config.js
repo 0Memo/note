@@ -1,4 +1,5 @@
 import { resolve } from "path";
+import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
   app: {
@@ -54,4 +55,12 @@ export default defineNuxtConfig({
   plugins: ["~/plugins/init-locale.client.js"],
 
   compatibilityDate: "2025-04-14",
+
+  runtimeConfig: {
+    googleClientSecret: process.env.NUXT_GOOGLE_CLIENT_SECRET || "",
+    public: {
+      googleClientId: process.env.NUXT_PUBLIC_GOOGLE_CLIENT_ID || "",
+      baseURL: process.env.NUXT_PUBLIC_BASE_URL || "",
+    },
+  },
 });

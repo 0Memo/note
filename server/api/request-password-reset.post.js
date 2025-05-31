@@ -26,8 +26,8 @@ export default defineEventHandler(async (event) => {
 
     const resetUrl =
         locale === "en"
-            ? `https://notes-memo.vercel.app/reset-password?token=${token}`
-            : `https://notes-memo.vercel.app/${locale}/reset-password?token=${token}`;
+            ? `https://notes.guillermo-projectmanagement.com/reset-password?token=${token}`
+            : `https://notes.guillermo-projectmanagement.com/${locale}/reset-password?token=${token}`;
 
     await sendMail({
         to: email,

@@ -14,7 +14,7 @@ html {
 
 .logoPath {
     stroke: #fff;
-    stroke-width: 0.25;
+    stroke-width: 0.5;
     fill: none;
     stroke-linecap: round;
 
@@ -26,14 +26,14 @@ html {
 }
 
 .scriptPath {
-    stroke: #fff;
-    stroke-width: 0.25;
+    stroke: #581C87;
+    stroke-width: 1;
     fill: none;
     stroke-linecap: round;
 
     stroke-dasharray: 200;
     stroke-dashoffset: 200;
-    animation: draw 10s ease-out forwards;
+    animation: draw 15s ease-out forwards;
 
     filter: drop-shadow(0 0 0 #581C87) drop-shadow(0 0 0 #581C87) drop-shadow(0 0 0 #581C87);
 }
