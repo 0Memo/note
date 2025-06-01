@@ -110,6 +110,21 @@
                 </div>
             </form>
 
+            <footer class="fixed bottom-0 md:bottom-8 left-10 gap-8 py-1 w-full flex items-center text-white bg-transparent text-md md:text-lg">
+                <nuxt-link
+                    :to="localePath('/privacy')"
+                    class="whitespace-nowrap hover:underline"
+                >
+                    {{ $t('modal.privacy.title') }}
+                </nuxt-link>
+                <nuxt-link
+                    :to="localePath('/terms')"
+                    class="whitespace-nowrap hover:underline"
+                >
+                    {{ $t('modal.terms.title') }}
+                </nuxt-link>
+            </footer>
+
             <div
                 v-if="isLoading"
                 class="absolute inset-0 flex items-center

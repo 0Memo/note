@@ -27,14 +27,14 @@
             </a>
             </p>
 
-            <div class="text-zinc-100 mt-6">
-            <nuxt-link
-                :to="localePath('/')"
-                class="w-full mt-4 bg-purple-900 text-lg px-4 py-2 rounded-2xl font-bold space-x-4 inline-flex justify-center items-center"
-            >
-                <span>{{ $t('modal.privacy.back') }}</span>
-                <span>➤</span>
-            </nuxt-link>
+            <div class="mt-6 relative z-50">
+                <nuxt-link
+                    :to="localePath('/')"
+                    class="w-full mt-4 bg-purple-900 text-lg px-4 py-2 rounded-2xl font-bold space-x-4 inline-flex justify-center items-center"
+                >
+                    <span>{{ $t('modal.privacy.back') }}</span>
+                    <span>➤</span>
+                </nuxt-link>
             </div>
         </div>
 
@@ -65,10 +65,10 @@
                 </a>
             </p>
 
-            <div class="mt-6">
+            <div class="mt-6 relative z-50">
                 <nuxt-link
                     :to="localePath('/')"
-                    class="mx-auto mt-4 bg-purple-900 text-lg px-6 py-2 rounded-2xl font-bold space-x-4 inline-flex justify-center items-center mb-8 max-w-xs"
+                    class="inline-flex items-center justify-center bg-purple-900 hover:bg-purple-800 transition text-lg px-6 py-2 rounded-2xl font-bold space-x-2"
                 >
                     <span>{{ $t('modal.privacy.back') }}</span>
                     <span>➤</span>

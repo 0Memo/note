@@ -89,6 +89,21 @@
                     >
                 </button>
 
+                <div class="w-full flex md:hidden justify-around text-md py-2">
+                    <nuxt-link
+                        :to="localePath('/privacy')"
+                        class="whitespace-nowrap hover:underline"
+                    >
+                        {{ $t('modal.privacy.title') }}
+                    </nuxt-link>
+                    <nuxt-link
+                        :to="localePath('/terms')"
+                        class="whitespace-nowrap hover:underline"
+                    >
+                        {{ $t('modal.terms.title') }}
+                    </nuxt-link>
+                </div>
+
                 <div class="w-full mt-4">
                     <button 
                         @click="connectGoogleCalendar" 
@@ -469,20 +484,6 @@
                             @input="debouncedFn"
                         >
                         </textarea>
-                        <div class="flex justify-between px-4 text-sm w-96 md:w-full -ml-36 md:-ml-5">
-                            <nuxt-link
-                                :to="localePath('/privacy')"
-                                class="whitespace-nowrap"
-                            >
-                                {{ $t('modal.privacy.title') }}
-                            </nuxt-link>
-                            <nuxt-link
-                                :to="localePath('/terms')"
-                                class="whitespace-nowrap"
-                            >
-                                {{ $t('modal.terms.title') }}
-                            </nuxt-link>
-                        </div>
                     </div>
                     <div v-else class="text-zinc-400 italic text-center mt-10">
                         {{ $t('notes.nothing') }}
@@ -514,6 +515,21 @@
             >
                 <Logout class="w-10 h-10" />
             </button>
+
+            <footer class="fixed bottom-0 md:bottom-8 left-0 w-full flex justify-evenly items-center text-white bg-transparent text-md md:text-lg">
+                <nuxt-link
+                    :to="localePath('/privacy')"
+                    class="whitespace-nowrap hover:underline"
+                >
+                    {{ $t('modal.privacy.title') }}
+                </nuxt-link>
+                <nuxt-link
+                    :to="localePath('/terms')"
+                    class="whitespace-nowrap hover:underline"
+                >
+                    {{ $t('modal.terms.title') }}
+                </nuxt-link>
+            </footer>
         </div>
     </div>
 </template>
@@ -1023,7 +1039,7 @@
         const redirectUri = encodeURIComponent(`${config.public.baseURL}/auth/callback`)
         const scope = encodeURIComponent('https://www.googleapis.com/auth/calendar.events')
         
-        const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&access_type=offline&prompt=consent`
+        const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&access_type=offline&prompt=consent&include_granted_scopes=true`
         
         $toast.info(t('toast.calendar.warning'), {
             duration: 8000
