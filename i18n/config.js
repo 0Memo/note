@@ -4,6 +4,15 @@ export default defineI18nConfig(() => ({
     fallbackLocale: "en",
     messages: {
         fr: {
+            homepage: {
+                title: "Page d’accueil",
+                welcome: "Bienvenue sur Memo's Notes !",
+                app: "Une application personnelle pour écrire ou dicter des notes grâce à la reconnaissance vocale. Vous pouvez aussi activer un effet visuel de la souris.",
+                actions: "Créez, modifiez ou supprimez des notes, organisées par date de création ou de mise à jour.",
+                calendar: "Synchronisez facilement vos notes avec Google Calendar, où elles apparaîtront comme des événements modifiables.",
+                organize: "Sur mobile, balayez une note vers la gauche pour la synchroniser ou la supprimer rapidement.",
+                access: "Consultez notre Politique de Confidentialité et nos Conditions d’Utilisation à tout moment depuis l’application."
+            },
             register: {
                 subscription: "Inscription gratuite",
                 subscribed: "Déja inscrit?",
@@ -105,6 +114,15 @@ export default defineI18nConfig(() => ({
             newYear: "Bonne Année!"
         },
         es: {
+            homepage: {
+                title: "Página principal",
+                welcome: "¡Bienvenido a Memo's Notes!",
+                app: "Una app personal para tomar notas escribiendo o dictando mediante reconocimiento de voz. También puedes activar un efecto visual del ratón.",
+                actions: "Crea, edita o elimina notas, organizadas por fecha de creación o última actualización.",
+                calendar: "Sincroniza fácilmente notas seleccionadas con tu Google Calendar, donde aparecerán como eventos editables.",
+                organize: "En móvil, desliza una nota hacia la izquierda para sincronizarla o eliminarla rápidamente.",
+                access: "Consulta nuestra Política de Privacidad y Términos del Servicio en cualquier momento desde la app."
+            },
             register: {
                 subscription: "Subscripción gratuita",
                 subscribed: "¿Está suscrito?",
@@ -206,6 +224,15 @@ export default defineI18nConfig(() => ({
             newYear: "¡Feliz Año Nuevo!"
         },
         pt: {
+            homepage: {
+                title: "Página inicial",
+                welcome: "Bem-vindo ao Memo's Notes!",
+                app: "Um app pessoal para escrever ou ditar anotações com reconhecimento de voz. Também é possível ativar um efeito visual do cursor.",
+                actions: "Crie, edite ou exclua anotações, organizadas por data de criação ou última atualização.",
+                calendar: "Sincronize facilmente notas selecionadas com seu Google Agenda, onde aparecerão como eventos editáveis.",
+                organize: "No celular, deslize a nota para a esquerda para sincronizar ou excluir rapidamente.",
+                access: "Acesse nossa Política de Privacidade e Termos de Uso em qualquer momento pelo app."
+            },
             register: {
                 subscription: "Cadástre-se gratis",
                 subscribed: "Já inscrito?",
@@ -307,6 +334,15 @@ export default defineI18nConfig(() => ({
             newYear: "Feliz Ano Novo!"
         },
         en: {
+            homepage: {
+                title: "Homepage",
+                welcome: "Welcome to Memo's Notes!",
+                app: "A personal note-taking app where you can write or dictate notes using speech-to-text, and optionally enable a fun mouse trail for visual feedback.",
+                actions: "Create, edit, or delete notes, organized by date of creation or last update.",
+                calendar: "Easily sync selected notes to your Google Calendar, where they appear as editable events.",
+                organize: "On mobile, swipe left on a note to sync or delete it quickly without opening it.",
+                access: "View our Privacy Policy and Terms of Service anytime within the app."
+            },
             register: {
                 subscription: "Free subscription",
                 subscribed: "Already subscribed?",
@@ -408,6 +444,15 @@ export default defineI18nConfig(() => ({
             newYear: "Happy New Year!"
         },
         it: {
+            homepage: {
+                title: "Pagina iniziale",
+                welcome: "Benvenuto su Memo's Notes!",
+                app: "Un'app personale per scrivere o dettare note tramite riconoscimento vocale. Puoi anche attivare un effetto visivo del cursore.",
+                actions: "Crea, modifica o elimina note, organizzate per data di creazione o ultimo aggiornamento.",
+                calendar: "Sincronizza facilmente le note selezionate con Google Calendar, dove appariranno come eventi modificabili.",
+                organize: "Su mobile, scorri verso sinistra per sincronizzare o eliminare una nota rapidamente.",
+                access: "Consulta la nostra Privacy Policy e i Termini di Servizio in qualsiasi momento dall'app."
+            },
             register: {
                 subscription: "Abbonamento gratuito",
                 subscribed: "Già iscritto?",
@@ -509,6 +554,15 @@ export default defineI18nConfig(() => ({
             newYear: "Felice Anno Nuovo!"
         },
         sv: {
+            homepage: {
+                title: "Startsida",
+                welcome: "Välkommen till Memo's Notes!",
+                app: "En personlig app för att skriva eller tala in anteckningar med tal-till-text. Du kan också aktivera en visuell muspekareffekt.",
+                actions: "Skapa, redigera eller ta bort anteckningar, organiserade efter skapelse- eller uppdateringsdatum.",
+                calendar: "Synkronisera enkelt valda anteckningar med Google Kalender, där de visas som redigerbara händelser.",
+                organize: "På mobil kan du svepa vänster på en anteckning för att snabbt synka eller ta bort den.",
+                access: "Du kan när som helst se vår integritetspolicy och användarvillkor i appen."
+            },
             register: {
                 subscription: "Gratis prenumeration",
                 subscribed: "Redan prenumererad?",
@@ -610,6 +664,15 @@ export default defineI18nConfig(() => ({
             newYear: "Gott Nytt År!"
         },
         ro: {
+            homepage: {
+                title: "Pagina principală",
+                welcome: "Bine ai venit la Memo's Notes!",
+                app: "O aplicație personală pentru a scrie sau dicta notițe folosind recunoaștere vocală. Poți activa și un efect vizual al cursorului.",
+                actions: "Creează, editează sau șterge notițe, organizate după data creării sau ultimei modificări.",
+                calendar: "Sincronizează cu ușurință notițele selectate în Google Calendar, unde apar ca evenimente editabile.",
+                organize: "Pe mobil, glisează spre stânga pe o notiță pentru a o sincroniza sau șterge rapid.",
+                access: "Accesează Politica de Confidențialitate și Termenii de Utilizare direct din aplicație."
+            },
             register: {
                 subscription: "Abonament gratuit",
                 subscribed: "Deja abonat?",

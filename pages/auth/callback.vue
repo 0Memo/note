@@ -128,10 +128,10 @@
     }
 
     const goToNotes = () => {
-    router.push(localePath('/'))
+    router.push(localePath('/dashboard'))
     }
 
     const retryConnection = () => {
-    router.push(localePath('/'))
+    router.push(localePath('/dashboard'))
     }
 </script>

@@ -14,14 +14,23 @@
             <p class="mb-4">{{ $t('modal.terms.app') }}</p>
 
             <div class="mt-6 relative z-50">
-                <nuxt-link
-                    :to="localePath('/')"
+                <button
+                    @click="goBack"
                     class="inline-flex items-center justify-center bg-purple-900 hover:bg-purple-800 transition text-lg px-6 py-2 rounded-2xl font-bold space-x-2"
                 >
                     <span>{{ $t('modal.terms.back')}}</span>
                     <span>➤</span>
-                </nuxt-link>
+                </button>
             </div>
+
+            <p class="mt-6 ml-1 text-md text-zinc-300 relative z-50">
+                <nuxt-link
+                    :to="localePath('/')"
+                    class="text-white shadow-2xl shadow-purple-900 font-semibold
+                    transform cursor-pointer hover:underline">
+                    {{ $t('homepage.title') }}
+                </nuxt-link>
+            </p>
         </div>
 
         <!-- Plain content visible on mobile -->
@@ -37,14 +46,23 @@
             <p class="mb-4">{{ $t('modal.terms.app') }}</p>
 
             <div class="mt-6 relative z-50">
-                <nuxt-link
-                    :to="localePath('/')"
+                <button
+                    @click="goBack"
                     class="inline-flex items-center justify-center bg-purple-900 hover:bg-purple-800 transition text-lg px-6 py-2 rounded-2xl font-bold space-x-2"
                 >
                     <span>{{ $t('modal.terms.back')}}</span>
                     <span>➤</span>
-                </nuxt-link>
+                </button>
             </div>
+
+            <p class="mt-6 ml-1 text-md text-zinc-300 relative z-50">
+                <nuxt-link
+                    :to="localePath('/')"
+                    class="text-white shadow-2xl shadow-purple-900 font-semibold
+                    transform cursor-pointer hover:underline">
+                    {{ $t('homepage.title') }}
+                </nuxt-link>
+            </p>
         </div>
     </div>
 </template>
@@ -55,4 +73,14 @@
     
     const { t } = useI18n()
     const localePath = useLocalePath()
+
+    const goBack = () => {
+        if (import.meta.client) {
+            if (window.history.length > 1) {
+                window.history.back()
+            } else {
+                window.location.href = localePath('/') // fallback to homepage
+            }
+        }
+    }
 </script>  

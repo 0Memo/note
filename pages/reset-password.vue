@@ -90,6 +90,15 @@
                 </div>
             </form>
 
+            <p class="mt-6 ml-1 text-md text-zinc-300">
+                <nuxt-link
+                    :to="localePath('/')"
+                    class="text-purple-700 shadow-2xl shadow-green-700 font-semibold
+                    transform cursor-pointer hover:text-purple-300">
+                    {{ $t('homepage.title') }}
+                </nuxt-link>
+            </p>
+
             <footer class="fixed bottom-0 md:bottom-8 left-10 gap-8 py-1 w-full flex items-center text-white bg-transparent text-md md:text-lg">
                 <nuxt-link
                     :to="localePath('/privacy')"
