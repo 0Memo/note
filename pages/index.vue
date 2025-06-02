@@ -1,8 +1,8 @@
 <template>
-    <div class="h-screen bg-[#1c044f] flex font-h1">
+    <div class="min-h-screen bg-[#1c044f] flex font-h1">
         <div class="bg-[#030303] w-full md:w-[516px] p-12 flex flex-col justify-center">
-            <Logo />
-            <div class="text-white -ml-16 md:-ml-32 flex flex-wrap justify-center gap-2 mt-8 md:mt-6">
+            <Logo class="mx-auto" />
+            <div class="text-white flex flex-wrap justify-center gap-2 mt-8">
                 <button @click="changeLocale('en')">
                     <img
                         src="https://flagcdn.com/w20/us.png"
@@ -67,34 +67,32 @@
                     >
                 </button>
             </div>
-            <h1 class="font-h1 mt-8 md:text-2xl font-bold text-zinc-50">{{ $t('homepage.title') }}</h1>
-            <p class="mt-2 text-md text-zinc-200">{{ $t('homepage.welcome') }}</p>
-            <p class="mt-2 text-md text-zinc-200">{{ $t('homepage.app') }}</p>
-            <p class="mt-2 text-md text-zinc-200">{{ $t('homepage.actions') }}</p>
-            <p class="mt-2 text-md text-zinc-200">{{ $t('homepage.calendar') }}</p>
-            <p class="mt-2 text-md text-zinc-200">{{ $t('homepage.organize') }}</p>
-            <p class="mt-2 text-md text-zinc-200">{{ $t('homepage.access') }}</p>
-
-            <div class="flex flex-row gap-8 relative z-50">
-                <p class="mt-6 ml-1 text-md text-zinc-300">
-                    <nuxt-link
-                        :to="localePath('/register')"
-                        class="text-purple-700 shadow-2xl shadow-green-700 font-semibold
-                        transform cursor-pointer hover:text-purple-300">
-                        {{ $t('login.creation') }}
-                    </nuxt-link>
-                </p>
-                <p class="mt-6 ml-1 text-md text-zinc-300">
-                    <nuxt-link
-                        :to="localePath('/login')"
-                        class="text-purple-700 shadow-2xl shadow-green-700 font-semibold
-                        transform cursor-pointer hover:text-purple-300">
-                        {{ $t('register.login') }}
-                    </nuxt-link>
-                </p>
+            <h1 class="my-5 md:my-8 text-2xl font-bold text-zinc-50 text-center">{{ $t('homepage.title') }}</h1>
+            <div class="mt-2 space-y-2 text-[15.5px] text-zinc-200">
+                <p>{{ $t('homepage.welcome') }}</p>
+                <p>{{ $t('homepage.app') }}</p>
+                <p>{{ $t('homepage.actions') }}</p>
+                <p>{{ $t('homepage.calendar') }}</p>
+                <p>{{ $t('homepage.organize') }}</p>
+                <p>{{ $t('homepage.access') }}</p>
             </div>
 
-            <div class="mt-6 relative z-50 text-white flex justify-center">
+            <div class="flex justify-between w-full mt-6 relative z-50">
+                <nuxt-link
+                    :to="localePath('/register')"
+                    class="text-purple-700 shadow-2xl shadow-green-700 font-semibold
+                    transform cursor-pointer hover:text-purple-300">
+                    {{ $t('login.creation') }}
+                </nuxt-link>
+                <nuxt-link
+                    :to="localePath('/login')"
+                    class="text-purple-700 shadow-2xl shadow-green-700 font-semibold
+                    transform cursor-pointer hover:text-purple-300">
+                    {{ $t('register.login') }}
+                </nuxt-link>
+            </div>
+
+            <div class="mt-6 text-white flex justify-center relative z-50">
                 <button
                     @click="goBack"
                     class="inline-flex items-center justify-center bg-purple-900 hover:bg-purple-800 transition text-lg px-6 py-2 rounded-2xl font-bold space-x-2"
@@ -104,7 +102,7 @@
                 </button>
             </div>
 
-            <footer class="fixed bottom-0 md:bottom-8 left-10 gap-8 py-1 w-full flex items-center text-white bg-transparent text-md md:text-lg">
+            <footer class="mt-10 sm:mt-14 md:mt-20 sm:-mb-2 md:-mb-0 w-full flex justify-between text-white bg-transparent text-sm md:text-md relative z-50">
                 <nuxt-link
                     :to="localePath('/privacy')"
                     class="whitespace-nowrap hover:underline"
