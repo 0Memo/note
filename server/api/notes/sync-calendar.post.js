@@ -27,41 +27,56 @@ export default defineEventHandler(async (event) => {
         const start = new Date(note.date);
         const end = new Date(start.getTime() + 30 * 60 * 1000); // 30 mins later
 
-        // Make the request to Google Calendar API
-        const response = await $fetch(
-        "https://www.googleapis.com/calendar/v3/calendars/primary/events",
-        {
+        const eventPayload = {
+            summary: note.title,
+            description: note.content,
+            start: {
+                dateTime: start.toISOString(),
+                timeZone: "UTC",
+            },
+            end: {
+                dateTime: end.toISOString(),
+                timeZone: "UTC",
+            },
+            visibility: "default",
+            status: "confirmed",
+        };
+
+        let response;
+        let updated = false;
+
+        // 🔁 Update if eventId exists, otherwise insert new
+        if (note.eventId) {
+            // Update existing event
+            response = await $fetch(`https://www.googleapis.com/calendar/v3/calendars/primary/events/${note.eventId}`, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${googleAccessToken}`,
+                "Content-Type": "application/json"
+            },
+            body: eventPayload
+            });
+            updated = true;
+        } else {
+            // Create new event
+            response = await $fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events", {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${googleAccessToken}`,
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"
             },
-            body: {
-                summary: note.title,
-                description: note.content,
-                start: { 
-                    dateTime: start.toISOString(),
-                    timeZone: 'UTC' // You might want to use user's timezone
-                },
-                end: { 
-                    dateTime: end.toISOString(),
-                    timeZone: 'UTC'
-                },
-                // Make sure the event is visible
-                visibility: 'default',
-                status: 'confirmed'
-            },
+            body: eventPayload
+            });
         }
-        );
 
         console.log("Google Calendar API response:", response);
 
         return {
             success: true,
-            event: response,
+            updated,
             eventLink: response.htmlLink, // Direct link to the event
-            calendarId: 'primary',
-            eventId: response.id
+            eventId: response.id,
+            calendarId: 'primary'
         };
     } catch (error) {
         console.error("Calendar sync error:", error);

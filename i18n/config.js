@@ -5,13 +5,13 @@ export default defineI18nConfig(() => ({
     messages: {
         fr: {
             homepage: {
-                title: "Page d’accueil",
+                title: "Page d'accueil",
                 welcome: "Bienvenue sur Memo's Notes !",
                 app: "Une application personnelle pour écrire ou dicter des notes grâce à la reconnaissance vocale. Vous pouvez aussi activer un effet visuel de la souris.",
                 actions: "Créez, modifiez ou supprimez des notes, organisées par date de création ou de mise à jour.",
                 calendar: "Synchronisez facilement vos notes avec Google Calendar, où elles apparaîtront comme des événements modifiables.",
                 organize: "Sur mobile, balayez une note vers la gauche pour la synchroniser ou la supprimer rapidement.",
-                access: "Consultez notre Politique de Confidentialité et nos Conditions d’Utilisation à tout moment depuis l’application."
+                access: "Consultez notre Politique de Confidentialité et nos Conditions d'Utilisation à tout moment depuis l'application."
             },
             register: {
                 subscription: "Inscription gratuite",
@@ -105,7 +105,9 @@ export default defineI18nConfig(() => ({
                     notConnected: "Agenda non connecté",
                     token: "Le jeton Google Agenda a expiré. Veuillez vous reconnecter.",
                     refreshToken: "Jeton de rafraîchissement manquant. Veuillez révoquer l'accès et vous reconnecter.",
-                    success: "Connexion réussie à Google Agenda !"
+                    success: "Connexion réussie à Google Agenda !",
+                    updated: "Note mise à jour dans Google Agenda!",
+                    alreadySynced: "Note déjà synchronisée avec le calendrier"
                 },
             },
             easter: "Joyeuses Pâques!",
@@ -215,7 +217,9 @@ export default defineI18nConfig(() => ({
                     notConnected: "Calendario no conectado",
                     token: "El token de Google Calendar ha expirado. Por favor, vuelve a conectar.",
                     refreshToken: "Falta el token de actualización. Por favor, revoca el acceso y vuelve a conectar.",
-                    success: "¡Conexión exitosa con Google Calendar!"
+                    success: "¡Conexión exitosa con Google Calendar!",
+                    updated: "¡Nota actualizada en Google Calendar!",
+                    alreadySynced: "Nota ya actualizada con el calendario"
                 },
             },
             easter: "¡Felices Pascuas!",
@@ -325,7 +329,9 @@ export default defineI18nConfig(() => ({
                     notConnected: "Calendário não conectado",
                     token: "O token do Google Agenda expirou. Conecte-se novamente.",
                     refreshToken: "Token de atualização ausente. Revogue o acesso e conecte-se novamente.",
-                    success: "Conectado com sucesso ao Google Agenda!"
+                    success: "Conectado com sucesso ao Google Agenda!",
+                    updated: "Nota atualizada no Google Agenda!",
+                    alreadySynced: "Nota já atualizada com o calendário"
                 },
             },
             easter: "Feliz Páscoa!",
@@ -435,7 +441,9 @@ export default defineI18nConfig(() => ({
                     notConnected: "Calendar not connected",
                     token: "Google Calendar token expired. Please reconnect.",
                     refreshToken: "Missing refresh token. Please revoke access and reconnect.",
-                    success: "Successfully connected to Google Calendar!"
+                    success: "Successfully connected to Google Calendar!",
+                    updated: "Note updated in Google Calendar!",
+                    alreadySynced: "Note has already been synced to calendar"
                 },
             },
             easter: "Happy Easter!",
@@ -545,7 +553,9 @@ export default defineI18nConfig(() => ({
                     notConnected: "Calendario non connesso",
                     token: "Il token di Google Calendar è scaduto. Riconnettiti.",
                     refreshToken: "Token di aggiornamento mancante. Revoca l'accesso e riconnettiti.",
-                    success: "Connessione riuscita a Google Calendar!"
+                    success: "Connessione riuscita a Google Calendar!",
+                    updated: "Nota aggiornata su Google Calendar!",
+                    alreadySynced: "Nota già sincronizzata con il calendario"
                 }
             },
             easter: "Buona Pasqua!",
@@ -655,7 +665,9 @@ export default defineI18nConfig(() => ({
                     notConnected: "Kalendern är inte ansluten",
                     token: "Google Kalender-token har löpt ut. Anslut igen.",
                     refreshToken: "Uppdateringstoken saknas. Återkalla åtkomsten och anslut igen.",
-                    success: "Ansluten till Google Kalender!"
+                    success: "Ansluten till Google Kalender!",
+                    updated: "Anteckning uppdaterad i Google Kalender!",
+                    alreadySynced: "Anteckning redan synkats med kalendarn"
                 },
             },
             easter: "Glad Påsk!",
@@ -765,7 +777,9 @@ export default defineI18nConfig(() => ({
                     notConnected: "Calendarul nu este conectat",
                     token: "Tokenul Google Calendar a expirat. Te rugăm să te reconectezi.",
                     refreshToken: "Lipsește tokenul de reîmprospătare. Revocă accesul și reconectează-te.",
-                    success: "Conectare reușită la Google Calendar!"
+                    success: "Conectare reușită la Google Calendar!",
+                    updated: "Notiță actualizată în Google Calendar!",
+                    alreadySynced: "Notiță deja sincronizată cu calendarul"
                 },
             },
             easter: "Paște Fericit!",
