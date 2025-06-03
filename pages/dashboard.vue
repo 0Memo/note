@@ -32,7 +32,7 @@
                     {{ $t('homepage.title') }}
                 </nuxt-link>
             </p>
-            <div class="text-white flex flex-wrap justify-center gap-2 mt-8 md:mt-6 relative">
+            <div class="text-white flex flex-wrap justify-center gap-2 mt-8 md:mt-6 relative z-50">
                 <button @click="changeLocale('en')">
                     <img
                         src="https://flagcdn.com/w20/us.png"
@@ -582,7 +582,7 @@
     function changeLocale(newLocale) {
         locale.value = newLocale
         $toast.success(`${t('toast.language')}${newLocale}`)
-        router.push({ path: `/${newLocale}` })
+        router.push({ path: `/${newLocale}/dashboard` })
     }
 
     function logout() {
@@ -970,7 +970,7 @@
         }
 
         recognition.start()
-        $toast.info(t('toast.speechError'))
+        $toast.info(t('toast.listening'))
     }
 
     const todaysNotes = computed(() => {
