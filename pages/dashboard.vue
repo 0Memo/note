@@ -670,6 +670,7 @@
             const alreadySynced =
                 note.calendarEventId &&
                 note.lastSyncedText === note.text &&
+                note.lastSyncedDate &&
                 new Date(note.lastSyncedDate).toISOString() === new Date(note.updatedAt).toISOString();
 
             if (alreadySynced) {
@@ -679,6 +680,7 @@
 
             // Prepare event data
             const eventData = {
+                id: note.id,
                 title: note.text?.substring(0, 50) || 'Untitled Note',
                 content: note.text || '',
                 date: new Date(note.updatedAt).toISOString(),
@@ -724,7 +726,6 @@
             syncingNoteId.value = null
         }
     }
-
 
     async function createNewNote() {
         try {

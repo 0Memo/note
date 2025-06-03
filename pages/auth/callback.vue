@@ -112,7 +112,7 @@
         }
         
         success.value = true
-        $toast.success('Google Calendar connected successfully!')
+        $toast.success(t('toast.calendar.success'))
         
         // Redirect to notes after a short delay
         setTimeout(() => {
