@@ -117,11 +117,11 @@ export default defineI18nConfig(() => ({
             homepage: {
                 title: "Página principal",
                 welcome: "¡Bienvenido a Memo's Notes!",
-                app: "Una app personal para tomar notas escribiendo o dictando mediante reconocimiento de voz. También puedes activar un efecto visual del ratón.",
-                actions: "Crea, edita o elimina notas, organizadas por fecha de creación o última actualización.",
-                calendar: "Sincroniza fácilmente notas seleccionadas con tu Google Calendar, donde aparecerán como eventos editables.",
-                organize: "En móvil, desliza una nota hacia la izquierda para sincronizarla o eliminarla rápidamente.",
-                access: "Consulta nuestra Política de Privacidad y Términos del Servicio en cualquier momento desde la app."
+                app: "Una app personal para tomar notas escribiendo o dictando mediante reconocimiento de voz. También puede activar un efecto visual del mouse.",
+                actions: "Cree, edite o elimine notas, organizadas por fecha de creación o última actualización.",
+                calendar: "Sincronice notas seleccionadas con su Google Calendar con facilidad, donde aparecerán como eventos editables.",
+                organize: "En el celular, deslice una nota hacia la izquierda para sincronizarla o eliminarla rápidamente.",
+                access: "Consulte nuestra Política de Privacidad y Términos del Servicio en cualquier momento desde la app."
             },
             register: {
                 subscription: "Subscripción gratuita",
