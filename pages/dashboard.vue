@@ -119,7 +119,7 @@
                         class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-500 text-white font-bold py-2 px-4 rounded transition-colors duration-200 flex items-center justify-center gap-2"
                     >
                         <svg v-if="!isConnectingCalendar" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
                         </svg>
                         <div v-else class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
                         {{ isConnectingCalendar ? 'Connecting...' : (calendarConnected ? 'Calendar Connected' : 'Connect Google Calendar') }}
@@ -204,6 +204,13 @@
                                             </div>
                                         </div>
 
+                                        <button 
+                                            @click.stop="confirmDeleteNote(note)"
+                                            class="md:flex hidden pl-8 items-center justify-center"
+                                        >
+                                            <TrashIcon class="text-red-500 font-bold hover:text-white" />
+                                        </button>
+
                                         <!-- Desktop Calendar Sync Button -->
                                         <button 
                                             v-if="isDesktop && calendarConnected" 
@@ -280,6 +287,13 @@
                                                 </span>
                                             </div>
                                         </div>
+
+                                        <button 
+                                            @click.stop="confirmDeleteNote(note)"
+                                            class="md:flex hidden pl-8 items-center justify-center"
+                                        >
+                                            <TrashIcon class="text-red-500 font-bold hover:text-white" />
+                                        </button>
 
                                         <!-- Desktop Calendar Sync Button -->
                                         <button 
@@ -359,6 +373,13 @@
                                                 </span>
                                             </div>
                                         </div>
+
+                                        <button 
+                                            @click.stop="confirmDeleteNote(note)"
+                                            class="md:flex hidden pl-8 items-center justify-center"
+                                        >
+                                            <TrashIcon class="text-red-500 font-bold hover:text-white" />
+                                        </button>
 
                                         <!-- Desktop Calendar Sync Button -->
                                         <button 
