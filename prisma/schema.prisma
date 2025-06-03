@@ -31,4 +31,6 @@ model Note {
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @default(now()) @updatedAt
   user              User          @relation(fields: [userId], references: [id])
+  lastSyncedText    String?       @db.Text
+  lastSyncedDate    DateTime?
 }

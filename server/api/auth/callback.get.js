@@ -29,9 +29,9 @@ export default defineEventHandler(async (event) => {
 
         // Store tokens in cookies
         setCookie(event, "google_access_token", tokenRes.access_token, {
-        httpOnly: true,
-        path: "/",
-        maxAge: tokenRes.expires_in || 3600, // Use the actual expiry time
+            httpOnly: true,
+            path: "/",
+            maxAge: tokenRes.expires_in || 3600, // Use the actual expiry time
         });
 
         // Store refresh token if available

@@ -3,7 +3,6 @@ import { jwtVerify } from 'jose'
 export default defineNuxtRouteMiddleware(async () =>{
     const jwt = useCookie('NoteJWT')
     if (import.meta.client) {
-        console.log("middleWare fired");
         if (!jwt.value) return navigateTo("/login");
 
         // 👇 Check JWT expiry on the client
@@ -30,7 +29,6 @@ export default defineNuxtRouteMiddleware(async () =>{
         const secret = new TextEncoder().encode(process.env.JWT_SECRET)
         // Verify the JWT
         const { payload } = await jwtVerify(jwt.value, secret)
-        console.log('Payload vérifié:', payload)
         // Optionally attach user info to the request context or useState
         const user = useState('user', () => payload)
 
