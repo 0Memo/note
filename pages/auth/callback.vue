@@ -3,8 +3,8 @@
         <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4 text-center">
             <div v-if="isProcessing" class="space-y-4">
             <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-            <h2 class="text-xl font-semibold text-gray-800">Connecting to Google Calendar...</h2>
-            <p class="text-gray-600">Please wait while we set up your calendar integration.</p>
+            <h2 class="text-xl font-semibold text-gray-800">{{ $t('toast.calendar.connecting') }}</h2>
+            <p class="text-gray-600">{{ $t('toast.calendar.wait') }}</p>
             </div>
             
             <div v-else-if="success" class="space-y-4">
@@ -13,13 +13,13 @@
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                 </svg>
             </div>
-            <h2 class="text-xl font-semibold text-gray-800">Successfully Connected!</h2>
-            <p class="text-gray-600">Your Google Calendar has been connected to Memo's Notes.</p>
+            <h2 class="text-xl font-semibold text-gray-800">{{ $t('toast.calendar.connected') }}</h2>
+            <p class="text-gray-600">{{ $t('toast.calendar.confirmation') }}</p>
             <button 
                 @click="goToNotes" 
                 class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200"
             >
-                Go to Notes
+            {{ $t('toast.calendar.toNotes') }}
             </button>
             </div>
             
@@ -29,20 +29,20 @@
                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
                 </svg>
             </div>
-            <h2 class="text-xl font-semibold text-gray-800">Connection Failed</h2>
+            <h2 class="text-xl font-semibold text-gray-800">{{ $t('toast.calendar.connectionFailed') }}</h2>
             <p class="text-gray-600">{{ errorMessage }}</p>
             <div class="space-x-4">
                 <button 
                 @click="retryConnection" 
                 class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200"
                 >
-                Try Again
+                {{ $t('toast.calendar.tryAgain') }}
                 </button>
                 <button 
                 @click="goToNotes" 
                 class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200"
                 >
-                Go to Notes
+                {{ $t('toast.calendar.toNotes') }}
                 </button>
             </div>
             </div>
@@ -52,12 +52,14 @@
 
 <script setup>
     import { ref, onMounted } from 'vue'
+    import { useI18n } from 'vue-i18n'
     import { useRoute, useRouter } from 'vue-router'
     import { useToast } from 'vue-toast-notification'
     import { useLocalePath } from '#i18n'
 
     const route = useRoute()
     const router = useRouter()
+    const { t } = useI18n()
     const localePath = useLocalePath()
     const $toast = useToast()
 

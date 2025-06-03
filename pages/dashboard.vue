@@ -485,6 +485,7 @@
                             </button>
                         </p>
                         <textarea
+                            ref="textarea"
                             v-model="updatedNote"
                             name="note"
                             id="note"

@@ -1,5 +1,7 @@
-import { defineEventHandler, readBody, getCookie } from "h3";
-import { $fetch } from "ofetch";
+import { defineEventHandler, readBody, getCookie } from "h3"
+import { $fetch } from "ofetch"
+import { jwtVerify } from "jose"
+import prisma from "../../utils/db"
 
 export default defineEventHandler(async (event) => {
     try {
@@ -14,11 +16,16 @@ export default defineEventHandler(async (event) => {
             return { error: "Not authenticated" };
         }
 
+        const { payload } = await jwtVerify(
+            jwtCookie,
+            new TextEncoder().encode(process.env.JWT_SECRET)
+        );
+        const userId = payload.userId;
+
         // Get the Google access token from localStorage
         // Since localStorage is client-side only, we need to pass the token in the request
         // We'll modify our client-side code to include the token in the request
         const googleAccessToken = event.node.req.headers["x-google-access-token"];
-
         if (!googleAccessToken) {
             return { error: "Google Calendar not connected", status: 401 };
         }
@@ -49,27 +56,38 @@ export default defineEventHandler(async (event) => {
         if (note.eventId) {
             // Update existing event
             response = await $fetch(`https://www.googleapis.com/calendar/v3/calendars/primary/events/${note.eventId}`, {
-            method: "PUT",
-            headers: {
-                Authorization: `Bearer ${googleAccessToken}`,
-                "Content-Type": "application/json"
-            },
-            body: eventPayload
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${googleAccessToken}`,
+                    "Content-Type": "application/json"
+                },
+                body: eventPayload
             });
             updated = true;
         } else {
             // Create new event
             response = await $fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events", {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${googleAccessToken}`,
-                "Content-Type": "application/json"
-            },
-            body: eventPayload
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${googleAccessToken}`,
+                    "Content-Type": "application/json"
+                },
+                body: eventPayload
             });
         }
 
-        console.log("Google Calendar API response:", response);
+        // ✅ Update the synced values in your DB
+        await prisma.note.update({
+            where: {
+                id: Number(note.id),
+                userId: userId,
+            },
+            data: {
+                lastSyncedText: note.content,
+                lastSyncedDate: new Date(note.date),
+                ...(note.eventId ? {} : { calendarEventId: response.id }) // Save event ID only if new
+            }
+        });
 
         return {
             success: true,
