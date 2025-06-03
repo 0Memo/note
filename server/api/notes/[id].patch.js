@@ -48,8 +48,11 @@ export default defineEventHandler(async (event) => {
             },
             data: {
                 text: body.updatedNote,
-                lastSyncedText: null,
-                lastSyncedDate: null,
+                // ❗ Only reset sync fields if text actually changed
+                ...(body.updatedNote !== noteToUpdate.text && {
+                    lastSyncedText: null,
+                    lastSyncedDate: null,
+                })
             }
         })
 

@@ -20,8 +20,16 @@ export default defineEventHandler(async(event) => {
         const userId = payload.userId;
 
         const notes = await prisma.note.findMany({
-            where: {
-            userId,
+            where: { userId },
+            orderBy: { updatedAt: "desc" },
+            select: {
+                id: true,
+                text: true,
+                createdAt: true,
+                updatedAt: true,
+                calendarEventId: true,
+                lastSyncedText: true,
+                lastSyncedDate: true,
             },
         });
         return notes

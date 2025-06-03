@@ -667,9 +667,9 @@
             }
 
             const alreadySynced =
-            note.calendarEventId &&
-            note.lastSyncedText === note.text &&
-            note.lastSyncedDate === note.updatedAt
+                note.calendarEventId &&
+                note.lastSyncedText === note.text &&
+                new Date(note.lastSyncedDate).toISOString() === new Date(note.updatedAt).toISOString();
 
             if (alreadySynced) {
                 $toast.error(t('toast.calendar.alreadySynced') || 'Note has already been synced to calendar')
@@ -708,7 +708,6 @@
             } else {
                 $toast.success(t('toast.calendar.sync') || 'Note synced to Google Calendar!');
             }
-            console.log('Calendar sync response:', response)
         } catch (error) {
             console.error('Error syncing to calendar:', error)
             
