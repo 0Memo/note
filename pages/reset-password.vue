@@ -99,7 +99,7 @@
                 </nuxt-link>
             </p>
 
-            <footer class="fixed bottom-0 md:bottom-8 left-10 gap-8 py-1 w-full flex items-center text-white bg-transparent text-md md:text-lg">
+            <footer class="fixed bottom-0 md:bottom-8 left-10 gap-8 py-1 w-full flex items-center text-white bg-transparent text-sm md:text-md">
                 <nuxt-link
                     :to="localePath('/privacy')"
                     class="whitespace-nowrap hover:underline"

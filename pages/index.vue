@@ -102,7 +102,7 @@
                 </button>
             </div>
 
-            <footer class="mt-10 sm:mt-14 md:mt-20 sm:-mb-2 md:-mb-0 w-full flex justify-between text-white bg-transparent text-sm md:text-md relative z-50">
+            <footer class="mt-10 sm:mt-14 md:mt-20 sm:-mb-2 md:-mb-0 w-full flex justify-between text-white bg-transparent text-[13px] md:text-md relative z-50">
                 <nuxt-link
                     :to="localePath('/privacy')"
                     class="whitespace-nowrap hover:underline"
