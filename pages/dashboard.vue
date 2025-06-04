@@ -670,7 +670,6 @@
             const alreadySynced =
                 note.calendarEventId &&
                 note.lastSyncedText === note.text &&
-                note.lastSyncedDate &&
                 new Date(note.lastSyncedDate).toISOString() === new Date(note.updatedAt).toISOString();
 
             if (alreadySynced) {
@@ -684,7 +683,7 @@
                 title: note.text?.substring(0, 50) || 'Untitled Note',
                 content: note.text || '',
                 date: new Date(note.updatedAt).toISOString(),
-                eventId: note.calendarEventId || null // important!
+                eventId: note.calendarEventId || null
             };
             
             const response = await $fetch('/api/notes/sync-calendar', {
