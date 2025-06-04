@@ -1,7 +1,5 @@
 import { defineEventHandler, readBody, getCookie } from "h3"
 import { $fetch } from "ofetch"
-import { jwtVerify } from "jose"
-import prisma from "../../utils/db"
 
 export default defineEventHandler(async (event) => {
     try {
@@ -15,12 +13,6 @@ export default defineEventHandler(async (event) => {
         if (!jwtCookie) {
             return { error: "Not authenticated" };
         }
-
-        const { payload } = await jwtVerify(
-            jwtCookie,
-            new TextEncoder().encode(process.env.JWT_SECRET)
-        );
-        const userId = payload.userId;
 
         // Get the Google access token from localStorage
         // Since localStorage is client-side only, we need to pass the token in the request
@@ -80,19 +72,6 @@ export default defineEventHandler(async (event) => {
                 }
             );
         }
-
-        // ✅ Update the synced values in your DB
-        await prisma.note.update({
-            where: {
-                id: Number(note.id),
-                userId: userId,
-            },
-            data: {
-                lastSyncedText: note.content,
-                lastSyncedDate: new Date(note.date),
-                ...(note.eventId ? {} : { calendarEventId: response.id }) // Save event ID only if new
-            }
-        });
 
         return {
             success: true,
