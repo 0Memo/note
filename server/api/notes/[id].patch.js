@@ -47,12 +47,20 @@ export default defineEventHandler(async (event) => {
             if (!body.lastSyncedText || !body.lastSyncedDate) {
                 throw createError({ statusCode: 400, statusMessage: "Missing sync metadata" })
             }
+
+            const parsedDate = new Date(Date.parse(body.lastSyncedDate));
+            if (isNaN(parsedDate.getTime())) {
+                throw createError({
+                    statusCode: 400,
+                    statusMessage: "Invalid date format",
+                });
+            }
     
             const updatedNote = await prisma.note.update({
                 where: { id: Number(id) },
                 data: {
                     lastSyncedText: body.lastSyncedText,
-                    lastSyncedDate: new Date(body.lastSyncedDate),
+                    lastSyncedDate: parsedDate,
                 },
             });
     

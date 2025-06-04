@@ -703,15 +703,24 @@
                 $toast.success(t('toast.calendar.sync'))
             }
 
-            await $fetch(`/api/notes/${note.id}`, {
+            console.log("Sending PATCH request with body:", {
+                updatedNote: note.text,
+                syncMetaOnly: true,
+                lastSyncedText: note.text,
+                lastSyncedDate: new Date(note.updatedAt),
+            });
+
+            const patchResponse = await $fetch(`/api/notes/${note.id}`, {
                 method: 'PATCH',
                 body: {
                     updatedNote: note.text,
                     syncMetaOnly: true,
                     lastSyncedText: note.text,
-                    lastSyncedDate: note.updatedAt,
+                    lastSyncedDate: note.updatedAt.toISOString(),
                 }
             })
+
+            console.log("PATCH response:", patchResponse);
 
         } catch (error) {
             console.error('Error syncing to calendar:', error)
