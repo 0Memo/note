@@ -16,6 +16,9 @@
             <h2 class="text-2xl font-semibold mt-4">{{ $t('modal.privacy.storage') }}</h2>
             <p class="mb-4">{{ $t('modal.privacy.token') }}</p>
 
+            <h2 class="text-2xl font-semibold mt-4">{{ $t('modal.privacy.retention') }}</h2>
+            <p>{{ $t('modal.privacy.deletion') }}</p>
+
             <h2 class="text-2xl font-semibold mt-4">{{ $t('modal.privacy.compliance') }}</h2>
             <p class="mb-4">{{ $t('modal.privacy.requirements') }}</p>
 
@@ -62,6 +65,9 @@
 
             <h2 class="text-2xl font-semibold mt-4">{{ $t('modal.privacy.storage') }}</h2>
             <p>{{ $t('modal.privacy.token') }}</p>
+
+            <h2 class="text-2xl font-semibold mt-4">{{ $t('modal.privacy.retention') }}</h2>
+            <p>{{ $t('modal.privacy.deletion') }}</p>
 
             <h2 class="text-2xl font-semibold mt-4">{{ $t('modal.privacy.compliance') }}</h2>
             <p>{{ $t('modal.privacy.requirements') }}</p>
