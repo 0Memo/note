@@ -666,10 +666,11 @@
                 return
             }
 
+            const updatedAtDate = new Date(note.updatedAt)
             const alreadySynced =
                 note.calendarEventId &&
                 note.lastSyncedText === note.text &&
-                new Date(note.lastSyncedDate).toISOString() === new Date(note.updatedAt).toISOString();
+                new Date(note.lastSyncedDate).toISOString() === updatedAtDate.toISOString();
 
             if (alreadySynced) {
                 $toast.error(t('toast.calendar.alreadySynced'))
@@ -695,7 +696,7 @@
             }
 
             note.lastSyncedText = note.text
-            note.lastSyncedDate = note.updatedAt
+            note.lastSyncedDate = updatedAtDate
 
             if (response.updated) {
                 $toast.success(t('toast.calendar.updated'))
@@ -707,7 +708,7 @@
                 updatedNote: note.text,
                 syncMetaOnly: true,
                 lastSyncedText: note.text,
-                lastSyncedDate: new Date(note.updatedAt),
+                lastSyncedDate: updatedAtDate.toISOString(),
             });
 
             const patchResponse = await $fetch(`/api/notes/${note.id}`, {
@@ -716,7 +717,7 @@
                     updatedNote: note.text,
                     syncMetaOnly: true,
                     lastSyncedText: note.text,
-                    lastSyncedDate: note.updatedAt.toISOString(),
+                    lastSyncedDate: updatedAtDate.toISOString(),
                 }
             })
 
