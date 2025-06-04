@@ -1,11 +1,11 @@
 import { jwtVerify } from "jose"
+import { readBody, getRouterParam, parseCookies, createError } from "h3";
 import prisma from "../../utils/db"
 
 export default defineEventHandler(async (event) => {
     try {
         const body = await readBody(event)
         const id = getRouterParam(event, 'id')
-
         const cookies = parseCookies(event)
         const token = cookies.NoteJWT
 
@@ -42,21 +42,37 @@ export default defineEventHandler(async (event) => {
             })
         }
 
+        if (body.syncMetaOnly) {
+            // ✅ Validate required fields are present
+            if (!body.lastSyncedText || !body.lastSyncedDate) {
+                throw createError({
+                    statusCode: 400,
+                    statusMessage: "Missing sync metadata",
+                });
+            }
+
+            await prisma.note.update({
+                where: { id: Number(id) },
+                data: {
+                    lastSyncedText: body.lastSyncedText,
+                    lastSyncedDate: new Date(body.lastSyncedDate),
+                },
+            });
+            return { success: true, message: "Sync metadata updated" };
+        }
+
         await prisma.note.update({
-            where: {
-                id: Number(id),
-            },
+            where: { id: Number(id) },
             data: {
                 text: body.updatedNote,
-                // ❗ Only reset sync fields if text actually changed
                 ...(body.updatedNote !== noteToUpdate.text && {
                     lastSyncedText: null,
                     lastSyncedDate: null,
-                })
-            }
-        })
+                }),
+            },
+        });
 
-        return { success: true };
+        return { success: true, message: "Note updated" };
     } catch (error) {
         console.error("Database error:", error);
         throw error

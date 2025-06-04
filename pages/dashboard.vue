@@ -703,6 +703,16 @@
                 $toast.success(t('toast.calendar.sync'))
             }
 
+            await $fetch(`/api/notes/${note.id}`, {
+                method: 'PATCH',
+                body: {
+                    updatedNote: note.text,
+                    syncMetaOnly: true, // 👈 We'll use this flag to avoid resetting sync fields
+                    lastSyncedText: note.text,
+                    lastSyncedDate: note.updatedAt,
+                }
+            })
+
         } catch (error) {
             console.error('Error syncing to calendar:', error)
             if (error.status === 401) {
