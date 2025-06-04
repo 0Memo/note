@@ -48,6 +48,9 @@ export default defineEventHandler(async (event) => {
                 throw createError({ statusCode: 400, statusMessage: "Missing sync metadata" })
             }
 
+            console.log("lastSyncedDate received:", body.lastSyncedDate);
+            console.log("parsedDate:", parsedDate, "typeof:", typeof parsedDate);
+
             const parsedDate = new Date(Date.parse(body.lastSyncedDate));
             if (isNaN(parsedDate.getTime())) {
                 throw createError({
@@ -57,12 +60,14 @@ export default defineEventHandler(async (event) => {
             }
 
             try {
+                const dataToUpdate = {
+                    lastSyncedText: String(body.lastSyncedText),
+                    lastSyncedDate: parsedDate,
+                };
+                console.log("Data passed to Prisma:", dataToUpdate);
                 const updatedNote = await prisma.note.update({
                     where: { id: Number(id) },
-                    data: {
-                        lastSyncedText: body.lastSyncedText,
-                        lastSyncedDate: parsedDate,
-                    },
+                    data: dataToUpdate,
                 });
     
                 return { success: true, message: "Sync metadata updated", updatedNote };
