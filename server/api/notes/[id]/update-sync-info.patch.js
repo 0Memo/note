@@ -29,13 +29,28 @@ export default defineEventHandler(async (event) => {
             throw createError({ statusCode: 403, statusMessage: "Accès refusé" });
         }
 
-        const updated = await prisma.note.update({
+        console.log("🛠️ Update sync info request for note ID:", id);
+        console.log("Body:", body);
+        console.log("lastSyncedText type:", typeof body.lastSyncedText);
+        console.log("lastSyncedDate raw:", body.lastSyncedDate);
+        console.log("lastSyncedDate as Date:", new Date(body.lastSyncedDate));
+
+        try {
+            const updated = await prisma.note.update({
             where: { id },
             data: {
                 lastSyncedText: body.lastSyncedText,
                 lastSyncedDate: new Date(body.lastSyncedDate),
             },
-        });
+            });
+        } catch (updateError) {
+            console.error("❌ Prisma update error:", updateError);
+            throw createError({
+                statusCode: 500,
+                statusMessage: "DB update failed: " + updateError.message,
+            });
+        }
+        
 
         console.log("✅ Note updated successfully:", updated);
 
