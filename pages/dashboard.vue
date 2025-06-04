@@ -697,19 +697,6 @@
             note.lastSyncedText = note.text
             note.lastSyncedDate = note.updatedAt
 
-            // ✅ Persist sync info in DB
-            const syncInfoResponse = await $fetch(`/api/notes/${note.id}/update-sync-info`, {
-                method: 'PATCH',
-                body: {
-                    lastSyncedText: note.text,
-                    lastSyncedDate: note.updatedAt
-                }
-            });
-            if (!syncInfoResponse?.success) {
-                throw new Error('DB sync update failed');
-            }
-            console.log('✅ Sync info saved to DB')
-
             if (response.updated) {
                 $toast.success(t('toast.calendar.updated'))
             } else {
@@ -724,7 +711,7 @@
                 localStorage.removeItem('googleCalendarToken')
                 $toast.error(t('toast.calendar.expired'))
             } else {
-                $toast.error(t('toast.calendarFailed') + (error.message || 'Unknown error'))
+                $toast.error(t('toast.noSpeech') + (error.message || 'Unknown error'))
             }
         } finally {
             syncingNoteId.value = null
