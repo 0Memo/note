@@ -697,6 +697,16 @@
             note.lastSyncedText = note.text
             note.lastSyncedDate = note.updatedAt
 
+            // ✅ Persist sync info in DB
+            await $fetch(`/api/notes/${note.id}/update-sync-info`, {
+                method: 'PATCH',
+                body: {
+                    lastSyncedText: note.text,
+                    lastSyncedDate: note.updatedAt
+                }
+            });
+            console.log('Sync info savec to DB')
+
             if (response.updated) {
                 $toast.success(t('toast.calendar.updated'))
             } else {
