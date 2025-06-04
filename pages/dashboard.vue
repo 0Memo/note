@@ -707,7 +707,7 @@
                 method: 'PATCH',
                 body: {
                     updatedNote: note.text,
-                    syncMetaOnly: true, // 👈 We'll use this flag to avoid resetting sync fields
+                    syncMetaOnly: true,
                     lastSyncedText: note.text,
                     lastSyncedDate: note.updatedAt,
                 }

@@ -30,51 +30,61 @@ export default defineEventHandler(async (event) => {
 
         if(!noteToUpdate) {
             throw createError({
-                status: 401,
+                status: 404,
                 statusMessage: 'Note inexistante',
             })
         }
 
         if(noteToUpdate.userId !== userId) {
             throw createError({
-                status: 401,
+                status: 403,
                 statusMessage: "Permission refusée",
             })
         }
 
+        // ✅ Only update sync metadata
         if (body.syncMetaOnly) {
-            // ✅ Validate required fields are present
             if (!body.lastSyncedText || !body.lastSyncedDate) {
-                throw createError({
-                    statusCode: 400,
-                    statusMessage: "Missing sync metadata",
-                });
+            throw createError({ statusCode: 400, statusMessage: "Missing sync metadata" })
             }
-
+    
             await prisma.note.update({
-                where: { id: Number(id) },
-                data: {
-                    lastSyncedText: body.lastSyncedText,
-                    lastSyncedDate: new Date(body.lastSyncedDate),
-                },
-            });
-            return { success: true, message: "Sync metadata updated" };
+            where: { id: Number(id) },
+            data: {
+                lastSyncedText: body.lastSyncedText,
+                lastSyncedDate: new Date(body.lastSyncedDate)
+            }
+            })
+    
+            return { success: true, message: "Sync metadata updated" }
         }
-
+    
+        // ✅ Full update: update text, and reset sync metadata if the note changed
+        if (typeof body.updatedNote !== 'string') {
+            throw createError({ statusCode: 400, statusMessage: "Missing updated note text" })
+        }
+    
+        const updatedText = body.updatedNote
+        const shouldResetSync =
+            updatedText !== noteToUpdate.text
+    
         await prisma.note.update({
             where: { id: Number(id) },
             data: {
-                text: body.updatedNote,
-                ...(body.updatedNote !== noteToUpdate.text && {
-                    lastSyncedText: null,
-                    lastSyncedDate: null,
-                }),
-            },
-        });
+            text: updatedText,
+            ...(shouldResetSync && {
+                lastSyncedText: null,
+                lastSyncedDate: null
+            })
+            }
+        })
 
         return { success: true, message: "Note updated" };
     } catch (error) {
-        console.error("Database error:", error);
-        throw error
+        console.error("PATCH /notes/[id] error:", error);
+        throw createError({
+            statusCode: 500,
+            statusMessage: error.message || "Erreur serveur",
+        });
     }
 })
