@@ -59,18 +59,24 @@ export default defineEventHandler(async (event) => {
                 });
             }
 
+            console.log("About to update note:", {
+                id: Number(id),
+                updatedNote: body.updatedNote,
+            });
+
             try {
-                const dataToUpdate = {
-                    lastSyncedText: String(body.lastSyncedText),
-                    lastSyncedDate: parsedDate,
-                };
-                console.log("Data passed to Prisma:", dataToUpdate);
                 const updatedNote = await prisma.note.update({
                     where: { id: Number(id) },
-                    data: dataToUpdate,
+                    data: {
+                        text: body.updatedNote,
+                        ...(body.updatedNote !== noteToUpdate.text && {
+                        lastSyncedText: null,
+                        lastSyncedDate: null,
+                        }),
+                    },
                 });
     
-                return { success: true, message: "Sync metadata updated", updatedNote };
+                return { success: true, message: "Note updated", updatedNote };
             } catch (prismaErr) {
                 console.error("Prisma update error:", prismaErr);
                 throw createError({ statusCode: 500, statusMessage: "Prisma update failed" });
