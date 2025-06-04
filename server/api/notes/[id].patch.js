@@ -55,16 +55,21 @@ export default defineEventHandler(async (event) => {
                     statusMessage: "Invalid date format",
                 });
             }
+
+            try {
+                const updatedNote = await prisma.note.update({
+                    where: { id: Number(id) },
+                    data: {
+                        lastSyncedText: body.lastSyncedText,
+                        lastSyncedDate: parsedDate,
+                    },
+                });
     
-            const updatedNote = await prisma.note.update({
-                where: { id: Number(id) },
-                data: {
-                    lastSyncedText: body.lastSyncedText,
-                    lastSyncedDate: parsedDate,
-                },
-            });
-    
-            return { success: true, message: "Sync metadata updated", updatedNote };
+                return { success: true, message: "Sync metadata updated", updatedNote };
+            } catch (prismaErr) {
+                console.error("Prisma update error:", prismaErr);
+                throw createError({ statusCode: 500, statusMessage: "Prisma update failed" });
+            }
         }
     
         await prisma.note.update({
