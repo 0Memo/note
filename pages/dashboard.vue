@@ -677,6 +677,7 @@
             }
 
             const eventData = {
+                id: note.id,
                 title: note.text?.substring(0, 50) || 'Untitled Note',
                 content: note.text || '',
                 date: new Date(note.updatedAt).toISOString(),
