@@ -666,11 +666,10 @@
                 return
             }
 
-            const updatedAtDate = new Date(note.updatedAt)
             const alreadySynced =
                 note.calendarEventId &&
                 note.lastSyncedText === note.text &&
-                new Date(note.lastSyncedDate).toISOString() === updatedAtDate.toISOString();
+                new Date(note.lastSyncedDate).toISOString() === new Date(note.updatedAt).toISOString();
 
             if (alreadySynced) {
                 $toast.error(t('toast.calendar.alreadySynced'))
@@ -678,7 +677,6 @@
             }
 
             const eventData = {
-                id: note.id,
                 title: note.text?.substring(0, 50) || 'Untitled Note',
                 content: note.text || '',
                 date: new Date(note.updatedAt).toISOString(),
@@ -696,32 +694,13 @@
             }
 
             note.lastSyncedText = note.text
-            note.lastSyncedDate = updatedAtDate
+            note.lastSyncedDate = note.updatedAt
 
             if (response.updated) {
                 $toast.success(t('toast.calendar.updated'))
             } else {
                 $toast.success(t('toast.calendar.sync'))
             }
-
-            console.log("Sending PATCH request with body:", {
-                updatedNote: note.text,
-                syncMetaOnly: true,
-                lastSyncedText: note.text,
-                lastSyncedDate: updatedAtDate.toISOString(),
-            });
-
-            const patchResponse = await $fetch(`/api/notes/${note.id}`, {
-                method: 'PATCH',
-                body: {
-                    updatedNote: note.text,
-                    syncMetaOnly: true,
-                    lastSyncedText: note.text,
-                    lastSyncedDate: updatedAtDate.toISOString(),
-                }
-            })
-
-            console.log("PATCH response:", patchResponse);
 
         } catch (error) {
             console.error('Error syncing to calendar:', error)
