@@ -666,62 +666,25 @@
                 $toast.error(t('toast.calendar.expired'))
                 return
             }
-
-            const alreadySynced =
-                note.calendarEventId &&
-                note.lastSyncedText === note.text &&
-                note.lastSyncedDate &&
-                new Date(note.lastSyncedDate).toISOString() === new Date(note.updatedAt).toISOString();
-
-            if (alreadySynced) {
-                $toast.error(t('toast.calendar.alreadySynced') || 'Note has already been synced to calendar')
-                return
-            }
-
-            // Prepare event data
-            const eventData = {
-                id: note.id,
-                title: note.text?.substring(0, 50) || 'Untitled Note',
-                content: note.text || '',
-                date: new Date(note.updatedAt).toISOString(),
-                eventId: note.calendarEventId || null // important!
-            };
             
             const response = await $fetch('/api/notes/sync-calendar', {
                 method: 'POST',
-                // Pass the token in the headers
                 headers: {
                     'x-google-access-token': token
                 },
-                body: {
-                    note: eventData
-                }
+                body: { note: { id: note.id } }
             })
 
-            // 🎯 If new event created, store the ID
-            if (response.eventId && !note.calendarEventId) {
-                note.calendarEventId = response.eventId;
-            }
-
-            note.lastSyncedText = note.text
-            note.lastSyncedDate = note.updatedAt
-
-            if (response.updated) {
-                $toast.success(t('toast.calendar.updated') || 'Note updated in calendar!');
-            } else {
-                $toast.success(t('toast.calendar.sync') || 'Note synced to Google Calendar!');
+            if (response.alreadySynced) {
+                $toast.error(t('toast.calendar.alreadySynced'))
+            } else if (response.success) {
+                $toast.success(response.updated ? t('toast.calendar.updated') : t('toast.calendar.sync'))
+                // Optionally reload the note list or update the synced fields
+                await refreshNotes() // or re-fetch that single note
             }
         } catch (error) {
-            console.error('Error syncing to calendar:', error)
-            
-            if (error.status === 401) {
-                calendarConnected.value = false
-                accessToken.value = null
-                localStorage.removeItem('googleCalendarToken')
-                $toast.error(t('toast.calendar.expired'))
-            } else {
-                $toast.error(t('toast.noSpeech') + (error.message || 'Unknown error'))
-            }
+            console.error('Sync error:', error)
+            $toast.error(t('toast.calendar.error') + (error.message || 'Unknown error'))
         } finally {
             syncingNoteId.value = null
         }

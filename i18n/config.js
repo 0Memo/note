@@ -114,7 +114,8 @@ export default defineI18nConfig(() => ({
                     refreshToken: "Jeton de rafraîchissement manquant. Veuillez révoquer l'accès et vous reconnecter.",
                     success: "Connexion réussie à Google Agenda !",
                     updated: "Note mise à jour dans Google Agenda!",
-                    alreadySynced: "Note déjà synchronisée avec le calendrier"
+                    alreadySynced: "Note déjà synchronisée avec le calendrier",
+                    error: "Erreur"
                 },
             },
             easter: "Joyeuses Pâques!",
@@ -233,7 +234,8 @@ export default defineI18nConfig(() => ({
                     refreshToken: "Falta el token de actualización. Por favor, revoque el acceso y vuelva a conectar.",
                     success: "¡Conexión exitosa con Google Calendar!",
                     updated: "¡Nota actualizada en Google Calendar!",
-                    alreadySynced: "Nota ya actualizada con el calendario"
+                    alreadySynced: "Nota ya actualizada con el calendario",
+                    error: "Error"
                 },
             },
             easter: "¡Felices Pascuas!",
@@ -352,7 +354,8 @@ export default defineI18nConfig(() => ({
                     refreshToken: "Token de atualização ausente. Revogue o acesso e conecte-se novamente.",
                     success: "Conectado com sucesso ao Google Agenda!",
                     updated: "Nota atualizada no Google Agenda!",
-                    alreadySynced: "Nota já atualizada com o calendário"
+                    alreadySynced: "Nota já atualizada com o calendário",
+                    error: "Erro"
                 },
             },
             easter: "Feliz Páscoa!",
@@ -471,7 +474,8 @@ export default defineI18nConfig(() => ({
                     refreshToken: "Missing refresh token. Please revoke access and reconnect.",
                     success: "Successfully connected to Google Calendar!",
                     updated: "Note updated in Google Calendar!",
-                    alreadySynced: "Note has already been synced to calendar"
+                    alreadySynced: "Note has already been synced to calendar",
+                    error: "Error"
                 },
             },
             easter: "Happy Easter!",
@@ -590,7 +594,8 @@ export default defineI18nConfig(() => ({
                     refreshToken: "Token di aggiornamento mancante. Revoca l'accesso e riconnettiti.",
                     success: "Connessione riuscita a Google Calendar!",
                     updated: "Nota aggiornata su Google Calendar!",
-                    alreadySynced: "Nota già sincronizzata con il calendario"
+                    alreadySynced: "Nota già sincronizzata con il calendario",
+                    error: "Errore"
                 }
             },
             easter: "Buona Pasqua!",
@@ -709,7 +714,8 @@ export default defineI18nConfig(() => ({
                     refreshToken: "Uppdateringstoken saknas. Återkalla åtkomsten och anslut igen.",
                     success: "Ansluten till Google Kalender!",
                     updated: "Anteckning uppdaterad i Google Kalender!",
-                    alreadySynced: "Anteckning redan synkats med kalendarn"
+                    alreadySynced: "Anteckning redan synkats med kalendarn",
+                    error: "Fel"
                 },
             },
             easter: "Glad Påsk!",
@@ -828,7 +834,8 @@ export default defineI18nConfig(() => ({
                     refreshToken: "Lipsește tokenul de reîmprospătare. Revocă accesul și reconectează-te.",
                     success: "Conectare reușită la Google Calendar!",
                     updated: "Notiță actualizată în Google Calendar!",
-                    alreadySynced: "Notiță deja sincronizată cu calendarul"
+                    alreadySynced: "Notiță deja sincronizată cu calendarul",
+                    error: "Eroare"
                 },
             },
             easter: "Paște Fericit!",

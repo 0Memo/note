@@ -30,13 +30,43 @@ export default defineEventHandler(async (event) => {
             return { error: "Google Calendar not connected", status: 401 };
         }
 
-        // Create calendar event (30 minutes duration)
-        const start = new Date(note.date);
-        const end = new Date(start.getTime() + 30 * 60 * 1000); // 30 mins later
+        const dbNote = await prisma.note.findUnique({
+            where: {
+                id: Number(note.id),
+            },
+            select: {
+                id: true,
+                text: true,
+                updatedAt: true,
+                lastSyncedText: true,
+                lastSyncedDate: true,
+                calendarEventId: true,
+                userId: true,
+            },
+        });
+
+        if (!dbNote || dbNote.userId !== userId) {
+            return { error: "Note not found or unauthorized", status: 403 };
+        }
+
+        // ✅ Compare DB values to see if sync is needed
+        const alreadySynced =
+            dbNote.calendarEventId &&
+            dbNote.lastSyncedText === dbNote.text &&
+            dbNote.lastSyncedDate &&
+            new Date(dbNote.lastSyncedDate).toISOString() === new Date(dbNote.updatedAt).toISOString()
+
+        if (alreadySynced) {
+            return { success: false, alreadySynced: true }
+        }
+
+        // Prepare Google Calendar event
+        const start = new Date(dbNote.updatedAt)
+        const end = new Date(start.getTime() + 30 * 60 * 1000)
 
         const eventPayload = {
-            summary: note.title,
-            description: note.content,
+            summary: dbNote.text?.substring(0, 50) || "Untitled Note",
+            description: dbNote.text,
             start: {
                 dateTime: start.toISOString(),
                 timeZone: "UTC",
@@ -49,13 +79,12 @@ export default defineEventHandler(async (event) => {
             status: "confirmed",
         };
 
-        let response;
-        let updated = false;
+        let response, updated = false;
 
         // 🔁 Update if eventId exists, otherwise insert new
-        if (note.eventId) {
+        if (dbNote.calendarEventId) {
             // Update existing event
-            response = await $fetch(`https://www.googleapis.com/calendar/v3/calendars/primary/events/${note.eventId}`, {
+            response = await $fetch(`https://www.googleapis.com/calendar/v3/calendars/primary/events/${dbNote.calendarEventId}`, {
                 method: "PUT",
                 headers: {
                     Authorization: `Bearer ${googleAccessToken}`,
@@ -80,12 +109,11 @@ export default defineEventHandler(async (event) => {
         await prisma.note.update({
             where: {
                 id: Number(note.id),
-                userId: userId,
             },
             data: {
-                lastSyncedText: note.content,
-                lastSyncedDate: new Date(note.date),
-                ...(note.eventId ? {} : { calendarEventId: response.id }) // Save event ID only if new
+                lastSyncedText: dbNote.text,
+                lastSyncedDate: dbNote.updatedAt,
+                ...(dbNote.calendarEventId ? {} : { calendarEventId: response.id })
             }
         });
 
@@ -93,8 +121,7 @@ export default defineEventHandler(async (event) => {
             success: true,
             updated,
             eventLink: response.htmlLink, // Direct link to the event
-            eventId: response.id,
-            calendarId: 'primary'
+            eventId: response.id
         };
     } catch (error) {
         console.error("Calendar sync error:", error);
