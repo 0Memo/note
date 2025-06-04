@@ -52,21 +52,21 @@ export default defineEventHandler(async (event) => {
         // ✅ Compare DB values to see if sync is needed
         const alreadySynced =
             dbNote.calendarEventId &&
-            dbNote.lastSyncedText === dbNote.text &&
+            dbNote.lastSyncedText === note.text &&
             dbNote.lastSyncedDate &&
-            new Date(dbNote.lastSyncedDate).toISOString() === new Date(dbNote.updatedAt).toISOString()
+            new Date(dbNote.lastSyncedDate).toISOString() === new Date(note.updatedAt).toISOString();
 
         if (alreadySynced) {
             return { success: false, alreadySynced: true }
         }
 
         // Prepare Google Calendar event
-        const start = new Date(dbNote.updatedAt)
+        const start = new Date(note.updatedAt)
         const end = new Date(start.getTime() + 30 * 60 * 1000)
 
         const eventPayload = {
-            summary: dbNote.text?.substring(0, 50) || "Untitled Note",
-            description: dbNote.text,
+            summary: note.text?.substring(0, 50) || "Untitled Note",
+            description: note.text,
             start: {
                 dateTime: start.toISOString(),
                 timeZone: "UTC",
@@ -111,8 +111,8 @@ export default defineEventHandler(async (event) => {
                 id: Number(note.id),
             },
             data: {
-                lastSyncedText: dbNote.text,
-                lastSyncedDate: dbNote.updatedAt,
+                lastSyncedText: note.text,
+                lastSyncedDate: new Date(note.updatedAt),
                 ...(dbNote.calendarEventId ? {} : { calendarEventId: response.id })
             }
         });

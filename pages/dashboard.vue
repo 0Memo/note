@@ -672,7 +672,13 @@
                 headers: {
                     'x-google-access-token': token
                 },
-                body: { note: { id: note.id } }
+                body: {
+                    note: {
+                        id: note.id,
+                        text: note.text,
+                        updatedAt: note.updatedAt,
+                    }
+                }
             })
 
             if (response.alreadySynced) {
