@@ -45,46 +45,34 @@ export default defineEventHandler(async (event) => {
         // ✅ Only update sync metadata
         if (body.syncMetaOnly) {
             if (!body.lastSyncedText || !body.lastSyncedDate) {
-            throw createError({ statusCode: 400, statusMessage: "Missing sync metadata" })
+                throw createError({ statusCode: 400, statusMessage: "Missing sync metadata" })
             }
     
-            await prisma.note.update({
-            where: { id: Number(id) },
-            data: {
-                lastSyncedText: body.lastSyncedText,
-                lastSyncedDate: new Date(body.lastSyncedDate)
-            }
-            })
+            const updatedNote = await prisma.note.update({
+                where: { id: Number(id) },
+                data: {
+                    lastSyncedText: body.lastSyncedText,
+                    lastSyncedDate: new Date(body.lastSyncedDate),
+                },
+            });
     
-            return { success: true, message: "Sync metadata updated" }
+            return { success: true, message: "Sync metadata updated", updatedNote };
         }
-    
-        // ✅ Full update: update text, and reset sync metadata if the note changed
-        if (typeof body.updatedNote !== 'string') {
-            throw createError({ statusCode: 400, statusMessage: "Missing updated note text" })
-        }
-    
-        const updatedText = body.updatedNote
-        const shouldResetSync =
-            updatedText !== noteToUpdate.text
     
         await prisma.note.update({
             where: { id: Number(id) },
             data: {
-            text: updatedText,
-            ...(shouldResetSync && {
-                lastSyncedText: null,
-                lastSyncedDate: null
-            })
-            }
-        })
+                text: body.updatedNote,
+                ...(body.updatedNote !== noteToUpdate.text && {
+                    lastSyncedText: null,
+                    lastSyncedDate: null,
+                }),
+            },
+        });
 
         return { success: true, message: "Note updated" };
     } catch (error) {
         console.error("PATCH /notes/[id] error:", error);
-        throw createError({
-            statusCode: 500,
-            statusMessage: error.message || "Erreur serveur",
-        });
+        throw createError({ statusCode: 500, statusMessage: error.message || "Internal server error" });
     }
 })
