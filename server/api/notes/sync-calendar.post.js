@@ -30,43 +30,13 @@ export default defineEventHandler(async (event) => {
             return { error: "Google Calendar not connected", status: 401 };
         }
 
-        const dbNote = await prisma.note.findUnique({
-            where: {
-                id: Number(note.id),
-            },
-            select: {
-                id: true,
-                text: true,
-                updatedAt: true,
-                lastSyncedText: true,
-                lastSyncedDate: true,
-                calendarEventId: true,
-                userId: true,
-            },
-        });
-
-        if (!dbNote || dbNote.userId !== userId) {
-            return { error: "Note not found or unauthorized", status: 403 };
-        }
-
-        // ✅ Compare DB values to see if sync is needed
-        const alreadySynced =
-            dbNote.calendarEventId &&
-            dbNote.lastSyncedText === note.text &&
-            dbNote.lastSyncedDate &&
-            new Date(dbNote.lastSyncedDate).toISOString() === new Date(note.updatedAt).toISOString();
-
-        if (alreadySynced) {
-            return { success: false, alreadySynced: true }
-        }
-
         // Prepare Google Calendar event
-        const start = new Date(note.updatedAt)
+        const start = new Date(note.date)
         const end = new Date(start.getTime() + 30 * 60 * 1000)
 
         const eventPayload = {
-            summary: note.text?.substring(0, 50) || "Untitled Note",
-            description: note.text,
+            summary: note.title,
+            description: note.content,
             start: {
                 dateTime: start.toISOString(),
                 timeZone: "UTC",
@@ -82,38 +52,45 @@ export default defineEventHandler(async (event) => {
         let response, updated = false;
 
         // 🔁 Update if eventId exists, otherwise insert new
-        if (dbNote.calendarEventId) {
+        if (note.eventId) {
             // Update existing event
-            response = await $fetch(`https://www.googleapis.com/calendar/v3/calendars/primary/events/${dbNote.calendarEventId}`, {
+            response = await $fetch(
+                `https://www.googleapis.com/calendar/v3/calendars/primary/events/${note.eventId}`,
+                {
                 method: "PUT",
                 headers: {
                     Authorization: `Bearer ${googleAccessToken}`,
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
-                body: eventPayload
-            });
+                body: eventPayload,
+                }
+            );
             updated = true;
         } else {
             // Create new event
-            response = await $fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events", {
+            response = await $fetch(
+                "https://www.googleapis.com/calendar/v3/calendars/primary/events",
+                {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${googleAccessToken}`,
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
-                body: eventPayload
-            });
+                body: eventPayload,
+                }
+            );
         }
 
         // ✅ Update the synced values in your DB
         await prisma.note.update({
             where: {
                 id: Number(note.id),
+                userId: userId,
             },
             data: {
-                lastSyncedText: note.text,
-                lastSyncedDate: new Date(note.updatedAt),
-                ...(dbNote.calendarEventId ? {} : { calendarEventId: response.id })
+                lastSyncedText: note.content,
+                lastSyncedDate: new Date(note.date),
+                ...(note.eventId ? {} : { calendarEventId: response.id }) // Save event ID only if new
             }
         });
 
@@ -121,7 +98,8 @@ export default defineEventHandler(async (event) => {
             success: true,
             updated,
             eventLink: response.htmlLink, // Direct link to the event
-            eventId: response.id
+            eventId: response.id,
+            calendarId: "primary",
         };
     } catch (error) {
         console.error("Calendar sync error:", error);
