@@ -1,8 +1,8 @@
 <template>
-    <div class="min-h-screen bg-[#1c044f] flex items-center justify-center">
+    <div class="min-h-screen bg-[#1d073a] flex items-center justify-center">
         <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4 text-center">
             <div v-if="isProcessing" class="space-y-4">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#1d073a] mx-auto"></div>
             <h2 class="text-xl font-semibold text-gray-800">{{ $t('toast.calendar.connecting') }}</h2>
             <p class="text-gray-600">{{ $t('toast.calendar.wait') }}</p>
             </div>
@@ -17,7 +17,7 @@
             <p class="text-gray-600">{{ $t('toast.calendar.confirmation') }}</p>
             <button 
                 @click="goToNotes" 
-                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200"
+                class="bg-[#1d073a] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200"
             >
             {{ $t('toast.calendar.toNotes') }}
             </button>
@@ -34,7 +34,7 @@
             <div class="space-x-4">
                 <button 
                 @click="retryConnection" 
-                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200"
+                class="bg-[#1d073a] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200"
                 >
                 {{ $t('toast.calendar.tryAgain') }}
                 </button>

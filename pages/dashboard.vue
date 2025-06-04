@@ -721,7 +721,7 @@
                 localStorage.removeItem('googleCalendarToken')
                 $toast.error(t('toast.calendar.expired'))
             } else {
-                $toast.error(t('toast.noSpeech') + (error.message || 'Unknown error'))
+                $toast.error(t('toast.calendar.failed') + (error.message || 'Unknown error'))
             }
         } finally {
             syncingNoteId.value = null
