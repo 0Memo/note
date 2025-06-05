@@ -9,6 +9,10 @@ export default defineEventHandler(async (event) => {
         const { note } = body; // note.title, note.content, note.date
         console.log("🔍 Incoming note for sync:", note);
 
+        if (!note.text?.trim()) {
+            return { success: false, error: "Note is empty" };
+        }
+
         // Get the access token from the cookie or localStorage
         // In Nuxt server routes, we need to get it from the cookie
         const jwtCookie = getCookie(event, "NoteJWT");
@@ -87,6 +91,12 @@ export default defineEventHandler(async (event) => {
             console.log(`✅ Note ${note.id} synced and updated.`);
         } catch (dbError) {
             console.error("❌ Failed to update note in DB:", dbError);
+            console.error("⚠️ Note update data:", {
+                id: note.id,
+                calendarEventId: response.id,
+                lastSyncedText: note.text,
+                lastSyncedDate: note.date,
+            });
         }
 
         return {
