@@ -7,6 +7,7 @@ export default defineEventHandler(async (event) => {
         // Get the note data from the request body
         const body = await readBody(event);
         const { note } = body; // note.title, note.content, note.date
+        console.log("🔍 Incoming note for sync:", note);
 
         // Get the access token from the cookie or localStorage
         // In Nuxt server routes, we need to get it from the cookie
@@ -79,7 +80,7 @@ export default defineEventHandler(async (event) => {
                 id: note.id,
             },
             data: {
-                calendarEventId: response.id, // for new events
+                calendarEventId: response.id,
                 lastSyncedText: note.text,
                 lastSyncedDate: new Date(note.date),
             },
