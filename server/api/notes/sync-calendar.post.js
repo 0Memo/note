@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
 
         const eventPayload = {
             summary: note.title,
-            description: note.content,
+            description: note.text,
             start: {
                 dateTime: start.toISOString(),
                 timeZone: "UTC",
@@ -80,7 +80,7 @@ export default defineEventHandler(async (event) => {
                 where: { id: note.id },
                 data: {
                     calendarEventId: response.id,
-                    lastSyncedText: note.content,
+                    lastSyncedText: note.text,
                     lastSyncedDate: new Date(note.date),
                 },
             });
