@@ -447,7 +447,7 @@ export default defineI18nConfig(() => ({
                     compliance: "5. Limited Use Compliance",
                     requirements: "Our app's use of Google APIs strictly adheres to Google's Limited Use requirements: We only access the information necessary to provide the features you request, and we never share or use your data for advertising or analytics.",                    
                     contact: "6. Contact",
-                    questions: "If you have any questions about this Privacy Policy or your data, you can contact us at: support@guillermo-projectmanagement.com",                    
+                    questions: "If you have any questions about this Privacy Policy or your data, you can contact us at",                    
                     back: "Back"
                 },
                 terms: {
