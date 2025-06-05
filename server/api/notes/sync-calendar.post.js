@@ -80,7 +80,7 @@ export default defineEventHandler(async (event) => {
                 where: { id: note.id },
                 data: {
                     calendarEventId: response.id,
-                    lastSyncedText: note.text,
+                    lastSyncedText: note.content,
                     lastSyncedDate: new Date(note.date),
                 },
             });
