@@ -464,10 +464,21 @@
                 <div class="text-white p-8 max-w-[40%] mx-auto font-bodyTest">
                     <div v-if="selectedNote && selectedNote.id">
                         <p class="mb-8 text-lg flex flex-row items-center gap-2">
-                            <button @click="startTranscription" class="focus:outline-none">
+                            <button @click="startTranscription" class="focus:outline-none pr-2">
                                 <Microphone class="w-8 h-8 text-white font-bold relative -top-2"/>
                             </button>
-                            &nbsp;{{ formatOrToday(selectedNote.updatedAt) }}
+                            <span v-if="!editingDate">{{ formattedDisplayedDate }}</span>
+                            <input
+                                v-else
+                                type="date"
+                                v-model="manualDate"
+                                @change="saveDateChange"
+                                class="text-black rounded px-2 py-1"
+                            />
+                            
+                            <button @click="toggleDateEdit" class="text-xs underline">
+                                {{ editingDate ? $t('notes.cancel') : $t('notes.change') }}
+                            </button>
 
                             <!-- Calendar sync button for current note -->
                             <button 
@@ -596,6 +607,8 @@
     const isSyncing = ref(false)
     const accessToken = ref(null)
     const syncingNoteId = ref(null)
+    const editingDate = ref(false)
+    const manualDate = ref('')
 
     function toggleMouseTrail() {
         showMouseTrail.value = !showMouseTrail.value
@@ -615,6 +628,33 @@
         calendarConnected.value = false
         accessToken.value = null
         navigateTo(localePath('/login'))
+    }
+
+    const formattedDisplayedDate = computed(() => {
+        const dateToShow = selectedNote.value?.eventDate || selectedNote.value?.updatedAt
+        return formatOrToday(dateToShow)
+    })
+
+    function toggleDateEdit() {
+        editingDate.value = !editingDate.value
+        manualDate.value = selectedNote.value?.eventDate?.slice(0, 10) || selectedNote.value?.updatedAt?.slice(0, 10)
+    }
+
+    async function saveDateChange() {
+        try {
+            await $fetch('/api/notes/update-date', {
+            method: 'POST',
+            body: {
+                id: selectedNote.value.id,
+                eventDate: manualDate.value,
+            },
+            })
+
+            selectedNote.value.eventDate = manualDate.value
+            editingDate.value = false
+        } catch (err) {
+            console.error('Failed to save custom date:', err)
+        }
     }
 
     const confirmDeleteNote = (note) => {

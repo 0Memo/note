@@ -34,4 +34,5 @@ model Note {
   lastSyncedText    String?       @db.Text
   lastSyncedDate    DateTime?
   calendarEventId   String?
+  eventDate         DateTime?
 }

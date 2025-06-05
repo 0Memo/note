@@ -48,7 +48,9 @@ export default defineI18nConfig(() => ({
                 nothing: "Pas de note encore...",
                 today: "Aujourd'hui",
                 yesterday: "Hier",
-                previous: "Préc."
+                previous: "Préc.",
+                change: "Changer",
+                cancel: "Annuler"
             },
             modal: {
                 definitive: "Suppression définitive",
@@ -170,7 +172,9 @@ export default defineI18nConfig(() => ({
                 nothing: "Nada todavía...",
                 today: "Hoy",
                 yesterday: "Ayer",
-                previous: "Prev."
+                previous: "Prev.",
+                change: "Cambiar",
+                cancel: "Cancelar"
             },
             modal: {
                 definitive: "Supresión definitiva",
@@ -292,7 +296,9 @@ export default defineI18nConfig(() => ({
                 nothing: "Nada ainda...",
                 today: "Hoje",
                 yesterday: "Ontem",
-                previous: "Prev."
+                previous: "Prev.",
+                change: "Alterar",
+                cancel: "Cancelar"
             },
             modal: {
                 definitive: "Supressão definitiva",
@@ -414,7 +420,9 @@ export default defineI18nConfig(() => ({
                 nothing: "Nothing yet...",
                 today: "Today",
                 yesterday: "Yesterday",
-                previous: "Prev."
+                previous: "Prev.",
+                change: "Change",
+                cancel: "Cancel"
             },
             modal: {
                 definitive: "Definitive deletion",
@@ -452,7 +460,7 @@ export default defineI18nConfig(() => ({
                 welcome: "Welcome!",
                 passwordChange: "Password has been changed successful!",
                 linkError: "Invalid or expired link",
-                resetLink: "Un lien de rénitialisation a été envoyé à votre adresse mail",
+                resetLink: "A reset link has been sent to your e-mail",
                 noteDeletion: "Note has been successfully deleted!",
                 deletionError: "Error deleting the note",
                 speechError: "Speech recognition failed.",
@@ -536,7 +544,9 @@ export default defineI18nConfig(() => ({
                 nothing: "Ancora niente...",
                 today: "Oggi",
                 yesterday: "Ieri",
-                previous: "Prec."
+                previous: "Prec.",
+                change: "Modifica",
+                cancel: "Annulla"
             },
             modal: {
                 definitive: "Eliminazione definitiva",
@@ -658,7 +668,9 @@ export default defineI18nConfig(() => ({
                 nothing: "Inget än...",
                 today: "Idag",
                 yesterday: "Igår",
-                previous: "Föreg."
+                previous: "Föreg.",
+                change: "Ändra",
+                cancel: "Avbryt"
             },
             modal: {
                 definitive: "Slutgiltig radering",
@@ -780,7 +792,9 @@ export default defineI18nConfig(() => ({
                 nothing: "Încă nimic...",
                 today: "Astăzi",
                 yesterday: "Ieri",
-                previous: "Anter."
+                previous: "Anter.",
+                change: "Schimbă",
+                cancel: "Anulează"
             },
             modal: {
                 definitive: "Ștergere definitivă",
