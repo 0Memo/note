@@ -1,5 +1,6 @@
 import { defineEventHandler, readBody, getCookie } from "h3"
 import { $fetch } from "ofetch"
+import prisma from "../../utils/db";
 
 export default defineEventHandler(async (event) => {
     try {
@@ -72,6 +73,17 @@ export default defineEventHandler(async (event) => {
                 }
             );
         }
+
+        await prisma.note.update({
+            where: {
+                id: note.id,
+            },
+            data: {
+                calendarEventId: response.id, // for new events
+                lastSyncedText: note.text,
+                lastSyncedDate: new Date(note.date),
+            },
+        });
 
         return {
             success: true,
