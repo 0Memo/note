@@ -75,16 +75,19 @@ export default defineEventHandler(async (event) => {
             );
         }
 
-        await prisma.note.update({
-            where: {
-                id: note.id,
-            },
-            data: {
-                calendarEventId: response.id,
-                lastSyncedText: note.text,
-                lastSyncedDate: new Date(note.date),
-            },
-        });
+        try {
+            await prisma.note.update({
+                where: { id: note.id },
+                data: {
+                    calendarEventId: response.id,
+                    lastSyncedText: note.text,
+                    lastSyncedDate: new Date(note.date),
+                },
+            });
+            console.log(`✅ Note ${note.id} synced and updated.`);
+        } catch (dbError) {
+            console.error("❌ Failed to update note in DB:", dbError);
+        }
 
         return {
             success: true,
