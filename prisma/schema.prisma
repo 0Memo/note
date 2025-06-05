@@ -33,4 +33,5 @@ model Note {
   user              User          @relation(fields: [userId], references: [id])
   lastSyncedText    String?       @db.Text
   lastSyncedDate    DateTime?
+  calendarEventId   String?
 }
