@@ -463,22 +463,36 @@
             <template v-else>
                 <div class="text-white p-8 max-w-[40%] mx-auto font-bodyTest">
                     <div v-if="selectedNote && selectedNote.id">
-                        <p class="mb-8 text-lg flex flex-row items-center gap-2">
+                        <div class="mb-8 text-lg flex flex-row items-center gap-2">
                             <button @click="startTranscription" class="focus:outline-none pr-2">
                                 <Microphone class="w-8 h-8 text-white font-bold relative -top-2"/>
                             </button>
-                            <span v-if="!editingDate">{{ formattedDisplayedDate }}</span>
-                            <input
-                                v-else
-                                type="date"
-                                v-model="manualDate"
-                                @change="saveDateChange"
-                                class="text-black rounded px-2 py-1"
-                            />
-                            
-                            <button @click="toggleDateEdit" class="text-xs underline">
-                                {{ editingDate ? $t('notes.cancel') : $t('notes.change') }}
-                            </button>
+                            <div class="flex items-center gap-2 min-h-[36px] w-full">
+                                <template v-if="editingDate">
+                                    <div class="flex flex-col space-y-1 md:space-y-0 md:flex-row h-[36px]">
+                                        <input
+                                            type="date"
+                                            v-model="manualDate"
+                                            class="text-black rounded px-2 w-50 -ml-2 md:ml-0 md:w-full md: mr-4"
+                                        />
+                                    
+                                        <button @click="saveDateChange" class="text-xs text-green-500 underline md:mr-2">
+                                            {{ $t('notes.confirm') }}
+                                        </button>
+                                        <button @click="toggleDateEdit" class="text-xs text-red-500 underline">
+                                            {{ $t('notes.cancel') }}
+                                        </button>
+                                    </div>
+                                </template>
+                                <template v-else>
+                                    <div class="h-[36px]">
+                                        <span>{{ formattedDisplayedDate }}</span>
+                                        <button @click="toggleDateEdit" class="text-xs underline md:ml-2">
+                                            {{ $t('notes.change') }}
+                                        </button>
+                                    </div>
+                                </template>
+                            </div>
 
                             <!-- Calendar sync button for current note -->
                             <button 
@@ -494,7 +508,7 @@
                                 <div v-else class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                                 <span class="hidden sm:inline">Sync to Calendar</span>
                             </button>
-                        </p>
+                        </div>
                         <textarea
                             ref="textarea"
                             v-model="updatedNote"
@@ -637,23 +651,40 @@
 
     function toggleDateEdit() {
         editingDate.value = !editingDate.value
-        manualDate.value = selectedNote.value?.eventDate?.slice(0, 10) || selectedNote.value?.updatedAt?.slice(0, 10)
+        if (editingDate.value) {
+            manualDate.value =
+            selectedNote.value?.eventDate?.slice(0, 10) ||
+            new Date().toISOString().slice(0, 10)
+        }
     }
 
     async function saveDateChange() {
-        try {
-            await $fetch('/api/notes/update-date', {
-            method: 'POST',
-            body: {
-                id: selectedNote.value.id,
-                eventDate: manualDate.value,
-            },
-            })
+        const id = selectedNote.value?.id;
+        const rawDate = manualDate.value;
 
-            selectedNote.value.eventDate = manualDate.value
-            editingDate.value = false
+        if (!id || !rawDate || isNaN(new Date(rawDate).getTime())) {
+            console.warn("Missing ID or date");
+            alert("Cannot update: missing note ID or date.");
+            return;
+        }
+        const isoDate = new Date(rawDate).toISOString();
+
+        console.log("🟡 Sending date update:", { id, eventDate: isoDate });
+
+        try {
+            const updatedNote = await $fetch("/api/notes/update-date", {
+                method: "POST",
+                body: {
+                    id,
+                    eventDate: isoDate,
+                },
+            });
+
+            selectedNote.value.eventDate = updatedNote.eventDate;
+            editingDate.value = false;
         } catch (err) {
-            console.error('Failed to save custom date:', err)
+            console.error("❌ Failed to save custom date:", err);
+            alert("Failed to update date. Check console.");
         }
     }
 
@@ -1234,9 +1265,7 @@
             date.getMonth() === today.getMonth() &&
             date.getDate() === today.getDate()
 
-        if (isSameDay) {
-            return t('notes.today') // Localized "Today"
-        }
+        if (isSameDay) return t('notes.today')
 
         const year = date.getFullYear()
         const month = String(date.getMonth() + 1).padStart(2, '0')

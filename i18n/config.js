@@ -50,7 +50,8 @@ export default defineI18nConfig(() => ({
                 yesterday: "Hier",
                 previous: "Préc.",
                 change: "Changer",
-                cancel: "Annuler"
+                cancel: "Annuler",
+                confirm: "Confirmer"
             },
             modal: {
                 definitive: "Suppression définitive",
@@ -174,7 +175,8 @@ export default defineI18nConfig(() => ({
                 yesterday: "Ayer",
                 previous: "Prev.",
                 change: "Cambiar",
-                cancel: "Cancelar"
+                cancel: "Cancelar",
+                confirm: "Confirmar"
             },
             modal: {
                 definitive: "Supresión definitiva",
@@ -298,7 +300,8 @@ export default defineI18nConfig(() => ({
                 yesterday: "Ontem",
                 previous: "Prev.",
                 change: "Alterar",
-                cancel: "Cancelar"
+                cancel: "Cancelar",
+                confirm: "Confirmar"
             },
             modal: {
                 definitive: "Supressão definitiva",
@@ -422,7 +425,8 @@ export default defineI18nConfig(() => ({
                 yesterday: "Yesterday",
                 previous: "Prev.",
                 change: "Change",
-                cancel: "Cancel"
+                cancel: "Cancel",
+                confirm: "Confirm"
             },
             modal: {
                 definitive: "Definitive deletion",
@@ -546,7 +550,8 @@ export default defineI18nConfig(() => ({
                 yesterday: "Ieri",
                 previous: "Prec.",
                 change: "Modifica",
-                cancel: "Annulla"
+                cancel: "Annulla",
+                confirm: "Conferma"
             },
             modal: {
                 definitive: "Eliminazione definitiva",
@@ -670,7 +675,8 @@ export default defineI18nConfig(() => ({
                 yesterday: "Igår",
                 previous: "Föreg.",
                 change: "Ändra",
-                cancel: "Avbryt"
+                cancel: "Avbryt",
+                confirm: "Bekräfta"
             },
             modal: {
                 definitive: "Slutgiltig radering",
@@ -794,7 +800,8 @@ export default defineI18nConfig(() => ({
                 yesterday: "Ieri",
                 previous: "Anter.",
                 change: "Schimbă",
-                cancel: "Anulează"
+                cancel: "Anulează",
+                confirm: "Confirmă"
             },
             modal: {
                 definitive: "Ștergere definitivă",

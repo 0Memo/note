@@ -58,13 +58,32 @@ export async function createNote(userId, text = "") {
     return notes[0];
 }
 
-export async function updateNote(id, text) {
-    await pool.execute(
-        "UPDATE Note SET text = ?, updatedAt = NOW() WHERE id = ?",
-        [text, id]
-    );
+export async function updateNote(id, data = {}) {
+    const fields = [];
+    const values = [];
 
-    // Get the updated note
+    if (data.text !== undefined) {
+        fields.push("text = ?");
+        values.push(data.text);
+    }
+
+    if (data.eventDate !== undefined) {
+        fields.push("eventDate = ?");
+        values.push(data.eventDate);
+    }
+
+    // Always update the updatedAt field
+    fields.push("updatedAt = NOW()");
+
+    if (fields.length === 0) {
+        throw new Error("No valid fields to update");
+    }
+
+    values.push(id);
+
+    const sql = `UPDATE Note SET ${fields.join(", ")} WHERE id = ?`;
+    await pool.execute(sql, values);
+
     const [notes] = await pool.execute("SELECT * FROM Note WHERE id = ?", [id]);
     return notes[0];
 }
@@ -154,7 +173,7 @@ const prisma = {
         },
         update: async ({ where, data }) => {
             if (where.id) {
-                return updateNote(where.id, data.text);
+                return updateNote(where.id, data);
             }
             return null;
         },
