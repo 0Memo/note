@@ -46,6 +46,7 @@ export default defineI18nConfig(() => ({
             notes: {
                 text: "༄ Veuillez saisir votre texte ici... ༄",
                 nothing: "Pas de note encore...",
+                upcoming: "Proch.",
                 today: "Aujourd'hui",
                 yesterday: "Hier",
                 previous: "Préc.",
@@ -171,6 +172,7 @@ export default defineI18nConfig(() => ({
             notes: {
                 text: "༄ Escriba su texto aquí... ༄",
                 nothing: "Nada todavía...",
+                upcoming: "Próx.",
                 today: "Hoy",
                 yesterday: "Ayer",
                 previous: "Prev.",
@@ -296,6 +298,7 @@ export default defineI18nConfig(() => ({
             notes: {
                 text: "༄ Escreva seu texto aqui... ༄",
                 nothing: "Nada ainda...",
+                upcoming: "Próx.",
                 today: "Hoje",
                 yesterday: "Ontem",
                 previous: "Prev.",
@@ -421,6 +424,7 @@ export default defineI18nConfig(() => ({
             notes: {
                 text: "༄ Write your text here... ༄",
                 nothing: "Nothing yet...",
+                upcoming: "Next",
                 today: "Today",
                 yesterday: "Yesterday",
                 previous: "Prev.",
@@ -546,6 +550,7 @@ export default defineI18nConfig(() => ({
             notes: {
                 text: "༄ Scrivi qui il tuo testo... ༄",
                 nothing: "Ancora niente...",
+                upcoming: "Pross.",
                 today: "Oggi",
                 yesterday: "Ieri",
                 previous: "Prec.",
@@ -671,6 +676,7 @@ export default defineI18nConfig(() => ({
             notes: {
                 text: "༄ Skriv in din text här... ༄",
                 nothing: "Inget än...",
+                upcoming: "Nästa",
                 today: "Idag",
                 yesterday: "Igår",
                 previous: "Föreg.",
@@ -796,6 +802,7 @@ export default defineI18nConfig(() => ({
             notes: {
                 text: "༄ Scrie-ți textul aici... ༄",
                 nothing: "Încă nimic...",
+                upcoming: "Următ.",
                 today: "Astăzi",
                 yesterday: "Ieri",
                 previous: "Anter.",
