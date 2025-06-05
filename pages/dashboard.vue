@@ -195,7 +195,7 @@
                                 <div class="flex-1 min-w-0">
                                     <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
                                     <div class="space-x-4 truncate">
-                                    <span>{{ formatDate(note.eventDate) }}</span>
+                                    <span>{{ formatDate(note.eventDate || note.updatedAt) }}</span>
                                     <span
                                         v-if="note.text.length > 50"
                                         class="text-zinc-400"
@@ -303,7 +303,7 @@
                                             <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
                                             <div class="space-x-4 truncate">
                                                 <span>
-                                                    {{ formatDate(note.updatedAt) }}
+                                                    {{ formatDate(note.eventDate || note.updatedAt) }}
                                                 </span>
                                                 <span
                                                     v-if="note.text.length > 50"
@@ -388,7 +388,7 @@
                                         <div class="flex-1 min-w-0">
                                             <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
                                             <div class="space-x-4 truncate">
-                                                <span>{{ formatDate(note.updatedAt) }}</span>
+                                                <span>{{ formatDate(note.eventDate || note.updatedAt) }}</span>
                                                 <span
                                                     v-if="note.text.length > 50"
                                                     class="text-zinc-400"
@@ -473,7 +473,7 @@
                                             <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
                                             <div class="space-x-4 truncate">
                                                 <span>
-                                                    {{ formatDate(note.updatedAt) }}
+                                                    {{ formatDate(note.eventDate || note.updatedAt) }}
                                                 </span>
                                                 <span
                                                     v-if="note.text.length > 50"
@@ -1186,6 +1186,10 @@
         $toast.info(t('toast.listening'))
     }
 
+    function getReferenceDate(note) {
+        return note.eventDate ? new Date(note.eventDate) : new Date(note.updatedAt)
+    }
+
     const upcomingNotes = computed(() => {
         if (!Array.isArray(notes.value)) return []
 
@@ -1194,51 +1198,40 @@
 
         return notes.value
             .filter((note) => {
-                const noteDate = new Date(note.updatedAt)
-                return noteDate > today
+                const noteDate = getReferenceDate(note);
+                return noteDate > today && noteDate.toDateString() !== todayStr;
             })
-            .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+            .sort((a, b) => getReferenceDate(b) - getReferenceDate(a));
     })
 
-    function getReferenceDate(note) {
-        return note.eventDate ? new Date(note.eventDate) : new Date(note.updatedAt)
-    }
+    const todayStr = new Date().toDateString();
+    const yesterdayDate = new Date();
+    yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+    const yesterdayStr = yesterdayDate.toDateString();
 
     const todaysNotes = computed(() => {
-        if (!Array.isArray(notes.value)) return []
-        const todayStr = new Date().toDateString()
+        if (!Array.isArray(notes.value)) return [];
         return notes.value
-            .filter((note) => {
-                const noteDate = getReferenceDate(note)
-                return noteDate.toDateString() === todayStr
-            })
-            .sort((a, b) => getReferenceDate(b) - getReferenceDate(a))
-    })
+            .filter(note => getReferenceDate(note).toDateString() === todayStr)
+            .sort((a, b) => getReferenceDate(b) - getReferenceDate(a));
+    });
 
     const yesterdaysNotes = computed(() => {
-        if (!Array.isArray(notes.value)) return []
-        const yesterday = new Date()
-        yesterday.setDate(yesterday.getDate() - 1)
-        const yesterdayStr = yesterday.toDateString()
+        if (!Array.isArray(notes.value)) return [];
         return notes.value
-            .filter((note) => {
-                const noteDate = getReferenceDate(note)
-                return noteDate.toDateString() === yesterdayStr
-            })
-            .sort((a, b) => getReferenceDate(b) - getReferenceDate(a))
-    })
+            .filter(note => getReferenceDate(note).toDateString() === yesterdayStr)
+            .sort((a, b) => getReferenceDate(b) - getReferenceDate(a));
+    });
 
     const earlierNotes = computed(() => {
-        if (!Array.isArray(notes.value)) return []
-        const yesterday = new Date()
-        yesterday.setDate(yesterday.getDate() - 1)
+        if (!Array.isArray(notes.value)) return [];
         return notes.value
-            .filter((note) => {
-                const noteDate = getReferenceDate(note)
-                return noteDate < yesterday && noteDate.toDateString() !== yesterday.toDateString()
+            .filter(note => {
+            const noteDate = getReferenceDate(note);
+            return noteDate < yesterdayDate && noteDate.toDateString() !== yesterdayStr;
             })
-            .sort((a, b) => getReferenceDate(b) - getReferenceDate(a))
-    })
+            .sort((a, b) => getReferenceDate(b) - getReferenceDate(a));
+    });
 
     const connectGoogleCalendar = () => {
         isConnectingCalendar.value = true
