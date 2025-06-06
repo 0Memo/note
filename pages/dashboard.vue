@@ -975,6 +975,7 @@
 
             note.lastSyncedText = note.text
             note.lastSyncedDate = new Date().toISOString()
+            note.synced = true
 
             if (response.updated) {
                 $toast.success(t('toast.calendar.updated'))
