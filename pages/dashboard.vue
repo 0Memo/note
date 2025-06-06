@@ -174,9 +174,9 @@
                         </p>
                         <div class="text-zinc-200 mt-3 ml-2 text-sm font-bodyTest">
                             <div
-                            v-for="note in upcomingNotes"
-                            :key="note.id"
-                            class="relative overflow-hidden"
+                                v-for="note in upcomingNotes"
+                                :key="note.id"
+                                class="relative overflow-hidden"
                             >
                             <!-- Swipeable note container -->
                             <div
@@ -192,49 +192,49 @@
                                 @touchend="handleTouchEnd(note.id)"
                             >
                                 <div class="flex items-center justify-between">
-                                <div class="flex-1 min-w-0">
-                                    <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
-                                    <div class="space-x-4 truncate">
-                                    <span>{{ formatDate(note.eventDate || note.updatedAt) }}</span>
-                                    <span
-                                        v-if="note.text.length > 50"
-                                        class="text-zinc-400"
-                                    >
-                                        ...{{ note.text.substring(30, 50) }}
-                                    </span>
+                                    <div class="flex-1 min-w-0">
+                                        <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
+                                        <div class="space-x-4 truncate">
+                                            <span>{{ formatDate(note.eventDate) }}</span>
+                                            <span
+                                                v-if="note.text.length > 50"
+                                                class="text-zinc-400"
+                                            >
+                                                ...{{ note.text.substring(30, 50) }}
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Desktop buttons -->
-                                <button
-                                    @click.stop="confirmDeleteNote(note)"
-                                    class="md:flex hidden pl-8 items-center justify-center"
-                                >
-                                    <TrashIcon class="text-red-500 font-bold hover:text-white" />
-                                </button>
-
-                                <button
-                                    v-if="isDesktop && calendarConnected"
-                                    @click.stop="syncNoteToCalendar(note)"
-                                    :disabled="syncingNoteId === note.id"
-                                    class="ml-2 p-1 text-blue-400 hover:text-blue-300 transition-colors duration-200"
-                                    title="Sync to Google Calendar"
-                                >
-                                    <svg
-                                    v-if="syncingNoteId !== note.id"
-                                    class="w-4 h-4"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
+                                    <!-- Desktop buttons -->
+                                    <button
+                                        @click.stop="confirmDeleteNote(note)"
+                                        class="md:flex hidden pl-8 items-center justify-center"
                                     >
-                                    <path
-                                        d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"
-                                    />
-                                    </svg>
-                                    <div
-                                    v-else
-                                    class="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-400"
-                                    ></div>
-                                </button>
+                                        <TrashIcon class="text-red-500 font-bold hover:text-white" />
+                                    </button>
+
+                                    <button
+                                        v-if="isDesktop && calendarConnected"
+                                        @click.stop="syncNoteToCalendar(note)"
+                                        :disabled="syncingNoteId === note.id"
+                                        class="ml-2 p-1 text-blue-400 hover:text-blue-300 transition-colors duration-200"
+                                        title="Sync to Google Calendar"
+                                    >
+                                        <svg
+                                        v-if="syncingNoteId !== note.id"
+                                        class="w-4 h-4"
+                                        fill="currentColor"
+                                        viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"
+                                            />
+                                        </svg>
+                                        <div
+                                        v-else
+                                        class="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-400"
+                                        ></div>
+                                    </button>
                                 </div>
                             </div>
 
@@ -273,6 +273,90 @@
                                 <TrashIcon class="text-white" />
                                 </button>
                             </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="text-md font-semibold text-zinc-200 mt-3 font-h1">{{ $t('notes.tomorrow') }}</p>
+                        <div class="text-zinc-200 mt-3 ml-2 text-sm font-bodyTest">
+                            <div
+                                v-for="note in tomorrowsNotes"
+                                :key="note.id"
+                                class="relative overflow-hidden"
+                            >
+                                <!-- Swipeable note container -->
+                                <div
+                                    class="rounded-lg p-4 cursor-pointer transition-transform duration-300"
+                                    :class="{
+                                        'bg-[#581C87]': note.id === selectedNote.id,
+                                        'hover:bg-[#581C87]/50': note.id !== selectedNote.id,
+                                        'transform translate-x-[-70px]': swipedNoteId === note.id && !isDesktop,
+                                    }"
+                                    @click="handleNoteClick(note)"
+                                    @touchstart="handleTouchStart($event, note.id)"
+                                    @touchmove="handleTouchMove($event, note.id)"
+                                    @touchend="handleTouchEnd(note.id)"
+                                >
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex-1 min-w-0">
+                                            <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
+                                            <div class="space-x-4 truncate">
+                                                <span>{{ formatDate(note.eventDate) }}</span>
+                                                <span
+                                                    v-if="note.text.length > 50"
+                                                    class="text-zinc-400"
+                                                >...{{ note.text.substring(30, 50) }}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <button 
+                                            @click.stop="confirmDeleteNote(note)"
+                                            class="md:flex hidden pl-8 items-center justify-center"
+                                        >
+                                            <TrashIcon class="text-red-500 font-bold hover:text-white" />
+                                        </button>
+
+                                        <!-- Desktop Calendar Sync Button -->
+                                        <button 
+                                            v-if="isDesktop && calendarConnected" 
+                                            @click.stop="syncNoteToCalendar(note)"
+                                            :disabled="syncingNoteId === note.id"
+                                            class="ml-2 p-1 text-blue-400 hover:text-blue-300 transition-colors duration-200"
+                                            title="Sync to Google Calendar"
+                                        >
+                                        <svg v-if="syncingNoteId !== note.id" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                                        </svg>
+                                        <div v-else class="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-400"></div>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Delete button revealed on swipe - ONLY on mobile -->
+                                <div v-if="!isDesktop && swipedNoteId === note.id" class="absolute top-0 right-0 bottom-0 flex">
+                                    <!-- Calendar Sync Button -->
+                                    <button 
+                                        v-if="calendarConnected"
+                                        @click.stop="syncNoteToCalendar(note)"
+                                        :disabled="syncingNoteId === note.id"
+                                        class="w-[70px] bg-blue-600 flex items-center justify-center"
+                                        title="Sync to Calendar"
+                                    >
+                                        <svg v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                                        </svg>
+                                        <div v-else class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                                    </button>
+                                    <!-- Delete Button -->
+                                    <button 
+                                        @click.stop="confirmDeleteNote(note)"
+                                        class="w-[70px] bg-red-600 flex items-center justify-center"
+                                    >
+                                        <TrashIcon class="text-white" />
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -582,13 +666,13 @@
                                         <input
                                             type="date"
                                             v-model="manualDate"
-                                            class="text-black rounded px-2 w-50 -ml-2 md:ml-0 md:w-full md: mr-4"
+                                            class="text-black rounded px-2 w-[138px] -ml-4 md:ml-0 md:w-full md:mr-4"
                                         />
                                     
-                                        <button @click="saveDateChange" class="text-xs text-green-500 underline md:mr-2">
+                                        <button @click="saveDateChange" class="-ml-4 md:ml-0 text-xs text-green-500 underline md:mr-2">
                                             {{ $t('notes.confirm') }}
                                         </button>
-                                        <button @click="toggleDateEdit" class="text-xs text-red-500 underline">
+                                        <button @click="toggleDateEdit" class="-ml-4 md:ml-0 text-xs text-red-500 underline">
                                             {{ $t('notes.cancel') }}
                                         </button>
                                     </div>
@@ -608,7 +692,7 @@
                                 v-if="calendarConnected" 
                                 @click="syncNoteToCalendar(selectedNote)"
                                 :disabled="syncingNoteId === selectedNote.id"
-                                class="ml-4 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-500 text-white text-sm px-3 py-1 rounded transition-colors duration-200 flex items-center gap-1"
+                                class="ml-6 md:ml-0 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-500 text-white text-sm px-2 py-1 rounded transition-colors duration-200 flex items-center gap-1"
                                 title="Sync this note to Google Calendar"
                             >
                                 <svg v-if="syncingNoteId !== selectedNote.id" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -616,6 +700,7 @@
                                 </svg>
                                 <div v-else class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                                 <span class="hidden sm:inline">Sync to Calendar</span>
+                                <span class="inline sm:hidden">Sync</span>
                             </button>
                         </div>
                         <textarea
@@ -1193,21 +1278,33 @@
     const upcomingNotes = computed(() => {
         if (!Array.isArray(notes.value)) return []
 
-        const today = new Date()
-        today.setHours(0, 0, 0, 0)
+        const dayAfterTomorrow = new Date();
+        dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+        dayAfterTomorrow.setHours(0, 0, 0, 0);
 
         return notes.value
             .filter((note) => {
                 const noteDate = getReferenceDate(note);
-                return noteDate > today && noteDate.toDateString() !== todayStr;
+                return noteDate > dayAfterTomorrow;
             })
             .sort((a, b) => getReferenceDate(b) - getReferenceDate(a));
     })
 
+    
     const todayStr = new Date().toDateString();
     const yesterdayDate = new Date();
+    const tomorrowDate = new Date();
     yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+    tomorrowDate.setDate(tomorrowDate.getDate() + 1);
     const yesterdayStr = yesterdayDate.toDateString();
+    const tomorrowStr = tomorrowDate.toDateString();
+
+    const tomorrowsNotes = computed(() => {
+        if (!Array.isArray(notes.value)) return [];
+        return notes.value
+            .filter(note => getReferenceDate(note).toDateString() === tomorrowStr)
+            .sort((a, b) => getReferenceDate(b) - getReferenceDate(a));
+    });
 
     const todaysNotes = computed(() => {
         if (!Array.isArray(notes.value)) return [];
