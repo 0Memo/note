@@ -703,12 +703,6 @@
                                 <span class="inline sm:hidden">Sync</span>
                             </button>
                         </div>
-                        <div v-if="selectedNote?.synced" class="text-green-400 mt-2 text-sm">
-                        ✅ Synced to Calendar on {{ selectedNote.lastSyncedDate?.toLocaleString() }}
-                        </div>
-                        <div v-else class="text-yellow-400 mt-2 text-sm">
-                        ⚠️ Not synced or modified
-                        </div>
                         <textarea
                             ref="textarea"
                             v-model="updatedNote"
