@@ -72,6 +72,16 @@ export async function updateNote(id, data = {}) {
         values.push(data.eventDate);
     }
 
+    if (data.lastSyncedText !== undefined) {
+        fields.push("lastSyncedText = ?");
+        values.push(data.lastSyncedText);
+    }
+
+    if (data.lastSyncedDate !== undefined) {
+        fields.push("lastSyncedDate = ?");
+        values.push(new Date(data.lastSyncedDate));
+    }
+
     // Always update the updatedAt field
     fields.push("updatedAt = NOW()");
 

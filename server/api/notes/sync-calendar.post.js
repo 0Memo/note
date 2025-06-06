@@ -83,7 +83,7 @@ export default defineEventHandler(async (event) => {
             await prisma.note.update({
                 where: { id: note.id },
                 data: {
-                    calendarEventId: response.id,
+                    calendarEventId: response.id || note.calendarEventId,
                     lastSyncedText: note.text,
                     lastSyncedDate: new Date(note.date),
                 },
