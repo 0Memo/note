@@ -703,6 +703,12 @@
                                 <span class="inline sm:hidden">Sync</span>
                             </button>
                         </div>
+                        <div v-if="selectedNote?.synced" class="text-green-400 mt-2 text-sm">
+                        ✅ Synced to Calendar on {{ selectedNote.lastSyncedDate?.toLocaleString() }}
+                        </div>
+                        <div v-else class="text-yellow-400 mt-2 text-sm">
+                        ⚠️ Not synced or modified
+                        </div>
                         <textarea
                             ref="textarea"
                             v-model="updatedNote"
@@ -1431,7 +1437,17 @@
             const fetchedNotes = await $fetch('/api/notes')
 
             // ✅ FIXED: Ensure we always set an array
-            notes.value = Array.isArray(fetchedNotes) ? fetchedNotes : []
+            notes.value = Array.isArray(fetchedNotes)
+                ? fetchedNotes.map(note => ({
+                    ...note,
+                    // ✅ Enrich each note with sync status
+                    synced: !!note.calendarEventId && note.lastSyncedText === note.text,
+                    lastSyncedDate: note.lastSyncedDate ? new Date(note.lastSyncedDate) : null,
+                    createdAt: note.createdAt ? new Date(note.createdAt) : null,
+                    updatedAt: note.updatedAt ? new Date(note.updatedAt) : null,
+                }))
+                : []
+
             console.log("📥 Notes fetched:", fetchedNotes)
             if (notes.value.length > 0) {
                 selectedNote.value = notes.value
