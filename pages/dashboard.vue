@@ -929,10 +929,9 @@
                 return
             }
 
-            const alreadySynced = note.calendarEventId &&
-                note.lastSyncedText === note.text &&
-                note.lastSyncedDate &&
-                new Date(note.lastSyncedDate).toISOString() === new Date(note.updatedAt).toISOString()
+            const alreadySynced =
+                note.calendarEventId &&
+                note.lastSyncedText === note.text
 
             if (alreadySynced) {
                 $toast.error(t('toast.calendar.alreadySynced'))
