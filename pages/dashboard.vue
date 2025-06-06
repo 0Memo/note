@@ -680,7 +680,6 @@
                                 <template v-else>
                                     <div class="h-[36px]">
                                         <span>{{ formattedDisplayedDate }}</span>
-                                        <span v-if="isNoteAlreadySynced(selectedNote)">✅</span>
                                         <button @click="toggleDateEdit" class="text-xs underline md:ml-2">
                                             {{ $t('notes.change') }}
                                         </button>
@@ -785,6 +784,7 @@
     const localePath = useLocalePath()
     const router = useRouter()
     const $toast = useToast()
+
     const updatedNote = ref('')
     const notes = ref([])
     const selectedNote = ref({})
@@ -815,16 +815,6 @@
     const syncingNoteId = ref(null)
     const editingDate = ref(false)
     const manualDate = ref('')
-
-    const isNoteAlreadySynced = (note) => {
-        if (!note) return false
-        return (
-            note.calendarEventId &&
-            note.lastSyncedText === note.text &&
-            note.lastSyncedDate &&
-            new Date(note.lastSyncedDate).toISOString() === new Date(note.updatedAt).toISOString()
-        )
-    }
 
     function toggleMouseTrail() {
         showMouseTrail.value = !showMouseTrail.value
@@ -922,7 +912,6 @@
         }
     }
 
-
     // Enhanced sync function
     const syncNoteToCalendar = async (note) => {
         if (!calendarConnected.value) {
@@ -940,7 +929,12 @@
                 return
             }
 
-            if (isNoteAlreadySynced(note)) {
+            const alreadySynced = note.calendarEventId &&
+                note.lastSyncedText === note.text &&
+                note.lastSyncedDate &&
+                new Date(note.lastSyncedDate).toISOString() === new Date(note.updatedAt).toISOString()
+
+            if (alreadySynced) {
                 $toast.error(t('toast.calendar.alreadySynced'))
                 return
             }
