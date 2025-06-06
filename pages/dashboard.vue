@@ -963,6 +963,11 @@
                 body: { note: eventData }
             })
 
+            if (response.alreadySynced) {
+                $toast.error(t('toast.calendar.alreadySynced'))
+                return
+            }
+
             // Save eventId back to the note
             if (response.eventId && !note.calendarEventId) {
                 note.calendarEventId = response.eventId
@@ -1427,6 +1432,7 @@
 
             // ✅ FIXED: Ensure we always set an array
             notes.value = Array.isArray(fetchedNotes) ? fetchedNotes : []
+            console.log("📥 Notes fetched:", fetchedNotes)
             if (notes.value.length > 0) {
                 selectedNote.value = notes.value
                     .slice()

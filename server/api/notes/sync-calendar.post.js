@@ -13,6 +13,22 @@ export default defineEventHandler(async (event) => {
             return { success: false, error: "Note is empty" };
         }
 
+        const existingNote = await prisma.note.findUnique({
+            where: { id: note.id },
+        });
+
+        if (
+            existingNote &&
+            existingNote.calendarEventId &&
+            existingNote.lastSyncedText === note.text
+            ) {
+            return {
+                success: false,
+                error: "Note is already synced and unchanged.",
+                alreadySynced: true,
+            };
+        }
+
         // Get the access token from the cookie or localStorage
         // In Nuxt server routes, we need to get it from the cookie
         const jwtCookie = getCookie(event, "NoteJWT");
