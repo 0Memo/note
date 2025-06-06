@@ -785,7 +785,6 @@
     const localePath = useLocalePath()
     const router = useRouter()
     const $toast = useToast()
-
     const updatedNote = ref('')
     const notes = ref([])
     const selectedNote = ref({})
