@@ -931,11 +931,23 @@
                 return
             }
 
+            const alreadySynced =
+                note.calendarEventId &&
+                note.lastSyncedText === note.text
+
+            if (alreadySynced) {
+                $toast.error(t('toast.calendar.alreadySynced'))
+                return
+            }
+
             // Decide which date to sync to
             const today = new Date().toISOString().slice(0, 10) // yyyy-mm-dd
-            const eventDate = note.eventDate ? new Date(note.eventDate).toISOString().slice(0, 10) : null
+            const eventDate = note.eventDate
+                ? new Date(note.eventDate).toISOString().slice(0, 10)
+                : null
 
-            const finalDateISO = (eventDate && eventDate !== today) 
+            const finalDateISO =
+                eventDate && eventDate !== today
                 ? new Date(note.eventDate).toISOString()
                 : new Date(note.updatedAt).toISOString()
 
@@ -958,12 +970,14 @@
                 note.calendarEventId = response.eventId
             }
 
+            note.lastSyncedText = note.text
+            note.lastSyncedDate = new Date().toISOString()
+
             if (response.updated) {
                 $toast.success(t('toast.calendar.updated'))
             } else {
                 $toast.success(t('toast.calendar.sync'))
             }
-
         } catch (error) {
             console.error('Error syncing to calendar:', error)
             if (error.status === 401) {
