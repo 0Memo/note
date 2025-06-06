@@ -680,6 +680,7 @@
                                 <template v-else>
                                     <div class="h-[36px]">
                                         <span>{{ formattedDisplayedDate }}</span>
+                                        <span v-if="isNoteAlreadySynced(note)">✅</span>
                                         <button @click="toggleDateEdit" class="text-xs underline md:ml-2">
                                             {{ $t('notes.change') }}
                                         </button>
@@ -793,8 +794,6 @@
     const isDesktop = ref(false)
     const isLoading = ref(true)
     const showConfirmModal = ref(false)
-    const showPrivacyModal = ref(false)
-    const showTermsModal = ref(false)
     const noteToDelete = ref(null)
     // Swipe functionality
     const swipedNoteId = ref(null)
@@ -817,6 +816,13 @@
     const syncingNoteId = ref(null)
     const editingDate = ref(false)
     const manualDate = ref('')
+
+    const isNoteAlreadySynced = (note) => {
+        return note.calendarEventId &&
+            note.lastSyncedText === note.text &&
+            note.lastSyncedDate &&
+            new Date(note.lastSyncedDate).toISOString() === new Date(note.updatedAt).toISOString()
+    }
 
     function toggleMouseTrail() {
         showMouseTrail.value = !showMouseTrail.value
@@ -914,6 +920,7 @@
         }
     }
 
+
     // Enhanced sync function
     const syncNoteToCalendar = async (note) => {
         if (!calendarConnected.value) {
@@ -931,11 +938,7 @@
                 return
             }
 
-            const alreadySynced =
-                note.calendarEventId &&
-                note.lastSyncedText === note.text
-
-            if (alreadySynced) {
+            if (isNoteAlreadySynced(note)) {
                 $toast.error(t('toast.calendar.alreadySynced'))
                 return
             }
