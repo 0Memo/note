@@ -931,21 +931,19 @@
                 return
             }
 
-            const alreadySynced =
-                note.calendarEventId &&
-                note.lastSyncedText === note.text &&
-                new Date(note.lastSyncedDate).toISOString() === new Date(note.updatedAt).toISOString();
+            // Decide which date to sync to
+            const today = new Date().toISOString().slice(0, 10) // yyyy-mm-dd
+            const eventDate = note.eventDate ? new Date(note.eventDate).toISOString().slice(0, 10) : null
 
-            if (alreadySynced) {
-                $toast.error(t('toast.calendar.alreadySynced'))
-                return
-            }
+            const finalDateISO = (eventDate && eventDate !== today) 
+                ? new Date(note.eventDate).toISOString()
+                : new Date(note.updatedAt).toISOString()
 
             const eventData = {
                 id: note.id,
                 title: note.text?.substring(0, 50) || 'Untitled Note',
                 text: note.text || '',
-                date: new Date(note.updatedAt).toISOString(),
+                date: finalDateISO,
                 eventId: note.calendarEventId || null
             }
 
@@ -955,12 +953,10 @@
                 body: { note: eventData }
             })
 
+            // Save eventId back to the note
             if (response.eventId && !note.calendarEventId) {
                 note.calendarEventId = response.eventId
             }
-
-            note.lastSyncedText = note.text
-            note.lastSyncedDate = note.updatedAt
 
             if (response.updated) {
                 $toast.success(t('toast.calendar.updated'))
