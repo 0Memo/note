@@ -680,7 +680,7 @@
                                 <template v-else>
                                     <div class="h-[36px]">
                                         <span>{{ formattedDisplayedDate }}</span>
-                                        <span v-if="isNoteAlreadySynced(note)">✅</span>
+                                        <span v-if="isNoteAlreadySynced(selectedNote)">✅</span>
                                         <button @click="toggleDateEdit" class="text-xs underline md:ml-2">
                                             {{ $t('notes.change') }}
                                         </button>
@@ -818,10 +818,13 @@
     const manualDate = ref('')
 
     const isNoteAlreadySynced = (note) => {
-        return note.calendarEventId &&
+        if (!note) return false
+        return (
+            note.calendarEventId &&
             note.lastSyncedText === note.text &&
             note.lastSyncedDate &&
             new Date(note.lastSyncedDate).toISOString() === new Date(note.updatedAt).toISOString()
+        )
     }
 
     function toggleMouseTrail() {
