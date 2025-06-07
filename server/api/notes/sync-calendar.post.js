@@ -17,17 +17,12 @@ export default defineEventHandler(async (event) => {
             where: { id: note.id },
         });
 
-        if (!existingNote) {
-            return { success: false, error: "Note not found" };
-        }
-
-        const lastSyncedText = existingNote.lastSyncedText;
-        const lastSyncedDate = new Date( existingNote.lastSyncedDate ).toISOString();
-        const currentNoteDate = new Date(note.date).toISOString();
-        const textChanged = note.text !== lastSyncedText;
-        const dateChanged = currentNoteDate !== lastSyncedDate;
-
-        if (!textChanged && !dateChanged) {
+        if (
+            existingNote &&
+            existingNote.calendarEventId &&
+            existingNote.lastSyncedText === note.text &&
+            new Date(existingNote.lastSyncedDate).toISOString() === new Date(note.date).toISOString()
+        ) {
             return {
                 success: false,
                 error: "Note is already synced and unchanged.",
@@ -71,10 +66,16 @@ export default defineEventHandler(async (event) => {
 
         let response, updated = false;
 
-        if (existingNote.calendarEventId) {
-            // 🔄 Update the existing event
+        const isSameDate =
+            existingNote?.lastSyncedDate &&
+            new Date(existingNote.lastSyncedDate).toISOString() ===
+                new Date(note.date).toISOString();
+
+        // 🔁 Update if eventId exists, otherwise insert new
+        if (note.eventId && isSameDate) {
+            // Update existing event
             response = await $fetch(
-                `https://www.googleapis.com/calendar/v3/calendars/primary/events/${existingNote.calendarEventId}`,
+                `https://www.googleapis.com/calendar/v3/calendars/primary/events/${note.eventId}`,
                 {
                 method: "PUT",
                 headers: {
@@ -86,7 +87,7 @@ export default defineEventHandler(async (event) => {
             );
             updated = true;
         } else {
-            // 🆕 Create a new event
+            // Create new event
             response = await $fetch(
                 "https://www.googleapis.com/calendar/v3/calendars/primary/events",
                 {
@@ -100,15 +101,46 @@ export default defineEventHandler(async (event) => {
             );
         }
 
-        await prisma.note.update({
-            where: { id: note.id },
-            data: {
-                calendarEventId: response.id || existingNote.calendarEventId,
+        if (syncType === "update" && calendarEventId) {
+            // Update existing event
+            await calendar.events.patch({
+                calendarId: "primary",
+                eventId: calendarEventId,
+                requestBody: {
+                    summary: note.text,
+                },
+            });
+
+            // Update lastSyncedText in DB (but not lastSyncedDate)
+            await prisma.note.update({
+                where: { id: note.id },
+                data: {
+                    lastSyncedText: note.text,
+                    // Don't update lastSyncedDate, since date wasn't changed
+                },
+            });
+        }
+
+        try {
+            await prisma.note.update({
+                where: { id: note.id },
+                data: {
+                    calendarEventId: response.id || note.calendarEventId,
+                    lastSyncedText: note.text,
+                    lastSyncedDate: new Date(note.date),
+                },
+            });
+            console.log(`✅ Note ${note.id} synced and updated.`);
+        } catch (dbError) {
+            console.error("❌ Failed to update note in DB:", dbError);
+            console.error("⚠️ Note update data:", {
+                id: note.id,
+                calendarEventId: response.id,
                 lastSyncedText: note.text,
-                lastSyncedDate: new Date(note.date),
-            },
-        });
-        console.log(`✅ Note ${note.id} ${updated ? "updated" : "synced"}.`);
+                lastSyncedDate: note.date,
+            });
+        }
+
         return {
             success: true,
             updated,

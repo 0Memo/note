@@ -929,14 +929,15 @@
                 return
             }
 
-            const alreadySynced =
-                note.calendarEventId &&
-                note.lastSyncedText === note.text
+            const textChanged = note.text !== note.lastSyncedText
+            const dateChanged = note.date !== note.lastSyncedDate
 
-            if (alreadySynced) {
+            if (!textChanged && !dateChanged) {
                 $toast.error(t('toast.calendar.alreadySynced'))
                 return
             }
+
+            const syncType = dateChanged ? 'new' : 'update'
 
             // Decide which date to sync to
             const today = new Date().toISOString().slice(0, 10) // yyyy-mm-dd
@@ -954,7 +955,8 @@
                 title: note.text?.substring(0, 50) || 'Untitled Note',
                 text: note.text || '',
                 date: finalDateISO,
-                eventId: note.calendarEventId || null
+                eventId: note.calendarEventId || null,
+                syncType
             }
 
             const response = await $fetch('/api/notes/sync-calendar', {
@@ -974,6 +976,7 @@
             }
 
             note.lastSyncedText = note.text
+            if (dateChanged) note.lastSyncedDate = note.date
             note.lastSyncedDate = new Date().toISOString()
             note.synced = true
 
