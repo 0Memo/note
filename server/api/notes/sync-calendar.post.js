@@ -17,12 +17,17 @@ export default defineEventHandler(async (event) => {
             where: { id: note.id },
         });
 
-        if (
-            existingNote &&
-            existingNote.calendarEventId &&
-            existingNote.lastSyncedText === note.text &&
-            new Date(existingNote.lastSyncedDate).toISOString() === new Date(note.date).toISOString()
-        ) {
+        if (!existingNote) {
+            return { success: false, error: "Note not found" };
+        }
+
+        const lastSyncedText = existingNote.lastSyncedText;
+        const lastSyncedDate = new Date( existingNote.lastSyncedDate ).toISOString();
+        const currentNoteDate = new Date(note.date).toISOString();
+        const textChanged = note.text !== lastSyncedText;
+        const dateChanged = currentNoteDate !== lastSyncedDate;
+
+        if (!textChanged && !dateChanged) {
             return {
                 success: false,
                 error: "Note is already synced and unchanged.",
@@ -66,16 +71,10 @@ export default defineEventHandler(async (event) => {
 
         let response, updated = false;
 
-        const isSameDate =
-            existingNote?.lastSyncedDate &&
-            new Date(existingNote.lastSyncedDate).toISOString() ===
-                new Date(note.date).toISOString();
-
-        // 🔁 Update if eventId exists, otherwise insert new
-        if (note.eventId && isSameDate) {
-            // Update existing event
+        if (existingNote.calendarEventId) {
+            // 🔄 Update the existing event
             response = await $fetch(
-                `https://www.googleapis.com/calendar/v3/calendars/primary/events/${note.eventId}`,
+                `https://www.googleapis.com/calendar/v3/calendars/primary/events/${existingNote.calendarEventId}`,
                 {
                 method: "PUT",
                 headers: {
@@ -87,7 +86,7 @@ export default defineEventHandler(async (event) => {
             );
             updated = true;
         } else {
-            // Create new event
+            // 🆕 Create a new event
             response = await $fetch(
                 "https://www.googleapis.com/calendar/v3/calendars/primary/events",
                 {
@@ -101,26 +100,15 @@ export default defineEventHandler(async (event) => {
             );
         }
 
-        try {
-            await prisma.note.update({
-                where: { id: note.id },
-                data: {
-                    calendarEventId: response.id || note.calendarEventId,
-                    lastSyncedText: note.text,
-                    lastSyncedDate: new Date(note.date),
-                },
-            });
-            console.log(`✅ Note ${note.id} synced and updated.`);
-        } catch (dbError) {
-            console.error("❌ Failed to update note in DB:", dbError);
-            console.error("⚠️ Note update data:", {
-                id: note.id,
-                calendarEventId: response.id,
+        await prisma.note.update({
+            where: { id: note.id },
+            data: {
+                calendarEventId: response.id || existingNote.calendarEventId,
                 lastSyncedText: note.text,
-                lastSyncedDate: note.date,
-            });
-        }
-
+                lastSyncedDate: new Date(note.date),
+            },
+        });
+        console.log(`✅ Note ${note.id} ${updated ? "updated" : "synced"}.`);
         return {
             success: true,
             updated,
