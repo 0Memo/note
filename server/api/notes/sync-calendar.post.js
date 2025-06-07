@@ -20,8 +20,9 @@ export default defineEventHandler(async (event) => {
         if (
             existingNote &&
             existingNote.calendarEventId &&
-            existingNote.lastSyncedText === note.text
-            ) {
+            existingNote.lastSyncedText === note.text &&
+            new Date(existingNote.lastSyncedDate).toISOString() === new Date(note.date).toISOString()
+        ) {
             return {
                 success: false,
                 error: "Note is already synced and unchanged.",
@@ -65,8 +66,13 @@ export default defineEventHandler(async (event) => {
 
         let response, updated = false;
 
+        const isSameDate =
+            existingNote?.lastSyncedDate &&
+            new Date(existingNote.lastSyncedDate).toISOString() ===
+                new Date(note.date).toISOString();
+
         // 🔁 Update if eventId exists, otherwise insert new
-        if (note.eventId) {
+        if (note.eventId && isSameDate) {
             // Update existing event
             response = await $fetch(
                 `https://www.googleapis.com/calendar/v3/calendars/primary/events/${note.eventId}`,
