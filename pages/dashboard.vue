@@ -691,7 +691,7 @@
                             <button 
                                 v-if="calendarConnected" 
                                 @click="syncNoteToCalendar(selectedNote)"
-                                :disabled="syncingNoteId === selectedNote.id || (selectedNote.text === selectedNote.lastSyncedText && selectedNote.date === selectedNote.lastSyncedDate)"
+                                :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
                                 class="ml-6 md:-ml-10 md:mr-4 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-500 text-white text-sm px-1 md:px-2 py-1 rounded transition-colors duration-200 flex items-center gap-1 -mt-3 md:mt-0"
                                 title="Sync this note to Google Calendar"
                             >
@@ -929,15 +929,14 @@
                 return
             }
 
-            const textChanged = note.text !== note.lastSyncedText
-            const dateChanged = note.date !== note.lastSyncedDate
+            const alreadySynced =
+                note.calendarEventId &&
+                note.lastSyncedText === note.text
 
-            if (!textChanged && !dateChanged) {
+            if (alreadySynced) {
                 $toast.error(t('toast.calendar.alreadySynced'))
                 return
             }
-
-            const syncType = dateChanged ? 'new' : 'update'
 
             // Decide which date to sync to
             const today = new Date().toISOString().slice(0, 10) // yyyy-mm-dd
@@ -955,8 +954,7 @@
                 title: note.text?.substring(0, 50) || 'Untitled Note',
                 text: note.text || '',
                 date: finalDateISO,
-                eventId: note.calendarEventId || null,
-                syncType
+                eventId: note.calendarEventId || null
             }
 
             const response = await $fetch('/api/notes/sync-calendar', {
@@ -976,7 +974,6 @@
             }
 
             note.lastSyncedText = note.text
-            if (dateChanged) note.lastSyncedDate = note.date
             note.lastSyncedDate = new Date().toISOString()
             note.synced = true
 

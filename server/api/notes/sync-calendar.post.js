@@ -13,23 +13,6 @@ export default defineEventHandler(async (event) => {
             return { success: false, error: "Note is empty" };
         }
 
-        const existingNote = await prisma.note.findUnique({
-            where: { id: note.id },
-        });
-
-        if (
-            existingNote &&
-            existingNote.calendarEventId &&
-            existingNote.lastSyncedText === note.text &&
-            new Date(existingNote.lastSyncedDate).toISOString() === new Date(note.date).toISOString()
-        ) {
-            return {
-                success: false,
-                error: "Note is already synced and unchanged.",
-                alreadySynced: true,
-            };
-        }
-
         // Get the access token from the cookie or localStorage
         // In Nuxt server routes, we need to get it from the cookie
         const jwtCookie = getCookie(event, "NoteJWT");
@@ -66,13 +49,8 @@ export default defineEventHandler(async (event) => {
 
         let response, updated = false;
 
-        const isSameDate =
-            existingNote?.lastSyncedDate &&
-            new Date(existingNote.lastSyncedDate).toISOString() ===
-                new Date(note.date).toISOString();
-
         // 🔁 Update if eventId exists, otherwise insert new
-        if (note.eventId && isSameDate) {
+        if (note.eventId) {
             // Update existing event
             response = await $fetch(
                 `https://www.googleapis.com/calendar/v3/calendars/primary/events/${note.eventId}`,
@@ -99,26 +77,6 @@ export default defineEventHandler(async (event) => {
                 body: eventPayload,
                 }
             );
-        }
-
-        if (syncType === "update" && calendarEventId) {
-            // Update existing event
-            await calendar.events.patch({
-                calendarId: "primary",
-                eventId: calendarEventId,
-                requestBody: {
-                    summary: note.text,
-                },
-            });
-
-            // Update lastSyncedText in DB (but not lastSyncedDate)
-            await prisma.note.update({
-                where: { id: note.id },
-                data: {
-                    lastSyncedText: note.text,
-                    // Don't update lastSyncedDate, since date wasn't changed
-                },
-            });
         }
 
         try {
