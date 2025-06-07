@@ -101,18 +101,25 @@ export default defineEventHandler(async (event) => {
             );
         }
 
-        await prisma.note.update({
-            where: { id: note.id },
-            data: {
+        try {
+            await prisma.note.update({
+                where: { id: note.id },
+                data: {
+                    calendarEventId: response.id || note.calendarEventId,
+                    lastSyncedText: note.text,
+                    lastSyncedDate: new Date(note.date),
+                },
+            });
+            console.log(`✅ Note ${note.id} synced and updated.`);
+        } catch (dbError) {
+            console.error("❌ Failed to update note in DB:", dbError);
+            console.error("⚠️ Note update data:", {
+                id: note.id,
                 calendarEventId: response.id,
                 lastSyncedText: note.text,
-                lastSyncedDate: new Date(note.date),
-            },
-        });
-
-        console.log(
-            `✅ Note ${note.id} synced (${updated ? "updated" : "created"})`
-        );
+                lastSyncedDate: note.date,
+            });
+        }
 
         return {
             success: true,
@@ -123,7 +130,11 @@ export default defineEventHandler(async (event) => {
         };
     } catch (error) {
         console.error("Calendar sync error:", error);
-        if (error.data) console.error('Error details:', error.data)
+
+        // Log more details about the error
+        if (error.data) {
+            console.error('Error details:', error.data)
+        }
         return {
             error: error.message || "Failed to sync with Google Calendar",
             status: error.status || 500,
