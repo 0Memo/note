@@ -959,8 +959,8 @@
 
             const response = await $fetch('/api/notes/sync-calendar', {
                 method: 'POST',
-                body: { note },
-                headers: { 'x-google-access-token': accessToken.value }
+                headers: { 'x-google-access-token': token },
+                body: { note: eventData }
             })
 
             if (response.alreadySynced) {

@@ -4,8 +4,9 @@ import prisma from "../../utils/db";
 
 export default defineEventHandler(async (event) => {
     try {
+        // Get the note data from the request body
         const body = await readBody(event);
-        const { note } = body;
+        const { note } = body; // note.title, note.content, note.date
         console.log("🔍 Incoming note for sync:", note);
 
         if (!note.text?.trim()) {
@@ -16,18 +17,12 @@ export default defineEventHandler(async (event) => {
             where: { id: note.id },
         });
 
-        if (!existingNote) {
-            return { success: false, error: "Note not found" };
-        }
-
-        const isSameDate =
-            existingNote.lastSyncedDate &&
-            new Date(existingNote.lastSyncedDate).toISOString() ===
-                new Date(note.date).toISOString();
-
-        const isSameText = existingNote.lastSyncedText === note.text;
-
-        if (existingNote.calendarEventId && isSameDate && isSameText) {
+        if (
+            existingNote &&
+            existingNote.calendarEventId &&
+            existingNote.lastSyncedText === note.text &&
+            new Date(existingNote.lastSyncedDate).toISOString() === new Date(note.date).toISOString()
+        ) {
             return {
                 success: false,
                 error: "Note is already synced and unchanged.",
@@ -71,11 +66,16 @@ export default defineEventHandler(async (event) => {
 
         let response, updated = false;
 
+        const isSameDate =
+            existingNote?.lastSyncedDate &&
+            new Date(existingNote.lastSyncedDate).toISOString() ===
+                new Date(note.date).toISOString();
+
         // 🔁 Update if eventId exists, otherwise insert new
-        if (existingNote.calendarEventId && isSameDate) {
+        if (note.eventId && isSameDate) {
             // Update existing event
             response = await $fetch(
-                `https://www.googleapis.com/calendar/v3/calendars/primary/events/${existingNote.calendarEventId}`,
+                `https://www.googleapis.com/calendar/v3/calendars/primary/events/${note.eventId}`,
                 {
                 method: "PUT",
                 headers: {
