@@ -252,7 +252,12 @@
                                 v-if="calendarConnected"
                                 @click.stop="syncNoteToCalendar(note)"
                                 :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
-                                class="w-[70px] bg-blue-600 flex items-center justify-center"
+                                :class="[
+                                    'w-[70px] flex items-center justify-center transition-colors duration-200',
+                                    syncingNoteId === note.id || note.text === note.lastSyncedText
+                                    ? 'bg-gray-600 cursor-not-allowed'
+                                    : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
+                                ]"
                                 title="Sync to Calendar"
                                 >
                                 <svg
@@ -351,7 +356,12 @@
                                         v-if="calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
                                         :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
-                                        class="w-[70px] bg-blue-600 flex items-center justify-center"
+                                        :class="[
+                                            'w-[70px] flex items-center justify-center transition-colors duration-200',
+                                            syncingNoteId === note.id || note.text === note.lastSyncedText
+                                            ? 'bg-gray-600 cursor-not-allowed'
+                                            : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
+                                        ]"
                                         title="Sync to Calendar"
                                     >
                                         <svg v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -442,7 +452,12 @@
                                         v-if="calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
                                         :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
-                                        class="w-[70px] bg-blue-600 flex items-center justify-center"
+                                        :class="[
+                                            'w-[70px] flex items-center justify-center transition-colors duration-200',
+                                            syncingNoteId === note.id || note.text === note.lastSyncedText
+                                            ? 'bg-gray-600 cursor-not-allowed'
+                                            : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
+                                        ]"
                                         title="Sync to Calendar"
                                     >
                                         <svg v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -531,7 +546,12 @@
                                         v-if="calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
                                         :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
-                                        class="w-[70px] bg-blue-600 flex items-center justify-center"
+                                        :class="[
+                                            'w-[70px] flex items-center justify-center transition-colors duration-200',
+                                            syncingNoteId === note.id || note.text === note.lastSyncedText
+                                            ? 'bg-gray-600 cursor-not-allowed'
+                                            : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
+                                        ]"
                                         title="Sync to Calendar"
                                     >
                                         <svg v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -622,7 +642,12 @@
                                         v-if="calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
                                         :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
-                                        class="w-[70px] bg-blue-600 flex items-center justify-center"
+                                        :class="[
+                                            'w-[70px] flex items-center justify-center transition-colors duration-200',
+                                            syncingNoteId === note.id || note.text === note.lastSyncedText
+                                            ? 'bg-gray-600 cursor-not-allowed'
+                                            : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
+                                        ]"
                                         title="Sync to Calendar"
                                     >
                                         <svg v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
