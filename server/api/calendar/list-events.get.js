@@ -7,8 +7,6 @@ export default defineEventHandler(async (event) => {
     let accessToken = event.node.req.headers["x-google-access-token"];
     const refreshToken = getCookie(event, "google_refresh_token");
 
-    console.log( "Received token (first 20 chars):", accessToken?.substring(0, 20) + "..." );
-
     if (!accessToken && !refreshToken) {
         return {
             error: "Google Calendar not connected",
@@ -16,16 +14,22 @@ export default defineEventHandler(async (event) => {
         };
     }
 
-    // Get today's events
-    const today = new Date();
-    const startOfDay = new Date(today.setHours(0, 0, 0, 0)).toISOString();
-    const endOfDay = new Date(today.setHours(23, 59, 59, 999)).toISOString();
+    const now = new Date();
 
-    console.log("Fetching events from:", startOfDay, "to:", endOfDay);
+    // Get 30 days before
+    const startDate = new Date();
+    startDate.setDate(now.getDate() - 30);
+
+    // Get 30 days after
+    const endDate = new Date();
+    endDate.setDate(now.getDate() + 30);
+
+    const timeMin = startDate.toISOString();
+    const timeMax = endDate.toISOString();
 
     const fetchEvents = async (token) => {
         return await $fetch(
-        `https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=${startOfDay}&timeMax=${endOfDay}&singleEvents=true&orderBy=startTime`,
+        `https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=${timeMin}&timeMax=${timeMax}&singleEvents=true&orderBy=startTime`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
