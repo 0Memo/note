@@ -741,7 +741,7 @@
                             <button 
                                 v-if="calendarConnected" 
                                 @click="syncNoteToCalendar(selectedNote)"
-                                :disabled="syncingNoteId === selectedNote.id || isNoteSynced"
+                                :disabled="syncingNoteId === selectedNote.id || isNoteUnchanged"
                                 class="ml-6 md:-ml-10 md:mr-4 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-500 text-white text-sm px-1 md:px-2 py-1 rounded transition-colors duration-200 flex items-center gap-1 -mt-3 md:mt-0"
                                 title="Sync this note to Google Calendar"
                             >
@@ -837,7 +837,7 @@
 
     const updatedNote = ref('')
     const notes = ref([])
-    const selectedNote = ref({})
+    const selectedNote = ref(null)
     const textarea = ref(null)
     const sidebarOpen = ref(false)
     const isDesktop = ref(false)
@@ -1051,18 +1051,14 @@
         }
     }
 
-    const isNoteSynced = computed(() => {
-        if (!selectedNote.value) return false
+    const isNoteUnchanged = computed(() => {
+        if (!selectedNote.value) return true
 
-        const currentText = selectedNote.value.text
-        const lastSyncedText = selectedNote.value.lastSyncedText
+        const textUnchanged = selectedNote.value.text === selectedNote.value.lastSyncedText
+        const dateUnchanged = new Date(selectedNote.value.eventDate).toISOString().slice(0, 10) ===
+                                new Date(selectedNote.value.lastSyncedDate).toISOString().slice(0, 10)
 
-        const currentDate = new Date(selectedNote.value.eventDate).toISOString().slice(0, 10)
-        const lastSyncedDate = selectedNote.value.lastSyncedDate
-            ? new Date(selectedNote.value.lastSyncedDate).toISOString().slice(0, 10)
-            : null
-
-        return currentText === lastSyncedText && currentDate === lastSyncedDate
+        return textUnchanged && dateUnchanged
     })
 
     async function createNewNote() {
