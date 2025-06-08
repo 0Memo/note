@@ -216,7 +216,7 @@
                                     <button
                                         v-if="isDesktop && calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
-                                        :disabled="syncingNoteId === note.id"
+                                        :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
                                         class="ml-2 p-1 text-blue-400 hover:text-blue-300 transition-colors duration-200"
                                         title="Sync to Google Calendar"
                                     >
@@ -246,7 +246,7 @@
                                 <button
                                 v-if="calendarConnected"
                                 @click.stop="syncNoteToCalendar(note)"
-                                :disabled="syncingNoteId === note.id"
+                                :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
                                 class="w-[70px] bg-blue-600 flex items-center justify-center"
                                 title="Sync to Calendar"
                                 >
@@ -322,7 +322,7 @@
                                         <button 
                                             v-if="isDesktop && calendarConnected" 
                                             @click.stop="syncNoteToCalendar(note)"
-                                            :disabled="syncingNoteId === note.id"
+                                            :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
                                             class="ml-2 p-1 text-blue-400 hover:text-blue-300 transition-colors duration-200"
                                             title="Sync to Google Calendar"
                                         >
@@ -340,7 +340,7 @@
                                     <button 
                                         v-if="calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
-                                        :disabled="syncingNoteId === note.id"
+                                        :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
                                         class="w-[70px] bg-blue-600 flex items-center justify-center"
                                         title="Sync to Calendar"
                                     >
@@ -408,7 +408,7 @@
                                         <button 
                                             v-if="isDesktop && calendarConnected" 
                                             @click.stop="syncNoteToCalendar(note)"
-                                            :disabled="syncingNoteId === note.id"
+                                            :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
                                             class="ml-2 p-1 text-blue-400 hover:text-blue-300 transition-colors duration-200"
                                             title="Sync to Google Calendar"
                                         >
@@ -426,7 +426,7 @@
                                     <button 
                                         v-if="calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
-                                        :disabled="syncingNoteId === note.id"
+                                        :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
                                         class="w-[70px] bg-blue-600 flex items-center justify-center"
                                         title="Sync to Calendar"
                                     >
@@ -492,7 +492,7 @@
                                         <button 
                                             v-if="isDesktop && calendarConnected" 
                                             @click.stop="syncNoteToCalendar(note)"
-                                            :disabled="syncingNoteId === note.id"
+                                            :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
                                             class="ml-2 p-1 text-blue-400 hover:text-blue-300 transition-colors duration-200"
                                             title="Sync to Google Calendar"
                                         >
@@ -510,7 +510,7 @@
                                     <button 
                                         v-if="calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
-                                        :disabled="syncingNoteId === note.id"
+                                        :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
                                         class="w-[70px] bg-blue-600 flex items-center justify-center"
                                         title="Sync to Calendar"
                                     >
@@ -578,7 +578,7 @@
                                         <button 
                                             v-if="isDesktop && calendarConnected" 
                                             @click.stop="syncNoteToCalendar(note)"
-                                            :disabled="syncingNoteId === note.id"
+                                            :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
                                             class="ml-2 p-1 text-blue-400 hover:text-blue-300 transition-colors duration-200"
                                             title="Sync to Google Calendar"
                                         >
@@ -596,7 +596,7 @@
                                     <button 
                                         v-if="calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
-                                        :disabled="syncingNoteId === note.id"
+                                        :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
                                         class="w-[70px] bg-blue-600 flex items-center justify-center"
                                         title="Sync to Calendar"
                                     >
