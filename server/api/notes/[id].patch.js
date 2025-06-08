@@ -42,17 +42,21 @@ export default defineEventHandler(async (event) => {
             })
         }
 
+        const textChanged = body.updatedNote !== noteToUpdate.text;
+        const dateChanged =
+            body.eventDate?.slice(0, 10) !== noteToUpdate.eventDate?.slice(0, 10);
+
         await prisma.note.update({
             where: {
                 id: Number(id),
             },
             data: {
                 text: body.updatedNote,
-                // ❗ Only reset sync fields if text actually changed
-                ...(body.updatedNote !== noteToUpdate.text && {
+                eventDate: body.eventDate,
+                ...(textChanged || dateChanged ? {
                     lastSyncedText: null,
-                    lastSyncedDate: null,
-                })
+                    lastSyncedDate: null
+                } : {})
             }
         })
 
