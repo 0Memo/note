@@ -1048,11 +1048,14 @@
     }
 
     const isNoteUnchanged = computed(() => {
-        if (!selectedNote.value) return true
+        const note = selectedNote.value
+        if (!note) return true
 
-        const textUnchanged = selectedNote.value.text === selectedNote.value.lastSyncedText
-        const dateUnchanged = new Date(selectedNote.value.eventDate).toISOString().slice(0, 10) ===
-                                new Date(selectedNote.value.lastSyncedDate).toISOString().slice(0, 10)
+        const hasNeverSynced = !note.lastSyncedText || !note.lastSyncedDate
+        if (hasNeverSynced) return false // allow syncing
+
+        const textUnchanged = note.text === note.lastSyncedText
+        const dateUnchanged = new Date(note.eventDate).toISOString().slice(0, 10) === new Date(note.lastSyncedDate).toISOString().slice(0, 10)
 
         return textUnchanged && dateUnchanged
     })
