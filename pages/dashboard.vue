@@ -217,8 +217,13 @@
                                         v-if="isDesktop && calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
                                         :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
-                                        class="ml-2 p-1 text-blue-400 hover:text-blue-300 transition-colors duration-200"
-                                        title="Sync to Google Calendar"
+                                        :title="(selectedNote.text === selectedNote.lastSyncedText) ? t('toast.calendar.alreadySynced') : 'Sync to Google Calendar'"
+                                        class="[
+                                            'ml-2 p-1 transition-colors duration-200',
+                                            syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText
+                                                ? 'text-gray-400 cursor-not-allowed'
+                                                : 'text-blue-400 hover:text-blue-300 cursor-pointer'
+                                        ]"
                                     >
                                         <svg
                                         v-if="syncingNoteId !== note.id"
@@ -323,8 +328,13 @@
                                             v-if="isDesktop && calendarConnected" 
                                             @click.stop="syncNoteToCalendar(note)"
                                             :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
-                                            class="ml-2 p-1 text-blue-400 hover:text-blue-300 transition-colors duration-200"
-                                            title="Sync to Google Calendar"
+                                            :title="(selectedNote.text === selectedNote.lastSyncedText) ? t('toast.calendar.alreadySynced') : 'Sync to Google Calendar'"
+                                            class="[
+                                                'ml-2 p-1 transition-colors duration-200',
+                                                syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText
+                                                    ? 'text-gray-400 cursor-not-allowed'
+                                                    : 'text-blue-400 hover:text-blue-300 cursor-pointer'
+                                            ]"
                                         >
                                         <svg v-if="syncingNoteId !== note.id" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
@@ -409,8 +419,13 @@
                                             v-if="isDesktop && calendarConnected" 
                                             @click.stop="syncNoteToCalendar(note)"
                                             :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
-                                            class="ml-2 p-1 text-blue-400 hover:text-blue-300 transition-colors duration-200"
-                                            title="Sync to Google Calendar"
+                                            :title="(selectedNote.text === selectedNote.lastSyncedText) ? t('toast.calendar.alreadySynced') : 'Sync to Google Calendar'"
+                                            class="[
+                                                'ml-2 p-1 transition-colors duration-200',
+                                                syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText
+                                                    ? 'text-gray-400 cursor-not-allowed'
+                                                    : 'text-blue-400 hover:text-blue-300 cursor-pointer'
+                                            ]"
                                         >
                                             <svg v-if="syncingNoteId !== note.id" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                                 <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
@@ -493,8 +508,13 @@
                                             v-if="isDesktop && calendarConnected" 
                                             @click.stop="syncNoteToCalendar(note)"
                                             :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
-                                            class="ml-2 p-1 text-blue-400 hover:text-blue-300 transition-colors duration-200"
-                                            title="Sync to Google Calendar"
+                                            :title="(selectedNote.text === selectedNote.lastSyncedText) ? t('toast.calendar.alreadySynced') : 'Sync to Google Calendar'"
+                                            class="[
+                                                'ml-2 p-1 transition-colors duration-200',
+                                                syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText
+                                                    ? 'text-gray-400 cursor-not-allowed'
+                                                    : 'text-blue-400 hover:text-blue-300 cursor-pointer'
+                                            ]"
                                         >
                                         <svg v-if="syncingNoteId !== note.id" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
@@ -579,8 +599,13 @@
                                             v-if="isDesktop && calendarConnected" 
                                             @click.stop="syncNoteToCalendar(note)"
                                             :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
-                                            class="ml-2 p-1 text-blue-400 hover:text-blue-300 transition-colors duration-200"
-                                            title="Sync to Google Calendar"
+                                            :title="(selectedNote.text === selectedNote.lastSyncedText) ? t('toast.calendar.alreadySynced') : 'Sync to Google Calendar'"
+                                            class="[
+                                                'ml-2 p-1 transition-colors duration-200',
+                                                syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText
+                                                    ? 'text-gray-400 cursor-not-allowed'
+                                                    : 'text-blue-400 hover:text-blue-300 cursor-pointer'
+                                            ]"
                                         >
                                         <svg v-if="syncingNoteId !== note.id" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
