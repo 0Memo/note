@@ -1027,6 +1027,8 @@
             note.lastSyncedDate = note.eventDate || new Date().toISOString()
             note.synced = true
 
+            selectedNote.value = { ...selectedNote.value }
+
             if (response.updated) {
                 $toast.success(t('toast.calendar.updated'))
             } else {
