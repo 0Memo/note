@@ -1,4 +1,4 @@
-import { refreshGoogleAccessToken } from "../../utils/refreshGoogleToken";
+import { refreshGoogleAccessToken } from "../utils/refreshGoogleToken";
 
 export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig();
