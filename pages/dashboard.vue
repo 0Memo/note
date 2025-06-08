@@ -741,7 +741,7 @@
                             <button 
                                 v-if="calendarConnected" 
                                 @click="syncNoteToCalendar(selectedNote)"
-                                ::disabled="syncingNoteId === selectedNote.id || isNoteAlreadySynced"
+                                ::disabled="syncingNoteId === selectedNote.id || isNoteSynced"
                                 class="ml-6 md:-ml-10 md:mr-4 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-500 text-white text-sm px-1 md:px-2 py-1 rounded transition-colors duration-200 flex items-center gap-1 -mt-3 md:mt-0"
                                 title="Sync this note to Google Calendar"
                             >
@@ -837,7 +837,7 @@
 
     const updatedNote = ref('')
     const notes = ref([])
-    const selectedNote = ref({})
+    const selectedNote = ref(null)
     const textarea = ref(null)
     const sidebarOpen = ref(false)
     const isDesktop = ref(false)
@@ -1064,14 +1064,16 @@
         }
     }
 
-    const isNoteAlreadySynced = computed(() => {
+    const isNoteSynced = computed(() => {
         const note = selectedNote.value
-        if (!note?.text || !note?.lastSyncedText || !note?.eventDate || !note?.lastSyncedDate) return false
+        if (!note) return false
 
-        const eventDateStr = new Date(note.eventDate).toISOString().slice(0, 10)
-        const lastSyncedDateStr = new Date(note.lastSyncedDate).toISOString().slice(0, 10)
+        const textUnchanged = note.text === note.lastSyncedText
+        const dateUnchanged =
+            new Date(note.eventDate).toISOString().slice(0, 10) ===
+            new Date(note.lastSyncedDate).toISOString().slice(0, 10)
 
-        return note.text === note.lastSyncedText && eventDateStr === lastSyncedDateStr
+        return textUnchanged && dateUnchanged
     })
 
     async function createNewNote() {
