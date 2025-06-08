@@ -216,8 +216,8 @@
                                     <button
                                         v-if="isDesktop && calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
-                                        :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
-                                        :title="(selectedNote.text === selectedNote.lastSyncedText) ? t('toast.calendar.alreadySynced') : t('toast.calendar.syncToCalendar')"
+                                        :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
+                                        :title="(note.text === note.lastSyncedText) ? t('toast.calendar.alreadySynced') : t('toast.calendar.syncToCalendar')"
                                         class="[
                                             'ml-2 p-1 transition-colors duration-200',
                                             syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText
