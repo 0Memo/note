@@ -217,7 +217,7 @@
                                         v-if="isDesktop && calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
                                         :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
-                                        :title="(selectedNote.text === selectedNote.lastSyncedText) ? t('toast.calendar.alreadySynced') : 'Sync to Google Calendar'"
+                                        :title="(selectedNote.text === selectedNote.lastSyncedText) ? t('toast.calendar.alreadySynced') : t('toast.calendar.syncToCalendar')"
                                         class="[
                                             'ml-2 p-1 transition-colors duration-200',
                                             syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText
@@ -328,7 +328,7 @@
                                             v-if="isDesktop && calendarConnected" 
                                             @click.stop="syncNoteToCalendar(note)"
                                             :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
-                                            :title="(selectedNote.text === selectedNote.lastSyncedText) ? t('toast.calendar.alreadySynced') : 'Sync to Google Calendar'"
+                                            :title="(selectedNote.text === selectedNote.lastSyncedText) ? t('toast.calendar.alreadySynced') : t('toast.calendar.syncToCalendar')"
                                             class="[
                                                 'ml-2 p-1 transition-colors duration-200',
                                                 syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText
@@ -419,7 +419,7 @@
                                             v-if="isDesktop && calendarConnected" 
                                             @click.stop="syncNoteToCalendar(note)"
                                             :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
-                                            :title="(selectedNote.text === selectedNote.lastSyncedText) ? t('toast.calendar.alreadySynced') : 'Sync to Google Calendar'"
+                                            :title="(selectedNote.text === selectedNote.lastSyncedText) ? t('toast.calendar.alreadySynced') : t('toast.calendar.syncToCalendar')"
                                             class="[
                                                 'ml-2 p-1 transition-colors duration-200',
                                                 syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText
@@ -508,7 +508,7 @@
                                             v-if="isDesktop && calendarConnected" 
                                             @click.stop="syncNoteToCalendar(note)"
                                             :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
-                                            :title="(selectedNote.text === selectedNote.lastSyncedText) ? t('toast.calendar.alreadySynced') : 'Sync to Google Calendar'"
+                                            :title="(selectedNote.text === selectedNote.lastSyncedText) ? t('toast.calendar.alreadySynced') : t('toast.calendar.syncToCalendar')"
                                             class="[
                                                 'ml-2 p-1 transition-colors duration-200',
                                                 syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText
@@ -599,7 +599,7 @@
                                             v-if="isDesktop && calendarConnected" 
                                             @click.stop="syncNoteToCalendar(note)"
                                             :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
-                                            :title="(selectedNote.text === selectedNote.lastSyncedText) ? t('toast.calendar.alreadySynced') : 'Sync to Google Calendar'"
+                                            :title="(selectedNote.text === selectedNote.lastSyncedText) ? t('toast.calendar.alreadySynced') : t('toast.calendar.syncToCalendar')"
                                             class="[
                                                 'ml-2 p-1 transition-colors duration-200',
                                                 syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText
@@ -724,7 +724,7 @@
                                     <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
                                 </svg>
                                 <div v-else class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                                <span class="hidden sm:inline">Sync to Calendar</span>
+                                <span class="hidden sm:inline">{{ $t('toast.calendar.syncToCalendar') }}</span>
                                 <span class="inline sm:hidden">Sync</span>
                             </button>
                         </div>
