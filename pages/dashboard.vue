@@ -122,14 +122,14 @@
                             <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
                         </svg>
                         <div v-else class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                        {{ isConnectingCalendar ? 'Connecting...' : (calendarConnected ? 'Calendar Connected' : 'Connect Google Calendar') }}
+                        {{ isConnectingCalendar ? t('toast.calendar.connecting') : (calendarConnected ? t('toast.calendar.calendarConnected') : t('toast.calendar.connectCalendar')) }}
                     </button>
                     
                     <div v-if="calendarConnected" class="mt-2 text-green-400 text-sm flex items-center gap-1">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        Calendar Connected
+                        {{ $t('toast.calendar.calendarConnected') }}
                     </div>
                 </div>
                 <button 
@@ -137,7 +137,7 @@
                     @click="checkCalendarEvents"
                     class="ml-2 bg-green-600 hover:bg-green-700 text-white text-sm px-3 py-1 rounded"
                 >
-                    Check Calendar Events
+                    {{ $t('toast.calendar.checkEvents') }}
                 </button>
 
                 <!-- Add this button next to your existing calendar buttons -->
@@ -146,7 +146,7 @@
                     @click="reconnectGoogleCalendar"
                     class="ml-2 bg-orange-600 hover:bg-orange-700 text-white text-sm px-3 py-1 rounded"
                 >
-                    Reconnect Calendar
+                    {{ $t('toast.calendar.reconnect') }}
                 </button>
             </div>
 
