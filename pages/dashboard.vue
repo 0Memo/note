@@ -251,7 +251,7 @@
                                 <button
                                 v-if="calendarConnected"
                                 @click.stop="syncNoteToCalendar(note)"
-                                :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
+                                :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
                                 class="w-[70px] bg-blue-600 flex items-center justify-center"
                                 title="Sync to Calendar"
                                 >
@@ -350,7 +350,7 @@
                                     <button 
                                         v-if="calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
-                                        :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
+                                        :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
                                         class="w-[70px] bg-blue-600 flex items-center justify-center"
                                         title="Sync to Calendar"
                                     >
@@ -441,7 +441,7 @@
                                     <button 
                                         v-if="calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
-                                        :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
+                                        :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
                                         class="w-[70px] bg-blue-600 flex items-center justify-center"
                                         title="Sync to Calendar"
                                     >
@@ -530,7 +530,7 @@
                                     <button 
                                         v-if="calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
-                                        :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
+                                        :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
                                         class="w-[70px] bg-blue-600 flex items-center justify-center"
                                         title="Sync to Calendar"
                                     >
@@ -621,7 +621,7 @@
                                     <button 
                                         v-if="calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
-                                        :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
+                                        :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
                                         class="w-[70px] bg-blue-600 flex items-center justify-center"
                                         title="Sync to Calendar"
                                     >
