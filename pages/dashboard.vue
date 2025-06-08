@@ -691,14 +691,7 @@
                             <button 
                                 v-if="calendarConnected" 
                                 @click="syncNoteToCalendar(selectedNote)"
-                                :disabled="
-                                    syncingNoteId === selectedNote.id ||
-                                    (
-                                        selectedNote.text === selectedNote.lastSyncedText &&
-                                        new Date(selectedNote.eventDate).toISOString().slice(0, 10) ===
-                                        new Date(selectedNote.lastSyncedDate).toISOString().slice(0, 10)
-                                    )
-                                "
+                                :disabled="syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText"
                                 class="ml-6 md:-ml-10 md:mr-4 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-500 text-white text-sm px-1 md:px-2 py-1 rounded transition-colors duration-200 flex items-center gap-1 -mt-3 md:mt-0"
                                 title="Sync this note to Google Calendar"
                             >
@@ -857,10 +850,6 @@
         }
     }
 
-    const isNoteSynced = (note) => {
-        return note.text === note.lastSyncedText && note.date === note.lastSyncedDate;
-    };
-
     async function saveDateChange() {
         const id = selectedNote.value?.id;
         const rawDate = manualDate.value;
@@ -940,13 +929,9 @@
                 return
             }
 
-            const lastSyncedDate = note.lastSyncedDate?.slice(0, 10)
-            const currentDate = note.eventDate?.slice(0, 10)
-
             const alreadySynced =
                 note.calendarEventId &&
-                note.lastSyncedText === note.text &&
-                lastSyncedDate === currentDate
+                note.lastSyncedText === note.text
 
             if (alreadySynced) {
                 $toast.error(t('toast.calendar.alreadySynced'))
@@ -989,7 +974,7 @@
             }
 
             note.lastSyncedText = note.text
-            note.lastSyncedDate = note.eventDate || new Date().toISOString()
+            note.lastSyncedDate = new Date().toISOString()
             note.synced = true
 
             if (response.updated) {
