@@ -1179,7 +1179,7 @@
             console.log('Event count:', response.count)
             
             const eventCount = response.count || 0
-            $toast.info(`Found ${eventCount} events for today`)
+            $toast.info(t('toast.calendar.eventsFound', { count: eventCount }))
             
             // Log each event for debugging
             if (response.events && response.events.length > 0) {

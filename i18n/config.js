@@ -127,7 +127,8 @@ export default defineI18nConfig(() => ({
                     success: "Connexion réussie à Google Agenda !",
                     updated: "Note mise à jour dans Google Agenda!",
                     alreadySynced: "Note déjà synchronisée avec le calendrier",
-                    error: "Erreur"
+                    error: "Erreur",
+                    eventsFound: "{count} évènements trouvés dans Google Agenda"
                 },
             },
             easter: "Joyeuses Pâques!",
@@ -259,7 +260,8 @@ export default defineI18nConfig(() => ({
                     success: "¡Conexión exitosa con Google Calendar!",
                     updated: "¡Nota actualizada en Google Calendar!",
                     alreadySynced: "Nota ya actualizada con el calendario",
-                    error: "Error"
+                    error: "Error",
+                    eventsFound: "Se encontraron {count} eventos en Google Calendar"
                 },
             },
             easter: "¡Felices Pascuas!",
@@ -391,7 +393,8 @@ export default defineI18nConfig(() => ({
                     success: "Conectado com sucesso ao Google Agenda!",
                     updated: "Nota atualizada no Google Agenda!",
                     alreadySynced: "Nota já atualizada com o calendário",
-                    error: "Erro"
+                    error: "Erro",
+                    eventsFound: "Foram encontrados {count} eventos no Google Agenda"
                 },
             },
             easter: "Feliz Páscoa!",
@@ -523,7 +526,8 @@ export default defineI18nConfig(() => ({
                     success: "Successfully connected to Google Calendar!",
                     updated: "Note updated in Google Calendar!",
                     alreadySynced: "Note has already been synced to calendar",
-                    error: "Error"
+                    error: "Error",
+                    eventsFound: "Found {count} events in Google Calendar"
                 },
             },
             easter: "Happy Easter!",
@@ -655,7 +659,8 @@ export default defineI18nConfig(() => ({
                     success: "Connessione riuscita a Google Calendar!",
                     updated: "Nota aggiornata su Google Calendar!",
                     alreadySynced: "Nota già sincronizzata con il calendario",
-                    error: "Errore"
+                    error: "Errore",
+                    eventsFound: "Trovati {count} eventi in Google Calendar"
                 }
             },
             easter: "Buona Pasqua!",
@@ -787,7 +792,8 @@ export default defineI18nConfig(() => ({
                     success: "Ansluten till Google Kalender!",
                     updated: "Anteckning uppdaterad i Google Kalender!",
                     alreadySynced: "Anteckning redan synkats med kalendarn",
-                    error: "Fel"
+                    error: "Fel",
+                    eventsFound: "Hittade {count} händelser i Google Kalender"
                 },
             },
             easter: "Glad Påsk!",
@@ -919,7 +925,8 @@ export default defineI18nConfig(() => ({
                     success: "Conectare reușită la Google Calendar!",
                     updated: "Notiță actualizată în Google Calendar!",
                     alreadySynced: "Notiță deja sincronizată cu calendarul",
-                    error: "Eroare"
+                    error: "Eroare",
+                    eventsFound: "Am găsit {count} evenimente în Google Calendar"
                 },
             },
             easter: "Paște Fericit!",
