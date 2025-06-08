@@ -1023,18 +1023,11 @@
                 note.calendarEventId = response.eventId
             }
 
-            if (note.id === selectedNote.value?.id) {
-                selectedNote.value = {
-                    ...selectedNote.value,
-                    lastSyncedText: note.text,
-                    lastSyncedDate: note.eventDate || new Date().toISOString(),
-                    synced: true,
-                }
-            } else {
-                note.lastSyncedText = note.text
-                note.lastSyncedDate = note.eventDate || new Date().toISOString()
-                note.synced = true
-            }
+            note.lastSyncedText = note.text
+            note.lastSyncedDate = note.eventDate || new Date().toISOString()
+            note.synced = true
+
+            selectedNote.value = { ...selectedNote.value }
 
             if (response.updated) {
                 $toast.success(t('toast.calendar.updated'))
