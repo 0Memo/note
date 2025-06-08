@@ -142,7 +142,7 @@
 
                 <!-- Add this button next to your existing calendar buttons -->
                 <button 
-                    v-if="calendarConnected" 
+                    v-if="!calendarConnected && savedToken" 
                     @click="reconnectGoogleCalendar"
                     class="ml-2 bg-orange-600 hover:bg-orange-700 text-white text-sm px-3 py-1 rounded"
                 >
@@ -1122,6 +1122,27 @@
         }
     }
 
+    const checkCalendarConnection = async () => {
+        const token = localStorage.getItem('googleCalendarToken')
+        if (!token) {
+            calendarConnected.value = false
+            return
+        }
+
+        try {
+            // Try to list events with access token
+            await $fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=1', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+            })
+            calendarConnected.value = true
+        } catch (error) {
+            console.warn('❌ Google Calendar token expired or invalid:', error?.response?._data || error.message)
+            calendarConnected.value = false
+        }
+    }
+
     // Add this to your index.vue script
     const checkCalendarEvents = async () => {
         try {
@@ -1194,6 +1215,16 @@
         // Redirect to connect again
         connectGoogleCalendar()
     }
+
+    const isAccessTokenValid = async () => {
+        try {
+            const response = await $fetch('/api/auth/check-calendar-status');
+            return response.status === 'connected';
+        } catch (error) {
+            console.error('Error checking token status:', error);
+            return false;
+        }
+    };
 
     // Touch event handlers for swipe functionality
     function handleTouchStart(event, noteId) {
@@ -1476,8 +1507,13 @@
         // Check for existing calendar connection
         const savedToken = localStorage.getItem('googleCalendarToken')
         if (savedToken) {
-            accessToken.value = savedToken
-            calendarConnected.value = true
+            accessToken.value = savedToken;
+            const stillValid = await isAccessTokenValid();
+            calendarConnected.value = stillValid;
+
+            if (!stillValid) {
+                $toast.info(t('toast.calendar.reconnect'), { duration: 6000 });
+            }
         }
 
         // Check for OAuth callback
@@ -1496,6 +1532,18 @@
         } else if (route.query.error) {
             $toast.error(t('toast.calendar.connectionFailed'))
             await router.replace({ query: {} })
+        }
+
+        await checkCalendarConnection()
+
+        // Optionally: automatically try to refresh token if it failed
+        if (!calendarConnected.value) {
+            try {
+                await refreshAccessTokenIfNeeded() // We'll define this next
+                await checkCalendarConnection() // Try again after refresh
+            } catch (err) {
+                console.warn('Could not refresh token:', err)
+            }
         }
 
         updateScreenSize()
@@ -1543,6 +1591,20 @@
             }
         })
     })
+
+    const refreshAccessTokenIfNeeded = async () => {
+        const refreshToken = useCookie('google_refresh_token').value
+        if (!refreshToken) {
+            throw new Error('No refresh token found.')
+        }
+
+        const refreshed = await $fetch('/api/refresh-token') // we’ll create this endpoint below
+        if (refreshed?.access_token) {
+            localStorage.setItem('googleCalendarToken', refreshed.access_token)
+        } else {
+            throw new Error('Failed to refresh token')
+        }
+    }
 
     watch(selectedNote, (newNote) => {
         updatedNote.value = newNote?.text || ''
