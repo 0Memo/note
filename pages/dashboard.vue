@@ -979,15 +979,11 @@
                 return
             }
 
-            const lastSyncedDate = note.lastSyncedDate?.slice(0, 10)
-            const currentDate = note.eventDate?.slice(0, 10)
+            const noteDate = note.eventDate || note.updatedAt
+            const hasChanged = note.text !== note.lastSyncedText || 
+                            (note.lastSyncedDate?.slice(0, 10) !== noteDate?.slice(0, 10))
 
-            const alreadySynced =
-                note.calendarEventId &&
-                note.lastSyncedText === note.text &&
-                lastSyncedDate === currentDate
-
-            if (alreadySynced) {
+            if (!hasChanged && note.calendarEventId) {
                 $toast.error(t('toast.calendar.alreadySynced'))
                 return
             }
