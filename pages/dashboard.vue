@@ -922,7 +922,18 @@
                 },
             });
 
-            selectedNote.value.eventDate = updatedNote.eventDate;
+            selectedNote.value = {
+                ...selectedNote.value,
+                eventDate: updatedNote.eventDate,
+            }
+
+            const index = notes.value.findIndex((n) => n.id === id)
+            if (index !== -1) {
+                notes.value[index] = {
+                    ...notes.value[index],
+                    eventDate: updatedNote.eventDate,
+                }
+            }
             editingDate.value = false;
         } catch (err) {
             console.error("❌ Failed to save custom date:", err);
