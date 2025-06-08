@@ -741,14 +741,7 @@
                             <button 
                                 v-if="calendarConnected" 
                                 @click="syncNoteToCalendar(selectedNote)"
-                                :disabled="
-                                    syncingNoteId === selectedNote.id ||
-                                    (
-                                        selectedNote.text === selectedNote.lastSyncedText &&
-                                        new Date(selectedNote.eventDate).toISOString().slice(0, 10) ===
-                                        new Date(selectedNote.lastSyncedDate).toISOString().slice(0, 10)
-                                    )
-                                "
+                                ::disabled="syncingNoteId === selectedNote.id || isNoteAlreadySynced"
                                 class="ml-6 md:-ml-10 md:mr-4 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-500 text-white text-sm px-1 md:px-2 py-1 rounded transition-colors duration-200 flex items-center gap-1 -mt-3 md:mt-0"
                                 title="Sync this note to Google Calendar"
                             >
@@ -1034,9 +1027,22 @@
                 note.calendarEventId = response.eventId
             }
 
-            note.lastSyncedText = note.text
-            note.lastSyncedDate = note.eventDate || new Date().toISOString()
-            note.synced = true
+            const newSyncedDate = note.eventDate || new Date().toISOString()
+
+            // ✅ Update selectedNote if it's the one being synced
+            if (selectedNote.value?.id === note.id) {
+                selectedNote.value = {
+                    ...note,
+                    calendarEventId: note.calendarEventId,
+                    lastSyncedText: note.text,
+                    lastSyncedDate: newSyncedDate,
+                    synced: true
+                }
+            } else {
+                note.lastSyncedText = note.text
+                note.lastSyncedDate = newSyncedDate
+                note.synced = true
+            }
 
             if (response.updated) {
                 $toast.success(t('toast.calendar.updated'))
@@ -1057,6 +1063,16 @@
             syncingNoteId.value = null
         }
     }
+
+    const isNoteAlreadySynced = computed(() => {
+        const note = selectedNote.value
+        if (!note?.text || !note?.lastSyncedText || !note?.eventDate || !note?.lastSyncedDate) return false
+
+        const eventDateStr = new Date(note.eventDate).toISOString().slice(0, 10)
+        const lastSyncedDateStr = new Date(note.lastSyncedDate).toISOString().slice(0, 10)
+
+        return note.text === note.lastSyncedText && eventDateStr === lastSyncedDateStr
+    })
 
     async function createNewNote() {
         try {
