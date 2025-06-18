@@ -12,21 +12,17 @@ export default defineEventHandler(async (event) => {
         if (!validator.isEmail(body.email)) {
             throw createError({
                 statusCode: 400,
-                message: "E-mail invalide",
+                message: "Invalid email",
             });
         }
 
-        // Validate password strength
-        if (!validator.isStrongPassword(body.password, {
-            minLength: 8,
-            minLowerCase: 0,
-            minUpperCase: 0,
-            minNumbers: 0,
-            minSymbols: 0,
-        })) {
+        // Validate password length and allowed characters
+        const allowedCharsRegex = /^[A-Za-z0-9!@#$%^&*()_\-+=\[\]{};:'",.<>/?\\|`~€£¤§]*$/;
+
+        if (!body.password || body.password.length < 8 || !allowedCharsRegex.test(body.password)) {
             throw createError({
                 statusCode: 401,
-                message: "Le mot de passe doit avoir 8 caractères min.",
+                message: "Password must contain at least 8 characters and may include symbols, uppercase, lowercase and numbers.",
             });
         }
 
@@ -38,7 +34,7 @@ export default defineEventHandler(async (event) => {
         if (existingUser) {
             throw createError({
                 statusCode: 409,
-                message: "Cet email est déjà utilisé.",
+                message: "This email is already in use.",
             });
         }
 

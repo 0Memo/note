@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
         const cookies = parseCookies(event);
         const token = cookies.NoteJWT;
         if (!token) {
-            throw createError({ statusCode: 401, statusMessage: "Non connecté" });
+            throw createError({ statusCode: 401, statusMessage: "Not connected" });
         }
 
         const { payload } = await jwtVerify(
@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
         });
 
         if (!note || note.userId !== userId) {
-            throw createError({ statusCode: 403, statusMessage: "Accès refusé" });
+            throw createError({ statusCode: 403, statusMessage: "Access denied" });
         }
 
         console.log("🛠️ Update sync info request for note ID:", id);
@@ -62,7 +62,7 @@ export default defineEventHandler(async (event) => {
     } catch (error) {
         console.error("❌ Update sync info error:", error);
         return {
-            error: error.message || "Erreur",
+            error: error.message || "Error",
             status: error.status || 500,
         };
     }

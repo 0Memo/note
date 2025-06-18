@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
         if(!token) {
             throw createError({
                 statusCode: 401,
-                statusMessage: 'Édition non autorisée'
+                statusMessage: 'Non authorized edition'
             })
         }
 
@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
     } catch (error) {
         throw createError({
             statusCode: 500,
-            statusMessage: "Impossible de vérifier JWT",
+            statusMessage: "JWT verification impossible",
         });
     }
 })

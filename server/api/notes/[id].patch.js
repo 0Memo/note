@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
         if(!token) {
             throw createError({
                 statusCode: 401,
-                statusMessage: 'Édition non autorisée'
+                statusMessage: 'Non authorized edition'
             })
         }
 
@@ -31,14 +31,14 @@ export default defineEventHandler(async (event) => {
         if(!noteToUpdate) {
             throw createError({
                 status: 401,
-                statusMessage: 'Note inexistante',
+                statusMessage: 'Non existing note',
             })
         }
 
         if(noteToUpdate.userId !== userId) {
             throw createError({
                 status: 401,
-                statusMessage: "Permission refusée",
+                statusMessage: "Permission denied",
             })
         }
 

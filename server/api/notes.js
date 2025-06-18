@@ -9,7 +9,7 @@ export default defineEventHandler(async(event) => {
         if(!token) {
             throw createError({
                 statusCode: 401,
-                statusMessage: 'Non connecté'
+                statusMessage: 'Not connected'
             })
         }
 

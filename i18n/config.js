@@ -19,7 +19,7 @@ export default defineI18nConfig(() => ({
                 login: "Connectez-vous",
                 account: "à votre compte",
                 email: "E-mail",
-                password: "Mot de passe - min, MAJ, $ymboles, n°",
+                password: "Mot de passe (min 8 car.)",
                 subscribe: "Inscription"
             },
             login: {
@@ -152,7 +152,7 @@ export default defineI18nConfig(() => ({
                 login: "Conéctese",
                 account: "a su cuenta",
                 email: "Correo",
-                password: "Contraseña - min, MAJ, $ímbolos, n°",
+                password: "Contraseña (min 8 car)",
                 subscribe: "Subscribir"
             },
             login: {
@@ -285,7 +285,7 @@ export default defineI18nConfig(() => ({
                 login: "Faça login",
                 account: "na sua conta",
                 email: "E-mail",
-                password: "Senha - min, MAJ, $ímbolos, n°",
+                password: "Senha (min 8 car.)",
                 subscribe: "Cadástre-se"
             },
             login: {
@@ -418,7 +418,7 @@ export default defineI18nConfig(() => ({
                 login: "Log in",
                 account: "to your account",
                 email: "Email",
-                password: "Password - min, MAJ, $ymbols, n°",
+                password: "Password (min 8 char.)",
                 subscribe: "Subscribe"
             },
             login: {
@@ -551,7 +551,7 @@ export default defineI18nConfig(() => ({
                 login: "Accedi",
                 account: "al tuo account",
                 email: "Email",
-                password: "Password - min, MAI, $imboli, n°",
+                password: "Password (min 8 car.)",
                 subscribe: "Iscriviti"
             },
             login: {
@@ -684,7 +684,7 @@ export default defineI18nConfig(() => ({
                 login: "Logga in",
                 account: "till ditt konto",
                 email: "E-post",
-                password: "Lösenord - min, MAJ, $ymboler, n°",
+                password: "Lösenord (min 8 tkn)",
                 subscribe: "Prenumerera"
             },
             login: {
@@ -817,7 +817,7 @@ export default defineI18nConfig(() => ({
                 login: "Autentificare",
                 account: "în contul tău",
                 email: "Email",
-                password: "Parolă - min, MAJ, $imboluri, n°",
+                password: "Parolă (min 8 car.)",
                 subscribe: "Înregistrează-te"
             },
             login: {

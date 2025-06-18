@@ -5,17 +5,13 @@ import validator from 'validator'
 export default defineEventHandler(async (event) => {
     const { token, newPassword } = await readBody(event);
 
-    if (!validator.isStrongPassword(newPassword, {
-        minLength: 8,
-        minLowerCase: 0,
-        minUpperCase: 0,
-        minNumbers: 0,
-        minSymbols: 0,
-    })) {
+    // Custom password check: min 8 chars and only allowed symbols
+    const allowedCharsRegex = /^[A-Za-z0-9!@#$%^&*()_\-+=\[\]{};:'",.<>/?\\|`~€£¤§]*$/;
+    if (!newPassword || newPassword.length < 8 || !allowedCharsRegex.test(newPassword)) {
         throw createError({
-            statusCode: 400,
-            message: "Le mot de passe doit avoir 8 caractères min.",
-        })
+        statusCode: 400,
+        message: "Password must contain at least 8 characters and may include symbols, uppercase, lowercase and numbers.",
+        });
     }
 
     const user = await prisma.user.findFirst({
@@ -27,7 +23,7 @@ export default defineEventHandler(async (event) => {
         },
     });
 
-    if (!user) throw createError({ statusCode: 400, message: "Lien expiré ou invalide" });
+    if (!user) throw createError({ statusCode: 400, message: "Expired or invalid reset link" });
 
     console.log("User before password update:", user);
 
@@ -59,5 +55,5 @@ export default defineEventHandler(async (event) => {
     const confirm = await prisma.user.findUnique({ where: { id: user.id } });
     console.log("✅ Confirm DB password after update:", confirm.password);
 
-    return { message: "Mot de passe mis à jour !" };
+    return { message: "Password updated!" };
 });

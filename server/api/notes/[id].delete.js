@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
         if (!token) {
             throw createError({
                 statusCode: 401,
-                statusMessage: "Mise à jour non autorisée",
+                statusMessage: "Non authorized update",
             })
         }
 
@@ -30,14 +30,14 @@ export default defineEventHandler(async (event) => {
         if(!noteToDelete) {
             throw createError({
                 statusCode: 401,
-                statusMessage: "Note inexistante",
+                statusMessage: "Non existing note",
             })
         }
 
         if(noteToDelete.userId !== userId) {
             throw createError({
                 statusCode: 401,
-                statusMessage: "Permission refusée",
+                statusMessage: "Permission denied",
             })
         }
 
