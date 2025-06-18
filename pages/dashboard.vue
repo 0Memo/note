@@ -162,7 +162,7 @@
 
             <template v-else>
                 <div
-                    class="notes-container max-h-[550px] md:max-h-screen overflow-y-auto md:overflow-hidden"
+                    class="notes-container max-h-[550px] overflow-y-auto md:overflow-y-visible"
                     ref="notesContainer"
                     @touchstart="handleTouchStartY"
                     @touchmove="handleTouchMoveY"
