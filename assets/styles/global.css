@@ -7,9 +7,15 @@
 @tailwind utilities;
 
 body,
-html {
+html,
+#__nuxt {
     height: 100%;
-    overflow: auto;
+    overflow: auto !important;
+}
+
+body {
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
 }
 
 .logoPath {
