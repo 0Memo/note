@@ -831,6 +831,7 @@
     import { useRouter } from 'vue-router'
     import { useLocalePath } from '#i18n'
     import { useCookie, navigateTo, useRuntimeConfig, useRoute } from '#app'
+    import { deferredPrompt, showInstall } from '../plugins/pwa-install.client'
 
     definePageMeta({
         middleware: ['auth'],
@@ -872,9 +873,6 @@
     const syncingNoteId = ref(null)
     const editingDate = ref(false)
     const manualDate = ref('')
-
-    const deferredPrompt = ref(null);
-    const showInstall = ref(false);
 
     function installApp() {
         if (!deferredPrompt.value) return;
@@ -1525,19 +1523,7 @@
         }
     }
 
-    onMounted(async() => {
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt.value = e;
-            showInstall.value = true;
-        });
-
-        // Optionally hide if already installed
-        window.addEventListener('appinstalled', () => {
-            console.log('PWA was installed')
-            showInstall.value = false
-        })
-        
+    onMounted(async() => {        
         // Check for existing calendar connection
         const savedToken = localStorage.getItem('googleCalendarToken')
         if (savedToken) {
