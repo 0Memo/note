@@ -131,6 +131,9 @@ export default defineI18nConfig(() => ({
                     eventsFound: "{count} évènements trouvés dans Google Agenda"
                 },
             },
+            common: {
+                installApp: "Installer App"
+            },
             easter: "Joyeuses Pâques!",
             halloween: "Joyeux Halloween!",
             xmas: "Joyeux Noël!",
@@ -263,6 +266,9 @@ export default defineI18nConfig(() => ({
                     error: "Error",
                     eventsFound: "Se encontraron {count} eventos en Google Calendar"
                 },
+            },
+            common: {
+                installApp: "Instalar App"
             },
             easter: "¡Felices Pascuas!",
             halloween: "¡Feliz Halloween!",
@@ -397,6 +403,9 @@ export default defineI18nConfig(() => ({
                     eventsFound: "Foram encontrados {count} eventos no Google Agenda"
                 },
             },
+            common: {
+                installApp: "Instalar App"
+            },
             easter: "Feliz Páscoa!",
             halloween: "Feliz Halloween!",
             xmas: "Feliz Natal!",
@@ -529,6 +538,9 @@ export default defineI18nConfig(() => ({
                     error: "Error",
                     eventsFound: "Found {count} events in Google Calendar"
                 },
+            },
+            common: {
+                installApp: "Install App"
             },
             easter: "Happy Easter!",
             halloween: "Happy Halloween!",
@@ -663,6 +675,9 @@ export default defineI18nConfig(() => ({
                     eventsFound: "Trovati {count} eventi in Google Calendar"
                 }
             },
+            common: {
+                installApp: "Installa l'App"
+            },
             easter: "Buona Pasqua!",
             halloween: "Buon Halloween!",
             xmas: "Buon Natale!",
@@ -796,6 +811,9 @@ export default defineI18nConfig(() => ({
                     eventsFound: "Hittade {count} händelser i Google Kalender"
                 },
             },
+            common: {
+                installApp: "Installera Appen"
+            },
             easter: "Glad Påsk!",
             halloween: "Glad Halloween!",
             xmas: "God Jul!",
@@ -928,6 +946,9 @@ export default defineI18nConfig(() => ({
                     error: "Eroare",
                     eventsFound: "Am găsit {count} evenimente în Google Calendar"
                 },
+            },
+            common: {
+                installApp: "Instalează App"
             },
             easter: "Paște Fericit!",
             halloween: "Halloween Fericit!",

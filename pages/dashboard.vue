@@ -32,7 +32,13 @@
                     {{ $t('homepage.title') }}
                 </nuxt-link>
             </p>
-            <button v-if="showInstall" @click="installApp" class="mt-6 ml-1 text-md text-white shadow-2xl font-semibold transform cursor-pointer hover:underline">Install App</button>
+            <button
+                v-if="showInstall"
+                @click="installApp"
+                class="mt-6 ml-1 text-md text-white shadow-2xl font-semibold transform cursor-pointer hover:underline"
+            >
+                {{ $t('common.installApp') }}
+            </button>
             <div class="text-white flex flex-wrap justify-center gap-2 mt-8 md:mt-6 relative z-50">
                 <button @click="changeLocale('en')">
                     <img
@@ -1525,6 +1531,13 @@
             deferredPrompt.value = e;
             showInstall.value = true;
         });
+
+        // Optionally hide if already installed
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed')
+            showInstall.value = false
+        })
+        
         // Check for existing calendar connection
         const savedToken = localStorage.getItem('googleCalendarToken')
         if (savedToken) {
