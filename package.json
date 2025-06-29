@@ -32,6 +32,7 @@
   "devDependencies": {
     "@types/node": "^22.14.0",
     "@types/validator": "^13.12.3",
+    "@vite-pwa/nuxt": "^1.0.4",
     "autoprefixer": "^10.4.20",
     "cross-env": "^7.0.3",
     "nitropack": "^2.10.4",

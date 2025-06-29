@@ -63,4 +63,40 @@ export default defineNuxtConfig({
       baseURL: process.env.NUXT_PUBLIC_BASE_URL || "",
     },
   },
+
+  pwa: {
+    registerType: "autoUpdate",
+    manifest: {
+      name: "Memo's Notes",
+      short_name: "Notes",
+      description: "Your multilingual voice & calendar notes app",
+      theme_color: "#ffffff",
+      background_color: "#ffffff",
+      display: "standalone",
+      start_url: "/",
+      icons: [
+        {
+          src: "/icons/icon-192x192.png",
+          sizes: "192x192",
+          type: "image/png",
+        },
+        {
+          src: "/icons/icon-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+        },
+      ],
+    },
+    workbox: {
+      cleanupOutdatedCaches: true,
+      runtimeCaching: [
+        {
+          urlPattern: "https://www.googleapis.com/.*",
+          handler: "NetworkFirst",
+          method: "GET",
+          strategyOptions: { cacheName: "google-api-cache" },
+        },
+      ],
+    },
+  },
 });
