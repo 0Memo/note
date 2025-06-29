@@ -32,6 +32,7 @@
                     {{ $t('homepage.title') }}
                 </nuxt-link>
             </p>
+            <button v-if="showInstall" @click="installApp">Install App</button>
             <div class="text-white flex flex-wrap justify-center gap-2 mt-8 md:mt-6 relative z-50">
                 <button @click="changeLocale('en')">
                     <img
@@ -866,6 +867,21 @@
     const editingDate = ref(false)
     const manualDate = ref('')
 
+    const deferredPrompt = ref(null);
+    const showInstall = ref(false);
+
+    function installApp() {
+        if (!deferredPrompt.value) return;
+        deferredPrompt.value.prompt();
+        deferredPrompt.value.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('User accepted the install prompt');
+            }
+            deferredPrompt.value = null;
+            showInstall.value = false;
+        });
+    }
+
     function toggleMouseTrail() {
         showMouseTrail.value = !showMouseTrail.value
     }
@@ -1504,6 +1520,11 @@
     }
 
     onMounted(async() => {
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt.value = e;
+            showInstall.value = true;
+        });
         // Check for existing calendar connection
         const savedToken = localStorage.getItem('googleCalendarToken')
         if (savedToken) {
