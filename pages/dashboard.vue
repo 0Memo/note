@@ -32,7 +32,7 @@
                     {{ $t('homepage.title') }}
                 </nuxt-link>
             </p>
-            <button v-if="showInstall" @click="installApp">Install App</button>
+            <button v-if="showInstall" @click="installApp" class="mt-6 ml-1 text-md text-zinc-300 relative z-50">Install App</button>
             <div class="text-white flex flex-wrap justify-center gap-2 mt-8 md:mt-6 relative z-50">
                 <button @click="changeLocale('en')">
                     <img
