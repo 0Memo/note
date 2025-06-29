@@ -18,7 +18,7 @@ export default defineNuxtConfig({
 
   css: ["@/assets/styles/global.css"],
 
-  modules: ["@vueuse/nuxt", "@nuxtjs/i18n"],
+  modules: [ "@vite-pwa/nuxt", "@vueuse/nuxt", "@nuxtjs/i18n"],
 
   i18n: {
     strategy: "prefix",
