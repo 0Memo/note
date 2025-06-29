@@ -13,6 +13,7 @@ export default defineNuxtConfig({
           content: "Best app ever built with Nuxt 3",
         },
       ],
+      link: [{ rel: "manifest", href: "/manifest.webmanifest" }],
     },
   },
 
