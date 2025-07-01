@@ -134,6 +134,10 @@ export default defineI18nConfig(() => ({
             common: {
                 installApp: "Installer App"
             },
+            pwa: {
+                iosPrompt: "Pour installer l'application, appuyer sur Partager → Ajouter à l'écran d'accueil",
+                dismiss: "Fermer"
+            },
             easter: "Joyeuses Pâques!",
             halloween: "Joyeux Halloween!",
             xmas: "Joyeux Noël!",
@@ -269,6 +273,10 @@ export default defineI18nConfig(() => ({
             },
             common: {
                 installApp: "Instalar App"
+            },
+            pwa: {
+                iosPrompt: "Para instalar la app, toque Compartir → Añadir a la pantalla de inicio",
+                dismiss: "Cerrar"
             },
             easter: "¡Felices Pascuas!",
             halloween: "¡Feliz Halloween!",
@@ -406,6 +414,10 @@ export default defineI18nConfig(() => ({
             common: {
                 installApp: "Instalar App"
             },
+            pwa: {
+                iosPrompt: "Para instalar o app, toque em Compartilhar → Adicionar à Tela de Início",
+                dismiss: "Fechar"
+            },
             easter: "Feliz Páscoa!",
             halloween: "Feliz Halloween!",
             xmas: "Feliz Natal!",
@@ -541,6 +553,10 @@ export default defineI18nConfig(() => ({
             },
             common: {
                 installApp: "Install App"
+            },
+            pwa: {
+                iosPrompt: "To install the app, tap Share → Add to Home Screen",
+                dismiss: "Dismiss"
             },
             easter: "Happy Easter!",
             halloween: "Happy Halloween!",
@@ -678,6 +694,10 @@ export default defineI18nConfig(() => ({
             common: {
                 installApp: "Installa l'App"
             },
+            pwa: {
+                iosPrompt: "Per installare l'app, tocca Condividi → Aggiungi a Home",
+                dismiss: "Chiudi"
+            },
             easter: "Buona Pasqua!",
             halloween: "Buon Halloween!",
             xmas: "Buon Natale!",
@@ -814,6 +834,10 @@ export default defineI18nConfig(() => ({
             common: {
                 installApp: "Installera Appen"
             },
+            pwa: {
+                iosPrompt: "För att installera appen, tryck på Dela → Lägg till på hemskärmen",
+                dismiss: "Stäng"
+            },
             easter: "Glad Påsk!",
             halloween: "Glad Halloween!",
             xmas: "God Jul!",
@@ -949,6 +973,10 @@ export default defineI18nConfig(() => ({
             },
             common: {
                 installApp: "Instalează App"
+            },
+            pwa: {
+                iosPrompt: "Pentru a instala aplicația, atinge Partajare → Adaugă pe ecranul de pornire",
+                dismiss: "Închide"
             },
             easter: "Paște Fericit!",
             halloween: "Halloween Fericit!",

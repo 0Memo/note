@@ -817,6 +817,7 @@
                     {{ $t('modal.terms.title') }}
                 </nuxt-link>
             </footer>
+            <IosInstallBanner />
         </div>
     </div>
 </template>
