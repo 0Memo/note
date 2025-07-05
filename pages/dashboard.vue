@@ -9,9 +9,7 @@
         </div>-->
         <div
             class="md:hidden fixed top-0 left-0 right-0 z-[100] bg-[#1d073a] flex items-center justify-between px-6 py-4 shadow-md cursor-pointer border-double border-b-4 border-white"
-            @click="toggleSidebar"
         >
-            <ClickLogo />
             <NavbarLogo />
         </div>
         <!-- Mobile + Desktop Sidebar -->
@@ -787,6 +785,13 @@
                     </div>
                 </div>
             </template>
+
+            <div
+                class="md:hidden fixed top-[4.5rem] right-0 z-[100] flex items-center justify-between px-6 py-4 shadow-md cursor-pointer"
+                @click="toggleSidebar"
+            >
+                <ClickLogo />
+            </div>
 
             <button
                 @click="toggleMouseTrail"
