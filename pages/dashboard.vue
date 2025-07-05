@@ -787,7 +787,7 @@
             </template>
 
             <div
-                class="md:hidden fixed top-[4.5rem] right-0 z-[100] flex items-center justify-between px-6 py-4 shadow-md cursor-pointer"
+                class="md:hidden fixed bottom-[5.5rem] right-0 z-[100] flex items-center justify-between px-6 py-4 shadow-md cursor-pointer"
                 @click="toggleSidebar"
             >
                 <ClickLogo />
