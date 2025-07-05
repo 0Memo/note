@@ -200,14 +200,14 @@
                             >
                                 <div class="flex items-center justify-between">
                                     <div class="flex-1 min-w-0">
-                                        <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
+                                        <h3 class="font-bold truncate">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
                                         <div class="space-x-4 truncate">
                                             <span>{{ formatDate(note.eventDate) }}</span>
                                             <span
                                                 v-if="note.text.length > 50"
                                                 class="text-zinc-400"
                                             >
-                                                ...{{ note.text.substring(30, 50) }}
+                                                ...{{ stripHtmlTags(note.text).substring(30, 50) }}
                                             </span>
                                         </div>
                                     </div>
@@ -317,13 +317,13 @@
                                 >
                                     <div class="flex items-center justify-between">
                                         <div class="flex-1 min-w-0">
-                                            <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
+                                            <h3 class="font-bold truncate">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
                                             <div class="space-x-4 truncate">
                                                 <span>{{ formatDate(note.eventDate) }}</span>
                                                 <span
                                                     v-if="note.text.length > 50"
                                                     class="text-zinc-400"
-                                                >...{{ note.text.substring(30, 50) }}
+                                                >...{{ stripHtmlTags(note.text).substring(30, 50) }}
                                                 </span>
                                             </div>
                                         </div>
@@ -411,7 +411,7 @@
                                 >
                                     <div class="flex items-center justify-between">
                                         <div class="flex-1 min-w-0">
-                                            <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
+                                            <h3 class="font-bold truncate">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
                                             <div class="space-x-4 truncate">
                                                 <span>
                                                     {{ formatDate(note.eventDate || note.updatedAt) }}
@@ -419,7 +419,7 @@
                                                 <span
                                                     v-if="note.text.length > 50"
                                                     class="text-zinc-400"
-                                                >...{{ note.text.substring(30, 50) }}
+                                                >...{{ stripHtmlTags(note.text).substring(30, 50) }}
                                                 </span>
                                             </div>
                                         </div>
@@ -507,13 +507,13 @@
                                 >
                                     <div class="flex items-center justify-between">
                                         <div class="flex-1 min-w-0">
-                                            <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
+                                            <h3 class="font-bold truncate">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
                                             <div class="space-x-4 truncate">
                                                 <span>{{ formatDate(note.eventDate || note.updatedAt) }}</span>
                                                 <span
                                                     v-if="note.text.length > 50"
                                                     class="text-zinc-400"
-                                                >...{{ note.text.substring(30, 50) }}
+                                                >...{{ stripHtmlTags(note.text).substring(30, 50) }}
                                                 </span>
                                             </div>
                                         </div>
@@ -601,7 +601,7 @@
                                 >
                                     <div class="flex items-center justify-between">
                                         <div class="flex-1 min-w-0">
-                                            <h3 class="font-bold truncate">{{ note.text.substring(0, 30) }}</h3>
+                                            <h3 class="font-bold truncate">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
                                             <div class="space-x-4 truncate">
                                                 <span>
                                                     {{ formatDate(note.eventDate || note.updatedAt) }}
@@ -609,7 +609,7 @@
                                                 <span
                                                     v-if="note.text.length > 50"
                                                     class="text-zinc-400"
-                                                >...{{ note.text.substring(30, 50) }}
+                                                >...{{ stripHtmlTags(note.text).substring(30, 50) }}
                                                 </span>
                                             </div>
                                         </div>
@@ -760,17 +760,25 @@
                                 <span class="inline sm:hidden">Sync</span>
                             </button>
                         </div>
-                        <textarea
-                            ref="textarea"
-                            v-model="updatedNote"
-                            name="note"
-                            id="note"
-                            :placeholder="$t('notes.text')"
-                            class="text-[#030303] my-4 bg-[#d5c7e2] rounded-md p-4 -ml-36 md:-ml-5 border-[0.5px] border-purple-900
-                            focus:outline-none focus:text-white focus:bg-[#030303] shadow-lg w-96 md:w-full min-h-[300px] cursor-text"
-                            @input="debouncedFn"
-                        >
-                        </textarea>
+                        <div class="my-4 bg-[#d5c7e2] border-purple-900 rounded-md p-4 -ml-36 md:-ml-5 shadow-lg w-96 md:w-full min-h-[300px]">
+                            <Editor
+                                ref="textarea"
+                                v-model="updatedNote"
+                                api-key= '7km3i00h6yxuuaielxdn70k4rzu7iswd10aw8f5ftnpvjspd'
+                                :init="{
+                                    height: 300,
+                                    menubar: false,
+                                    plugins: 'lists link image code table',
+                                    toolbar:
+                                    'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat code',
+                                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                                }"
+                                :placeholder="$t('notes.text')"
+                                name="note"
+                                id="note"
+                                @input="debouncedFn"
+                            />
+                        </div>
                     </div>
                     <div v-else class="text-zinc-400 italic text-center mt-10">
                         {{ $t('notes.nothing') }}
@@ -833,6 +841,7 @@
     import { useLocalePath } from '#i18n'
     import { useCookie, navigateTo, useRuntimeConfig, useRoute } from '#app'
     import { deferredPrompt, showInstall } from '../plugins/pwa-install.client'
+    import Editor from '@tinymce/tinymce-vue'
 
     definePageMeta({
         middleware: ['auth'],
@@ -885,6 +894,26 @@
             deferredPrompt.value = null;
             showInstall.value = false;
         });
+    }
+
+    function stripHtmlTags(input) {
+        return input?.replace(/<[^>]*>?/gm, '') || '';
+    }
+
+    function sanitizeHTML(dirty) {
+        const temp = document.createElement('div');
+        temp.innerHTML = dirty;
+        // Remove script, iframe, etc.
+        const allowedTags = ['b', 'i', 'u', 'strong', 'em', 'p', 'br', 'ul', 'ol', 'li', 'span'];
+        const walker = document.createTreeWalker(temp, NodeFilter.SHOW_ELEMENT, null, false);
+        let node;
+        while ((node = walker.nextNode())) {
+            if (!allowedTags.includes(node.nodeName.toLowerCase())) {
+                node.replaceWith(...node.childNodes);
+            }
+            [...node.attributes].forEach(attr => node.removeAttribute(attr)); // Optional: remove all attributes
+        }
+        return temp.innerHTML;
     }
 
     function toggleMouseTrail() {
@@ -1031,9 +1060,11 @@
                 ? new Date(note.eventDate).toISOString()
                 : new Date(note.updatedAt).toISOString()
 
+            const sanitizedText = sanitizeHTML(note.text || '')
+
             const eventData = {
                 id: note.id,
-                title: note.text?.substring(0, 50) || 'Untitled Note',
+                title: stripHtmlTags(sanitizedText).substring(0, 50) || 'Untitled Note',
                 text: note.text || '',
                 date: finalDateISO,
                 eventId: note.calendarEventId || null
@@ -1123,10 +1154,11 @@
 
     async function updateNote() {
         try {
+            const cleanText = sanitizeHTML(updatedNote.value)
             const response = await $fetch(`/api/notes/${selectedNote.value.id}`, {
                 method: 'PATCH',
                 body: {
-                    updatedNote: updatedNote.value,
+                    updatedNote: cleanText,
                 }
             })
         
@@ -1363,7 +1395,8 @@
 
         recognition.onresult = async (event) => {
             const transcript = event.results[0][0].transcript
-            updatedNote.value += (updatedNote.value ? '\n' : '') + transcript
+            const combined = (updatedNote.value ? updatedNote.value + '\n' : '') + transcript
+            updatedNote.value = sanitizeHTML(combined)
 
             if (selectedNote.value) {
                 selectedNote.value.text = updatedNote.value;

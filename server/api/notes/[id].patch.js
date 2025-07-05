@@ -1,11 +1,11 @@
 import { jwtVerify } from "jose"
 import prisma from "../../utils/db"
+import sanitizeHtml from "sanitize-html"
 
 export default defineEventHandler(async (event) => {
     try {
         const body = await readBody(event)
         const id = getRouterParam(event, 'id')
-
         const cookies = parseCookies(event)
         const token = cookies.NoteJWT
 
@@ -42,7 +42,20 @@ export default defineEventHandler(async (event) => {
             })
         }
 
-        const textChanged = body.updatedNote !== noteToUpdate.text;
+        const cleanText = sanitizeHtml(body.updatedNote, {
+            allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+                "img",
+                "h1",
+                "h2",
+            ]),
+            allowedAttributes: {
+                ...sanitizeHtml.defaults.allowedAttributes,
+                img: ["src", "alt"],
+                a: ["href", "name", "target"],
+            },
+        });
+
+        const textChanged = cleanText !== noteToUpdate.text;
         const dateChanged =
             body.eventDate?.slice(0, 10) !== noteToUpdate.eventDate?.slice(0, 10);
 
@@ -51,7 +64,7 @@ export default defineEventHandler(async (event) => {
                 id: Number(id),
             },
             data: {
-                text: body.updatedNote,
+                text: cleanText,
                 eventDate: body.eventDate,
                 ...(textChanged || dateChanged ? {
                     lastSyncedText: null,
