@@ -760,7 +760,7 @@
                                 <span class="inline sm:hidden">Sync</span>
                             </button>
                         </div>
-                        <div class="my-4 bg-[#d5c7e2] border-purple-900 rounded-md p-4 -ml-[8.75rem] md:-ml-5 shadow-lg w-[23rem] md:w-full min-h-[300px]">
+                        <div class="relative my-4 bg-[#d5c7e2] border-purple-900 rounded-md p-4 -ml-[8.75rem] md:-ml-5 shadow-lg w-[23rem] md:w-full min-h-[300px]">
                             <Editor
                                 ref="textarea"
                                 v-model="updatedNote"
@@ -778,6 +778,14 @@
                                 id="note"
                                 @input="debouncedFn"
                             />
+
+                            <!-- ✅ Green check indicator -->
+                            <transition name="fade">
+                                <div v-if="showSavedIndicator"
+                                    class="absolute bottom-3 right-4 text-green-700 bg-green-100 border border-green-300 text-sm px-3 py-1 rounded-md shadow">
+                                ✔ {{ $t('toast.saved') || 'Note saved' }}
+                                </div>
+                            </transition>
                         </div>
                     </div>
                     <div v-else class="text-zinc-400 italic text-center mt-10">
@@ -890,6 +898,7 @@
     const syncingNoteId = ref(null)
     const editingDate = ref(false)
     const manualDate = ref('')
+    const showSavedIndicator = ref(false)
 
     function installApp() {
         if (!deferredPrompt.value) return;
@@ -1162,7 +1171,7 @@
     async function updateNote() {
         try {
             const cleanText = sanitizeHTML(updatedNote.value)
-            const response = await $fetch(`/api/notes/${selectedNote.value.id}`, {
+            await $fetch(`/api/notes/${selectedNote.value.id}`, {
                 method: 'PATCH',
                 body: {
                     updatedNote: cleanText,
@@ -1173,10 +1182,15 @@
             if (Array.isArray(notes.value)) {
                 const updatedNoteIndex = notes.value.findIndex(n => n.id === selectedNote.value.id)
                 if (updatedNoteIndex !== -1) {
-                    notes.value[updatedNoteIndex].updatedAt = new Date().toISOString()
-                    selectedNote.value.updatedAt = new Date().toISOString()
+                    const now = new Date().toISOString()
+                    notes.value[updatedNoteIndex].updatedAt = now
+                    selectedNote.value.updatedAt = now
                 }
             }
+
+            // ✅ Show saved indicator for 1.5s
+            showSavedIndicator.value = true
+            setTimeout(() => showSavedIndicator.value = false, 2500)
         } catch (error) {
             console.log('error', error)
         }

@@ -101,6 +101,7 @@ export default defineI18nConfig(() => ({
                 listening: "À l'écoute... 🎤 Veuillez parler clairement.",
                 transcribed: "Discours transcrit avec succès!",
                 speechRecognition: "La reconnaissance vocale n'est pas prise en charge dans ce navigateur.",
+                saved: "Note enregistrée",
                 calendar: {
                     warning: "Votre consentement sera requis pour connecter Google Agenda",
                     connectCalendar: "Connecter Google Agenda",
@@ -241,6 +242,7 @@ export default defineI18nConfig(() => ({
                 listening: "Escuchando... 🎤 Por favor hable claramente.",
                 transcribed: "¡Voz transcrita con éxito!",
                 speechRecognition: "El reconocimiento de voz no es compatible con este navegador.",
+                saved: "Nota guardada",
                 calendar: {
                     warning: "Se requerirá su consentimiento para conectar con Google Calendar",
                     connectCalendar: "Conectar Google Calendar",
@@ -381,6 +383,7 @@ export default defineI18nConfig(() => ({
                 listening: "Ouvindo... 🎤 Por favor fale claramente.",
                 transcribed: "Fala transcrita com sucesso!",
                 speechRecognition: "Reconhecimento de voz não é compatível com este navegador.",
+                saved: "Nota salva",
                 calendar: {
                     warning: "Seu consentimento será necessário para conectar ao Google Agenda",
                     connectCalendar: "Conectar o Google Agenda",
@@ -521,6 +524,7 @@ export default defineI18nConfig(() => ({
                 listening: "Listening... 🎤 Please speak clearly.",
                 transcribed: "Speech successfully transcribed!",
                 speechRecognition: "Speech recognition not supported in this browser.",
+                saved: "Note saved",
                 calendar: {
                     warning: "Your consent will be required to connect to Google Calendar",
                     connectCalendar: "Connect Google Calendar",
@@ -661,6 +665,7 @@ export default defineI18nConfig(() => ({
                 listening: "Ascoltando... 🎤 Per favore, parla chiaramente.",
                 transcribed: "Voce trascritta con successo!",
                 speechRecognition: "Il riconoscimento vocale non è supportato da questo browser.",
+                saved: "Nota salvata",
                 calendar: {
                     warning: "Il tuo consenso sarà richiesto per connettersi a Google Calendar",
                     connectCalendar: "Connetti Google Calendar",
@@ -801,6 +806,7 @@ export default defineI18nConfig(() => ({
                 listening: "Lyssnar... 🎤 Tala tydligt.",
                 transcribed: "Rösten transkriberades framgångsrikt!",
                 speechRecognition: "Röstigenkänning stöds inte i den här webbläsaren.",
+                saved: "Anteckning sparad",
                 calendar: {
                     warning: "Ditt samtycke krävs för att ansluta till Google Kalender",
                     connectCalendar: "Anslut Google Kalender",
@@ -941,6 +947,7 @@ export default defineI18nConfig(() => ({
                 listening: "Ascultând... 🎤 Te rog să vorbești clar.",
                 transcribed: "Vocea a fost transcrisă cu succes!",
                 speechRecognition: "Recunoașterea vocală nu este compatibilă cu acest browser.",
+                saved: "Notiță salvată",
                 calendar: {
                     warning: "Consimțământul tău va fi necesar pentru a te conecta la Google Calendar",
                     connectCalendar: "Conectează Google Calendar",
