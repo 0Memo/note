@@ -760,7 +760,7 @@
                                 <span class="inline sm:hidden">Sync</span>
                             </button>
                         </div>
-                        <div class="my-4 bg-[#d5c7e2] border-purple-900 rounded-md p-4 -ml-36 md:-ml-5 shadow-lg w-96 md:w-full min-h-[300px]">
+                        <div class="my-4 bg-[#d5c7e2] border-purple-900 rounded-md p-2 -ml-36 md:-ml-5 shadow-lg w-96 md:w-full min-h-[300px]">
                             <Editor
                                 ref="textarea"
                                 v-model="updatedNote"
