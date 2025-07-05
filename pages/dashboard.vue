@@ -681,7 +681,8 @@
             <div class="text-white flex p-8 justify-between items-start mt-16 md:mt-0">
                 <button
                     class="inline-flex gap-3 font-bold
-                    text-white hover:text-zinc-500 shadow-lg"
+                    text-white hover:text-zinc-500 shadow-lg
+                    absolute left-[7.5rem] bottom-8 md:static"
                     @click="createNewNote"
                 >
                     <Pencil class="w-10 h-10" />
@@ -694,7 +695,8 @@
                     @cancel="showConfirmModal = false"
                 />
                 <button
-                    class="hover:text-zinc-500 shadow-lg"
+                    class="hover:text-zinc-500 shadow-lg absolute
+                    right-[7.5rem] md:static bottom-8 md:right-8"
                     @click="showConfirmModal = true"
                 >
                     <TrashIcon class="w-10 h-10" />
