@@ -85,6 +85,9 @@ export default defineI18nConfig(() => ({
                     back: "Retour"
                 }
             },
+            accessibility: {
+                readNote: "Lire la note à haute voix"
+            },
             toast: {
                 register: "L'utilisateur a été créé",
                 language: "La langue a été changée: ",
@@ -101,6 +104,7 @@ export default defineI18nConfig(() => ({
                 listening: "À l'écoute... 🎤 Veuillez parler clairement.",
                 transcribed: "Discours transcrit avec succès!",
                 speechRecognition: "La reconnaissance vocale n'est pas prise en charge dans ce navigateur.",
+                readingNote: "Lecture de la note...",
                 saved: "Note enregistrée",
                 calendar: {
                     warning: "Votre consentement sera requis pour connecter Google Agenda",
@@ -226,6 +230,9 @@ export default defineI18nConfig(() => ({
                     back: "Volver"
                 }
             },
+            accessibility: {
+                readNote: "Leer la nota en voz alta"
+            },
             toast: {
                 register: "El usuario ha sido creado",
                 language: "El idioma ha sido cambiado a: ",
@@ -242,6 +249,7 @@ export default defineI18nConfig(() => ({
                 listening: "Escuchando... 🎤 Por favor hable claramente.",
                 transcribed: "¡Voz transcrita con éxito!",
                 speechRecognition: "El reconocimiento de voz no es compatible con este navegador.",
+                readingNote: "Leyendo la nota...",
                 saved: "Nota guardada",
                 calendar: {
                     warning: "Se requerirá su consentimiento para conectar con Google Calendar",
@@ -367,6 +375,9 @@ export default defineI18nConfig(() => ({
                     back: "Voltar"
                 }
             },
+            accessibility: {
+                readNote: "Ler a nota em voz alta"
+            },
             toast: {
                 register: "Usuário criado com sucesso",
                 language: "Idioma alterado para: ",
@@ -383,6 +394,7 @@ export default defineI18nConfig(() => ({
                 listening: "Ouvindo... 🎤 Por favor fale claramente.",
                 transcribed: "Fala transcrita com sucesso!",
                 speechRecognition: "Reconhecimento de voz não é compatível com este navegador.",
+                readingNote: "Lendo a nota...",
                 saved: "Nota salva",
                 calendar: {
                     warning: "Seu consentimento será necessário para conectar ao Google Agenda",
@@ -508,6 +520,9 @@ export default defineI18nConfig(() => ({
                     back: "Back"
                 }
             },
+            accessibility: {
+                readNote: "Read note aloud"
+            },
             toast: {
                 register: "User has been created",
                 language: "Language has been changed to: ",
@@ -524,6 +539,7 @@ export default defineI18nConfig(() => ({
                 listening: "Listening... 🎤 Please speak clearly.",
                 transcribed: "Speech successfully transcribed!",
                 speechRecognition: "Speech recognition not supported in this browser.",
+                readingNote: "Reading note...",
                 saved: "Note saved",
                 calendar: {
                     warning: "Your consent will be required to connect to Google Calendar",
@@ -649,6 +665,9 @@ export default defineI18nConfig(() => ({
                     back: "Indietro"
                 }
             },
+            accessibility: {
+                readNote: "Leggi la nota ad alta voce"
+            },
             toast: {
                 register: "Utente creato con successo",
                 language: "Lingua cambiata in: ",
@@ -665,6 +684,7 @@ export default defineI18nConfig(() => ({
                 listening: "Ascoltando... 🎤 Per favore, parla chiaramente.",
                 transcribed: "Voce trascritta con successo!",
                 speechRecognition: "Il riconoscimento vocale non è supportato da questo browser.",
+                readingNote: "Lettura della nota...",
                 saved: "Nota salvata",
                 calendar: {
                     warning: "Il tuo consenso sarà richiesto per connettersi a Google Calendar",
@@ -790,6 +810,9 @@ export default defineI18nConfig(() => ({
                     back: "Tillbaka"
                 }
             },
+            accessibility: {
+                readNote: "Läs anteckningen högt"
+            },
             toast: {
                 register: "Användare har skapats",
                 language: "Språket har ändrats till: ",
@@ -806,6 +829,7 @@ export default defineI18nConfig(() => ({
                 listening: "Lyssnar... 🎤 Tala tydligt.",
                 transcribed: "Rösten transkriberades framgångsrikt!",
                 speechRecognition: "Röstigenkänning stöds inte i den här webbläsaren.",
+                readingNote: "Läser anteckningen...",
                 saved: "Anteckning sparad",
                 calendar: {
                     warning: "Ditt samtycke krävs för att ansluta till Google Kalender",
@@ -931,6 +955,9 @@ export default defineI18nConfig(() => ({
                     back: "Înapoi"
                 }
             },
+            accessibility: {
+                readNote: "Citește notița cu voce tare"
+            },
             toast: {
                 register: "Utilizatorul a fost creat",
                 language: "Limba a fost schimbată în: ",
@@ -938,7 +965,7 @@ export default defineI18nConfig(() => ({
                 passwordChange: "Parola a fost schimbată cu succes!",
                 linkError: "Link invalid sau expirat",
                 resetLink: "Un link de resetare a fost trimit pe adresa ta de e-mail",
-                noteDeletion: "Nota a fost ștearsă cu succes!",
+                noteDeletion: "Notița a fost ștearsă cu succes!",
                 deletionError: "Eroare la ștergerea notei",
                 speechError: "Recunoașterea vocală a eșuat",
                 noSpeech: "Nu a fost detectată nicio voce. Încearcă din nou",
@@ -947,6 +974,7 @@ export default defineI18nConfig(() => ({
                 listening: "Ascultând... 🎤 Te rog să vorbești clar.",
                 transcribed: "Vocea a fost transcrisă cu succes!",
                 speechRecognition: "Recunoașterea vocală nu este compatibilă cu acest browser.",
+                readingNote: "Se citește notița...",
                 saved: "Notiță salvată",
                 calendar: {
                     warning: "Consimțământul tău va fi necesar pentru a te conecta la Google Calendar",
@@ -965,7 +993,7 @@ export default defineI18nConfig(() => ({
                     expired: "Conexiunea cu calendarul a expirat. Te rugăm să te reconectezi.",
                     sync: "Notiță sincronizată cu Google Calendar",
                     syncToCalendar: "Sync Calendar",
-                    failed: "Nu s-a putut sincroniza nota cu Google Calendar: ",
+                    failed: "Nu s-a putut sincroniza notița cu Google Calendar: ",
                     connectionFailed: "Conectarea la Google Calendar a eșuat. Încearcă din nou.",
                     checkFailed: "Nu s-au putut verifica evenimentele din calendar: ",
                     notConnected: "Calendarul nu este conectat",

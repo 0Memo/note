@@ -717,6 +717,13 @@
                             <button @click="startTranscription" class="focus:outline-none pr-2">
                                 <Microphone class="w-8 h-8 text-white font-bold relative -top-2"/>
                             </button>
+                            <button
+                                class="focus:outline-none"
+                                @click="readNoteAloud"
+                                :aria-label="$t('accessibility.readNote')"
+                            >
+                                <VoiceReading class="w-8 h-8 text-white font-bold relative -top-2"/>
+                            </button>
                             <div class="flex items-center gap-2 min-h-[36px] w-full">
                                 <template v-if="editingDate">
                                     <div class="flex flex-col space-y-1 md:space-y-0 md:flex-row h-[36px]">
@@ -762,7 +769,7 @@
                         </div>
                         <div class="relative my-4 bg-[#d5c7e2] border-purple-900 rounded-md p-4 -ml-[8.75rem] md:-ml-5 shadow-lg w-[23rem] md:w-full min-h-[300px]">
                             <Editor
-                                ref="textarea"
+                                ref="editorRef"
                                 v-model="updatedNote"
                                 api-key= '7km3i00h6yxuuaielxdn70k4rzu7iswd10aw8f5ftnpvjspd'
                                 :init="{
@@ -871,7 +878,7 @@
     const updatedNote = ref('')
     const notes = ref([])
     const selectedNote = ref(null)
-    const textarea = ref(null)
+    const editorRef = ref(null)
     const sidebarOpen = ref(false)
     const isDesktop = ref(false)
     const isLoading = ref(true)
@@ -889,6 +896,7 @@
     const showMouseTrail = ref(false)
     const speechText = ref('')
     const userWantsCalendarSync = ref(true)
+    const savedToken = ref(localStorage.getItem('googleCalendarToken'))
 
     // New calendar-related refs
     const isConnectingCalendar = ref(false)
@@ -899,6 +907,7 @@
     const editingDate = ref(false)
     const manualDate = ref('')
     const showSavedIndicator = ref(false)
+    const spokenWordIndex = ref(-1)
 
     function installApp() {
         if (!deferredPrompt.value) return;
@@ -1154,8 +1163,8 @@
             updatedNote.value = ''
 
             nextTick(() => {
-                if (textarea.value) {
-                    textarea.value.focus()
+                if (editorRef.value?.editor) {
+                    editorRef.value.editor.focus()
                 }
             })
         } catch (error) {
@@ -1195,6 +1204,15 @@
             console.log('error', error)
         }
     }
+
+    const highlightedNote = computed(() => {
+        const content = stripHtmlTags(selectedNote.value?.text || '')
+        if (spokenWordIndex.value < 0) return content
+
+        const before = content.slice(0, spokenWordIndex.value)
+        const after = content.slice(spokenWordIndex.value)
+        return `${before}<span class="bg-yellow-200">${after.charAt(0)}</span>${after.slice(1)}`
+    })
 
     const checkCalendarConnection = async () => {
         const token = localStorage.getItem('googleCalendarToken')
@@ -1393,6 +1411,48 @@
 
     let isRecognizing = false
 
+    function getVoiceByLocale(locale) {
+        const langMap = {
+            en: 'en-US',
+            fr: 'fr-FR',
+            es: 'es-ES',
+            pt: 'pt-BR',
+            it: 'it-IT',
+            sv: 'sv-SE',
+            ro: 'ro-RO'
+        }
+        const desiredLang = langMap[locale.value] || 'en-US'
+        const voices = speechSynthesis.getVoices()
+        return voices.find(voice => voice.lang === desiredLang) || voices[0]
+    }
+
+    function readNoteAloud() {
+        if (!selectedNote.value?.text) return
+        // Cancel any previous speech
+        speechSynthesis.cancel()
+        const cleanText = stripHtmlTags(selectedNote.value.text)
+        const utterance = new SpeechSynthesisUtterance(cleanText)
+
+        utterance.voice = getVoiceByLocale(locale)
+        utterance.rate = 1
+        utterance.pitch = 1
+        utterance.volume = 1
+
+        $toast.info(t('toast.readingNote'))
+
+        utterance.onboundary = (event) => {
+            if (event.name === "word") {
+                spokenWordIndex.value = event.charIndex
+            }
+        }
+
+        utterance.onend = () => {
+            spokenWordIndex.value = -1
+        }
+
+        speechSynthesis.speak(utterance)
+    }
+
     function startTranscription() {
         if (isRecognizing) return
 
@@ -1578,11 +1638,18 @@
         }
     }
 
-    onMounted(async() => {        
+    onMounted(async() => {
+        // Ensure voices are loaded
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = () => {
+            console.log("🔊 Voices loaded:", speechSynthesis.getVoices())
+            }
+        }
+
         // Check for existing calendar connection
-        const savedToken = localStorage.getItem('googleCalendarToken')
-        if (savedToken) {
-            accessToken.value = savedToken;
+        savedToken.value = localStorage.getItem('googleCalendarToken')
+        if (savedToken.value) {
+            accessToken.value = savedToken.value;
             const stillValid = await isAccessTokenValid();
             calendarConnected.value = stillValid;
 
@@ -1661,8 +1728,8 @@
         
 
         nextTick(() => {
-            if (textarea.value) {
-                textarea.value.focus()
+            if (editorRef.value?.editor) {
+                editorRef.value.editor.focus()
             }
         })
     })
