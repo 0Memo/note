@@ -1420,67 +1420,69 @@
             it: 'it-IT',
             sv: 'sv-SE',
             ro: 'ro-RO'
-        }
+        };
 
-        const desiredLang = langMap[locale.value] || 'en-US'
-        const voices = speechSynthesis.getVoices()
+        const desiredLang = langMap[locale.value] || 'en-US';
+        const voices = speechSynthesis.getVoices();
 
-        // Prefer Google or native voices with correct lang
-        const preferredVoices = voices.filter(v => 
-            v.lang === desiredLang && /Google|Microsoft|Apple|native/i.test(v.name)
-        )
-        if (preferredVoices.length > 0) return preferredVoices[0]
+        // 1. Try Google/Microsoft/Apple native voice match
+        const nativePreferred = voices.find(v =>
+            v.lang === desiredLang && /Google|Microsoft|Apple|Natural/i.test(v.name)
+        );
+        if (nativePreferred) return nativePreferred;
 
-        // Fallback to any exact lang match
-        const exact = voices.find(v => v.lang === desiredLang)
-        if (exact) return exact
+        // 2. Try any exact match
+        const exactMatch = voices.find(v => v.lang === desiredLang);
+        if (exactMatch) return exactMatch;
 
-        // Fallback to same language prefix
-        return voices.find(v => v.lang.startsWith(desiredLang.split('-')[0])) || voices[0]
+        // 3. Try any same-language family
+        return voices.find(v => v.lang.startsWith(desiredLang.split('-')[0])) || voices[0];
     }
 
-    function readNoteAloud() {
-        if (!selectedNote.value?.text) return
+    async function loadVoices() {
+        return new Promise((resolve) => {
+            const voices = speechSynthesis.getVoices();
+            if (voices.length) return resolve(voices);
 
-        const cleanText = stripHtmlTags(selectedNote.value.text)
-        const utterance = new SpeechSynthesisUtterance(cleanText)
-
-        const trySpeak = () => {
-            const voice = getVoiceByLocale(locale)
-            if (voice) {
-            utterance.voice = voice
-            utterance.rate = 1
-            utterance.pitch = 1
-            utterance.volume = 1
-            $toast.info(t('toast.readingNote'))
-
-            utterance.onboundary = (event) => {
-                if (event.name === "word") {
-                spokenWordIndex.value = event.charIndex
-                }
-            }
-
-            utterance.onend = () => {
-                spokenWordIndex.value = -1
-            }
-
-            speechSynthesis.cancel() // Cancel any previous speech
-            speechSynthesis.speak(utterance)
-            } else {
-            console.warn("❌ No matching voice found.")
-            $toast.error(t('toast.voiceNotFound') || "No voice found for selected language.")
-            }
-        }
-
-        // If voices are already loaded, speak immediately
-        if (speechSynthesis.getVoices().length > 0) {
-            trySpeak()
-        } else {
-            // Wait for voices to load, then speak
             speechSynthesis.onvoiceschanged = () => {
-            trySpeak()
-            }
+            resolve(speechSynthesis.getVoices());
+            };
+        });
+    }
+
+    async function readNoteAloud() {
+        if (!selectedNote.value?.text) return;
+
+        const cleanText = stripHtmlTags(selectedNote.value.text);
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+        const voices = await loadVoices();
+
+        const chosenVoice = getVoiceByLocale(locale);
+        if (chosenVoice) {
+            utterance.voice = chosenVoice;
+            console.log('✅ Using voice:', chosenVoice.name, '| lang:', chosenVoice.lang);
+        } else {
+            console.warn('⚠️ No matching voice found. Using default.');
         }
+
+        utterance.rate = 1;
+        utterance.pitch = 1;
+        utterance.volume = 1;
+
+        $toast.info(t('toast.readingNote'));
+
+        utterance.onboundary = (event) => {
+            if (event.name === 'word') {
+            spokenWordIndex.value = event.charIndex;
+            }
+        };
+
+        utterance.onend = () => {
+            spokenWordIndex.value = -1;
+        };
+
+        speechSynthesis.cancel(); // Ensure no overlap
+        speechSynthesis.speak(utterance);
     }
 
     function startTranscription() {
