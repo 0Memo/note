@@ -1421,56 +1421,66 @@
             sv: 'sv-SE',
             ro: 'ro-RO'
         }
+
         const desiredLang = langMap[locale.value] || 'en-US'
         const voices = speechSynthesis.getVoices()
 
-        // Try to find an exact match
-        const exactMatch = voices.find(voice => voice.lang === desiredLang);
-        if (exactMatch) return exactMatch;
-        
-        // Otherwise, find any match that starts with the desired language
-        const fallbackMatch = voices.find(voice => voice.lang.startsWith(desiredLang.split('-')[0]));
-        if (fallbackMatch) return fallbackMatch;
+        // Prefer Google or native voices with correct lang
+        const preferredVoices = voices.filter(v => 
+            v.lang === desiredLang && /Google|Microsoft|Apple|native/i.test(v.name)
+        )
+        if (preferredVoices.length > 0) return preferredVoices[0]
 
-        // As a last resort, return the first available voice
-        return voices[0];
+        // Fallback to any exact lang match
+        const exact = voices.find(v => v.lang === desiredLang)
+        if (exact) return exact
+
+        // Fallback to same language prefix
+        return voices.find(v => v.lang.startsWith(desiredLang.split('-')[0])) || voices[0]
     }
 
     function readNoteAloud() {
         if (!selectedNote.value?.text) return
-        // Cancel any previous speech
-        speechSynthesis.cancel()
+
         const cleanText = stripHtmlTags(selectedNote.value.text)
         const utterance = new SpeechSynthesisUtterance(cleanText)
 
-        utterance.voice = getVoiceByLocale(locale)
-        utterance.rate = 1
-        utterance.pitch = 1
-        utterance.volume = 1
+        const trySpeak = () => {
+            const voice = getVoiceByLocale(locale)
+            if (voice) {
+            utterance.voice = voice
+            utterance.rate = 1
+            utterance.pitch = 1
+            utterance.volume = 1
+            $toast.info(t('toast.readingNote'))
 
-        $toast.info(t('toast.readingNote'))
-
-        utterance.onboundary = (event) => {
-            if (event.name === "word") {
+            utterance.onboundary = (event) => {
+                if (event.name === "word") {
                 spokenWordIndex.value = event.charIndex
+                }
+            }
+
+            utterance.onend = () => {
+                spokenWordIndex.value = -1
+            }
+
+            speechSynthesis.cancel() // Cancel any previous speech
+            speechSynthesis.speak(utterance)
+            } else {
+            console.warn("❌ No matching voice found.")
+            $toast.error(t('toast.voiceNotFound') || "No voice found for selected language.")
             }
         }
 
-        utterance.onend = () => {
-            spokenWordIndex.value = -1
-        }
-
-        if (speechSynthesis.getVoices().length === 0) {
-            // This triggers voice loading in some browsers
+        // If voices are already loaded, speak immediately
+        if (speechSynthesis.getVoices().length > 0) {
+            trySpeak()
+        } else {
+            // Wait for voices to load, then speak
             speechSynthesis.onvoiceschanged = () => {
-                const voice = getVoiceByLocale(locale);
-                utterance.voice = voice;
-                speechSynthesis.speak(utterance);
-            };
-            return;
+            trySpeak()
+            }
         }
-
-        speechSynthesis.speak(utterance)
     }
 
     function startTranscription() {
@@ -1659,6 +1669,7 @@
     }
 
     onMounted(async() => {
+        speechSynthesis.getVoices()
         // Ensure voices are loaded
         if (speechSynthesis.onvoiceschanged !== undefined) {
             speechSynthesis.onvoiceschanged = () => {
