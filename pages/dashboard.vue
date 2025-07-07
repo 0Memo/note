@@ -1423,7 +1423,17 @@
         }
         const desiredLang = langMap[locale.value] || 'en-US'
         const voices = speechSynthesis.getVoices()
-        return voices.find(voice => voice.lang === desiredLang) || voices[0]
+
+        // Try to find an exact match
+        const exactMatch = voices.find(voice => voice.lang === desiredLang);
+        if (exactMatch) return exactMatch;
+        
+        // Otherwise, find any match that starts with the desired language
+        const fallbackMatch = voices.find(voice => voice.lang.startsWith(desiredLang.split('-')[0]));
+        if (fallbackMatch) return fallbackMatch;
+
+        // As a last resort, return the first available voice
+        return voices[0];
     }
 
     function readNoteAloud() {
@@ -1448,6 +1458,16 @@
 
         utterance.onend = () => {
             spokenWordIndex.value = -1
+        }
+
+        if (speechSynthesis.getVoices().length === 0) {
+            // This triggers voice loading in some browsers
+            speechSynthesis.onvoiceschanged = () => {
+                const voice = getVoiceByLocale(locale);
+                utterance.voice = voice;
+                speechSynthesis.speak(utterance);
+            };
+            return;
         }
 
         speechSynthesis.speak(utterance)
