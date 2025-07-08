@@ -717,6 +717,9 @@
                             <button @click="startTranscription" class="focus:outline-none pr-2">
                                 <Microphone class="w-8 h-8 text-white font-bold relative -top-2"/>
                             </button>
+                            <button @click="readNoteAloud(selectedNote?.text)" class="focus:outline-none pr-2">
+                                <VoiceReading class="w-8 h-8 text-white font-bold relative -top-2"/>
+                            </button>
                             <div class="flex items-center gap-2 min-h-[36px] w-full">
                                 <template v-if="editingDate">
                                     <div class="flex flex-col space-y-1 md:space-y-0 md:flex-row h-[36px]">
@@ -1393,6 +1396,65 @@
     function resetSwipe() {
         if (!isDesktop.value) { // Only needed on mobile
             swipedNoteId.value = null
+        }
+    }
+
+    function readNoteAloud(noteText) {
+        const synth = window.speechSynthesis;
+        if (!synth) {
+            $toast.error(t('toast.speechSynthesisUnsupported'));
+            return;
+        }
+
+        const text = stripHtmlTags(noteText || updatedNote.value || '');
+        if (!text.trim()) {
+            $toast.error(t('toast.noTextToRead'));
+            return;
+        }
+
+        const utterance = new SpeechSynthesisUtterance(text);
+
+        const langMap = {
+            fr: 'fr-FR',
+            es: 'es-ES',
+            pt: 'pt-BR',
+            it: 'it-IT',
+            ro: 'ro-RO',
+            sv: 'sv-SE',
+            en: 'en-US',
+        };
+
+        const appLang = langMap[locale.value] || 'en-US';
+        utterance.lang = appLang;
+
+        // Load voices safely
+        const speakWithVoice = () => {
+            const voices = synth.getVoices();
+            if (!voices.length) {
+                // Retry after delay if voices are still not loaded
+                setTimeout(speakWithVoice, 200);
+                return;
+            }
+
+            const matched = voices.find(v => v.lang === appLang);
+            if (matched) {
+                utterance.voice = matched;
+            } else {
+                console.warn(`No exact voice match for ${appLang}, using default.`);
+            }
+
+            $toast.info(t('toast.readingNote'));
+
+            synth.cancel(); // Stop any ongoing speech
+            synth.speak(utterance);
+        };
+
+        if (!synth.getVoices().length) {
+            synth.addEventListener('voiceschanged', speakWithVoice, { once: true });
+            // Force voices to load
+            synth.getVoices();
+        } else {
+            speakWithVoice();
         }
     }
 
