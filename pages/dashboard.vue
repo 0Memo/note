@@ -713,7 +713,7 @@
             <template v-else>
                 <div class="text-white p-8 max-w-[40%] mx-auto font-bodyTest">
                     <div v-if="selectedNote && selectedNote.id">
-                        <div class="-ml-12 sm:ml-0 w-fit">
+                        <div class="-ml-14 sm:ml-0 w-fit">
                             <div class="mb-8 text-lg flex flex-row items-center gap-2">
                                 <button @click="startTranscription" class="focus:outline-none pr-2">
                                     <Microphone class="w-8 h-8 text-white font-bold relative -top-2"/>
