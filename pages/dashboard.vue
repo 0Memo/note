@@ -754,7 +754,7 @@
                                     @click="syncNoteToCalendar(selectedNote)"
                                     :class="[
                                         'ml-6 md:-ml-10 md:mr-4 text-white text-sm px-1 md:px-2 py-1 rounded transition-colors duration-200 flex items-center gap-1 -mt-3 md:mt-0',
-                                        syncingNoteId === selectedNote.id || isNoteUnchanged 
+                                        isSyncButtonDisabled
                                             ? 'bg-gray-500 cursor-not-allowed' 
                                             : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
                                     ]"
@@ -910,6 +910,10 @@
     const showSavedIndicator = ref(false)
     const editorRef = ref(null)
     const savedToken = ref(null)
+
+    const isSyncButtonDisabled = computed(() =>
+        syncingNoteId.value === selectedNote.value?.id || isNoteUnchanged.value
+    )
 
     function installApp() {
         if (!deferredPrompt.value) return;
