@@ -1081,7 +1081,8 @@
             }
 
             const noteDate = note.eventDate || note.updatedAt
-            const hasChanged = note.text !== note.lastSyncedText ||
+            const hasChanged =
+                note.text !== note.lastSyncedText ||
                 getDateString(note.lastSyncedDate) !== getDateString(noteDate)
 
             if (!hasChanged && note.calendarEventId) {
@@ -1126,16 +1127,18 @@
                 note.calendarEventId = response.eventId
             }
 
-            note.lastSyncedText = note.text
-            note.lastSyncedDate = note.eventDate || new Date().toISOString()
-            note.synced = true
-
-            const index = notes.value.findIndex(n => n.id === note.id)
-            if (index !== -1) {
-                notes.value[index] = { ...note }
+            const updatedNote = {
+                ...note,
+                lastSyncedText: note.text,
+                lastSyncedDate: note.eventDate || new Date().toISOString(),
             }
 
-            selectedNote.value = { ...note }
+            const index = notes.value.findIndex((n) => n.id === note.id)
+            if (index !== -1) {
+                notes.value[index] = updatedNote
+            }
+
+            selectedNote.value = {...updatedNote}
 
             await nextTick()
 
