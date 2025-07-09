@@ -1130,7 +1130,7 @@
             const updatedNote = {
                 ...note,
                 lastSyncedText: note.text,
-                lastSyncedDate: note.eventDate || new Date().toISOString(),
+                lastSyncedDate: note.eventDate || note.updatedAt,
             }
 
             const index = notes.value.findIndex((n) => n.id === note.id)
@@ -1166,13 +1166,10 @@
         const note = selectedNote.value
         if (!note) return true
 
-        const hasNeverSynced = !note.lastSyncedText || !note.lastSyncedDate
-        if (hasNeverSynced) return false // allow syncing
+        const lastSynced = getDateString(note.lastSyncedDate)
+        const currentDate = getDateString(note.eventDate || note.updatedAt)
 
-        const textUnchanged = note.text === note.lastSyncedText
-        const dateUnchanged = getDateString(note.eventDate) === getDateString(note.lastSyncedDate)
-
-        return textUnchanged && dateUnchanged
+        return note.text === note.lastSyncedText && lastSynced === currentDate
     })
 
     async function createNewNote() {
