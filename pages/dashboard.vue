@@ -904,7 +904,7 @@
     const manualDate = ref('')
     const showSavedIndicator = ref(false)
     const editorRef = ref(null)
-    const savedToken = ref(localStorage.getItem('googleCalendarToken'))
+    const savedToken = ref(null)
 
     function installApp() {
         if (!deferredPrompt.value) return;
@@ -1650,6 +1650,9 @@
     onMounted(async() => {        
         // Check for existing calendar connection
         savedToken.value = localStorage.getItem('googleCalendarToken')
+        if (accessToken.value) {
+            localStorage.setItem('googleCalendarToken', accessToken.value)
+        }
         if (savedToken.value) {
             accessToken.value = savedToken.value;
             const stillValid = await isAccessTokenValid();
