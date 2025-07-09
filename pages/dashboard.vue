@@ -1121,7 +1121,14 @@
             note.lastSyncedDate = note.eventDate || new Date().toISOString()
             note.synced = true
 
-            selectedNote.value = { ...selectedNote.value }
+            const index = notes.value.findIndex(n => n.id === note.id)
+            if (index !== -1) {
+                notes.value[index] = { ...note }
+            }
+
+            selectedNote.value = { ...note }
+
+            await nextTick()
 
             if (response.updated) {
                 $toast.success(t('toast.calendar.updated'))
@@ -1151,7 +1158,7 @@
         if (hasNeverSynced) return false // allow syncing
 
         const textUnchanged = note.text === note.lastSyncedText
-        const dateUnchanged = new Date(note.eventDate).toISOString().slice(0, 10) === new Date(note.lastSyncedDate).toISOString().slice(0, 10)
+        const dateUnchanged = getDateString(note.eventDate) === getDateString(note.lastSyncedDate)
 
         return textUnchanged && dateUnchanged
     })
