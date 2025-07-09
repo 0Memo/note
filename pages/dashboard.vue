@@ -758,7 +758,7 @@
                                             ? 'bg-gray-500 cursor-not-allowed' 
                                             : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
                                     ]"
-                                    :disabled="syncingNoteId === selectedNote.id || isNoteUnchanged"
+                                    :disabled="isSyncButtonDisabled"
                                     title="Sync this note to Google Calendar"
                                 >
                                     <svg v-if="syncingNoteId !== selectedNote.id" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
