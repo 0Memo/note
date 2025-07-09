@@ -713,55 +713,57 @@
             <template v-else>
                 <div class="text-white p-8 max-w-[40%] mx-auto font-bodyTest">
                     <div v-if="selectedNote && selectedNote.id">
-                        <div class="mb-8 text-lg flex flex-row items-center gap-2">
-                            <button @click="startTranscription" class="focus:outline-none pr-2">
-                                <Microphone class="w-8 h-8 text-white font-bold relative -top-2"/>
-                            </button>
-                            <button @click="readNoteAloud(selectedNote?.text)" class="focus:outline-none pr-2">
-                                <VoiceReading class="w-8 h-8 text-white font-bold relative -top-2"/>
-                            </button>
-                            <div class="flex items-center gap-2 min-h-[36px] w-full">
-                                <template v-if="editingDate">
-                                    <div class="flex flex-col space-y-1 md:space-y-0 md:flex-row h-[36px]">
-                                        <input
-                                            type="date"
-                                            v-model="manualDate"
-                                            class="text-black rounded px-2 w-[138px] -ml-4 md:ml-0 md:w-full md:mr-4"
-                                        />
-                                    
-                                        <button @click="saveDateChange" class="-ml-4 md:ml-0 text-xs text-green-500 underline md:mr-2">
-                                            {{ $t('notes.confirm') }}
-                                        </button>
-                                        <button @click="toggleDateEdit" class="-ml-4 md:ml-0 text-xs text-red-500 underline">
-                                            {{ $t('notes.cancel') }}
-                                        </button>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <div class="h-[36px]">
-                                        <span>{{ formattedDisplayedDate }}</span>
-                                        <button @click="toggleDateEdit" class="text-xs underline md:ml-2">
-                                            {{ $t('notes.change') }}
-                                        </button>
-                                    </div>
-                                </template>
+                        <div class="-ml-8 sm:ml-0 w-fit">
+                            <div class="mb-8 text-lg flex flex-row items-center gap-2">
+                                <button @click="startTranscription" class="focus:outline-none pr-2">
+                                    <Microphone class="w-8 h-8 text-white font-bold relative -top-2"/>
+                                </button>
+                                <button @click="readNoteAloud(selectedNote?.text)" class="focus:outline-none pr-2">
+                                    <VoiceReading class="w-8 h-8 text-white font-bold relative -top-2"/>
+                                </button>
+                                <div class="flex items-center gap-2 min-h-[36px] w-full">
+                                    <template v-if="editingDate">
+                                        <div class="flex flex-col space-y-1 md:space-y-0 md:flex-row h-[36px]">
+                                            <input
+                                                type="date"
+                                                v-model="manualDate"
+                                                class="text-black rounded px-2 w-[138px] -ml-4 md:ml-0 md:w-full md:mr-4"
+                                            />
+                                        
+                                            <button @click="saveDateChange" class="-ml-4 md:ml-0 text-xs text-green-500 underline md:mr-2">
+                                                {{ $t('notes.confirm') }}
+                                            </button>
+                                            <button @click="toggleDateEdit" class="-ml-4 md:ml-0 text-xs text-red-500 underline">
+                                                {{ $t('notes.cancel') }}
+                                            </button>
+                                        </div>
+                                    </template>
+                                    <template v-else>
+                                        <div class="h-[36px]">
+                                            <span>{{ formattedDisplayedDate }}</span>
+                                            <button @click="toggleDateEdit" class="text-xs underline md:ml-2">
+                                                {{ $t('notes.change') }}
+                                            </button>
+                                        </div>
+                                    </template>
+                                </div>
+                            
+                                <!-- Calendar sync button for current note -->
+                                <button 
+                                    v-if="calendarConnected" 
+                                    @click="syncNoteToCalendar(selectedNote)"
+                                    :disabled="syncingNoteId === selectedNote.id || isNoteUnchanged"
+                                    class="ml-6 md:-ml-10 md:mr-4 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-500 text-white text-sm px-1 md:px-2 py-1 rounded transition-colors duration-200 flex items-center gap-1 -mt-3 md:mt-0"
+                                    title="Sync this note to Google Calendar"
+                                >
+                                    <svg v-if="syncingNoteId !== selectedNote.id" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                                    </svg>
+                                    <div v-else class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                                    <span class="hidden sm:inline">{{ $t('toast.calendar.syncToCalendar') }}</span>
+                                    <span class="inline sm:hidden">Sync</span>
+                                </button>
                             </div>
-
-                            <!-- Calendar sync button for current note -->
-                            <button 
-                                v-if="calendarConnected" 
-                                @click="syncNoteToCalendar(selectedNote)"
-                                :disabled="syncingNoteId === selectedNote.id || isNoteUnchanged"
-                                class="ml-6 md:-ml-10 md:mr-4 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-500 text-white text-sm px-1 md:px-2 py-1 rounded transition-colors duration-200 flex items-center gap-1 -mt-3 md:mt-0"
-                                title="Sync this note to Google Calendar"
-                            >
-                                <svg v-if="syncingNoteId !== selectedNote.id" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-                                </svg>
-                                <div v-else class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                                <span class="hidden sm:inline">{{ $t('toast.calendar.syncToCalendar') }}</span>
-                                <span class="inline sm:hidden">Sync</span>
-                            </button>
                         </div>
                         <div class="relative my-4 bg-[#d5c7e2] border-purple-900 rounded-md p-4 -ml-[8.75rem] md:-ml-5 shadow-lg w-[23rem] md:w-full min-h-[300px]">
                             <Editor
