@@ -1045,6 +1045,15 @@
         }
     }
 
+    function getDateString(date) {
+        if (!date) return ''
+        return date instanceof Date
+            ? date.toISOString().slice(0, 10)
+            : typeof date === 'string'
+            ? date.slice(0, 10)
+            : ''
+    }
+
     // Enhanced sync function
     const syncNoteToCalendar = async (note) => {
         if (!calendarConnected.value) {
@@ -1063,8 +1072,8 @@
             }
 
             const noteDate = note.eventDate || note.updatedAt
-            const hasChanged = note.text !== note.lastSyncedText || 
-                            (note.lastSyncedDate?.slice(0, 10) !== noteDate?.slice(0, 10))
+            const hasChanged = note.text !== note.lastSyncedText ||
+                getDateString(note.lastSyncedDate) !== getDateString(noteDate)
 
             if (!hasChanged && note.calendarEventId) {
                 $toast.error(t('toast.calendar.alreadySynced'))
