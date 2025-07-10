@@ -678,19 +678,14 @@
         <div class="w-full bg-[#1d073a] overflow-y-scroll md:overflow-y-auto">
             <div class="text-white flex p-8 justify-between items-start mt-16 md:mt-0">
                 <button
-                    class="inline-flex gap-3
+                    class="gap-3 right create
                     text-white hover:text-zinc-500 shadow-lg
                     absolute left-[7.5rem] bottom-8 md:static"
                     @click="createNewNote"
+                    :data-tooltip="$t('tooltip.createNote')"
+                    data-position="right1"
                 >
-                    <div class="group flex justify-start transition-all">
-                        <Pencil class=" font-bold w-10 h-10" />
-                        <span
-                            class="absolute text-white opacity-0 group-hover:opacity-100 group-hover:-translate-y-7 duration-700 text-sm hidden md:block"
-                        >
-                            {{ $t('tooltip.createNote') }}
-                        </span>
-                    </div>
+                    <Pencil class="font-bold w-10 h-10" />
                 </button>
                 <ConfirmModal
                     :visible="showConfirmModal"
@@ -700,18 +695,13 @@
                     @cancel="showConfirmModal = false"
                 />
                 <button
-                    class="hover:text-zinc-500 shadow-lg absolute
-                    right-[7.5rem] md:static bottom-8 md:right-8"
+                    class="hover:text-zinc-500 left shadow-lg absolute
+                    right-[7.5rem] md:static bottom-8 md:right-8 delete"
                     @click="showConfirmModal = true"
+                    :data-tooltip="$t('tooltip.deleteNote')"
+                    data-position="left1"
                 >
-                    <div class="group flex justify-end transition-all">
-                        <TrashIcon class="font-bold w-10 h-10" />
-                        <span
-                            class="absolute text-white opacity-0 group-hover:opacity-100 group-hover:-translate-y-7 duration-700 text-sm hidden md:block"
-                        >
-                            {{ $t('tooltip.deleteNote') }}
-                        </span>
-                    </div>
+                    <TrashIcon class="font-bold w-10 h-10" />
                 </button>
             </div>
 
@@ -729,25 +719,19 @@
                     <div v-if="selectedNote && selectedNote.id">
                         <div class="-ml-14 sm:ml-0 w-fit">
                             <div class="mb-8 text-lg flex flex-row items-center gap-2">
-                                <button @click="startTranscription" class="focus:outline-none pr-2 text-white hover:text-zinc-500 shadow-lg">
-                                    <div class="group flex justify-end transition-all">
-                                        <Microphone class="w-8 h-8 font-bold relative -top-2"/>
-                                        <span
-                                            class="absolute text-white opacity-0 group-hover:opacity-100 group-hover:-translate-y-10 duration-700 text-sm hidden md:block"
-                                        >
-                                            {{ $t('tooltip.dictateNote') }}
-                                        </span>
-                                    </div>
+                                <button
+                                    @click="startTranscription" class="focus:outline-none left pr-2 text-white hover:text-zinc-500 shadow-lg"
+                                    :data-tooltip="$t('tooltip.dictateNote')"
+                                    data-position="left2"
+                                >
+                                    <Microphone class="w-8 h-8 font-bold relative -top-2"/>
                                 </button>
-                                <button @click="readNoteAloud(selectedNote?.text)" class="focus:outline-none pr-2 text-white hover:text-zinc-500 shadow-lg">
-                                    <div class="group flex justify-start transition-all">
-                                        <VoiceReading class="w-8 h-8 font-bold relative -top-2"/>
-                                        <span
-                                            class="absolute text-white opacity-0 group-hover:opacity-100 group-hover:-translate-y-10 duration-700 text-sm hidden md:block"
-                                        >
-                                            {{ $t('tooltip.listenNote') }}
-                                        </span>
-                                    </div>
+                                <button
+                                    @click="readNoteAloud(selectedNote?.text)"  class="focus:outline-none top pr-2 text-white hover:text-zinc-500 shadow-lg"
+                                    :data-tooltip="$t('tooltip.listenNote')"
+                                    data-position="top"
+                                >
+                                    <VoiceReading class="w-8 h-8 font-bold relative -top-2"/>
                                 </button>
                                 <div class="flex items-center gap-2 min-h-[36px] w-full">
                                     <template v-if="editingDate">
@@ -842,47 +826,39 @@
             <button
                 @click="toggleMouseTrail"
                 class="text-white absolute left-0 md:left-[292px] bottom-0 p-8 hover:text-zinc-500"
-                :title="showMouseTrail ? 'Disable Mouse Trail' : 'Enable Mouse Trail'"
             >
                 <!-- Replace with your preferred icon -->
                 <span v-if="showMouseTrail">
                     <ClientOnly>
-                        <div class="group flex justify-start transition-all">
+                        <button
+                            class="right"
+                            :data-tooltip="$t('tooltip.deactivate')"
+                            data-position="right"
+                        >
                             <MouseTrailOff class="font-bold w-10 h-10" />
-                            <span
-                                class="absolute text-white opacity-0 group-hover:opacity-100 group-hover:-translate-y-10 duration-700 text-sm w-full hidden md:block"
-                            >
-                                {{ $t('tooltip.deactivate') }}
-                            </span>
-                        </div>
+                        </button>
                     </ClientOnly>
                 </span>
                 <span v-else>
                     <ClientOnly>
-                        <div class="group flex justify-start transition-all">
+                        <button
+                            class="right"
+                            :data-tooltip="$t('tooltip.activate')"
+                            data-position="right"
+                        >
                             <MouseTrailOn class="font-bold w-10 h-10" />
-                            <span
-                                class="absolute text-white opacity-0 group-hover:opacity-100 group-hover:-translate-y-10 duration-700 text-sm w-full hidden md:block"
-                            >
-                                {{ $t('tooltip.activate') }}
-                            </span>
-                        </div>
+                        </button>
                     </ClientOnly>
                 </span>
             </button>
             
             <button
-                class="text-white absolute right-0 bottom-0 p-8 hover:text-zinc-500"
+                class="text-white left absolute right-0 bottom-0 p-8 hover:text-zinc-500"
                 @click="logout"
+                :data-tooltip="$t('tooltip.logout')"
+                data-position="left"
             >
-                <div class="group flex justify-end transition-all">
-                    <Logout class="font-bold w-10 h-10" />
-                    <span
-                        class="absolute text-white opacity-0 group-hover:opacity-100 group-hover:-translate-y-7 duration-700 text-sm w-full hidden md:block"
-                    >
-                        {{ $t('tooltip.logout') }}
-                    </span>
-                </div>
+                <Logout class="font-bold w-10 h-10" />
             </button>
 
             <footer class="fixed bottom-0 md:bottom-8 left-0 w-full flex justify-evenly items-center text-white bg-transparent text-md md:text-lg">

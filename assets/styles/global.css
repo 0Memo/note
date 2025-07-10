@@ -18,6 +18,119 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 
+/* Tooltips */
+
+button[data-tooltip].top:before,
+button[data-tooltip].top:after {
+    transform: translateY(10px);
+}
+
+button[data-tooltip].top:hover:after,
+button[data-tooltip].top:hover:before {
+    transform: translateY(0px);
+}
+
+button[data-tooltip].right:before,
+button[data-tooltip].right:after {
+    transform: translateX(0px);
+}
+
+button[data-tooltip].right:hover:after,
+button[data-tooltip].right:hover:before {
+    transform: translateX(10px);
+}
+
+button[data-tooltip].left:before,
+button[data-tooltip].left:after {
+    transform: translateX(0px);
+}
+
+button[data-tooltip].left:hover:after,
+button[data-tooltip].left:hover:before {
+    transform: translateX(-10px);
+}
+
+button[data-tooltip]:after,
+button[data-tooltip]:before {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    transition: transform 200ms ease, opacity 200ms;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 99;
+}
+
+button[data-tooltip]:before {
+    content: attr(data-tooltip);
+    background: #000;
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+    white-space: nowrap;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+button[data-tooltip]:after {
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    content: "";
+}
+
+button[data-tooltip]:hover:after,
+button[data-tooltip]:hover:before {
+    visibility: visible;
+    opacity: 0.85;
+    transform: translateY(0px);
+}
+
+button[data-tooltip][data-position=top]:before {
+    top: 8%;
+    left: 44.5%;
+}
+
+button[data-tooltip][data-position=left]:before {
+    bottom: 32%;
+    right: 70%;
+}
+
+button[data-tooltip][data-position=left1]:before {
+    top: 4%;
+    right: 3.5%;
+}
+
+button[data-tooltip][data-position=left2]:before {
+    top: 13.5%;
+    left: 35.5%;
+}
+
+button[data-tooltip][data-position=right]:before {
+    bottom: 32%;
+    left: 70%;
+}
+
+button[data-tooltip][data-position=right1]:before {
+    top: 4%;
+    left: 19.5%;
+}
+
+@media (max-width: 767px) {
+
+    [data-tooltip]::after,
+    [data-tooltip]::before {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+}
+
+/* End of tooltips */
+
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.3s;
