@@ -55,6 +55,15 @@ export default defineI18nConfig(() => ({
                 cancel: "Annuler",
                 confirm: "Confirmer"
             },
+            tooltip: {
+                createNote: "Créer nouvelle note",
+                deleteNote: "Supprimer note actuelle",
+                dictateNote: "Dicter votre note",
+                listenNote: "Écouter votre note",
+                activate: "Activer traînée de souris",
+                deactivate: "Désactiver traînée de souris",
+                logout: "Déconnexion"
+            },
             modal: {
                 definitive: "Suppression définitive",
                 confirm: "Confirmer?",
@@ -199,6 +208,15 @@ export default defineI18nConfig(() => ({
                 change: "Cambiar",
                 cancel: "Cancelar",
                 confirm: "Confirmar"
+            },
+            tooltip: {
+                createNote: "Crear nueva nota",
+                deleteNote: "Eliminar nota actual",
+                dictateNote: "Dictar su nota",
+                listenNote: "Escuchar su nota",
+                activate: "Activar estela del mouse",
+                deactivate: "Desactivar estela del mouse",
+                logout: "Cerrar sesión"
             },
             modal: {
                 definitive: "Supresión definitiva",
@@ -345,6 +363,15 @@ export default defineI18nConfig(() => ({
                 cancel: "Cancelar",
                 confirm: "Confirmar"
             },
+            tooltip: {
+                createNote: "Criar nova nota",
+                deleteNote: "Excluir nota atual",
+                dictateNote: "Dictar sua nota",
+                listenNote: "Ouvir sua nota",
+                activate: "Ativar trilha do mouse",
+                deactivate: "Desativar trilha do mouse",
+                logout: "Sair"
+            },
             modal: {
                 definitive: "Supressão definitiva",
                 confirm: "Confirmar?",
@@ -489,6 +516,15 @@ export default defineI18nConfig(() => ({
                 change: "Change",
                 cancel: "Cancel",
                 confirm: "Confirm"
+            },
+            tooltip: {
+                createNote: "Create new note",
+                deleteNote: "Delete current note",
+                dictateNote: "Dictate your note",
+                listenNote: "Listen to your note",
+                activate: "Activate mouse trail",
+                deactivate: "Deactivate mouse trail",
+                logout: "Log out"
             },
             modal: {
                 definitive: "Definitive deletion",
@@ -635,6 +671,15 @@ export default defineI18nConfig(() => ({
                 cancel: "Annulla",
                 confirm: "Conferma"
             },
+            tooltip: {
+                createNote: "Crea nuova nota",
+                deleteNote: "Elimina nota corrente",
+                dictateNote: "Detta la tua nota",
+                listenNote: "Ascolta la tua nota",
+                activate: "Attiva scia del mouse",
+                deactivate: "Disattiva scia del mouse",
+                logout: "Disconnetti"
+            },
             modal: {
                 definitive: "Eliminazione definitiva",
                 confirm: "Confermi?",
@@ -780,6 +825,15 @@ export default defineI18nConfig(() => ({
                 cancel: "Avbryt",
                 confirm: "Bekräfta"
             },
+            tooltip: {
+                createNote: "Skapa ny anteckning",
+                deleteNote: "Radera aktuell anteckning",
+                dictateNote: "Diktera din anteckning",
+                listenNote: "Lyssna på din anteckning",
+                activate: "Aktivera musspår",
+                deactivate: "Inaktivera musspår",
+                logout: "Logga ut"
+            },
             modal: {
                 definitive: "Slutgiltig radering",
                 confirm: "Bekräfta?",
@@ -924,6 +978,15 @@ export default defineI18nConfig(() => ({
                 change: "Schimbă",
                 cancel: "Anulează",
                 confirm: "Confirmă"
+            },
+            tooltip: {
+                createNote: "Creează notă nouă",
+                deleteNote: "Șterge nota curentă",
+                dictateNote: "Dictează nota ta",
+                listenNote: "Ascultă nota ta",
+                activate: "Activează urma mouse-ului",
+                deactivate: "Dezactivează mouse-ului",
+                logout: "Deconectează-te"
             },
             modal: {
                 definitive: "Ștergere definitivă",
