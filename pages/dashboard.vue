@@ -678,7 +678,7 @@
         <div class="w-full bg-[#1d073a] overflow-y-scroll md:overflow-y-auto">
             <div class="text-white flex p-8 justify-between items-start mt-16 md:mt-0">
                 <button
-                    class="gap-3 right create
+                    class="gap-3 right
                     text-white hover:text-zinc-500 shadow-lg
                     absolute left-[7.5rem] bottom-8 md:static"
                     @click="createNewNote"
@@ -696,7 +696,7 @@
                 />
                 <button
                     class="hover:text-zinc-500 left shadow-lg absolute
-                    right-[7.5rem] md:static bottom-8 md:right-8 delete"
+                    right-[7.5rem] md:static bottom-8 md:right-8"
                     @click="showConfirmModal = true"
                     :data-tooltip="$t('tooltip.deleteNote')"
                     data-position="left1"
@@ -853,7 +853,8 @@
             </button>
             
             <button
-                class="text-white left absolute right-0 bottom-0 p-8 hover:text-zinc-500"
+                class="text-white left absolute right-0 bottom-0 p-8
+                hover:text-zinc-500"
                 @click="logout"
                 :data-tooltip="$t('tooltip.logout')"
                 data-position="left"
@@ -861,7 +862,11 @@
                 <Logout class="font-bold w-10 h-10" />
             </button>
 
-            <footer class="fixed bottom-0 md:bottom-8 left-0 w-full flex justify-evenly items-center text-white bg-transparent text-md md:text-lg">
+            <footer
+                class="fixed bottom-0 md:bottom-8 left-0 w-full flex
+                justify-evenly items-center text-white bg-transparent
+                text-md md:text-lg"
+            >
                 <nuxt-link
                     :to="localePath('/privacy')"
                     class="whitespace-nowrap hover:underline"

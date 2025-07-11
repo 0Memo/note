@@ -20,6 +20,12 @@ body {
 
 /* Tooltips */
 
+button[data-tooltip]::before {
+    content: "\f09a";
+    color: #d5c7e2;
+    border-bottom: 4px solid #d5c7e2;
+}
+
 button[data-tooltip].top:before,
 button[data-tooltip].top:after {
     transform: translateY(10px);
