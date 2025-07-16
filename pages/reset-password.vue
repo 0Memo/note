@@ -76,9 +76,10 @@
                         v-model="password"
                         type="password"
                         class="w-full border-2 border-zinc-500
-                        rounded-lg h-10 placeholder:text-zinc-500
+                        h-10 placeholder:text-zinc-500
                         px-3 bg-zinc-800 text-zinc-100"
                         placeholder="********"
+                        :style="{ borderRadius: '255px 15px 225px 15px / 15px 225px 15px 255px' }"
                     >
                 </div>
 
