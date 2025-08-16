@@ -95,7 +95,10 @@ export default defineI18nConfig(() => ({
                 }
             },
             accessibility: {
-                readNote: "Lire la note à haute voix"
+                readNote: "Lire la note à haute voix",
+                accessibility: "Accessibilité",
+                highContrast: "Haut contraste",
+                reset: "Réinitialiser"
             },
             toast: {
                 register: "L'utilisateur a été créé",
@@ -249,7 +252,10 @@ export default defineI18nConfig(() => ({
                 }
             },
             accessibility: {
-                readNote: "Leer la nota en voz alta"
+                readNote: "Leer la nota en voz alta",
+                accessibility: "Accesibilidad",
+                highContrast: "Alto contraste",
+                reset: "Restablecer"
             },
             toast: {
                 register: "El usuario ha sido creado",
@@ -403,7 +409,10 @@ export default defineI18nConfig(() => ({
                 }
             },
             accessibility: {
-                readNote: "Ler a nota em voz alta"
+                readNote: "Ler a nota em voz alta",
+                accessibility: "Acessibilidade",
+                highContrast: "Alto contraste",
+                reset: "Redefinir"
             },
             toast: {
                 register: "Usuário criado com sucesso",
@@ -557,7 +566,10 @@ export default defineI18nConfig(() => ({
                 }
             },
             accessibility: {
-                readNote: "Read note aloud"
+                readNote: "Read note aloud",
+                accessibility: "Accessibility",
+                highContrast: "High Contrast",
+                reset: "Reset"
             },
             toast: {
                 register: "User has been created",
@@ -711,7 +723,10 @@ export default defineI18nConfig(() => ({
                 }
             },
             accessibility: {
-                readNote: "Leggi la nota ad alta voce"
+                readNote: "Leggi la nota ad alta voce",
+                accessibility: "Accessibilità",
+                highContrast: "Alto contrasto",
+                reset: "Ripristina"
             },
             toast: {
                 register: "Utente creato con successo",
@@ -865,7 +880,10 @@ export default defineI18nConfig(() => ({
                 }
             },
             accessibility: {
-                readNote: "Läs anteckningen högt"
+                readNote: "Läs anteckningen högt",
+                accessibility: "Tillgänglighet",
+                highContrast: "Hög kontrast",
+                reset: "Återställ"
             },
             toast: {
                 register: "Användare har skapats",
@@ -1019,7 +1037,10 @@ export default defineI18nConfig(() => ({
                 }
             },
             accessibility: {
-                readNote: "Citește notița cu voce tare"
+                readNote: "Citește notița cu voce tare",
+                accessibility: "Accesibilitate",
+                highContrast: "Contrast ridicat",
+                reset: "Resetare"
             },
             toast: {
                 register: "Utilizatorul a fost creat",

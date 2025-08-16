@@ -111,13 +111,13 @@
             <footer class="fixed bottom-0 md:bottom-8 left-10 gap-8 py-1 w-full flex items-center text-white bg-transparent text-sm md:text-md">
                 <nuxt-link
                     :to="localePath('/privacy')"
-                    class="whitespace-nowrap hover:underline"
+                    class="whitespace-nowrap custom-underline underline-purple"
                 >
                     {{ $t('modal.privacy.title') }}
                 </nuxt-link>
                 <nuxt-link
                     :to="localePath('/terms')"
-                    class="whitespace-nowrap hover:underline"
+                    class="whitespace-nowrap custom-underline underline-purple"
                 >
                     {{ $t('modal.terms.title') }}
                 </nuxt-link>

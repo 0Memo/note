@@ -3,45 +3,45 @@
         <!-- Shooting star trail using SVG -->
         <svg class="trail-svg" :width="svgWidth" :height="svgHeight">
         <!-- Glow effect (larger, more transparent path underneath) -->
-        <path
-            :d="pathData"
-            class="trail-glow"
-            fill="none"
-            stroke="#2f0b4a"
-            :stroke-width="getStrokeWidth(30)"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        />
-        
-        <!-- Main trail path -->
-        <path
-            :d="pathData"
-            class="trail-path"
-            fill="none"
-            stroke="url(#shootingStarGradient)"
-            :stroke-width="getStrokeWidth(30)"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        />
-        
-        <!-- Star head (circle at the front of the trail) -->
-        <circle
-            v-if="points.length > 0"
-            :cx="points[0].x"
-            :cy="points[0].y"
-            :r="getStrokeWidth(10) / 2"
-            class="star-head"
-            fill="#2f0b4a"
-        />
-        
-        <!-- Definitions for gradients -->
-        <defs>
-            <linearGradient id="shootingStarGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#2f0b4a" />
-            <stop offset="20%" stop-color="#2f0b4a" />
-            <stop offset="100%" stop-color="#2f0b4a" stop-opacity="0" />
-            </linearGradient>
-        </defs>
+            <path
+                :d="pathData"
+                class="trail-glow"
+                fill="none"
+                stroke="#9333ea"
+                :stroke-width="getStrokeWidth(30)"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            
+            <!-- Main trail path -->
+            <path
+                :d="pathData"
+                class="trail-path"
+                fill="none"
+                stroke="url(#shootingStarGradient)"
+                :stroke-width="getStrokeWidth(30)"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            
+            <!-- Star head (circle at the front of the trail) -->
+            <circle
+                v-if="points.length > 0"
+                :cx="points[0].x"
+                :cy="points[0].y"
+                :r="getStrokeWidth(10) / 2"
+                class="star-head"
+                fill="#9333ea"
+            />
+            
+            <!-- Definitions for gradients -->
+            <defs>
+                <linearGradient id="shootingStarGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#9333ea" />
+                <stop offset="20%" stop-color="#9333ea" />
+                <stop offset="100%" stop-color="#9333ea" stop-opacity="0" />
+                </linearGradient>
+            </defs>
         </svg>
         
         <!-- Small sparkles that follow the trail -->
@@ -319,7 +319,7 @@
     }
 
     .star-head {
-        filter: drop-shadow(0 0 2px #2f0b4a);
+        filter: drop-shadow(0 0 2px #9333ea);
     }
 
     .sparkle {

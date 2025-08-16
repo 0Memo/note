@@ -6,6 +6,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --user-font-size: 16px;
+}
+
 body,
 html,
 #__nuxt {
@@ -16,6 +20,57 @@ html,
 body {
     overscroll-behavior: none;
     -webkit-overflow-scrolling: touch;
+}
+
+.scalable-text {
+    font-size: var(--user-font-size) !important;
+}
+
+/* High contrast mode */
+.high-contrast {
+    --bg-primary: #000000;
+    --bg-secondary: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #ffff00;
+}
+
+.high-contrast .bg-\[#1c044f\] {
+    background-color: var(--bg-primary) !important;
+}
+
+.high-contrast .bg-\[#1d073a\] {
+    background-color: var(--bg-secondary) !important;
+}
+
+.high-contrast .text-white {
+    color: var(--text-primary) !important;
+}
+
+.high-contrast .text-zinc-300,
+.high-contrast .text-zinc-200, .high-contrast .whitespace-nowrap, .high-contrast button.scalable-text, .high-contrast a.scalable-text, .high-contrast .text-white {
+    color: var(--text-secondary) !important;
+}
+
+/* Underline */
+.custom-underline:hover {
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-thickness: 0.65rem;
+    text-underline-offset: -0.2em;
+    text-decoration-skip-ink: none;
+    text-decoration-skip: none;
+}
+
+.underline-purple {
+    text-decoration-color: #9333ea;
+}
+
+.underline-red {
+    text-decoration-color: #EF4444;
+}
+
+.underline-green {
+    text-decoration-color: #22C55E;
 }
 
 /* Tooltips */

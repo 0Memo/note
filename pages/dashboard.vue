@@ -26,14 +26,14 @@
                 <nuxt-link
                     :to="localePath('/')"
                     class="text-white shadow-2xl shadow-purple-900 font-semibold
-                    transform cursor-pointer hover:underline">
+                    transform cursor-pointer custom-underline underline-purple scalable-text">
                     {{ $t('homepage.title') }}
                 </nuxt-link>
             </p>
             <button
                 v-if="showInstall"
                 @click="installApp"
-                class="mt-6 ml-1 text-md text-white shadow-2xl font-semibold transform cursor-pointer hover:underline"
+                class="mt-6 ml-1 text-md text-white shadow-2xl font-semibold transform cursor-pointer custom-underline underline-purple"
             >
                 {{ $t('common.installApp') }}
             </button>
@@ -105,13 +105,13 @@
                 <div class="w-full flex md:hidden justify-around text-md py-2">
                     <nuxt-link
                         :to="localePath('/privacy')"
-                        class="whitespace-nowrap hover:underline"
+                        class="whitespace-nowrap custom-underline underline-purple"
                     >
                         {{ $t('modal.privacy.title') }}
                     </nuxt-link>
                     <nuxt-link
                         :to="localePath('/terms')"
-                        class="whitespace-nowrap hover:underline"
+                        class="whitespace-nowrap custom-underline underline-purple"
                     >
                         {{ $t('modal.terms.title') }}
                     </nuxt-link>
@@ -153,6 +153,35 @@
                 >
                     {{ $t('toast.calendar.reconnect') }}
                 </button>
+
+                <div class="mt-6 p-4 bg-[#1d073a] rounded-lg">
+                    <h3 class="text-white font-semibold mb-3 scalable-text">
+                        {{ $t('accessibility.accessibility') }}
+                    </h3>
+                    
+                    <FontSizeToggle />
+                    
+                    <!-- High Contrast Toggle -->
+                    <div class="flex items-center justify-between mb-3">
+                        <label class="text-white text-sm scalable-text">
+                            {{ $t('accessibility.highContrast') }}
+                        </label>
+                        <button
+                            @click="toggleHighContrast"
+                            :class="[
+                                'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
+                                highContrast ? 'bg-purple-600' : 'bg-gray-600'
+                            ]"
+                        >
+                            <span
+                                :class="[
+                                    'inline-block h-4 w-4 transform rounded-full bg-white transition-transform',
+                                    highContrast ? 'translate-x-6' : 'translate-x-1'
+                                ]"
+                            />
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <template v-if="isLoading">
@@ -174,7 +203,7 @@
                     @touchend="handleTouchEndY"
                 >
                     <div>
-                        <p class="text-md font-semibold text-zinc-200 mt-3 font-h1">
+                        <p class="text-md font-semibold text-zinc-200 mt-3 font-h1 scalable-text">
                             {{ $t('notes.upcoming') }}
                         </p>
                         <div class="text-zinc-200 mt-3 ml-2 text-sm font-bodyTest">
@@ -198,7 +227,7 @@
                             >
                                 <div class="flex items-center justify-between">
                                     <div class="flex-1 min-w-0">
-                                        <h3 class="font-bold truncate">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
+                                        <h3 class="font-bold truncate scalable-text">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
                                         <div class="space-x-4 truncate">
                                             <span>{{ formatDate(note.eventDate) }}</span>
                                             <span
@@ -293,7 +322,7 @@
                     </div>
 
                     <div>
-                        <p class="text-md font-semibold text-zinc-200 mt-3 font-h1">{{ $t('notes.tomorrow') }}</p>
+                        <p class="text-md font-semibold text-zinc-200 mt-3 font-h1 scalable-text">{{ $t('notes.tomorrow') }}</p>
                         <div class="text-zinc-200 mt-3 ml-2 text-sm font-bodyTest">
                             <div
                                 v-for="note in tomorrowsNotes"
@@ -315,7 +344,7 @@
                                 >
                                     <div class="flex items-center justify-between">
                                         <div class="flex-1 min-w-0">
-                                            <h3 class="font-bold truncate">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
+                                            <h3 class="font-bold truncate scalable-text">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
                                             <div class="space-x-4 truncate">
                                                 <span>{{ formatDate(note.eventDate) }}</span>
                                                 <span
@@ -387,7 +416,7 @@
                     </div>
 
                     <div>
-                        <p class="text-md font-semibold text-zinc-200 mt-3 font-h1">{{ $t('notes.today') }}</p>
+                        <p class="text-md font-semibold text-zinc-200 mt-3 font-h1 scalable-text">{{ $t('notes.today') }}</p>
                         <div class="text-zinc-200 mt-3 ml-2 text-sm font-bodyTest">
                             <div
                                 v-for="note in todaysNotes"
@@ -409,7 +438,7 @@
                                 >
                                     <div class="flex items-center justify-between">
                                         <div class="flex-1 min-w-0">
-                                            <h3 class="font-bold truncate">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
+                                            <h3 class="font-bold truncate scalable-text">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
                                             <div class="space-x-4 truncate">
                                                 <span>
                                                     {{ formatDate(note.eventDate || note.updatedAt) }}
@@ -483,7 +512,7 @@
                     </div>
                     
                     <div>
-                        <p class="text-md font-semibold text-zinc-200 mt-3 font-h1">{{ $t('notes.yesterday') }}</p>
+                        <p class="text-md font-semibold text-zinc-200 mt-3 font-h1 scalable-text">{{ $t('notes.yesterday') }}</p>
                         <div class="text-zinc-200 mt-3 ml-2 text-sm font-bodyTest">
                             <div
                                 v-for="note in yesterdaysNotes"
@@ -505,7 +534,7 @@
                                 >
                                     <div class="flex items-center justify-between">
                                         <div class="flex-1 min-w-0">
-                                            <h3 class="font-bold truncate">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
+                                            <h3 class="font-bold truncate scalable-text">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
                                             <div class="space-x-4 truncate">
                                                 <span>{{ formatDate(note.eventDate || note.updatedAt) }}</span>
                                                 <span
@@ -577,7 +606,7 @@
                     </div>
                     
                     <div>
-                        <p class="text-md font-semibold text-zinc-200 mt-3 font-h1">{{ $t('notes.previous') }}</p>
+                        <p class="text-md font-semibold text-zinc-200 mt-3 font-h1 scalable-text">{{ $t('notes.previous') }}</p>
                         <div class="text-zinc-200 mt-3 ml-2 text-sm font-bodyTest">
                             <div
                                 v-for="note in earlierNotes"
@@ -599,7 +628,7 @@
                                 >
                                     <div class="flex items-center justify-between">
                                         <div class="flex-1 min-w-0">
-                                            <h3 class="font-bold truncate">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
+                                            <h3 class="font-bold truncate scalable-text">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
                                             <div class="space-x-4 truncate">
                                                 <span>
                                                     {{ formatDate(note.eventDate || note.updatedAt) }}
@@ -742,10 +771,10 @@
                                                 class="text-black rounded px-2 w-[138px] -ml-4 md:ml-0 md:w-full md:mr-4"
                                             />
                                         
-                                            <button @click="saveDateChange" class="-ml-4 md:ml-0 text-xs text-green-500 underline md:mr-2">
+                                            <button @click="saveDateChange" class="-ml-4 md:ml-0 text-xs text-white custom-underline underline-green md:mr-2 scalable-text">
                                                 {{ $t('notes.confirm') }}
                                             </button>
-                                            <button @click="toggleDateEdit" class="-ml-4 md:ml-0 text-xs text-red-500 underline">
+                                            <button @click="toggleDateEdit" class="-ml-4 md:ml-0 text-xs text-white custom-underline underline-red scalable-text">
                                                 {{ $t('notes.cancel') }}
                                             </button>
                                         </div>
@@ -753,7 +782,7 @@
                                     <template v-else>
                                         <div class="h-[36px]">
                                             <span>{{ formattedDisplayedDate }}</span>
-                                            <button @click="toggleDateEdit" class="text-xs underline md:ml-2">
+                                            <button @click="toggleDateEdit" class="text-xs custom-underline underline-purple md:ml-2 scalable-text">
                                                 {{ $t('notes.change') }}
                                             </button>
                                         </div>
@@ -820,12 +849,12 @@
                 class="md:hidden fixed bottom-[5.5rem] right-0 z-[100] flex items-center justify-between px-6 py-4cursor-pointer"
                 @click="toggleSidebar"
             >
-                <ClickLogo class="bg-[#581C87] p-2 rounded-full shadow-md " />
+                <ClickLogo class="bg-[#9333ea] p-2 rounded-full shadow-md " />
             </div>
 
             <button
                 @click="toggleMouseTrail"
-                class="text-white absolute left-0 md:left-[292px] bottom-0 p-8 hover:text-zinc-500"
+                class="text-white absolute left-4 md:left-[292px] bottom-0 pb-6 pt-10 md:p-8 hover:text-zinc-500"
             >
                 <!-- Replace with your preferred icon -->
                 <span v-if="showMouseTrail">
@@ -865,17 +894,17 @@
             <footer
                 class="fixed bottom-0 md:bottom-8 left-0 w-full flex
                 justify-evenly items-center text-white bg-transparent
-                text-md md:text-lg"
+                text-md md:text-lg scalable-text"
             >
                 <nuxt-link
                     :to="localePath('/privacy')"
-                    class="whitespace-nowrap hover:underline"
+                    class="whitespace-nowrap custom-underline underline-purple"
                 >
                     {{ $t('modal.privacy.title') }}
                 </nuxt-link>
                 <nuxt-link
                     :to="localePath('/terms')"
-                    class="whitespace-nowrap hover:underline"
+                    class="whitespace-nowrap custom-underline underline-purple"
                 >
                     {{ $t('modal.terms.title') }}
                 </nuxt-link>
@@ -897,6 +926,7 @@
     import { useCookie, navigateTo, useRuntimeConfig, useRoute } from '#app'
     import { deferredPrompt, showInstall } from '../plugins/pwa-install.client'
     import Editor from '@tinymce/tinymce-vue'
+    import FontSizeToggle from '@/components/FontSizeToggle.vue'
 
     definePageMeta({
         middleware: ['auth'],
@@ -940,10 +970,29 @@
     const showSavedIndicator = ref(false)
     const editorRef = ref(null)
     const savedToken = ref(null)
+    const highContrast = ref(false)
+    const reducedMotion = ref(false)
+    const enhancedFocus = ref(false)
 
     const isSyncButtonDisabled = computed(() =>
         syncingNoteId.value === selectedNote.value?.id || isNoteUnchanged.value
     )
+
+    function toggleHighContrast() {
+        highContrast.value = !highContrast.value
+        localStorage.setItem('highContrast', highContrast.value.toString())
+        applyAccessibilitySettings()
+    }
+
+    function applyAccessibilitySettings() {
+        const root = document.documentElement
+        
+        if (highContrast.value) {
+            root.classList.add('high-contrast')
+        } else {
+            root.classList.remove('high-contrast')
+        }
+    }
 
     function installApp() {
         if (!deferredPrompt.value) return;
@@ -1702,7 +1751,9 @@
         }
     }
 
-    onMounted(async() => {        
+    onMounted(async() => {
+        highContrast.value = localStorage.getItem('highContrast') === 'true'
+        applyAccessibilitySettings()
         // Check for existing calendar connection
         savedToken.value = localStorage.getItem('googleCalendarToken')
         if (accessToken.value) {

@@ -25,7 +25,7 @@
             <h2 class="text-2xl font-semibold mt-4">{{ $t('modal.privacy.contact') }}</h2>
             <p class="mb-4">{{ $t('modal.privacy.questions') }}</p>
             <p>
-            <a href="mailto:guillaume.mehats@gmail.com" class="underline hover:text-purple-300">
+            <a href="mailto:guillaume.mehats@gmail.com" class="custom-underline underline-purple">
                 guillaume.mehats@gmail.com
             </a>
             </p>
@@ -44,7 +44,7 @@
                 <nuxt-link
                     :to="localePath('/')"
                     class="text-white shadow-2xl shadow-purple-900 font-semibold
-                    transform cursor-pointer hover:underline">
+                    transform cursor-pointer custom-underline underline-purple">
                     {{ $t('homepage.title') }}
                 </nuxt-link>
             </p>
@@ -75,7 +75,7 @@
             <h2 class="text-2xl font-semibold mt-4">{{ $t('modal.privacy.contact') }}</h2>
             <p>{{ $t('modal.privacy.questions') }}</p>
             <p>
-                <a href="mailto:guillaume.mehats@gmail.com" class="underline hover:text-purple-300">
+                <a href="mailto:guillaume.mehats@gmail.com" class="custom-underline underline-purple">
                     guillaume.mehats@gmail.com
                 </a>
             </p>
@@ -94,7 +94,7 @@
                 <nuxt-link
                     :to="localePath('/')"
                     class="text-white shadow-2xl shadow-purple-900 font-semibold
-                    transform cursor-pointer hover:underline">
+                    transform cursor-pointer custom-underline underline-purple">
                     {{ $t('homepage.title') }}
                 </nuxt-link>
             </p>
