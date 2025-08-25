@@ -227,14 +227,14 @@
                             >
                                 <div class="flex items-center justify-between">
                                     <div class="flex-1 min-w-0">
-                                        <h3 class="font-bold truncate scalable-text">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
+                                        <h3 class="font-bold truncate scalable-text">{{ decodeHtmlEntities(stripHtmlTags(note.text)).substring(0, 30) }}</h3>
                                         <div class="space-x-4 truncate">
                                             <span>{{ formatDate(note.eventDate) }}</span>
                                             <span
                                                 v-if="note.text.length > 50"
                                                 class="text-zinc-400"
                                             >
-                                                ...{{ stripHtmlTags(note.text).substring(30, 50) }}
+                                                ...{{ decodeHtmlEntities(stripHtmlTags(note.text)).substring(30, 50) }}
                                             </span>
                                         </div>
                                     </div>
@@ -344,13 +344,13 @@
                                 >
                                     <div class="flex items-center justify-between">
                                         <div class="flex-1 min-w-0">
-                                            <h3 class="font-bold truncate scalable-text">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
+                                            <h3 class="font-bold truncate scalable-text">{{ decodeHtmlEntities(stripHtmlTags(note.text)).substring(0, 30) }}</h3>
                                             <div class="space-x-4 truncate">
                                                 <span>{{ formatDate(note.eventDate) }}</span>
                                                 <span
                                                     v-if="note.text.length > 50"
                                                     class="text-zinc-400"
-                                                >...{{ stripHtmlTags(note.text).substring(30, 50) }}
+                                                >...{{ decodeHtmlEntities(stripHtmlTags(note.text)).substring(30, 50) }}
                                                 </span>
                                             </div>
                                         </div>
@@ -438,7 +438,7 @@
                                 >
                                     <div class="flex items-center justify-between">
                                         <div class="flex-1 min-w-0">
-                                            <h3 class="font-bold truncate scalable-text">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
+                                            <h3 class="font-bold truncate scalable-text">{{ decodeHtmlEntities(stripHtmlTags(note.text)).substring(0, 30) }}</h3>
                                             <div class="space-x-4 truncate">
                                                 <span>
                                                     {{ formatDate(note.eventDate || note.updatedAt) }}
@@ -446,7 +446,7 @@
                                                 <span
                                                     v-if="note.text.length > 50"
                                                     class="text-zinc-400"
-                                                >...{{ stripHtmlTags(note.text).substring(30, 50) }}
+                                                >...{{ decodeHtmlEntities(stripHtmlTags(note.text)).substring(30, 50) }}
                                                 </span>
                                             </div>
                                         </div>
@@ -534,13 +534,13 @@
                                 >
                                     <div class="flex items-center justify-between">
                                         <div class="flex-1 min-w-0">
-                                            <h3 class="font-bold truncate scalable-text">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
+                                            <h3 class="font-bold truncate scalable-text">{{ decodeHtmlEntities(stripHtmlTags(note.text)).substring(0, 30) }}</h3>
                                             <div class="space-x-4 truncate">
                                                 <span>{{ formatDate(note.eventDate || note.updatedAt) }}</span>
                                                 <span
                                                     v-if="note.text.length > 50"
                                                     class="text-zinc-400"
-                                                >...{{ stripHtmlTags(note.text).substring(30, 50) }}
+                                                >...{{ decodeHtmlEntities(stripHtmlTags(note.text)).substring(30, 50) }}
                                                 </span>
                                             </div>
                                         </div>
@@ -628,7 +628,7 @@
                                 >
                                     <div class="flex items-center justify-between">
                                         <div class="flex-1 min-w-0">
-                                            <h3 class="font-bold truncate scalable-text">{{ stripHtmlTags(note.text).substring(0, 30) }}</h3>
+                                            <h3 class="font-bold truncate scalable-text">{{ decodeHtmlEntities(stripHtmlTags(note.text)).substring(0, 30) }}</h3>
                                             <div class="space-x-4 truncate">
                                                 <span>
                                                     {{ formatDate(note.eventDate || note.updatedAt) }}
@@ -636,7 +636,7 @@
                                                 <span
                                                     v-if="note.text.length > 50"
                                                     class="text-zinc-400"
-                                                >...{{ stripHtmlTags(note.text).substring(30, 50) }}
+                                                >...{{ decodeHtmlEntities(stripHtmlTags(note.text)).substring(30, 50) }}
                                                 </span>
                                             </div>
                                         </div>
@@ -1010,6 +1010,13 @@
         return input?.replace(/<[^>]*>?/gm, '') || '';
     }
 
+    function decodeHtmlEntities(text) {
+        if (!text) return '';
+        const textarea = document.createElement('textarea');
+        textarea.innerHTML = text;
+        return textarea.value;
+    }
+
     function sanitizeHTML(dirty) {
         const temp = document.createElement('div');
         temp.innerHTML = dirty;
@@ -1169,8 +1176,7 @@
                 return
             }
 
-            // Decide which date to sync to
-            const today = new Date().toISOString().slice(0, 10) // yyyy-mm-dd
+            const today = new Date().toISOString().slice(0, 10)
             const eventDate = note.eventDate
                 ? new Date(note.eventDate).toISOString().slice(0, 10)
                 : null
@@ -1184,7 +1190,7 @@
 
             const eventData = {
                 id: note.id,
-                title: stripHtmlTags(sanitizedText).substring(0, 50) || 'Untitled Note',
+                title: decodeHtmlEntities(stripHtmlTags(sanitizedText)).substring(0, 50) || 'Untitled Note',
                 text: note.text || '',
                 date: finalDateISO,
                 eventId: note.calendarEventId || null
@@ -1201,7 +1207,6 @@
                 return
             }
 
-            // Save eventId back to the note
             if (response.eventId && !note.calendarEventId) {
                 note.calendarEventId = response.eventId
             }
@@ -1394,13 +1399,10 @@
         }
     }
 
-    // Function to reconnect Google Calendar
     const reconnectGoogleCalendar = () => {
-        // Clear existing token
         localStorage.removeItem('googleCalendarToken')
         calendarConnected.value = false
-        
-        // Redirect to connect again
+
         connectGoogleCalendar()
     }
 
@@ -1414,21 +1416,20 @@
         }
     };
 
-    // Touch event handlers for swipe functionality
     function handleTouchStart(event, noteId) {
-        if (isDesktop.value) return // Skip on desktop
+        if (isDesktop.value) return
         touchStartX.value = event.touches[0].clientX
         touchEndX.value = event.touches[0].clientX
     }
 
     function handleTouchStartY(event) {
-        if (isDesktop.value) return; // Skip on desktop
+        if (isDesktop.value) return;
         touchStartY.value = event.touches[0].clientY;
         touchEndY.value = touchStartY.value;
     }
 
     function handleTouchMove(event, noteId) {
-        if (isDesktop.value) return // Skip on desktop
+        if (isDesktop.value) return
         touchEndX.value = event.touches[0].clientX
         
         // Calculate swipe distance
@@ -1512,7 +1513,7 @@
             return;
         }
 
-        const text = stripHtmlTags(noteText || updatedNote.value || '');
+        const text = decodeHtmlEntities(stripHtmlTags(noteText || updatedNote.value || ''));
         if (!text.trim()) {
             $toast.error(t('toast.noTextToRead'));
             return;
