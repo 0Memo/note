@@ -1230,9 +1230,9 @@
             await $fetch(`/api/notes/${note.id}/update-sync-info`, {
                 method: 'PATCH',
                 body: {
-                    calendarEventId: updatedNoteData.calendarEventId,
-                    lastSyncedText: updatedNoteData.lastSyncedText,
-                    lastSyncedDate: updatedNoteData.lastSyncedDate
+                    calendarEventId: updatedNote.calendarEventId,
+                    lastSyncedText: updatedNote.lastSyncedText,
+                    lastSyncedDate: updatedNote.lastSyncedDate
                 }
             })
 
