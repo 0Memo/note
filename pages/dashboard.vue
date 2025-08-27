@@ -1152,8 +1152,11 @@
     function isNoteSynced(note) {
         if (!note.calendarEventId) return false
         
-        const textUnchanged = note.text === note.lastSyncedText
-        const dateUnchanged = getDateString(note.lastSyncedDate) === getDateString(note.eventDate || note.updatedAt)
+        const textUnchanged = note.lastSyncedText && note.text === note.lastSyncedText
+    
+        const currentDate = getDateString(note.eventDate || note.updatedAt)
+        const lastSyncedDate = getDateString(note.lastSyncedDate)
+        const dateUnchanged = lastSyncedDate && currentDate === lastSyncedDate
         
         return textUnchanged && dateUnchanged
     }
@@ -1180,8 +1183,6 @@
                 $toast.error(t('toast.calendar.expired'))
                 return
             }
-
-            const noteDate = note.eventDate || note.updatedAt
 
             if (isNoteSynced(note)) {
                 $toast.error(t('toast.calendar.alreadySynced'))
@@ -1219,22 +1220,30 @@
                 return
             }
 
-            if (response.eventId && !note.calendarEventId) {
-                note.calendarEventId = response.eventId
-            }
-
             const updatedNote = {
                 ...note,
+                calendarEventId: response.eventId || note.calendarEventId,
                 lastSyncedText: note.text,
                 lastSyncedDate: note.eventDate || note.updatedAt,
             }
+
+            await $fetch(`/api/notes/${note.id}/update-sync-info`, {
+                method: 'PATCH',
+                body: {
+                    calendarEventId: updatedNoteData.calendarEventId,
+                    lastSyncedText: updatedNoteData.lastSyncedText,
+                    lastSyncedDate: updatedNoteData.lastSyncedDate
+                }
+            })
 
             const index = notes.value.findIndex((n) => n.id === note.id)
             if (index !== -1) {
                 notes.value[index] = updatedNote
             }
 
-            selectedNote.value = {...updatedNote}
+            if (selectedNote.value.id === note.id) {
+                selectedNote.value = {...updatedNote}
+            }
 
             await nextTick()
 
@@ -1302,10 +1311,17 @@
                     const now = new Date().toISOString()
                     notes.value[updatedNoteIndex].updatedAt = now
                     selectedNote.value.updatedAt = now
+
+                    if (notes.value[updatedNoteIndex].text !== cleanText) {
+                        notes.value[updatedNoteIndex].lastSyncedText = null
+                        selectedNote.value.lastSyncedText = null
+                    }
+                    
+                    notes.value[updatedNoteIndex].text = cleanText
+                    selectedNote.value.text = cleanText
                 }
             }
 
-            // ✅ Show saved indicator for 1.5s
             showSavedIndicator.value = true
             setTimeout(() => showSavedIndicator.value = false, 2500)
         } catch (error) {
@@ -1346,8 +1362,6 @@
                 $toast.error(t('toast.calendar.notConnected'))
                 return
             }
-
-            console.log('Using token (first 20 chars):', token.substring(0, 20) + '...')
             
             const response = await $fetch('/api/calendar/list-events', {
                 headers: {
@@ -1816,10 +1830,12 @@
                 ? fetchedNotes.map(note => ({
                     ...note,
                     // ✅ Enrich each note with sync status
-                    synced: !!note.calendarEventId && note.lastSyncedText === note.text,
-                    lastSyncedDate: note.lastSyncedDate ? new Date(note.lastSyncedDate) : null,
+                    calendarEventId: note.calendarEventId || null,
+                    lastSyncedText: note.lastSyncedText || null,
+                    lastSyncedDate: note.lastSyncedDate || null,
                     createdAt: note.createdAt ? new Date(note.createdAt) : null,
                     updatedAt: note.updatedAt ? new Date(note.updatedAt) : null,
+                    eventDate: note.eventDate ? new Date(note.eventDate) : null,
                 }))
                 : []
 
