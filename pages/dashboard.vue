@@ -137,13 +137,6 @@
                         {{ $t('toast.calendar.calendarConnected') }}
                     </div>
                 </div>
-                <button 
-                    v-if="calendarConnected" 
-                    @click="checkCalendarEvents"
-                    class="ml-2 bg-green-600 hover:bg-green-700 text-white text-sm px-3 py-1 rounded"
-                >
-                    {{ $t('toast.calendar.checkEvents') }}
-                </button>
 
                 <!-- Add this button next to your existing calendar buttons -->
                 <button 
@@ -1334,69 +1327,6 @@
 
     if (calendarConnected.value) {
         savedToken.value = null
-    }
-
-    // Add this to your index.vue script
-    const checkCalendarEvents = async () => {
-        try {
-            const token = localStorage.getItem('googleCalendarToken')
-            if (!token) {
-                $toast.error(t('toast.calendar.notConnected'))
-                return
-            }
-
-            console.log('Using token (first 20 chars):', token.substring(0, 20) + '...')
-            
-            const response = await $fetch('/api/calendar/list-events', {
-                headers: {
-                    'x-google-access-token': token
-                }
-            })
-            
-            console.log('Full API response:', response)
-            
-            if (response.error) {
-                if (response.tokenError || response.status === 401) {
-                    // Token is expired or invalid
-                    $toast.error(t('toast.calendar.token'))
-                    // Clear the invalid token
-                    localStorage.removeItem('googleCalendarToken')
-                    calendarConnected.value = false
-                    return
-                }
-                $toast.error(`Error: ${response.error}`)
-                return
-            }
-
-            console.log('Events array:', response.events)
-            console.log('Event count:', response.count)
-            
-            const eventCount = response.count || 0
-            $toast.info(t('toast.calendar.eventsFound', { count: eventCount }))
-            
-            // Log each event for debugging
-            if (response.events && response.events.length > 0) {
-                response.events.forEach((event, index) => {
-                    console.log(`Event ${index + 1}:`, {
-                        title: event.summary,
-                        start: event.start,
-                        end: event.end,
-                        link: event.htmlLink
-                    })
-                })
-            }
-            
-            return response.events
-        } catch (error) {
-            console.error('Error checking calendar events:', error)
-            if (error.status === 401) {
-                $toast.error(t('toast.calendar.token'))
-                localStorage.removeItem('googleCalendarToken')
-                calendarConnected.value = false
-            } else {
-                $toast.error(t('toast.calendar.checkFailed')  + error.message)
-            }
-        }
     }
 
     const reconnectGoogleCalendar = () => {
