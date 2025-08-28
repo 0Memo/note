@@ -250,8 +250,8 @@
                                     <button
                                         v-if="isDesktop && calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
-                                        :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
-                                        :title="(note.text === note.lastSyncedText) ? t('toast.calendar.alreadySynced') : t('toast.calendar.syncToCalendar')"
+                                        :disabled="syncingNoteId === note.id || isNoteSynced(note)"
+                                        :title="isNoteSynced(note) ? t('toast.calendar.alreadySynced') : t('toast.calendar.syncToCalendar')"
                                         class="[
                                             'ml-2 p-1 transition-colors duration-200',
                                             syncingNoteId === note.id || note.text === note.lastSyncedText
@@ -285,7 +285,7 @@
                                 <button
                                 v-if="calendarConnected"
                                 @click.stop="syncNoteToCalendar(note)"
-                                :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
+                                :disabled="syncingNoteId === note.id || isNoteSynced(note)"
                                 :class="[
                                     'w-[70px] flex items-center justify-center transition-colors duration-200',
                                     syncingNoteId === note.id || note.text === note.lastSyncedText
@@ -366,8 +366,8 @@
                                         <button 
                                             v-if="isDesktop && calendarConnected" 
                                             @click.stop="syncNoteToCalendar(note)"
-                                            :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
-                                            :title="(note.text === note.lastSyncedText) ? t('toast.calendar.alreadySynced') : t('toast.calendar.syncToCalendar')"
+                                            :disabled="syncingNoteId === note.id || isNoteSynced(note)"
+                                            :title="isNoteSynced(note) ? t('toast.calendar.alreadySynced') : t('toast.calendar.syncToCalendar')"
                                             class="[
                                                 'ml-2 p-1 transition-colors duration-200',
                                                 syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText
@@ -389,7 +389,7 @@
                                     <button 
                                         v-if="calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
-                                        :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
+                                        :disabled="syncingNoteId === note.id || isNoteSynced(note)"
                                         :class="[
                                             'w-[70px] flex items-center justify-center transition-colors duration-200',
                                             syncingNoteId === note.id || note.text === note.lastSyncedText
@@ -462,8 +462,8 @@
                                         <button 
                                             v-if="isDesktop && calendarConnected" 
                                             @click.stop="syncNoteToCalendar(note)"
-                                            :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
-                                            :title="(note.text === note.lastSyncedText) ? t('toast.calendar.alreadySynced') : t('toast.calendar.syncToCalendar')"
+                                            :disabled="syncingNoteId === note.id || isNoteSynced(note)"
+                                            :title="isNoteSynced(note) ? t('toast.calendar.alreadySynced') : t('toast.calendar.syncToCalendar')"
                                             class="[
                                                 'ml-2 p-1 transition-colors duration-200',
                                                 syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText
@@ -485,7 +485,7 @@
                                     <button 
                                         v-if="calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
-                                        :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
+                                        :disabled="syncingNoteId === note.id || isNoteSynced(note)"
                                         :class="[
                                             'w-[70px] flex items-center justify-center transition-colors duration-200',
                                             syncingNoteId === note.id || note.text === note.lastSyncedText
@@ -556,8 +556,8 @@
                                         <button 
                                             v-if="isDesktop && calendarConnected" 
                                             @click.stop="syncNoteToCalendar(note)"
-                                            :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
-                                            :title="(note.text === note.lastSyncedText) ? t('toast.calendar.alreadySynced') : t('toast.calendar.syncToCalendar')"
+                                            :disabled="syncingNoteId === note.id || isNoteSynced(note)"
+                                            :title="isNoteSynced(note) ? t('toast.calendar.alreadySynced') : t('toast.calendar.syncToCalendar')"
                                             class="[
                                                 'ml-2 p-1 transition-colors duration-200',
                                                 syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText
@@ -579,7 +579,7 @@
                                     <button 
                                         v-if="calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
-                                        :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
+                                        :disabled="syncingNoteId === note.id || isNoteSynced(note)"
                                         :class="[
                                             'w-[70px] flex items-center justify-center transition-colors duration-200',
                                             syncingNoteId === note.id || note.text === note.lastSyncedText
@@ -652,8 +652,8 @@
                                         <button 
                                             v-if="isDesktop && calendarConnected" 
                                             @click.stop="syncNoteToCalendar(note)"
-                                            :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
-                                            :title="(note.text === note.lastSyncedText) ? t('toast.calendar.alreadySynced') : t('toast.calendar.syncToCalendar')"
+                                            :disabled="syncingNoteId === note.id || isNoteSynced(note)"
+                                            :title="isNoteSynced(note) ? t('toast.calendar.alreadySynced') : t('toast.calendar.syncToCalendar')"
                                             class="[
                                                 'ml-2 p-1 transition-colors duration-200',
                                                 syncingNoteId === selectedNote.id || selectedNote.text === selectedNote.lastSyncedText
@@ -675,7 +675,7 @@
                                     <button 
                                         v-if="calendarConnected"
                                         @click.stop="syncNoteToCalendar(note)"
-                                        :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
+                                        :disabled="syncingNoteId === note.id || isNoteSynced(note)"
                                         :class="[
                                             'w-[70px] flex items-center justify-center transition-colors duration-200',
                                             syncingNoteId === note.id || note.text === note.lastSyncedText
@@ -1211,18 +1211,33 @@
                 note.calendarEventId = response.eventId
             }
 
+            const lastSyncedDate = note.eventDate || note.updatedAt || new Date()
+            const calendarEventId = response.eventId || note.calendarEventId || null
+
             const updatedNote = {
                 ...note,
+                calendarEventId,
                 lastSyncedText: note.text,
-                lastSyncedDate: note.eventDate || note.updatedAt,
+                lastSyncedDate
             }
 
             const index = notes.value.findIndex((n) => n.id === note.id)
-            if (index !== -1) {
-                notes.value[index] = updatedNote
-            }
+            if (index !== -1) notes.value[index] = updatedNote
 
             selectedNote.value = {...updatedNote}
+
+            try {
+                await $fetch(`/api/notes/${note.id}/update-sync-info`, {
+                    method: 'PATCH',
+                    body: {
+                    lastSyncedText: updatedNote.lastSyncedText,
+                    lastSyncedDate: updatedNote.lastSyncedDate,
+                    calendarEventId: updatedNote.calendarEventId
+                    }
+                })
+            } catch (e) {
+                console.warn('Could not persist sync info', e)
+            }
 
             await nextTick()
 
@@ -1244,6 +1259,18 @@
         } finally {
             syncingNoteId.value = null
         }
+    }
+
+    function normalizeText(s) {
+        return (s || '').replace(/\r/g, '').trim()
+    }
+
+    function isNoteSynced(note) {
+        // require an existing event id, same text, and same date
+        const sameText = normalizeText(note.text) === normalizeText(note.lastSyncedText)
+        const lastSynced = getDateString(note.lastSyncedDate)
+        const currentDate = getDateString(note.eventDate || note.updatedAt)
+        return !!note.calendarEventId && sameText && lastSynced === currentDate
     }
 
     const isNoteUnchanged = computed(() => {

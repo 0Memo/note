@@ -35,13 +35,24 @@ export default defineEventHandler(async (event) => {
         console.log("lastSyncedDate raw:", body.lastSyncedDate);
         console.log("lastSyncedDate as Date:", new Date(body.lastSyncedDate));
 
+        const data = {};
+        if (typeof body.lastSyncedText === "string") {
+            data.lastSyncedText = body.lastSyncedText;
+        }
+        if (body.lastSyncedDate) {
+            const d = new Date(body.lastSyncedDate);
+            if (!isNaN(d.getTime())) data.lastSyncedDate = d;
+        }
+        if ("calendarEventId" in body) {
+            // allow setting to null to clear it if needed
+            data.calendarEventId = body.calendarEventId ?? null;
+        }
+
+        let updated;
         try {
-            const updated = await prisma.note.update({
-            where: { id },
-            data: {
-                lastSyncedText: body.lastSyncedText,
-                lastSyncedDate: new Date(body.lastSyncedDate),
-            },
+            updated = await prisma.note.update({
+                where: { id },
+                data,
             });
         } catch (updateError) {
             console.error("❌ Prisma update error:", updateError);
@@ -50,15 +61,16 @@ export default defineEventHandler(async (event) => {
                 statusMessage: "DB update failed: " + updateError.message,
             });
         }
-        
 
-        console.log("✅ Note updated successfully:", updated);
-
-        // 🧪 Add this block to verify what was saved
-        const recheck = await prisma.note.findUnique({ where: { id } });
-        console.log("📋 Note after update:", recheck);
-
-        return { success: true };
+        return {
+            success: true,
+            note: {
+                id: updated.id,
+                calendarEventId: updated.calendarEventId,
+                lastSyncedText: updated.lastSyncedText,
+                lastSyncedDate: updated.lastSyncedDate,
+            },
+        };
     } catch (error) {
         console.error("❌ Update sync info error:", error);
         return {
