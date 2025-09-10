@@ -1,5 +1,5 @@
 <template>
-    <div class="h-screen bg-[#1c044f] flex">
+    <div class="h-screen bg-primary flex">
         <ClientOnly>
             <MouseTrail v-if="showMouseTrail" />
         </ClientOnly>
@@ -8,7 +8,7 @@
             <Easter />
         </div>-->
         <div
-            class="md:hidden fixed top-0 left-0 right-0 z-[100] bg-[#1d073a] flex items-center justify-between px-6 py-4 shadow-md cursor-pointer border-double border-b-4 border-white"
+            class="md:hidden fixed top-0 left-0 right-0 z-[100] bg-secondary flex items-center justify-between px-6 py-4 shadow-md cursor-pointer border-double border-b-4 border-white"
         >
             <NavbarLogo />
         </div>
@@ -147,7 +147,7 @@
                     {{ $t('toast.calendar.reconnect') }}
                 </button>
 
-                <div class="mt-6 p-4 bg-[#1d073a] rounded-lg">
+                <div class="mt-6 p-4 bg-secondary rounded-lg">
                     <h3 class="text-white font-semibold mb-3 scalable-text">
                         {{ $t('accessibility.accessibility') }}
                     </h3>
@@ -697,7 +697,7 @@
             </template>
         </div>
 
-        <div class="w-full bg-[#1d073a] overflow-y-scroll md:overflow-y-auto">
+        <div class="w-full bg-secondary overflow-y-scroll md:overflow-y-auto">
             <div class="text-white flex p-8 justify-between items-start mt-16 md:mt-0">
                 <button
                     class="gap-3 right

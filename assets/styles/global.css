@@ -34,11 +34,11 @@ body {
     --text-secondary: #ffff00;
 }
 
-.high-contrast .bg-\[#1c044f\] {
+.high-contrast .bg-primary {
     background-color: var(--bg-primary) !important;
 }
 
-.high-contrast .bg-\[#1d073a\] {
+.high-contrast .bg-secondary {
     background-color: var(--bg-secondary) !important;
 }
 

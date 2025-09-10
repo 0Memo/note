@@ -24,6 +24,10 @@ export default {
       serif: ["ui-serif", "Georgia"],
     },
     extend: {
+      colors: {
+        primary: "#1c044f",
+        secondary: "#1d073a",
+      },
       lineClamp: {
         8: "8",
         10: "10",

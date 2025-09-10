@@ -1,5 +1,5 @@
 <template>
-    <div class="h-screen bg-[#1c044f] flex font-h1">
+    <div class="h-screen bg-primary flex font-h1">
         <div class="bg-[#030303] w-full md:w-[516px] p-12 flex flex-col justify-center">
             <Logo />
             <div class="text-white -ml-16 md:-ml-32 flex flex-wrap justify-center gap-2 mt-8 md:mt-6">
@@ -125,7 +125,7 @@
             </div>
         </div>
 
-        <div class="bg-[#1d073a] w-full text-zinc-100 hidden md:block">
+        <div class="bg-secondary w-full text-zinc-100 hidden md:block">
         </div>
     </div>
 </template>

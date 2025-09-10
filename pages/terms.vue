@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-[#1d073a] text-white min-h-screen px-4 py-8
+    <div class="bg-secondary text-white min-h-screen px-4 py-8
     block md:flex md:items-center md:justify-center">
         <!-- Outer card: hidden on mobile, visible on md+ -->
         <div class="hidden md:block bg-[#2a1051] rounded-2xl p-8 max-w-xl w-full text-center shadow-md mx-auto">
