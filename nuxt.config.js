@@ -49,8 +49,10 @@ export default defineNuxtConfig({
     },
   },
 
+  ssr: false,
+
   nitro: {
-    preset: "vercel",
+    preset: "static",
   },
 
   plugins: ["~/plugins/init-locale.client.js"],

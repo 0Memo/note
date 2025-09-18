@@ -30,13 +30,13 @@
                     {{ $t('homepage.title') }}
                 </nuxt-link>
             </p>
-            <button
+            <!-- <button
                 v-if="showInstall"
                 @click="installApp"
                 class="mt-6 ml-1 text-md text-white shadow-2xl font-semibold transform cursor-pointer custom-underline underline-purple"
             >
                 {{ $t('common.installApp') }}
-            </button>
+            </button> -->
             <div class="text-white flex flex-wrap justify-center gap-2 mt-8 md:mt-6 relative z-50">
                 <button @click="changeLocale('en')">
                     <img
@@ -804,8 +804,8 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="relative my-4 bg-[#d5c7e2] border-purple-900 rounded-md p-4 -ml-[8.75rem] md:-ml-5 shadow-lg w-[23rem] md:w-full min-h-[300px]">
-                            <Editor
+                        <div class="relative my-4 bg-[#d5c7e2] border-purple-900 rounded-md p-4 -ml-[8.75rem] md:-ml-5 shadow-lg w-[22.5rem] md:w-full min-h-[300px]">
+                            <!-- <Editor
                                 ref="editorRef"
                                 v-model="updatedNote"
                                 api-key= '7km3i00h6yxuuaielxdn70k4rzu7iswd10aw8f5ftnpvjspd'
@@ -821,15 +821,107 @@
                                 name="note"
                                 id="note"
                                 @input="debouncedFn"
-                            />
-
-                            <!-- ✅ Green check indicator -->
-                            <transition name="fade">
-                                <div v-if="showSavedIndicator"
-                                    class="absolute bottom-3 right-4 text-green-700 bg-green-100 border border-green-300 text-sm px-3 py-1 rounded-md shadow">
-                                ✔ {{ $t('toast.saved') || 'Note saved' }}
+                            /> -->
+                            <div class="border border-white rounded-lg overflow-hidden text-black bg-white">
+                                <div v-if="editor" class="rounded-tl-md rounded-tr-md shadow-md p-2 flex flex-wrap gap-1 md:gap-2 bg-gray-50 text-black">
+                                    <button
+                                        @click="editor.chain().focus().undo().run()"
+                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm"
+                                        type="button"
+                                    >
+                                        ↶
+                                    </button>
+                                    <button
+                                        @click="editor.chain().focus().redo().run()"
+                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm"
+                                        type="button"
+                                    >
+                                        ↷
+                                    </button>
+                                    <div class="w-px h-6 bg-gray-300 mx-1 hidden md:block"></div>
+                                    <button
+                                        @click="editor.chain().focus().toggleBold().run()"
+                                        :class="{ 'bg-gray-300': editor.isActive('bold') }"
+                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm font-medium"
+                                        type="button"
+                                    >
+                                        B
+                                    </button>
+                                    <button
+                                        @click="editor.chain().focus().toggleItalic().run()"
+                                        :class="{ 'bg-gray-300': editor.isActive('italic') }"
+                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm italic"
+                                        type="button"
+                                    >
+                                        I
+                                    </button>
+                                    <button
+                                        @click="editor.chain().focus().toggleUnderline().run()"
+                                        :class="{ 'bg-gray-300': editor.isActive('underline') }"
+                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm underline"
+                                        type="button"
+                                    >
+                                        U
+                                    </button>
+                                    <div class="w-px h-6 bg-gray-300 mx-1 hidden md:block"></div>
+                                    <button
+                                        @click="editor.chain().focus().setTextAlign('left').run()"
+                                        :class="{ 'bg-gray-300': editor.isActive({ textAlign: 'left' }) }"
+                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm"
+                                        type="button"
+                                    >
+                                        ←
+                                    </button>
+                                    <button
+                                        @click="editor.chain().focus().setTextAlign('center').run()"
+                                        :class="{ 'bg-gray-300': editor.isActive({ textAlign: 'center' }) }"
+                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm"
+                                        type="button"
+                                    >
+                                        ↔
+                                    </button>
+                                    <button
+                                        @click="editor.chain().focus().setTextAlign('right').run()"
+                                        :class="{ 'bg-gray-300': editor.isActive({ textAlign: 'right' }) }"
+                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm"
+                                        type="button"
+                                    >
+                                        →
+                                    </button>
+                                    <div class="w-px h-6 bg-gray-300 mx-1 hidden md:block"></div>
+                                    <button
+                                        @click="editor.chain().focus().toggleBulletList().run()"
+                                        :class="{ 'bg-gray-300': editor.isActive('bulletList') }"
+                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm"
+                                        type="button"
+                                    >
+                                        •
+                                    </button>
+                                    <button
+                                        @click="editor.chain().focus().toggleOrderedList().run()"
+                                        :class="{ 'bg-gray-300': editor.isActive('orderedList') }"
+                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm"
+                                        type="button"
+                                    >
+                                        1.
+                                    </button>
+                                    
                                 </div>
-                            </transition>
+                                <EditorContent
+                                    :editor="editor" 
+                                    :placeholder="$t('notes.text')"
+                                    class="min-h-[300px]"
+                                />
+                                
+                                <!-- ✅ Green check indicator -->
+                                <transition name="fade">
+                                    <div v-if="showSavedIndicator" 
+                                        :class="saveIndicatorClass"
+                                        class="absolute bottom-3 right-4 text-sm px-3 py-1 rounded-md shadow">
+                                    {{ saveIndicatorText }}
+                                    </div>
+                                </transition>
+                            </div>
                         </div>
                     </div>
                     <div v-else class="text-zinc-400 italic text-center mt-10">
@@ -918,7 +1010,16 @@
     import { useLocalePath } from '#i18n'
     import { useCookie, navigateTo, useRuntimeConfig, useRoute } from '#app'
     import { deferredPrompt, showInstall } from '../plugins/pwa-install.client'
-    import Editor from '@tinymce/tinymce-vue'
+    import { useEditor, EditorContent } from '@tiptap/vue-3'
+    import StarterKit from '@tiptap/starter-kit'
+    import { Link } from '@tiptap/extension-link'
+    import { Image } from '@tiptap/extension-image'
+    import { Table } from '@tiptap/extension-table'
+    import { TableRow } from '@tiptap/extension-table-row'
+    import { TableHeader } from '@tiptap/extension-table-header'
+    import { TableCell } from '@tiptap/extension-table-cell'
+    import { TextAlign } from '@tiptap/extension-text-align'
+    import { Underline } from '@tiptap/extension-underline'
     import FontSizeToggle from '@/components/FontSizeToggle.vue'
 
     definePageMeta({
@@ -943,11 +1044,11 @@
     const swipedNoteId = ref(null)
     const touchStartX = ref(0)
     const touchEndX = ref(0)
-    const touchStartY = ref(0);
-    const touchEndY = ref(0);
-    const notesContainer = ref(null);
-    const scrollPosition = ref(0);
-    const minSwipeDistance = 50 // minimum distance required for a swipe
+    const touchStartY = ref(0)
+    const touchEndY = ref(0)
+    const notesContainer = ref(null)
+    const scrollPosition = ref(0)
+    const minSwipeDistance = 50
     const showMouseTrail = ref(false)
     const speechText = ref('')
     const userWantsCalendarSync = ref(true)
@@ -961,11 +1062,90 @@
     const editingDate = ref(false)
     const manualDate = ref('')
     const showSavedIndicator = ref(false)
-    const editorRef = ref(null)
+    const saveIndicatorType = ref('saving')
+
+    const saveIndicatorClass = computed(() => {
+        switch (saveIndicatorType.value) {
+            case 'saving':
+            return 'text-blue-700 bg-blue-100 border border-blue-300'
+            case 'saved':
+            return 'text-green-700 bg-green-100 border border-green-300'
+            case 'error':
+            return 'text-red-700 bg-red-100 border border-red-300'
+            default:
+            return 'text-green-700 bg-green-100 border border-green-300'
+        }
+    })
+
+    const saveIndicatorText = computed(() => {
+        switch (saveIndicatorType.value) {
+            case 'saving':
+            return '💾 ' + (t('toast.saving') || 'Saving...')
+            case 'saved':
+            return '✔ ' + (t('toast.saved') || 'Note saved')
+            case 'error':
+            return '⚠ ' + (t('toast.saveError') || 'Save failed')
+            default:
+            return '✔ ' + (t('toast.saved') || 'Note saved')
+        }
+    })
+
     const savedToken = ref(null)
     const highContrast = ref(false)
     const reducedMotion = ref(false)
     const enhancedFocus = ref(false)
+
+    const editor = useEditor({
+        content: '',
+        extensions: [
+            StarterKit,
+            Image,
+            Table.configure({
+                resizable: true,
+            }),
+            TableRow,
+            TableHeader,
+            TableCell,
+            TextAlign.configure({
+                types: ['heading', 'paragraph'],
+            }),
+        ],
+        onUpdate: ({ editor }) => {
+            const newContent = editor.getHTML()
+            if (newContent !== updatedNote.value) {
+                updatedNote.value = newContent
+                showSavingIndicator()
+                debouncedFn()
+            }
+        },
+        editorProps: {
+            attributes: {
+                class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none min-h-[300px] p-4',
+                style: 'font-family: Helvetica, Arial, sans-serif; font-size: 14px;'
+            },
+        },
+    })
+
+    function showSavingIndicator() {
+        saveIndicatorType.value = 'saving'
+        showSavedIndicator.value = true
+    }
+
+    function showSavedIndicatorSuccess() {
+        saveIndicatorType.value = 'saved'
+        showSavedIndicator.value = true
+        setTimeout(() => {
+            showSavedIndicator.value = false
+        }, 2500)
+    }
+
+    function showSavedIndicatorError() {
+        saveIndicatorType.value = 'error'
+        showSavedIndicator.value = true
+        setTimeout(() => {
+            showSavedIndicator.value = false
+        }, 3000)
+    }
 
     const isSyncButtonDisabled = computed(() =>
         syncingNoteId.value === selectedNote.value?.id || isNoteUnchanged.value
@@ -1123,6 +1303,9 @@
             if (selectedNote.value.id === noteId) {
                 selectedNote.value = notes.value[0] || {}
                 updatedNote.value = selectedNote.value?.text || ''
+                if (editor.value && selectedNote.value?.text) {
+                    editor.value.commands.setContent(selectedNote.value.text)
+                }
             }
             
             noteToDelete.value = null
@@ -1162,7 +1345,7 @@
             const noteDate = note.eventDate || note.updatedAt
             const hasChanged =
                 note.text !== note.lastSyncedText ||
-                getDateString(note.lastSyncedDate) !== getDateString(noteDate)
+                getDateString(note.lastSyncedDate) !== getDateString(noteDate || note.updatedAt)
 
             if (!hasChanged && note.calendarEventId) {
                 $toast.error(t('toast.calendar.alreadySynced'))
@@ -1261,11 +1444,10 @@
             selectedNote.value = notes.value[0]
             updatedNote.value = ''
 
-            nextTick(() => {
-                if (editorRef.value?.editor) {
-                    editorRef.value.editor.focus()
-                }
-            })
+            if (editor.value) {
+                editor.value.commands.setContent('')
+                editor.value.commands.focus()
+            }
         } catch (error) {
             console.log('error', error)
             $toast.error(t('toast.creationError'))
@@ -1277,30 +1459,54 @@
     }, 1000)
 
     async function updateNote() {
+        if (!selectedNote.value?.id) {
+            showSavedIndicator.value = false
+            return
+        }
+
         try {
             const cleanText = sanitizeHTML(updatedNote.value)
-            await $fetch(`/api/notes/${selectedNote.value.id}`, {
+
+            // include credentials to ensure cookies (NoteJWT) are sent
+            const response = await $fetch(`/api/notes/${selectedNote.value.id}`, {
                 method: 'PATCH',
                 body: {
+                    // keep backend expectations and be flexible
                     updatedNote: cleanText,
-                }
+                    text: cleanText, // harmless duplicate for future-proofing
+                    eventDate: selectedNote.value?.eventDate ?? null,
+                },
+                // ensure cookies are sent (client-side)
+                credentials: 'include',
             })
-        
-            // ✅ Ensure notes.value is an array before using findIndex
+
+            // If backend returns success, update local state
+            if (response && response.success) {
             if (Array.isArray(notes.value)) {
-                const updatedNoteIndex = notes.value.findIndex(n => n.id === selectedNote.value.id)
-                if (updatedNoteIndex !== -1) {
+                const idx = notes.value.findIndex(n => n.id === selectedNote.value.id)
+                if (idx !== -1) {
                     const now = new Date().toISOString()
-                    notes.value[updatedNoteIndex].updatedAt = now
+                    notes.value[idx].updatedAt = now
+                    notes.value[idx].text = cleanText
+                    // Only update eventDate when backend sent one
+                    if (response.note?.eventDate) notes.value[idx].eventDate = response.note.eventDate
                     selectedNote.value.updatedAt = now
+                    selectedNote.value.text = cleanText
                 }
             }
-
-            // ✅ Show saved indicator for 1.5s
-            showSavedIndicator.value = true
-            setTimeout(() => showSavedIndicator.value = false, 2500)
+            showSavedIndicatorSuccess()
+            } else {
+                // Backend returned a non-success payload (edge-case)
+                console.warn('Update responded but success !== true', response)
+                showSavedIndicatorError()
+            }
         } catch (error) {
-            console.log('error', error)
+            // log full error object for debugging
+            console.error('updateNote failed:', error)
+            // If fetch throws with response body (nitro error), log it
+            if (error?.data) console.error('error.data:', error.data)
+            if (error?.message) console.error('error.message:', error.message)
+            showSavedIndicatorError()
         }
     }
 
@@ -1515,7 +1721,7 @@
         }[locale.value] || 'en-US'
         recognition.interimResults = false
         recognition.maxAlternatives = 1
-        recognition.continuous = false // set to true if you want longer listening
+        recognition.continuous = false
         recognition.onspeechend = () => recognition.stop()
 
         recognition.onresult = async (event) => {
@@ -1523,19 +1729,25 @@
             const combined = (updatedNote.value ? updatedNote.value + '\n' : '') + transcript
             updatedNote.value = sanitizeHTML(combined)
 
+            if (editor.value) {
+                editor.value.commands.setContent(updatedNote.value)
+            }
+
             if (selectedNote.value) {
                 selectedNote.value.text = updatedNote.value;
-                selectedNote.value.updatedAt = new Date().toISOString(); // Update date to now
+                selectedNote.value.updatedAt = new Date().toISOString();
                 
                 // Optionally update the local notes array date too for UI update
                 const idx = notes.value.findIndex(n => n.id === selectedNote.value.id);
                 if (idx !== -1) {
-                notes.value[idx].updatedAt = selectedNote.value.updatedAt;
+                    notes.value[idx].updatedAt = selectedNote.value.updatedAt
+                    notes.value[idx].text = updatedNote.value
                 }
             }
             $toast.success(t('toast.transcribed'))
             isRecognizing = false
 
+            showSavingIndicator()
             try {
                 await updateNote()
             } catch (e) {
@@ -1682,6 +1894,13 @@
         }
     }
 
+    function triggerSavedToast() {
+        showSavedIndicator.value = true
+        setTimeout(() => {
+            showSavedIndicator.value = false
+        }, 1500)
+    }
+
     onMounted(async() => {
         highContrast.value = localStorage.getItem('highContrast') === 'true'
         applyAccessibilitySettings()
@@ -1757,23 +1976,20 @@
                     .slice()
                     .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))[0]
                 updatedNote.value = selectedNote.value.text || ''
+
+                if (editor.value && selectedNote.value.text) {
+                    editor.value.commands.setContent(selectedNote.value.text)
+                }
             }
 
             await new Promise(resolve => setTimeout(resolve, 500))
 
         } catch (error) {
             console.error('Error fetching notes:', error)
-            notes.value = [] // ✅ Ensure it's always an array on error
+            notes.value = []
         } finally {
             isLoading.value = false
         }
-        
-
-        nextTick(() => {
-            if (editorRef.value?.editor) {
-                editorRef.value.editor.focus()
-            }
-        })
     })
 
     const refreshAccessTokenIfNeeded = async () => {
@@ -1782,7 +1998,7 @@
             throw new Error('No refresh token found.')
         }
 
-        const refreshed = await $fetch('/api/refresh-token') // we’ll create this endpoint below
+        const refreshed = await $fetch('/api/refresh-token')
         if (refreshed?.access_token) {
             localStorage.setItem('googleCalendarToken', refreshed.access_token)
         } else {
@@ -1791,11 +2007,16 @@
     }
 
     watch(selectedNote, (newNote) => {
-        updatedNote.value = newNote?.text || ''
+        if (newNote?.text !== updatedNote.value) {
+            updatedNote.value = newNote?.text || ''
+            if (editor.value) {
+                editor.value.commands.setContent(updatedNote.value)
+            }
+        }
     })
 
     watch(updatedNote, (newText) => {
-        if (selectedNote.value) {
+        if (selectedNote.value && selectedNote.value.text !== newText) {
             selectedNote.value.text = newText
         }
     })
@@ -1828,6 +2049,9 @@
     onBeforeUnmount(() => {
         window.removeEventListener('resize', updateScreenSize)
         window.removeEventListener('click', resetSwipe)
+        if (editor.value) {
+            editor.value.destroy()
+        }
     })
 
     function updateScreenSize() {
@@ -1851,6 +2075,15 @@
         
         selectedNote.value = note
         updatedNote.value = note.text || ''
+        if (editor.value) {
+            editor.value.commands.setContent(note.text || '')
+        }
         if (!isDesktop.value) sidebarOpen.value = false
+    }
+
+    const focusEditor = () => {
+        if (editor.value) {
+            editor.value.commands.focus()
+        }
     }
 </script>

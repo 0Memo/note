@@ -117,7 +117,9 @@ export default defineI18nConfig(() => ({
                 transcribed: "Discours transcrit avec succès!",
                 speechRecognition: "La reconnaissance vocale n'est pas prise en charge dans ce navigateur.",
                 readingNote: "Lecture de la note...",
+                saving: "Enregistrement...",
                 saved: "Note enregistrée",
+                saveError: "Erreur",
                 calendar: {
                     warning: "Votre consentement sera requis pour connecter Google Agenda",
                     connectCalendar: "Connecter Google Agenda",
@@ -274,7 +276,9 @@ export default defineI18nConfig(() => ({
                 transcribed: "¡Voz transcrita con éxito!",
                 speechRecognition: "El reconocimiento de voz no es compatible con este navegador.",
                 readingNote: "Leyendo la nota...",
+                saving: "Guardando...",
                 saved: "Nota guardada",
+                saveError: "Error",
                 calendar: {
                     warning: "Se requerirá su consentimiento para conectar con Google Calendar",
                     connectCalendar: "Conectar Google Calendar",
@@ -431,7 +435,9 @@ export default defineI18nConfig(() => ({
                 transcribed: "Fala transcrita com sucesso!",
                 speechRecognition: "Reconhecimento de voz não é compatível com este navegador.",
                 readingNote: "Lendo a nota...",
+                saving: "Salvando...",
                 saved: "Nota salva",
+                saveError: "Erro",
                 calendar: {
                     warning: "Seu consentimento será necessário para conectar ao Google Agenda",
                     connectCalendar: "Conectar o Google Agenda",
@@ -588,7 +594,9 @@ export default defineI18nConfig(() => ({
                 transcribed: "Speech successfully transcribed!",
                 speechRecognition: "Speech recognition not supported in this browser.",
                 readingNote: "Reading note...",
+                saving: "Saving...",
                 saved: "Note saved",
+                saveError: "Error",
                 calendar: {
                     warning: "Your consent will be required to connect to Google Calendar",
                     connectCalendar: "Connect Google Calendar",
@@ -745,7 +753,9 @@ export default defineI18nConfig(() => ({
                 transcribed: "Voce trascritta con successo!",
                 speechRecognition: "Il riconoscimento vocale non è supportato da questo browser.",
                 readingNote: "Lettura della nota...",
+                saving: "Salvando...",
                 saved: "Nota salvata",
+                saveError: "Errore",
                 calendar: {
                     warning: "Il tuo consenso sarà richiesto per connettersi a Google Calendar",
                     connectCalendar: "Connetti Google Calendar",
@@ -902,7 +912,9 @@ export default defineI18nConfig(() => ({
                 transcribed: "Rösten transkriberades framgångsrikt!",
                 speechRecognition: "Röstigenkänning stöds inte i den här webbläsaren.",
                 readingNote: "Läser anteckningen...",
+                saving: "Sparar...",
                 saved: "Anteckning sparad",
+                saveError: "Fel",
                 calendar: {
                     warning: "Ditt samtycke krävs för att ansluta till Google Kalender",
                     connectCalendar: "Anslut Google Kalender",
@@ -1059,7 +1071,9 @@ export default defineI18nConfig(() => ({
                 transcribed: "Vocea a fost transcrisă cu succes!",
                 speechRecognition: "Recunoașterea vocală nu este compatibilă cu acest browser.",
                 readingNote: "Se citește notița...",
+                saving: "Se salvează...",
                 saved: "Notiță salvată",
+                saveError: "Eroare",
                 calendar: {
                     warning: "Consimțământul tău va fi necesar pentru a te conecta la Google Calendar",
                     connectCalendar: "Conectează Google Calendar",

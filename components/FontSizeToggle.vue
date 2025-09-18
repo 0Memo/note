@@ -4,7 +4,6 @@
             @click="decreaseFontSize"
             :disabled="currentFontSize <= minFontSize"
             class="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-500 text-white p-2 rounded-full transition-colors duration-200"
-            :title="$t('accessibility.decreaseFont')"
         >
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M19 13H5v-2h14v2z"/>
@@ -19,7 +18,6 @@
             @click="increaseFontSize"
             :disabled="currentFontSize >= maxFontSize"
             class="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-500 text-white p-2 rounded-full transition-colors duration-200"
-            :title="$t('accessibility.increaseFont')"
         >
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
@@ -29,7 +27,7 @@
         <button
             @click="resetFontSize"
             class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded text-xs transition-colors duration-200"
-            :title="$t('accessibility.resetFont')"
+            :title="$t('accessibility.reset')"
         >
             {{ $t('accessibility.reset') }}
         </button>

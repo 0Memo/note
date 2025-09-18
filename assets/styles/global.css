@@ -26,6 +26,32 @@ body {
     font-size: var(--user-font-size) !important;
 }
 
+.tiptap {
+    :first-child {
+        margin-top: 0;
+    }
+
+    /* List styles */
+    ul {
+        list-style: circle
+    }
+
+    ol {
+        list-style: decimal;
+    }
+
+    ul,
+    ol {
+        padding: 0 1rem;
+        margin: 1.25rem 1rem 1.25rem 0.4rem;
+
+        li p {
+            margin-top: 0.25em;
+            margin-bottom: 0.25em;
+        }
+    }
+}
+
 /* High contrast mode */
 .high-contrast {
     --bg-primary: #000000;
@@ -194,7 +220,7 @@ button[data-tooltip][data-position=right1]:before {
 
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.3s;
+    transition: opacity 0.3s ease;
 }
 
 .fade-enter-from,

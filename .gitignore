@@ -6,6 +6,11 @@
 .cache
 dist
 
+# Keys
+keys/upload-keystore.jks
+.keys/upload-keystore.jks
+*.jks
+
 # Node dependencies
 node_modules
 
@@ -26,4 +31,17 @@ logs
 .env.*
 !.env.example
 
+# Vercel
 .vercel
+
+
+# Android
+android/keystore.properties
+android/local.properties
+android/.gradle/
+android/.idea/
+android/build
+android/app/build
+
+# Root Gradle cache
+.gradle/
