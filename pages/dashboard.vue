@@ -1713,16 +1713,17 @@
         }
 
         const recognition = new SpeechRecognition()
-        isRecognizing = true
 
         recognition.lang = {
             fr: 'fr-FR', es: 'es-ES', pt: 'pt-BR',
             it: 'it-IT', ro: 'ro-RO', sv: 'sv-SE'
         }[locale.value] || 'en-US'
         recognition.interimResults = false
-        recognition.maxAlternatives = 1
-        recognition.continuous = false
-        recognition.onspeechend = () => recognition.stop()
+        recognition.continuous = true
+        isRecognizing = true
+        recognition.onstart = () => {
+            $toast.info(t('toast.listening'));
+        };
 
         recognition.onresult = async (event) => {
             const transcript = event.results[0][0].transcript
@@ -1736,18 +1737,11 @@
             if (selectedNote.value) {
                 selectedNote.value.text = updatedNote.value;
                 selectedNote.value.updatedAt = new Date().toISOString();
-                
-                // Optionally update the local notes array date too for UI update
-                const idx = notes.value.findIndex(n => n.id === selectedNote.value.id);
-                if (idx !== -1) {
-                    notes.value[idx].updatedAt = selectedNote.value.updatedAt
-                    notes.value[idx].text = updatedNote.value
-                }
             }
             $toast.success(t('toast.transcribed'))
-            isRecognizing = false
 
             showSavingIndicator()
+
             try {
                 await updateNote()
             } catch (e) {
@@ -1780,7 +1774,6 @@
         }
 
         recognition.start()
-        $toast.info(t('toast.listening'))
     }
 
     function getReferenceDate(note) {
