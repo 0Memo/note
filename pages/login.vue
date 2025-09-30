@@ -1,8 +1,8 @@
 <template>
-    <div class="h-screen bg-primary flex font-h1">
+    <div class="flex h-screen bg-primary font-h1">
         <div class="bg-[#030303] w-full md:w-[516px] p-12 flex flex-col justify-center">
             <Logo />
-            <div class="text-white -ml-16 md:-ml-32 flex flex-wrap justify-center gap-2 mt-8 md:mt-6">
+            <div class="flex flex-wrap justify-center gap-2 mt-8 -ml-16 text-white md:-ml-32 md:mt-6">
                 <button @click="changeLocale('en')">
                     <img
                         src="https://flagcdn.com/w20/us.png"
@@ -67,12 +67,12 @@
                     >
                 </button>
             </div>
-            <h1 class="font-h1 mt-8 md:text-2xl font-bold text-zinc-50">{{ $t('login.connection') }}</h1>
+            <h1 class="mt-8 font-bold font-h1 md:text-2xl text-zinc-50">{{ $t('login.connection') }}</h1>
             <p class="mt-2 text-md text-zinc-200">
                 {{ $t('login.subscribed') }}
                 <nuxt-link
                     :to="localePath('/register')"
-                    class="text-purple-700 shadow-2xl shadow-green-700 font-semibold transform cursor-pointer hover:text-purple-300">
+                    class="font-semibold text-purple-700 transform shadow-2xl cursor-pointer shadow-green-700 hover:text-purple-300">
                     {{ $t('login.creation') }}
                 </nuxt-link>
             </p>
@@ -83,9 +83,7 @@
                     <input
                         v-model="email"
                         type="email"
-                        class="w-full border-2 border-zinc-500
-                        h-10 placeholder:text-zinc-500
-                        px-3 bg-zinc-800 text-zinc-100"
+                        class="w-full h-10 px-3 border-2 border-zinc-500 placeholder:text-zinc-500 bg-zinc-800 text-zinc-100"
                         placeholder="email@example.com"
                         :style="{ borderRadius: '255px 15px 225px 15px / 15px 225px 15px 255px' }"
                     >
@@ -96,16 +94,14 @@
                     <input
                         v-model="password"
                         type="password"
-                        class="w-full border-2 border-zinc-500
-                        h-10 placeholder:text-zinc-500
-                        px-3 bg-zinc-800 text-zinc-100"
+                        class="w-full h-10 px-3 border-2 border-zinc-500 placeholder:text-zinc-500 bg-zinc-800 text-zinc-100"
                         placeholder="*******************"
                         :style="{ borderRadius: '255px 15px 225px 15px / 15px 225px 15px 255px' }"
                     >
                 </div>
 
-                <div class="text-zinc-100 mt-6">
-                    <button class="w-full mt-4 bg-purple-900 text-lg px-4 py-2 rounded-2xl font-bold space-x-4">
+                <div class="mt-6 text-zinc-100">
+                    <button class="w-full px-4 py-2 mt-4 space-x-4 text-lg font-bold bg-purple-900 rounded-2xl">
                         <span>{{ $t('login.connect') }}</span>
                         <span>➤</span>
                     </button>
@@ -116,22 +112,20 @@
                 <p class="mt-6 ml-1 text-md text-zinc-300">
                     <nuxt-link
                         :to="localePath('/forgot-password')"
-                        class="text-purple-700 shadow-2xl shadow-green-700 font-semibold
-                        transform cursor-pointer hover:text-purple-300">
+                        class="font-semibold text-purple-700 transform shadow-2xl cursor-pointer shadow-green-700 hover:text-purple-300">
                         {{ $t('login.forgottenPassword') }}
                     </nuxt-link>
                 </p>
                 <p class="mt-6 ml-1 text-md text-zinc-300">
                     <nuxt-link
                         :to="localePath('/')"
-                        class="text-purple-700 shadow-2xl shadow-green-700 font-semibold
-                        transform cursor-pointer hover:text-purple-300">
+                        class="font-semibold text-purple-700 transform shadow-2xl cursor-pointer shadow-green-700 hover:text-purple-300">
                         {{ $t('homepage.title') }}
                     </nuxt-link>
                 </p>
             </div>
 
-            <footer class="fixed bottom-0 md:bottom-8 left-10 gap-8 py-1 w-full flex items-center text-white bg-transparent text-sm md:text-md">
+            <footer class="fixed bottom-0 flex items-center w-full gap-8 py-1 text-sm text-white bg-transparent md:bottom-8 left-10 md:text-md">
                 <nuxt-link
                     :to="localePath('/privacy')"
                     class="whitespace-nowrap custom-underline underline-purple"
@@ -148,15 +142,13 @@
 
             <div
                 v-if="isLoading"
-                class="absolute inset-0 flex items-center
-                justify-center bg-black bg-opacity-50 z-50
-                transition-opacity duration-500 ease-in-out"
+                class="absolute inset-0 z-50 flex items-center justify-center transition-opacity duration-500 ease-in-out bg-black bg-opacity-50"
             >
                 <div id="loader"></div>
             </div>
         </div>
 
-        <div class="bg-secondary w-full text-zinc-100 hidden md:block">
+        <div class="hidden w-full bg-secondary text-zinc-100 md:block">
         </div>
     </div>
 </template>
@@ -187,7 +179,8 @@
         isLoading.value = true
 
         try {
-            const response = await $fetch('/api/login', {
+            const config = useRuntimeConfig()
+            const response = await $fetch(`${config.public.baseURL}/api/login`, {
                 method: 'POST',
                 body: {
                     email: email.value,

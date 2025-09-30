@@ -175,7 +175,7 @@ export default defineI18nConfig(() => ({
             register: {
                 subscription: "Subscripción gratuita",
                 subscribed: "¿Está suscrito?",
-                login: "Conéctese",
+                login: "Inicie sesión",
                 account: "a su cuenta",
                 email: "Correo",
                 password: "Contraseña (min 8 car)",
