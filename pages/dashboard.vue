@@ -1,5 +1,5 @@
 <template>
-    <div class="h-screen bg-primary flex">
+    <div class="flex h-screen bg-primary">
         <ClientOnly>
             <MouseTrail v-if="showMouseTrail" />
         </ClientOnly>
@@ -22,22 +22,21 @@
             }"
         >
             <Logo @click="toggleSidebar" class="cursor-pointer" />
-            <p class="mt-6 ml-1 text-md text-zinc-300 relative z-50">
+            <p class="relative z-50 mt-6 ml-1 text-md text-zinc-300">
                 <nuxt-link
                     :to="localePath('/')"
-                    class="text-white shadow-2xl shadow-purple-900 font-semibold
-                    transform cursor-pointer custom-underline underline-purple scalable-text">
+                    class="font-semibold text-white transform shadow-2xl cursor-pointer shadow-purple-900 custom-underline underline-purple scalable-text">
                     {{ $t('homepage.title') }}
                 </nuxt-link>
             </p>
             <!-- <button
                 v-if="showInstall"
                 @click="installApp"
-                class="mt-6 ml-1 text-md text-white shadow-2xl font-semibold transform cursor-pointer custom-underline underline-purple"
+                class="mt-6 ml-1 font-semibold text-white transform shadow-2xl cursor-pointer text-md custom-underline underline-purple"
             >
                 {{ $t('common.installApp') }}
             </button> -->
-            <div class="text-white flex flex-wrap justify-center gap-2 mt-8 md:mt-6 relative z-50">
+            <div class="relative z-50 flex flex-wrap justify-center gap-2 mt-8 text-white md:mt-6">
                 <button @click="changeLocale('en')">
                     <img
                         src="https://flagcdn.com/w20/us.png"
@@ -102,7 +101,7 @@
                     >
                 </button>
 
-                <div class="w-full flex md:hidden justify-around text-md py-2">
+                <div class="flex justify-around w-full py-2 md:hidden text-md">
                     <nuxt-link
                         :to="localePath('/privacy')"
                         class="whitespace-nowrap custom-underline underline-purple"
@@ -121,16 +120,16 @@
                     <button 
                         @click="connectGoogleCalendar" 
                         :disabled="isConnectingCalendar"
-                        class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-500 text-white font-bold py-2 px-4 rounded transition-colors duration-200 flex items-center justify-center gap-2"
+                        class="flex items-center justify-center w-full gap-2 px-4 py-2 font-bold text-white transition-colors duration-200 bg-blue-600 rounded hover:bg-blue-700 disabled:bg-gray-500"
                     >
                         <svg v-if="!isConnectingCalendar" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
                         </svg>
-                        <div v-else class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                        <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
                         {{ isConnectingCalendar ? t('toast.calendar.connecting') : (calendarConnected ? t('toast.calendar.calendarConnected') : t('toast.calendar.connectCalendar')) }}
                     </button>
                     
-                    <div v-if="calendarConnected" class="mt-2 text-green-400 text-sm flex items-center gap-1">
+                    <div v-if="calendarConnected" class="flex items-center gap-1 mt-2 text-sm text-green-400">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
@@ -142,13 +141,13 @@
                 <button 
                     v-if="!calendarConnected && savedToken" 
                     @click="reconnectGoogleCalendar"
-                    class="ml-2 bg-orange-600 hover:bg-orange-700 text-white text-sm px-3 py-1 rounded"
+                    class="px-3 py-1 ml-2 text-sm text-white bg-orange-600 rounded hover:bg-orange-700"
                 >
                     {{ $t('toast.calendar.reconnect') }}
                 </button>
 
-                <div class="mt-6 p-4 bg-secondary rounded-lg">
-                    <h3 class="text-white font-semibold mb-3 scalable-text">
+                <div class="p-4 mt-6 rounded-lg bg-secondary">
+                    <h3 class="mb-3 font-semibold text-white scalable-text">
                         {{ $t('accessibility.accessibility') }}
                     </h3>
                     
@@ -156,7 +155,7 @@
                     
                     <!-- High Contrast Toggle -->
                     <div class="flex items-center justify-between mb-3">
-                        <label class="text-white text-sm scalable-text">
+                        <label class="text-sm text-white scalable-text">
                             {{ $t('accessibility.highContrast') }}
                         </label>
                         <button
@@ -179,7 +178,7 @@
 
             <template v-if="isLoading">
                 <!-- Show a few skeleton loaders -->
-                <div class="space-y-10 my-10">
+                <div class="my-10 space-y-10">
                     <div v-for="n in 3" :key="n" class="space-y-4">
                         <div class="text-skeleton"></div>
                         <div class="note-skeleton"></div>
@@ -196,10 +195,10 @@
                     @touchend="handleTouchEndY"
                 >
                     <div>
-                        <p class="text-md font-semibold text-zinc-200 mt-3 font-h1 scalable-text">
+                        <p class="mt-3 font-semibold text-md text-zinc-200 font-h1 scalable-text">
                             {{ $t('notes.upcoming') }}
                         </p>
-                        <div class="text-zinc-200 mt-3 ml-2 text-sm font-bodyTest">
+                        <div class="mt-3 ml-2 text-sm text-zinc-200 font-bodyTest">
                             <div
                                 v-for="note in upcomingNotes"
                                 :key="note.id"
@@ -207,7 +206,7 @@
                             >
                             <!-- Swipeable note container -->
                             <div
-                                class="rounded-lg p-4 cursor-pointer transition-transform duration-300"
+                                class="p-4 transition-transform duration-300 rounded-lg cursor-pointer"
                                 :class="{
                                 'bg-[#581C87]': note.id === selectedNote.id,
                                 'hover:bg-[#581C87]/50': note.id !== selectedNote.id,
@@ -235,9 +234,9 @@
                                     <!-- Desktop buttons -->
                                     <button
                                         @click.stop="confirmDeleteNote(note)"
-                                        class="md:flex hidden pl-8 items-center justify-center"
+                                        class="items-center justify-center hidden pl-8 md:flex"
                                     >
-                                        <TrashIcon class="text-red-500 font-bold hover:text-white" />
+                                        <TrashIcon class="font-bold text-red-500 hover:text-white" />
                                     </button>
 
                                     <button
@@ -264,7 +263,7 @@
                                         </svg>
                                         <div
                                         v-else
-                                        class="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-400"
+                                        class="w-4 h-4 border-b-2 border-blue-400 rounded-full animate-spin"
                                         ></div>
                                     </button>
                                 </div>
@@ -273,7 +272,7 @@
                             <!-- Mobile swipe buttons -->
                             <div
                                 v-if="!isDesktop && swipedNoteId === note.id"
-                                class="absolute top-0 right-0 bottom-0 flex"
+                                class="absolute top-0 bottom-0 right-0 flex"
                             >
                                 <button
                                 v-if="calendarConnected"
@@ -299,7 +298,7 @@
                                 </svg>
                                 <div
                                     v-else
-                                    class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"
+                                    class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"
                                 ></div>
                                 </button>
 
@@ -315,8 +314,8 @@
                     </div>
 
                     <div>
-                        <p class="text-md font-semibold text-zinc-200 mt-3 font-h1 scalable-text">{{ $t('notes.tomorrow') }}</p>
-                        <div class="text-zinc-200 mt-3 ml-2 text-sm font-bodyTest">
+                        <p class="mt-3 font-semibold text-md text-zinc-200 font-h1 scalable-text">{{ $t('notes.tomorrow') }}</p>
+                        <div class="mt-3 ml-2 text-sm text-zinc-200 font-bodyTest">
                             <div
                                 v-for="note in tomorrowsNotes"
                                 :key="note.id"
@@ -324,7 +323,7 @@
                             >
                                 <!-- Swipeable note container -->
                                 <div
-                                    class="rounded-lg p-4 cursor-pointer transition-transform duration-300"
+                                    class="p-4 transition-transform duration-300 rounded-lg cursor-pointer"
                                     :class="{
                                         'bg-[#581C87]': note.id === selectedNote.id,
                                         'hover:bg-[#581C87]/50': note.id !== selectedNote.id,
@@ -350,9 +349,9 @@
 
                                         <button 
                                             @click.stop="confirmDeleteNote(note)"
-                                            class="md:flex hidden pl-8 items-center justify-center"
+                                            class="items-center justify-center hidden pl-8 md:flex"
                                         >
-                                            <TrashIcon class="text-red-500 font-bold hover:text-white" />
+                                            <TrashIcon class="font-bold text-red-500 hover:text-white" />
                                         </button>
 
                                         <!-- Desktop Calendar Sync Button -->
@@ -371,13 +370,13 @@
                                         <svg v-if="syncingNoteId !== note.id" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
                                         </svg>
-                                        <div v-else class="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-400"></div>
+                                        <div v-else class="w-4 h-4 border-b-2 border-blue-400 rounded-full animate-spin"></div>
                                         </button>
                                     </div>
                                 </div>
                                 
                                 <!-- Delete button revealed on swipe - ONLY on mobile -->
-                                <div v-if="!isDesktop && swipedNoteId === note.id" class="absolute top-0 right-0 bottom-0 flex">
+                                <div v-if="!isDesktop && swipedNoteId === note.id" class="absolute top-0 bottom-0 right-0 flex">
                                     <!-- Calendar Sync Button -->
                                     <button 
                                         v-if="calendarConnected"
@@ -394,7 +393,7 @@
                                         <svg v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
                                         </svg>
-                                        <div v-else class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                                        <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
                                     </button>
                                     <!-- Delete Button -->
                                     <button 
@@ -409,8 +408,8 @@
                     </div>
 
                     <div>
-                        <p class="text-md font-semibold text-zinc-200 mt-3 font-h1 scalable-text">{{ $t('notes.today') }}</p>
-                        <div class="text-zinc-200 mt-3 ml-2 text-sm font-bodyTest">
+                        <p class="mt-3 font-semibold text-md text-zinc-200 font-h1 scalable-text">{{ $t('notes.today') }}</p>
+                        <div class="mt-3 ml-2 text-sm text-zinc-200 font-bodyTest">
                             <div
                                 v-for="note in todaysNotes"
                                 :key="note.id"
@@ -418,7 +417,7 @@
                             >
                                 <!-- Swipeable note container -->
                                 <div
-                                    class="rounded-lg p-4 cursor-pointer transition-transform duration-300"
+                                    class="p-4 transition-transform duration-300 rounded-lg cursor-pointer"
                                     :class="{
                                         'bg-[#581C87]': note.id === selectedNote.id,
                                         'hover:bg-[#581C87]/50': note.id !== selectedNote.id,
@@ -446,9 +445,9 @@
 
                                         <button 
                                             @click.stop="confirmDeleteNote(note)"
-                                            class="md:flex hidden pl-8 items-center justify-center"
+                                            class="items-center justify-center hidden pl-8 md:flex"
                                         >
-                                            <TrashIcon class="text-red-500 font-bold hover:text-white" />
+                                            <TrashIcon class="font-bold text-red-500 hover:text-white" />
                                         </button>
 
                                         <!-- Desktop Calendar Sync Button -->
@@ -467,13 +466,13 @@
                                             <svg v-if="syncingNoteId !== note.id" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                                 <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
                                             </svg>
-                                            <div v-else class="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-400"></div>
+                                            <div v-else class="w-4 h-4 border-b-2 border-blue-400 rounded-full animate-spin"></div>
                                         </button>
                                     </div>
                                 </div>
                                 
                                 <!-- Delete button revealed on swipe - ONLY on mobile -->
-                                <div v-if="!isDesktop && swipedNoteId === note.id" class="absolute top-0 right-0 bottom-0 flex">
+                                <div v-if="!isDesktop && swipedNoteId === note.id" class="absolute top-0 bottom-0 right-0 flex">
                                     <!-- Calendar Sync Button -->
                                     <button 
                                         v-if="calendarConnected"
@@ -490,7 +489,7 @@
                                         <svg v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
                                         </svg>
-                                        <div v-else class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                                        <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
                                     </button>
                                     <!-- Delete Button -->
                                     <button 
@@ -505,8 +504,8 @@
                     </div>
                     
                     <div>
-                        <p class="text-md font-semibold text-zinc-200 mt-3 font-h1 scalable-text">{{ $t('notes.yesterday') }}</p>
-                        <div class="text-zinc-200 mt-3 ml-2 text-sm font-bodyTest">
+                        <p class="mt-3 font-semibold text-md text-zinc-200 font-h1 scalable-text">{{ $t('notes.yesterday') }}</p>
+                        <div class="mt-3 ml-2 text-sm text-zinc-200 font-bodyTest">
                             <div
                                 v-for="note in yesterdaysNotes"
                                 :key="note.id"
@@ -514,7 +513,7 @@
                             >
                                 <!-- Swipeable note container -->
                                 <div
-                                    class="rounded-lg p-4 cursor-pointer transition-transform duration-300"
+                                    class="p-4 transition-transform duration-300 rounded-lg cursor-pointer"
                                     :class="{
                                         'bg-[#581C87]': note.id === selectedNote.id,
                                         'hover:bg-[#581C87]/50': note.id !== selectedNote.id,
@@ -540,9 +539,9 @@
 
                                         <button 
                                             @click.stop="confirmDeleteNote(note)"
-                                            class="md:flex hidden pl-8 items-center justify-center"
+                                            class="items-center justify-center hidden pl-8 md:flex"
                                         >
-                                            <TrashIcon class="text-red-500 font-bold hover:text-white" />
+                                            <TrashIcon class="font-bold text-red-500 hover:text-white" />
                                         </button>
 
                                         <!-- Desktop Calendar Sync Button -->
@@ -561,13 +560,13 @@
                                         <svg v-if="syncingNoteId !== note.id" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
                                         </svg>
-                                        <div v-else class="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-400"></div>
+                                        <div v-else class="w-4 h-4 border-b-2 border-blue-400 rounded-full animate-spin"></div>
                                         </button>
                                     </div>
                                 </div>
                                 
                                 <!-- Delete button revealed on swipe - ONLY on mobile -->
-                                <div v-if="!isDesktop && swipedNoteId === note.id" class="absolute top-0 right-0 bottom-0 flex">
+                                <div v-if="!isDesktop && swipedNoteId === note.id" class="absolute top-0 bottom-0 right-0 flex">
                                     <!-- Calendar Sync Button -->
                                     <button 
                                         v-if="calendarConnected"
@@ -584,7 +583,7 @@
                                         <svg v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
                                         </svg>
-                                        <div v-else class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                                        <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
                                     </button>
                                     <!-- Delete Button -->
                                     <button 
@@ -599,8 +598,8 @@
                     </div>
                     
                     <div>
-                        <p class="text-md font-semibold text-zinc-200 mt-3 font-h1 scalable-text">{{ $t('notes.previous') }}</p>
-                        <div class="text-zinc-200 mt-3 ml-2 text-sm font-bodyTest">
+                        <p class="mt-3 font-semibold text-md text-zinc-200 font-h1 scalable-text">{{ $t('notes.previous') }}</p>
+                        <div class="mt-3 ml-2 text-sm text-zinc-200 font-bodyTest">
                             <div
                                 v-for="note in earlierNotes"
                                 :key="note.id"
@@ -608,7 +607,7 @@
                             >
                                 <!-- Swipeable note container -->
                                 <div
-                                    class="rounded-lg p-4 cursor-pointer transition-transform duration-300"
+                                    class="p-4 transition-transform duration-300 rounded-lg cursor-pointer"
                                     :class="{
                                         'bg-[#581C87]': note.id === selectedNote.id,
                                         'hover:bg-[#581C87]/50': note.id !== selectedNote.id,
@@ -636,9 +635,9 @@
 
                                         <button 
                                             @click.stop="confirmDeleteNote(note)"
-                                            class="md:flex hidden pl-8 items-center justify-center"
+                                            class="items-center justify-center hidden pl-8 md:flex"
                                         >
-                                            <TrashIcon class="text-red-500 font-bold hover:text-white" />
+                                            <TrashIcon class="font-bold text-red-500 hover:text-white" />
                                         </button>
 
                                         <!-- Desktop Calendar Sync Button -->
@@ -657,13 +656,13 @@
                                         <svg v-if="syncingNoteId !== note.id" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
                                         </svg>
-                                        <div v-else class="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-400"></div>
+                                        <div v-else class="w-4 h-4 border-b-2 border-blue-400 rounded-full animate-spin"></div>
                                         </button>
                                     </div>
                                 </div>
                                 
                                 <!-- Delete button revealed on swipe - ONLY on mobile -->
-                                <div v-if="!isDesktop && swipedNoteId === note.id" class="absolute top-0 right-0 bottom-0 flex">
+                                <div v-if="!isDesktop && swipedNoteId === note.id" class="absolute top-0 bottom-0 right-0 flex">
                                     <!-- Calendar Sync Button -->
                                     <button 
                                         v-if="calendarConnected"
@@ -680,7 +679,7 @@
                                         <svg v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
                                         </svg>
-                                        <div v-else class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                                        <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
                                     </button>
                                     <!-- Delete Button -->
                                     <button 
@@ -697,8 +696,8 @@
             </template>
         </div>
 
-        <div class="w-full bg-secondary overflow-y-scroll md:overflow-y-auto">
-            <div class="text-white flex p-8 justify-between items-start mt-16 md:mt-0">
+        <div class="w-full overflow-y-scroll bg-secondary md:overflow-y-auto">
+            <div class="flex items-start justify-between p-8 mt-16 text-white md:mt-0">
                 <button
                     class="gap-3 right
                     text-white hover:text-zinc-500 shadow-lg
@@ -707,7 +706,7 @@
                     :data-tooltip="$t('tooltip.createNote')"
                     data-position="right1"
                 >
-                    <Pencil class="font-bold w-10 h-10" />
+                    <Pencil class="w-10 h-10 font-bold" />
                 </button>
                 <ConfirmModal
                     :visible="showConfirmModal"
@@ -723,12 +722,12 @@
                     :data-tooltip="$t('tooltip.deleteNote')"
                     data-position="left1"
                 >
-                    <TrashIcon class="font-bold w-10 h-10" />
+                    <TrashIcon class="w-10 h-10 font-bold" />
                 </button>
             </div>
 
             <template v-if="isLoading">
-                <div class="space-y-8 mt-10">
+                <div class="mt-10 space-y-8">
                     <div v-for="n in 1" :key="n" class="space-y-4">
                         <div class="main-text-skeleton"></div>
                         <div class="main-note-skeleton"></div>
@@ -740,20 +739,20 @@
                 <div class="text-white p-8 max-w-[40%] mx-auto font-bodyTest">
                     <div v-if="selectedNote && selectedNote.id">
                         <div class="-ml-14 sm:ml-0 w-fit">
-                            <div class="mb-8 text-lg flex flex-row items-center gap-2">
+                            <div class="flex flex-row items-center gap-2 mb-8 text-lg">
                                 <button
-                                    @click="startTranscription" class="focus:outline-none left pr-2 text-white hover:text-zinc-500 shadow-lg"
+                                    @click="startTranscription" class="pr-2 text-white shadow-lg focus:outline-none left hover:text-zinc-500"
                                     :data-tooltip="$t('tooltip.dictateNote')"
                                     data-position="left2"
                                 >
-                                    <Microphone class="w-8 h-8 font-bold relative -top-2"/>
+                                    <Microphone class="relative w-8 h-8 font-bold -top-2"/>
                                 </button>
                                 <button
-                                    @click="readNoteAloud(selectedNote?.text)"  class="focus:outline-none top pr-2 text-white hover:text-zinc-500 shadow-lg"
+                                    @click="readNoteAloud(selectedNote?.text)"  class="pr-2 text-white shadow-lg focus:outline-none top hover:text-zinc-500"
                                     :data-tooltip="$t('tooltip.listenNote')"
                                     data-position="top"
                                 >
-                                    <VoiceReading class="w-8 h-8 font-bold relative -top-2"/>
+                                    <VoiceReading class="relative w-8 h-8 font-bold -top-2"/>
                                 </button>
                                 <div class="flex items-center gap-2 min-h-[36px] w-full">
                                     <template v-if="editingDate">
@@ -764,10 +763,10 @@
                                                 class="text-black rounded px-2 w-[138px] -ml-4 md:ml-0 md:w-full md:mr-4"
                                             />
                                         
-                                            <button @click="saveDateChange" class="-ml-4 md:ml-0 text-xs text-white custom-underline underline-green md:mr-2 scalable-text">
+                                            <button @click="saveDateChange" class="-ml-4 text-xs text-white md:ml-0 custom-underline underline-green md:mr-2 scalable-text">
                                                 {{ $t('notes.confirm') }}
                                             </button>
-                                            <button @click="toggleDateEdit" class="-ml-4 md:ml-0 text-xs text-white custom-underline underline-red scalable-text">
+                                            <button @click="toggleDateEdit" class="-ml-4 text-xs text-white md:ml-0 custom-underline underline-red scalable-text">
                                                 {{ $t('notes.cancel') }}
                                             </button>
                                         </div>
@@ -798,7 +797,7 @@
                                     <svg v-if="syncingNoteId !== selectedNote.id" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
                                     </svg>
-                                    <div v-else class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                                    <div v-else class="w-4 h-4 border-b-2 border-white rounded-full animate-spin"></div>
                                     <span class="hidden sm:inline">{{ $t('toast.calendar.syncToCalendar') }}</span>
                                     <span class="inline sm:hidden">Sync</span>
                                 </button>
@@ -822,27 +821,27 @@
                                 id="note"
                                 @input="debouncedFn"
                             /> -->
-                            <div class="border border-white rounded-lg overflow-hidden text-black bg-white">
-                                <div v-if="editor" class="rounded-tl-md rounded-tr-md shadow-md p-2 flex flex-wrap gap-1 md:gap-2 bg-gray-50 text-black">
+                            <div class="overflow-hidden text-black bg-white border border-white rounded-lg">
+                                <div v-if="editor" class="flex flex-wrap gap-1 p-2 text-black shadow-md rounded-tl-md rounded-tr-md md:gap-2 bg-gray-50">
                                     <button
                                         @click="editor.chain().focus().undo().run()"
-                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm"
+                                        class="px-2 py-1 text-sm rounded hover:bg-gray-200"
                                         type="button"
                                     >
                                         ↶
                                     </button>
                                     <button
                                         @click="editor.chain().focus().redo().run()"
-                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm"
+                                        class="px-2 py-1 text-sm rounded hover:bg-gray-200"
                                         type="button"
                                     >
                                         ↷
                                     </button>
-                                    <div class="w-px h-6 bg-gray-300 mx-1 hidden md:block"></div>
+                                    <div class="hidden w-px h-6 mx-1 bg-gray-300 md:block"></div>
                                     <button
                                         @click="editor.chain().focus().toggleBold().run()"
                                         :class="{ 'bg-gray-300': editor.isActive('bold') }"
-                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm font-medium"
+                                        class="px-2 py-1 text-sm font-medium rounded hover:bg-gray-200"
                                         type="button"
                                     >
                                         B
@@ -850,7 +849,7 @@
                                     <button
                                         @click="editor.chain().focus().toggleItalic().run()"
                                         :class="{ 'bg-gray-300': editor.isActive('italic') }"
-                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm italic"
+                                        class="px-2 py-1 text-sm italic rounded hover:bg-gray-200"
                                         type="button"
                                     >
                                         I
@@ -858,16 +857,16 @@
                                     <button
                                         @click="editor.chain().focus().toggleUnderline().run()"
                                         :class="{ 'bg-gray-300': editor.isActive('underline') }"
-                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm underline"
+                                        class="px-2 py-1 text-sm underline rounded hover:bg-gray-200"
                                         type="button"
                                     >
                                         U
                                     </button>
-                                    <div class="w-px h-6 bg-gray-300 mx-1 hidden md:block"></div>
+                                    <div class="hidden w-px h-6 mx-1 bg-gray-300 md:block"></div>
                                     <button
                                         @click="editor.chain().focus().setTextAlign('left').run()"
                                         :class="{ 'bg-gray-300': editor.isActive({ textAlign: 'left' }) }"
-                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm"
+                                        class="px-2 py-1 text-sm rounded hover:bg-gray-200"
                                         type="button"
                                     >
                                         ←
@@ -875,7 +874,7 @@
                                     <button
                                         @click="editor.chain().focus().setTextAlign('center').run()"
                                         :class="{ 'bg-gray-300': editor.isActive({ textAlign: 'center' }) }"
-                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm"
+                                        class="px-2 py-1 text-sm rounded hover:bg-gray-200"
                                         type="button"
                                     >
                                         ↔
@@ -883,16 +882,16 @@
                                     <button
                                         @click="editor.chain().focus().setTextAlign('right').run()"
                                         :class="{ 'bg-gray-300': editor.isActive({ textAlign: 'right' }) }"
-                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm"
+                                        class="px-2 py-1 text-sm rounded hover:bg-gray-200"
                                         type="button"
                                     >
                                         →
                                     </button>
-                                    <div class="w-px h-6 bg-gray-300 mx-1 hidden md:block"></div>
+                                    <div class="hidden w-px h-6 mx-1 bg-gray-300 md:block"></div>
                                     <button
                                         @click="editor.chain().focus().toggleBulletList().run()"
                                         :class="{ 'bg-gray-300': editor.isActive('bulletList') }"
-                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm"
+                                        class="px-2 py-1 text-sm rounded hover:bg-gray-200"
                                         type="button"
                                     >
                                         •
@@ -900,7 +899,7 @@
                                     <button
                                         @click="editor.chain().focus().toggleOrderedList().run()"
                                         :class="{ 'bg-gray-300': editor.isActive('orderedList') }"
-                                        class="px-2 py-1 rounded hover:bg-gray-200 text-sm"
+                                        class="px-2 py-1 text-sm rounded hover:bg-gray-200"
                                         type="button"
                                     >
                                         1.
@@ -917,14 +916,14 @@
                                 <transition name="fade">
                                     <div v-if="showSavedIndicator" 
                                         :class="saveIndicatorClass"
-                                        class="absolute bottom-3 right-4 text-sm px-3 py-1 rounded-md shadow">
+                                        class="absolute px-3 py-1 text-sm rounded-md shadow bottom-3 right-4">
                                     {{ saveIndicatorText }}
                                     </div>
                                 </transition>
                             </div>
                         </div>
                     </div>
-                    <div v-else class="text-zinc-400 italic text-center mt-10">
+                    <div v-else class="mt-10 italic text-center text-zinc-400">
                         {{ $t('notes.nothing') }}
                     </div>
                 </div>
@@ -949,7 +948,7 @@
                             :data-tooltip="$t('tooltip.deactivate')"
                             data-position="right"
                         >
-                            <MouseTrailOff class="font-bold w-10 h-10" />
+                            <MouseTrailOff class="w-10 h-10 font-bold" />
                         </button>
                     </ClientOnly>
                 </span>
@@ -960,26 +959,23 @@
                             :data-tooltip="$t('tooltip.activate')"
                             data-position="right"
                         >
-                            <MouseTrailOn class="font-bold w-10 h-10" />
+                            <MouseTrailOn class="w-10 h-10 font-bold" />
                         </button>
                     </ClientOnly>
                 </span>
             </button>
             
             <button
-                class="text-white left absolute right-0 bottom-0 p-8
-                hover:text-zinc-500"
+                class="absolute bottom-0 right-0 p-8 text-white left hover:text-zinc-500"
                 @click="logout"
                 :data-tooltip="$t('tooltip.logout')"
                 data-position="left"
             >
-                <Logout class="font-bold w-10 h-10" />
+                <Logout class="w-10 h-10 font-bold" />
             </button>
 
             <footer
-                class="fixed bottom-0 md:bottom-8 left-0 w-full flex
-                justify-evenly items-center text-white bg-transparent
-                text-md md:text-lg scalable-text"
+                class="fixed bottom-0 left-0 flex items-center w-full text-white bg-transparent md:bottom-8 justify-evenly text-md md:text-lg scalable-text"
             >
                 <nuxt-link
                     :to="localePath('/privacy')"
@@ -1021,6 +1017,9 @@
     import { TextAlign } from '@tiptap/extension-text-align'
     import { Underline } from '@tiptap/extension-underline'
     import FontSizeToggle from '@/components/FontSizeToggle.vue'
+    import { Capacitor } from '@capacitor/core'
+    import { TextToSpeech } from '@capacitor-community/text-to-speech'
+    import { SpeechRecognition } from '@capacitor-community/speech-recognition'
 
     definePageMeta({
         middleware: ['auth'],
@@ -1642,20 +1641,12 @@
         }
     }
 
-    function readNoteAloud(noteText) {
-        const synth = window.speechSynthesis;
-        if (!synth) {
-            $toast.error(t('toast.speechSynthesisUnsupported'));
-            return;
-        }
-
+    async function readNoteAloud(noteText) {
         const text = decodeHtmlEntities(stripHtmlTags(noteText || updatedNote.value || ''));
         if (!text.trim()) {
             $toast.error(t('toast.noTextToRead'));
             return;
         }
-
-        const utterance = new SpeechSynthesisUtterance(text);
 
         const langMap = {
             fr: 'fr-FR',
@@ -1668,112 +1659,107 @@
         };
 
         const appLang = langMap[locale.value] || 'en-US';
-        utterance.lang = appLang;
 
-        // Load voices safely
-        const speakWithVoice = () => {
-            const voices = synth.getVoices();
-            if (!voices.length) {
-                // Retry after delay if voices are still not loaded
-                setTimeout(speakWithVoice, 200);
-                return;
+        if (Capacitor.isNativePlatform()) {
+            try {
+                await TextToSpeech.speak({
+                    text,
+                    lang: appLang,
+                    rate: 1.0,
+                    pitch: 1.0,
+                    volume: 1.0,
+                })
+                $toast.success(t('toast.readingNote'))
+            } catch (err) {
+                console.error('TTS failed:', err)
+                $toast.error(t('toast.speechSynthesisUnsupported'))
             }
-
-            const matched = voices.find(v => v.lang === appLang);
-            if (matched) {
-                utterance.voice = matched;
-            } else {
-                console.warn(`No exact voice match for ${appLang}, using default.`);
-            }
-
-            $toast.info(t('toast.readingNote'));
-
-            synth.cancel(); // Stop any ongoing speech
-            synth.speak(utterance);
-        };
-
-        if (!synth.getVoices().length) {
-            synth.addEventListener('voiceschanged', speakWithVoice, { once: true });
-            // Force voices to load
-            synth.getVoices();
         } else {
-            speakWithVoice();
+            // Fallback to browser API
+            const synth = window.speechSynthesis
+            if (!synth) {
+                $toast.error(t('toast.speechSynthesisUnsupported'))
+                return
+            }
+            const utterance = new SpeechSynthesisUtterance(text)
+            utterance.lang = appLang
+            synth.cancel()
+            synth.speak(utterance)
+            $toast.success(t('toast.readingNote'))
         }
     }
 
     let isRecognizing = false
 
-    function startTranscription() {
+    async function startTranscription() {
         if (isRecognizing) return
 
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
-        if (!SpeechRecognition) {
-            $toast.error(t('toast.speechRecognition'))
-            return
-        }
-
-        const recognition = new SpeechRecognition()
-
-        recognition.lang = {
-            fr: 'fr-FR', es: 'es-ES', pt: 'pt-BR',
-            it: 'it-IT', ro: 'ro-RO', sv: 'sv-SE'
-        }[locale.value] || 'en-US'
-        recognition.interimResults = false
-        recognition.continuous = true
-        isRecognizing = true
-        recognition.onstart = () => {
-            $toast.info(t('toast.listening'));
-        };
-
-        recognition.onresult = async (event) => {
-            const transcript = event.results[0][0].transcript
-            const combined = (updatedNote.value ? updatedNote.value + '\n' : '') + transcript
-            updatedNote.value = sanitizeHTML(combined)
-
-            if (editor.value) {
-                editor.value.commands.setContent(updatedNote.value)
-            }
-
-            if (selectedNote.value) {
-                selectedNote.value.text = updatedNote.value;
-                selectedNote.value.updatedAt = new Date().toISOString();
-            }
-            $toast.success(t('toast.transcribed'))
-
-            showSavingIndicator()
-
+        if (Capacitor.isNativePlatform()) {
             try {
-                await updateNote()
-            } catch (e) {
-                console.error("Error updating note after speech:", e)
-            }
-        }
+                // Ask permission first
+                const perm = await SpeechRecognition.requestPermission()
+                if (perm.permission !== 'granted') {
+                    $toast.error(t('toast.permissionError'))
+                    return
+                }
 
-        recognition.onerror = (event) => {
-            console.error('Speech recognition error:', event.error)
-            isRecognizing = false
+                const result = await SpeechRecognition.start({
+                    language: { fr: 'fr-FR', es: 'es-ES', pt: 'pt-BR', it: 'it-IT', ro: 'ro-RO', sv: 'sv-SE' }[locale.value] || 'en-US',
+                    partialResults: false,
+                    popup: false
+                })
 
-            switch (event.error) {
-            case 'no-speech':
-                $toast.error(t('toast.noSpeech'))
-                break
-            case 'audio-capture':
-                $toast.error(t('toast.audioError'))
-                break
-            case 'not-allowed':
-                $toast.error(t('toast.permissionError'))
-                break
-            default:
+                const transcript = result.matches?.join(' ') || ''
+                if (transcript) {
+                    const combined = (updatedNote.value ? updatedNote.value + '\n' : '') + transcript
+                    updatedNote.value = sanitizeHTML(combined)
+                    if (editor.value) editor.value.commands.setContent(updatedNote.value)
+                    if (selectedNote.value) {
+                        selectedNote.value.text = updatedNote.value
+                        selectedNote.value.updatedAt = new Date().toISOString()
+                    }
+                    $toast.success(t('toast.transcribed'))
+                    await updateNote()
+                }
+            } catch (err) {
+                console.error('Speech recognition error:', err)
                 $toast.error(t('toast.speechError'))
-                break
             }
-        }
+        } else {
+            // Fallback to browser API
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+            if (!SpeechRecognition) {
+                $toast.error(t('toast.speechRecognition'))
+                return
+            }
 
-        recognition.onend = () => {
-            isRecognizing = false
-        }
+            const recognition = new SpeechRecognition()
+            recognition.lang = { fr: 'fr-FR', es: 'es-ES', pt: 'pt-BR', it: 'it-IT', ro: 'ro-RO', sv: 'sv-SE' }[locale.value] || 'en-US'
+            recognition.interimResults = false
+            recognition.continuous = true
 
-        recognition.start()
+            isRecognizing = true
+            recognition.onstart = () => $toast.info(t('toast.listening'))
+            recognition.onresult = async (event) => {
+                const transcript = event.results[0][0].transcript
+                const combined = (updatedNote.value ? updatedNote.value + '\n' : '') + transcript
+                updatedNote.value = sanitizeHTML(combined)
+                if (editor.value) editor.value.commands.setContent(updatedNote.value)
+                if (selectedNote.value) {
+                    selectedNote.value.text = updatedNote.value
+                    selectedNote.value.updatedAt = new Date().toISOString()
+                }
+                $toast.success(t('toast.transcribed'))
+                await updateNote()
+            }
+            recognition.onerror = (event) => {
+                console.error('Speech recognition error:', event.error)
+                $toast.error(t('toast.speechError'))
+                isRecognizing = false
+            }
+            recognition.onend = () => { isRecognizing = false }
+            recognition.start()
+        }
     }
 
     function getReferenceDate(note) {

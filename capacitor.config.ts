@@ -5,7 +5,8 @@ const config: CapacitorConfig = {
   appName: "Memo's Notes",
   webDir: '.output/public',
   server: {
-    androidScheme: "https",
+    url: "https://notes.guillermo-projectmanagement.com",
+    cleartext: true
   },
   plugins: {
     SplashScreen: {
