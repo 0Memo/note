@@ -16,11 +16,8 @@ export default defineNuxtConfig({
       link: [{ rel: "manifest", href: "/manifest.webmanifest" }],
     },
   },
-
   css: ["@/assets/styles/global.css"],
-
   modules: ["@vite-pwa/nuxt", "@vueuse/nuxt", "@nuxtjs/i18n"],
-
   i18n: {
     strategy: "prefix",
     defaultLocale: "en",
@@ -41,27 +38,21 @@ export default defineNuxtConfig({
     lazy: false,
     vueI18n: resolve("i18n/config.js"),
   },
-
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
   },
-
   ssr: false,
-
   nitro: {
     preset: "vercel",
   },
-
   plugins: [
     "~/plugins/init-locale.client.js",
     "~/plugins/capacitor-browser.client.js",
   ],
-
   compatibilityDate: "2025-04-14",
-
   runtimeConfig: {
     googleClientSecret: process.env.NUXT_GOOGLE_CLIENT_SECRET || "",
     public: {
@@ -71,7 +62,9 @@ export default defineNuxtConfig({
         "https://notes.guillermo-projectmanagement.com",
     },
   },
-
+  experimental: {
+    typedPages: false,
+  },
   pwa: {
     registerType: "autoUpdate",
     manifest: {

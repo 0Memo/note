@@ -1017,13 +1017,30 @@
     import { TextAlign } from '@tiptap/extension-text-align'
     import { Underline } from '@tiptap/extension-underline'
     import FontSizeToggle from '@/components/FontSizeToggle.vue'
-    import { Capacitor } from '@capacitor/core'
-    import { TextToSpeech } from '@capacitor-community/text-to-speech'
-    import { SpeechRecognition } from '@capacitor-community/speech-recognition'
 
     definePageMeta({
         middleware: ['auth'],
     })
+
+    let Capacitor = null
+    let TextToSpeech = null
+    let SpeechRecognition = null
+
+    if (typeof window !== 'undefined' && window.Capacitor) {
+        import('@capacitor/core').then(mod => {
+            Capacitor = mod.Capacitor
+        }).catch(err => console.warn('Capacitor core not available:', err))
+
+        import('@capacitor-community/text-to-speech').then(mod => {
+            TextToSpeech = mod.TextToSpeech
+        }).catch(err => console.warn('TTS not available:', err))
+
+        import('@capacitor-community/speech-recognition').then(mod => {
+            SpeechRecognition = mod.SpeechRecognition
+        }).catch(err => console.warn('Speech Recognition not available:', err))
+    } else {
+    console.log('Running on web – Capacitor plugins disabled.')
+    }
 
     const config = useRuntimeConfig()
     const { t, locale } = useI18n()
