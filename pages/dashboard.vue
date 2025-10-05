@@ -1017,30 +1017,13 @@
     import { TextAlign } from '@tiptap/extension-text-align'
     import { Underline } from '@tiptap/extension-underline'
     import FontSizeToggle from '@/components/FontSizeToggle.vue'
+    import { Capacitor } from '@capacitor/core'
+    import { TextToSpeech } from '@capacitor-community/text-to-speech'
+    import { SpeechRecognition } from '@capacitor-community/speech-recognition'
 
     definePageMeta({
         middleware: ['auth'],
     })
-
-    let Capacitor = null
-    let TextToSpeech = null
-    let SpeechRecognition = null
-
-    if (typeof window !== 'undefined' && window.Capacitor) {
-        import('@capacitor/core').then(mod => {
-            Capacitor = mod.Capacitor
-        }).catch(err => console.warn('Capacitor core not available:', err))
-
-        import('@capacitor-community/text-to-speech').then(mod => {
-            TextToSpeech = mod.TextToSpeech
-        }).catch(err => console.warn('TTS not available:', err))
-
-        import('@capacitor-community/speech-recognition').then(mod => {
-            SpeechRecognition = mod.SpeechRecognition
-        }).catch(err => console.warn('Speech Recognition not available:', err))
-    } else {
-    console.log('Running on web – Capacitor plugins disabled.')
-    }
 
     const config = useRuntimeConfig()
     const { t, locale } = useI18n()
@@ -1732,6 +1715,18 @@
         isRecognizing = false;
     }
 
+    async function requestSpeechPermission() {
+        try {
+            // Plugin request (ignored on Android)
+            const status = await SpeechRecognition.requestPermissions?.();
+            return status?.granted ?? false;
+        } catch {
+            console.warn('requestPermission not implemented on Android, using Capacitor Permissions API');
+            const perm = await Capacitor.Plugins.Permissions.request({ name: 'microphone' });
+            return perm.state === 'granted';
+        }
+    }
+
     async function startTranscription() {
         if (isRecognizing) return;
         isRecognizing = true;
@@ -1745,17 +1740,33 @@
                     return;
                 }
 
+                const hasPerm = await requestSpeechPermission();
+                if (!hasPerm) {
+                    $toast.error('Microphone permission denied');
+                    isRecognizing = false;
+                    return;
+                }
+
                 if (!listenersAdded) {
                     SpeechRecognition.addListener('partialResults', handlePartial);
                     SpeechRecognition.addListener('result', handleFinal);
                     listenersAdded = true;
                 }
 
-                await SpeechRecognition.start({
-                    language: { fr: 'fr-FR', es: 'es-ES', pt: 'pt-BR', it: 'it-IT', ro: 'ro-RO', sv: 'sv-SE' }[locale.value] || 'en-US',
-                    partialResults: true,
-                    popup: false,
-                });
+                try {
+                    await SpeechRecognition.start({
+                        language: { fr: 'fr-FR', es: 'es-ES', pt: 'pt-BR', it: 'it-IT', ro: 'ro-RO', sv: 'sv-SE' }[locale.value] || 'en-US',
+                        partialResults: true,
+                        popup: false,
+                    });
+                } catch (err) {
+                    if (err.message.includes('requestPermission')) {
+                        console.warn('Ignored requestPermission error on Android');
+                        $toast.info(t('toast.listening'));
+                    } else {
+                        throw err;
+                    }
+                }
             } else {
                 // Browser fallback
                 const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
