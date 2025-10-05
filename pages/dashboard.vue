@@ -1920,8 +1920,6 @@
     }
 
     onMounted(async() => {
-        const nuxtApp = useNuxtApp()
-        await nuxtApp.$clearWebViewCache()
         highContrast.value = localStorage.getItem('highContrast') === 'true'
         applyAccessibilitySettings()
         // Check for existing calendar connection
