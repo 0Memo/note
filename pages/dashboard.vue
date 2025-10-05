@@ -1681,84 +1681,106 @@
                 $toast.error(t('toast.speechSynthesisUnsupported'))
                 return
             }
+            $toast.success(t('toast.readingNote'))
             const utterance = new SpeechSynthesisUtterance(text)
             utterance.lang = appLang
             synth.cancel()
             synth.speak(utterance)
-            $toast.success(t('toast.readingNote'))
         }
     }
 
     let isRecognizing = false
+    let listenersAdded = false;
+
+    function handlePartial(data) {
+        console.log('Partial:', data.matches);
+    }
+
+    async function handleFinal(data) {
+        console.log('Final:', data.matches);
+        const transcript = data.matches?.join(' ') || '';
+        if (!transcript) return;
+
+        const combined = (updatedNote.value ? updatedNote.value + '\n' : '') + transcript;
+        updatedNote.value = sanitizeHTML(combined);
+
+        if (editor.value) editor.value.commands.setContent(updatedNote.value);
+        if (selectedNote.value) {
+            selectedNote.value.text = updatedNote.value;
+            selectedNote.value.updatedAt = new Date().toISOString();
+        }
+
+        $toast.success(t('toast.transcribed'));
+        await updateNote();
+        isRecognizing = false;
+    }
 
     async function startTranscription() {
-        if (isRecognizing) return
+        if (isRecognizing) return;
+        isRecognizing = true;
 
-        if (Capacitor.isNativePlatform()) {
-            try {
-                // Ask permission first
-                const perm = await SpeechRecognition.requestPermission()
-                if (perm.permission !== 'granted') {
-                    $toast.error(t('toast.permissionError'))
-                    return
+        try {
+            if (Capacitor.isNativePlatform()) {
+                const isAvailable = await SpeechRecognition.available();
+                if (!isAvailable.available) {
+                    $toast.error(t('toast.speechServiceNotAvailable') || 'Speech recognition service not available.');
+                    isRecognizing = false;
+                    return;
                 }
 
-                const result = await SpeechRecognition.start({
+                if (!listenersAdded) {
+                    SpeechRecognition.addListener('partialResults', handlePartial);
+                    SpeechRecognition.addListener('result', handleFinal);
+                    listenersAdded = true;
+                }
+
+                await SpeechRecognition.start({
                     language: { fr: 'fr-FR', es: 'es-ES', pt: 'pt-BR', it: 'it-IT', ro: 'ro-RO', sv: 'sv-SE' }[locale.value] || 'en-US',
-                    partialResults: false,
-                    popup: false
-                })
+                    partialResults: true,
+                    popup: false,
+                });
+            } else {
+                // Browser fallback
+                const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (!SpeechRecognitionAPI) {
+                    $toast.error(t('toast.speechRecognition'));
+                    isRecognizing=false;
+                    return;
+                }
 
-                const transcript = result.matches?.join(' ') || ''
-                if (transcript) {
-                    const combined = (updatedNote.value ? updatedNote.value + '\n' : '') + transcript
-                    updatedNote.value = sanitizeHTML(combined)
-                    if (editor.value) editor.value.commands.setContent(updatedNote.value)
+                const recognition = new SpeechRecognitionAPI();
+                recognition.lang = { fr: 'fr-FR', es: 'es-ES', pt: 'pt-BR', it: 'it-IT', ro: 'ro-RO', sv: 'sv-SE' }[locale.value] || 'en-US';
+                recognition.interimResults = false;
+                recognition.continuous = true;
+
+                recognition.onstart = () =>  $toast.info(t('toast.listening'));
+                recognition.onresult = async (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    const combined = (updatedNote.value ? updatedNote.value + '\n' : '') + transcript;
+                    updatedNote.value = sanitizeHTML(combined);
+                    
+                    if (editor.value) editor.value.commands.setContent(updatedNote.value);
                     if (selectedNote.value) {
-                        selectedNote.value.text = updatedNote.value
-                        selectedNote.value.updatedAt = new Date().toISOString()
+                        selectedNote.value.text = updatedNote.value;
+                        selectedNote.value.updatedAt = new Date().toISOString();
                     }
-                    $toast.success(t('toast.transcribed'))
-                    await updateNote()
-                }
-            } catch (err) {
-                console.error('Speech recognition error:', err)
-                $toast.error(t('toast.speechError'))
-            }
-        } else {
-            // Fallback to browser API
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
-            if (!SpeechRecognition) {
-                $toast.error(t('toast.speechRecognition'))
-                return
-            }
+                    $toast.success(t('toast.transcribed'));
+                    await updateNote();
+                };
 
-            const recognition = new SpeechRecognition()
-            recognition.lang = { fr: 'fr-FR', es: 'es-ES', pt: 'pt-BR', it: 'it-IT', ro: 'ro-RO', sv: 'sv-SE' }[locale.value] || 'en-US'
-            recognition.interimResults = false
-            recognition.continuous = true
+                recognition.onerror = (event) => {
+                    console.error('Speech recognition error:', event.error);
+                    $toast.error(t('toast.speechError'));
+                    isRecognizing = false;
+                };
 
-            isRecognizing = true
-            recognition.onstart = () => $toast.info(t('toast.listening'))
-            recognition.onresult = async (event) => {
-                const transcript = event.results[0][0].transcript
-                const combined = (updatedNote.value ? updatedNote.value + '\n' : '') + transcript
-                updatedNote.value = sanitizeHTML(combined)
-                if (editor.value) editor.value.commands.setContent(updatedNote.value)
-                if (selectedNote.value) {
-                    selectedNote.value.text = updatedNote.value
-                    selectedNote.value.updatedAt = new Date().toISOString()
-                }
-                $toast.success(t('toast.transcribed'))
-                await updateNote()
+                recognition.onend = () => { isRecognizing = false };
+                recognition.start();
             }
-            recognition.onerror = (event) => {
-                console.error('Speech recognition error:', event.error)
-                $toast.error(t('toast.speechError'))
-                isRecognizing = false
-            }
-            recognition.onend = () => { isRecognizing = false }
-            recognition.start()
+        } catch (err) {
+            console.error('Speech recognition error:', err);
+            $toast.error( t('toast.speechError') + '. Please ensure Google Voice Input is enabled.');
+            isRecognizing = false;
         }
     }
 
@@ -1881,6 +1903,8 @@
     }
 
     onMounted(async() => {
+        const nuxtApp = useNuxtApp()
+        await nuxtApp.$clearWebViewCache()
         highContrast.value = localStorage.getItem('highContrast') === 'true'
         applyAccessibilitySettings()
         // Check for existing calendar connection

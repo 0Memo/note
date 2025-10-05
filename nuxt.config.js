@@ -55,7 +55,10 @@ export default defineNuxtConfig({
     preset: "vercel",
   },
 
-  plugins: ["~/plugins/init-locale.client.js"],
+  plugins: [
+    "~/plugins/init-locale.client.js",
+    "~/plugins/capacitor-browser.client.js",
+  ],
 
   compatibilityDate: "2025-04-14",
 
@@ -101,6 +104,14 @@ export default defineNuxtConfig({
           method: "GET",
         },
       ],
+    },
+  },
+
+  vite: {
+    build: {
+      rollupOptions: {
+        external: ["@capacitor/browser", "@capacitor/core"],
+      },
     },
   },
 });

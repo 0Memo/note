@@ -19,6 +19,11 @@ const config: CapacitorConfig = {
       backgroundColor: "#1c044f",
     },
   },
+  cordova: {
+    preferences: {
+      "android-manifest/@android:usesCleartextTraffic": "true"
+    }
+  }
 };
 
 export default config;

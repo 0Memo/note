@@ -19,3 +19,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Protect the Speech Recognition plugin classes from obfuscation
+-keep class com.getcapacitor.community.speechrecognition.** { *; }
+-keep class com.google.android.gms.internal.firebase-auth.** { *; }
+-dontwarn com.google.android.gms.**
