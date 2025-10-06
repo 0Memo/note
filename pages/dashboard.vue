@@ -1755,7 +1755,6 @@
 
         try {
             recognition.start();
-            $toast.info(t('toast.listening'));
         } catch (e) {
             console.error('Web Speech API start failed:', e);
             $toast.error(t('toast.speechError') + '. Failed to start Web API.');
