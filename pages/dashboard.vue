@@ -1691,6 +1691,7 @@
 
     let isRecognizing = false
     let listenersAdded = false;
+    let androidListeners = []
 
     function handlePartial(data) {
         console.log('Partial:', data.matches);
@@ -1715,15 +1716,50 @@
         isRecognizing = false;
     }
 
-    async function requestSpeechPermission() {
+    async function startWebTranscription(selectedLang) {
+        const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognitionAPI) {
+            $toast.error(t('toast.speechRecognition'));
+            isRecognizing = false;
+            return;
+        }
+        const recognition = new SpeechRecognitionAPI();
+        recognition.lang = selectedLang;
+        recognition.interimResults = false;
+        recognition.continuous = true;
+
+        recognition.onstart = () => $toast.info(t('toast.listening (Web)'));
+
+        recognition.onresult = async (event) => {
+            const transcript = event.results[0][0].transcript;
+            const combined = (updatedNote.value ? updatedNote.value + '\n' : '') + transcript;
+            updatedNote.value = sanitizeHTML(combined);
+            if (editor.value) editor.value.commands.setContent(updatedNote.value);
+            if (selectedNote.value) {
+                selectedNote.value.text = updatedNote.value;
+                selectedNote.value.updatedAt = new Date().toISOString();
+            }
+            $toast.success(t('toast.transcribed'));
+            await updateNote();
+        };
+
+        recognition.onerror = (event) => {
+            console.error('Speech recognition error (Web):', event.error);
+            $toast.error(t('toast.speechError') + ' (Web).');
+            isRecognizing = false;
+        };
+
+        recognition.onend = () => {
+            isRecognizing = false;
+        };
+
         try {
-            // Plugin request (ignored on Android)
-            const status = await SpeechRecognition.requestPermissions?.();
-            return status?.granted ?? false;
-        } catch {
-            console.warn('requestPermission not implemented on Android, using Capacitor Permissions API');
-            const perm = await Capacitor.Plugins.Permissions.request({ name: 'microphone' });
-            return perm.state === 'granted';
+            recognition.start();
+            $toast.info(t('toast.listening'));
+        } catch (e) {
+            console.error('Web Speech API start failed:', e);
+            $toast.error(t('toast.speechError') + '. Failed to start Web API.');
+            isRecognizing = false;
         }
     }
 
@@ -1731,85 +1767,77 @@
         if (isRecognizing) return;
         isRecognizing = true;
 
+        const langMap = {
+            fr: 'fr-FR',
+            es: 'es-ES',
+            pt: 'pt-BR',
+            it: 'it-IT',
+            ro: 'ro-RO',
+            sv: 'sv-SE',
+            en: 'en-US',
+        }
+        const selectedLang = langMap[locale.value] || 'en-US'
+
         try {
             if (Capacitor.isNativePlatform()) {
+                
                 const isAvailable = await SpeechRecognition.available();
-                if (!isAvailable.available) {
-                    $toast.error(t('toast.speechServiceNotAvailable') || 'Speech recognition service not available.');
+                if (!isAvailable.available || window.navigator.userAgent.includes('Android')) { 
+                    // NOTE: Checking userAgent is a heuristic, but necessary here.
+                    
+                    console.warn('Forcing Web API on potential buggy Android platform.');
+                    
+                    // 1. Request microphone permission using standard Web API (Crucial for Web Fallback)
+                    await navigator.mediaDevices.getUserMedia({ audio: true }).catch(err => {
+                        console.error('Web Microphone Permission Denied:', err);
+                        $toast.error(t('toast.speechError') + '. Web microphone access denied.');
+                        isRecognizing = false;
+                        throw err; // Re-throw to exit the main try block cleanly
+                    });
+                    
+                    await startWebTranscription(selectedLang);
                     isRecognizing = false;
                     return;
                 }
 
-                const hasPerm = await requestSpeechPermission();
-                if (!hasPerm) {
-                    $toast.error('Microphone permission denied');
-                    isRecognizing = false;
-                    return;
+                if (!listenersAdded){
+                    listenersAdded = true
                 }
 
-                if (!listenersAdded) {
-                    SpeechRecognition.addListener('partialResults', handlePartial);
-                    SpeechRecognition.addListener('result', handleFinal);
-                    listenersAdded = true;
-                }
+                $toast.info(t('toast.listening (Native)'));
 
                 try {
-                    await SpeechRecognition.start({
-                        language: { fr: 'fr-FR', es: 'es-ES', pt: 'pt-BR', it: 'it-IT', ro: 'ro-RO', sv: 'sv-SE' }[locale.value] || 'en-US',
-                        partialResults: true,
-                        popup: false,
-                    });
-                } catch (err) {
-                    if (err.message.includes('requestPermission')) {
-                        console.warn('Ignored requestPermission error on Android');
-                        $toast.info(t('toast.listening'));
-                    } else {
-                        throw err;
-                    }
+                    await SpeechRecognition.start({ language: selectedLang, partialResults: true, popup: false, });
+                } catch (nativeErr) {
+                    console.error('Capacitor start() failed. Attempting Web Fallback.', nativeErr);
+                    await startWebTranscription(selectedLang);
                 }
             } else {
-                // Browser fallback
-                const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
-                if (!SpeechRecognitionAPI) {
-                    $toast.error(t('toast.speechRecognition'));
-                    isRecognizing=false;
-                    return;
-                }
-
-                const recognition = new SpeechRecognitionAPI();
-                recognition.lang = { fr: 'fr-FR', es: 'es-ES', pt: 'pt-BR', it: 'it-IT', ro: 'ro-RO', sv: 'sv-SE' }[locale.value] || 'en-US';
-                recognition.interimResults = false;
-                recognition.continuous = true;
-
-                recognition.onstart = () =>  $toast.info(t('toast.listening'));
-                recognition.onresult = async (event) => {
-                    const transcript = event.results[0][0].transcript;
-                    const combined = (updatedNote.value ? updatedNote.value + '\n' : '') + transcript;
-                    updatedNote.value = sanitizeHTML(combined);
-                    
-                    if (editor.value) editor.value.commands.setContent(updatedNote.value);
-                    if (selectedNote.value) {
-                        selectedNote.value.text = updatedNote.value;
-                        selectedNote.value.updatedAt = new Date().toISOString();
-                    }
-                    $toast.success(t('toast.transcribed'));
-                    await updateNote();
-                };
-
-                recognition.onerror = (event) => {
-                    console.error('Speech recognition error:', event.error);
-                    $toast.error(t('toast.speechError'));
-                    isRecognizing = false;
-                };
-
-                recognition.onend = () => { isRecognizing = false };
-                recognition.start();
+                await startWebTranscription(selectedLang);
             }
         } catch (err) {
             console.error('Speech recognition error:', err);
-            $toast.error( t('toast.speechError') + '. Please ensure Google Voice Input is enabled.');
-            isRecognizing = false;
+            $toast.error( t('toast.speechError') + '. Web fallback intent.');
+            await startWebTranscription(selectedLang);
         }
+    }
+
+    async function stopTranscription() {
+        if (!isRecognizing) return
+
+        if (Capacitor.isNativePlatform()) {
+            await SpeechRecognition.stop()
+            androidListeners.forEach((l) => l.remove())
+            androidListeners = []
+            listenersAdded = false
+        } else {
+            // Browser API: we need to keep a reference to recognition
+            if (window.recognitionInstance) {
+            window.recognitionInstance.stop()
+            window.recognitionInstance = null
+            }
+        }
+        isRecognizing = false
     }
 
     function getReferenceDate(note) {
