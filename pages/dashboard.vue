@@ -1728,7 +1728,7 @@
         recognition.interimResults = false;
         recognition.continuous = true;
 
-        recognition.onstart = () => $toast.info(t('toast.listening (Web)'));
+        recognition.onstart = () => $toast.info(t('toast.listening'));
 
         recognition.onresult = async (event) => {
             const transcript = event.results[0][0].transcript;
