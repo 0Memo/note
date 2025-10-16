@@ -179,8 +179,7 @@
         isLoading.value = true
 
         try {
-            const config = useRuntimeConfig()
-            const response = await $fetch(`${config.public.baseURL}/api/login`, {
+            const response = await $fetch('/api/login', {
                 method: 'POST',
                 body: {
                     email: email.value,

@@ -804,23 +804,6 @@
                             </div>
                         </div>
                         <div class="relative my-4 bg-[#d5c7e2] border-purple-900 rounded-md p-4 -ml-[8.75rem] md:-ml-5 shadow-lg w-[22.5rem] md:w-full min-h-[300px]">
-                            <!-- <Editor
-                                ref="editorRef"
-                                v-model="updatedNote"
-                                api-key= '7km3i00h6yxuuaielxdn70k4rzu7iswd10aw8f5ftnpvjspd'
-                                :init="{
-                                    height: 300,
-                                    menubar: false,
-                                    plugins: 'lists link image code table',
-                                    toolbar:
-                                    'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat code',
-                                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                                }"
-                                :placeholder="$t('notes.text')"
-                                name="note"
-                                id="note"
-                                @input="debouncedFn"
-                            /> -->
                             <div class="overflow-hidden text-black bg-white border border-white rounded-lg">
                                 <div v-if="editor" class="flex flex-wrap gap-1 p-2 text-black shadow-md rounded-tl-md rounded-tr-md md:gap-2 bg-gray-50">
                                     <button
@@ -999,7 +982,7 @@
     import MouseTrail from '@/components/MouseTrail.vue'
     import { useI18n } from 'vue-i18n'
     import ConfirmModal from '@/components/ConfirmModal.vue'
-    import { nextTick, ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
+    import { nextTick, ref, computed, onMounted, onBeforeUnmount, watch, onUnmounted } from 'vue'
     import { useDebounceFn } from '@vueuse/core'
     import { useToast } from 'vue-toast-notification'
     import { useRouter } from 'vue-router'
@@ -1017,9 +1000,7 @@
     import { TextAlign } from '@tiptap/extension-text-align'
     import { Underline } from '@tiptap/extension-underline'
     import FontSizeToggle from '@/components/FontSizeToggle.vue'
-    import { Capacitor } from '@capacitor/core'
-    import { TextToSpeech } from '@capacitor-community/text-to-speech'
-    import { SpeechRecognition } from '@capacitor-community/speech-recognition'
+    import { definePageMeta } from '#imports'
 
     definePageMeta({
         middleware: ['auth'],
@@ -1200,7 +1181,7 @@
             if (!allowedTags.includes(node.nodeName.toLowerCase())) {
                 node.replaceWith(...node.childNodes);
             }
-            [...node.attributes].forEach(attr => node.removeAttribute(attr)); // Optional: remove all attributes
+            [...node.attributes].forEach(attr => node.removeAttribute(attr));
         }
         return temp.innerHTML;
     }
@@ -1466,16 +1447,13 @@
         try {
             const cleanText = sanitizeHTML(updatedNote.value)
 
-            // include credentials to ensure cookies (NoteJWT) are sent
             const response = await $fetch(`/api/notes/${selectedNote.value.id}`, {
                 method: 'PATCH',
                 body: {
-                    // keep backend expectations and be flexible
                     updatedNote: cleanText,
-                    text: cleanText, // harmless duplicate for future-proofing
+                    text: cleanText,
                     eventDate: selectedNote.value?.eventDate ?? null,
                 },
-                // ensure cookies are sent (client-side)
                 credentials: 'include',
             })
 
@@ -1495,14 +1473,12 @@
             }
             showSavedIndicatorSuccess()
             } else {
-                // Backend returned a non-success payload (edge-case)
                 console.warn('Update responded but success !== true', response)
                 showSavedIndicatorError()
             }
         } catch (error) {
             // log full error object for debugging
             console.error('updateNote failed:', error)
-            // If fetch throws with response body (nitro error), log it
             if (error?.data) console.error('error.data:', error.data)
             if (error?.message) console.error('error.message:', error.message)
             showSavedIndicatorError()
@@ -1517,7 +1493,6 @@
         }
 
         try {
-            // Try to list events with access token
             await $fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=1', {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -1642,11 +1617,19 @@
     }
 
     async function readNoteAloud(noteText) {
+        const synth = window.speechSynthesis;
+        if (!synth) {
+            $toast.error(t('toast.speechSynthesisUnsupported'));
+            return;
+        }
+
         const text = decodeHtmlEntities(stripHtmlTags(noteText || updatedNote.value || ''));
         if (!text.trim()) {
             $toast.error(t('toast.noTextToRead'));
             return;
         }
+
+        const utterance = new SpeechSynthesisUtterance(text);
 
         const langMap = {
             fr: 'fr-FR',
@@ -1659,184 +1642,111 @@
         };
 
         const appLang = langMap[locale.value] || 'en-US';
+        utterance.lang = appLang;
 
-        if (Capacitor.isNativePlatform()) {
-            try {
-                await TextToSpeech.speak({
-                    text,
-                    lang: appLang,
-                    rate: 1.0,
-                    pitch: 1.0,
-                    volume: 1.0,
-                })
-                $toast.success(t('toast.readingNote'))
-            } catch (err) {
-                console.error('TTS failed:', err)
-                $toast.error(t('toast.speechSynthesisUnsupported'))
+        const speakWithVoice = () => {
+            const voices = synth.getVoices();
+            if (!voices.length) {
+                // Retry after delay if voices are still not loaded
+                setTimeout(speakWithVoice, 200);
+                return;
             }
+
+            const matched = voices.find(v => v.lang === appLang);
+            if (matched) {
+                utterance.voice = matched;
+            } else {
+                console.warn(`No exact voice match for ${appLang}, using default.`);
+            }
+
+            $toast.info(t('toast.readingNote'));
+
+            synth.cancel(); // Stop any ongoing speech
+            synth.speak(utterance);
+        };
+
+        if (!synth.getVoices().length) {
+            synth.addEventListener('voiceschanged', speakWithVoice, { once: true });
+            // Force voices to load
+            synth.getVoices();
         } else {
-            // Fallback to browser API
-            const synth = window.speechSynthesis
-            if (!synth) {
-                $toast.error(t('toast.speechSynthesisUnsupported'))
-                return
-            }
-            $toast.success(t('toast.readingNote'))
-            const utterance = new SpeechSynthesisUtterance(text)
-            utterance.lang = appLang
-            synth.cancel()
-            synth.speak(utterance)
+            speakWithVoice();
         }
     }
 
     let isRecognizing = false
-    let listenersAdded = false;
-    let androidListeners = []
 
-    function handlePartial(data) {
-        console.log('Partial:', data.matches);
-    }
+    function startTranscription() {
+        if (isRecognizing) return
 
-    async function handleFinal(data) {
-        console.log('Final:', data.matches);
-        const transcript = data.matches?.join(' ') || '';
-        if (!transcript) return;
-
-        const combined = (updatedNote.value ? updatedNote.value + '\n' : '') + transcript;
-        updatedNote.value = sanitizeHTML(combined);
-
-        if (editor.value) editor.value.commands.setContent(updatedNote.value);
-        if (selectedNote.value) {
-            selectedNote.value.text = updatedNote.value;
-            selectedNote.value.updatedAt = new Date().toISOString();
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+        if (!SpeechRecognition) {
+            $toast.error(t('toast.speechRecognition'))
+            return
         }
 
-        $toast.success(t('toast.transcribed'));
-        await updateNote();
-        isRecognizing = false;
-    }
+        const recognition = new SpeechRecognition()
 
-    async function startWebTranscription(selectedLang) {
-        const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (!SpeechRecognitionAPI) {
-            $toast.error(t('toast.speechRecognition'));
-            isRecognizing = false;
-            return;
-        }
-        const recognition = new SpeechRecognitionAPI();
-        recognition.lang = selectedLang;
-        recognition.interimResults = false;
-        recognition.continuous = true;
-
-        recognition.onstart = () => $toast.info(t('toast.listening'));
+        recognition.lang = {
+            fr: 'fr-FR', es: 'es-ES', pt: 'pt-BR',
+            it: 'it-IT', ro: 'ro-RO', sv: 'sv-SE'
+        }[locale.value] || 'en-US'
+        recognition.interimResults = false
+        recognition.continuous = true
+        isRecognizing = true
+        recognition.onstart = () => {
+            $toast.info(t('toast.listening'));
+        };
 
         recognition.onresult = async (event) => {
-            const transcript = event.results[0][0].transcript;
-            const combined = (updatedNote.value ? updatedNote.value + '\n' : '') + transcript;
-            updatedNote.value = sanitizeHTML(combined);
-            if (editor.value) editor.value.commands.setContent(updatedNote.value);
+            const transcript = event.results[0][0].transcript
+            const combined = (updatedNote.value ? updatedNote.value + '\n' : '') + transcript
+            updatedNote.value = sanitizeHTML(combined)
+
+            if (editor.value) {
+                editor.value.commands.setContent(updatedNote.value)
+            }
+
             if (selectedNote.value) {
                 selectedNote.value.text = updatedNote.value;
                 selectedNote.value.updatedAt = new Date().toISOString();
             }
-            $toast.success(t('toast.transcribed'));
-            await updateNote();
-        };
+            $toast.success(t('toast.transcribed'))
+
+            showSavingIndicator()
+
+            try {
+                await updateNote()
+            } catch (e) {
+                console.error("Error updating note after speech:", e)
+            }
+        }
 
         recognition.onerror = (event) => {
-            console.error('Speech recognition error (Web):', event.error);
-            $toast.error(t('toast.speechError') + ' (Web).');
-            isRecognizing = false;
-        };
+            console.error('Speech recognition error:', event.error)
+            isRecognizing = false
+
+            switch (event.error) {
+            case 'no-speech':
+                $toast.error(t('toast.noSpeech'))
+                break
+            case 'audio-capture':
+                $toast.error(t('toast.audioError'))
+                break
+            case 'not-allowed':
+                $toast.error(t('toast.permissionError'))
+                break
+            default:
+                $toast.error(t('toast.speechError'))
+                break
+            }
+        }
 
         recognition.onend = () => {
-            isRecognizing = false;
-        };
-
-        try {
-            recognition.start();
-        } catch (e) {
-            console.error('Web Speech API start failed:', e);
-            $toast.error(t('toast.speechError') + '. Failed to start Web API.');
-            isRecognizing = false;
+            isRecognizing = false
         }
-    }
 
-    async function startTranscription() {
-        if (isRecognizing) return;
-        isRecognizing = true;
-
-        const langMap = {
-            fr: 'fr-FR',
-            es: 'es-ES',
-            pt: 'pt-BR',
-            it: 'it-IT',
-            ro: 'ro-RO',
-            sv: 'sv-SE',
-            en: 'en-US',
-        }
-        const selectedLang = langMap[locale.value] || 'en-US'
-
-        try {
-            if (Capacitor.isNativePlatform()) {
-                
-                const isAvailable = await SpeechRecognition.available();
-                if (!isAvailable.available || window.navigator.userAgent.includes('Android')) { 
-                    // NOTE: Checking userAgent is a heuristic, but necessary here.
-                    
-                    console.warn('Forcing Web API on potential buggy Android platform.');
-                    
-                    // 1. Request microphone permission using standard Web API (Crucial for Web Fallback)
-                    await navigator.mediaDevices.getUserMedia({ audio: true }).catch(err => {
-                        console.error('Web Microphone Permission Denied:', err);
-                        $toast.error(t('toast.speechError') + '. Web microphone access denied.');
-                        isRecognizing = false;
-                        throw err; // Re-throw to exit the main try block cleanly
-                    });
-                    
-                    await startWebTranscription(selectedLang);
-                    isRecognizing = false;
-                    return;
-                }
-
-                if (!listenersAdded){
-                    listenersAdded = true
-                }
-
-                $toast.info(t('toast.listening (Native)'));
-
-                try {
-                    await SpeechRecognition.start({ language: selectedLang, partialResults: true, popup: false, });
-                } catch (nativeErr) {
-                    console.error('Capacitor start() failed. Attempting Web Fallback.', nativeErr);
-                    await startWebTranscription(selectedLang);
-                }
-            } else {
-                await startWebTranscription(selectedLang);
-            }
-        } catch (err) {
-            console.error('Speech recognition error:', err);
-            $toast.error( t('toast.speechError') + '. Web fallback intent.');
-            await startWebTranscription(selectedLang);
-        }
-    }
-
-    async function stopTranscription() {
-        if (!isRecognizing) return
-
-        if (Capacitor.isNativePlatform()) {
-            await SpeechRecognition.stop()
-            androidListeners.forEach((l) => l.remove())
-            androidListeners = []
-            listenersAdded = false
-        } else {
-            // Browser API: we need to keep a reference to recognition
-            if (window.recognitionInstance) {
-            window.recognitionInstance.stop()
-            window.recognitionInstance = null
-            }
-        }
-        isRecognizing = false
+        recognition.start()
     }
 
     function getReferenceDate(note) {

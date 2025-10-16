@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">Memo\'s Notes</string>
-    <string name="title_activity_main">Memo\'s Notes</string>
-    <string name="package_name">com.guillermo_projectmanagement.memosnotes</string>
-    <string name="custom_url_scheme">com.guillermo_projectmanagement.memosnotes</string>
-</resources>

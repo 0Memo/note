@@ -63,9 +63,7 @@ export default defineNuxtConfig({
     googleClientSecret: process.env.NUXT_GOOGLE_CLIENT_SECRET || "",
     public: {
       googleClientId: process.env.NUXT_PUBLIC_GOOGLE_CLIENT_ID || "",
-      baseURL:
-        process.env.NUXT_PUBLIC_BASE_URL ||
-        "https://notes.guillermo-projectmanagement.com",
+      baseURL: process.env.NUXT_PUBLIC_BASE_URL || "",
     },
   },
 

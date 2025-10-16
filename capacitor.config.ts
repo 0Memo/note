@@ -5,8 +5,7 @@ const config: CapacitorConfig = {
   appName: "Memo's Notes",
   webDir: '.output/public',
   server: {
-    url: "https://notes.guillermo-projectmanagement.com",
-    cleartext: true
+    androidScheme: "https"
   },
   plugins: {
     SplashScreen: {
@@ -19,11 +18,6 @@ const config: CapacitorConfig = {
       backgroundColor: "#1c044f",
     },
   },
-  cordova: {
-    preferences: {
-      "android-manifest/@android:usesCleartextTraffic": "true"
-    }
-  }
 };
 
 export default config;
