@@ -20,6 +20,7 @@ export default {
       input: ["Kalam"],
       button: ["Kalam"],
       footer: ["Kalam"],
+      tacom: ["TACOM"],
       sans: ["ui-sans-serif", "system-ui"],
       serif: ["ui-serif", "Georgia"],
     },

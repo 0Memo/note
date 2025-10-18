@@ -3,12 +3,18 @@
         <ClientOnly>
             <MouseTrail v-if="showMouseTrail" />
         </ClientOnly>
-        <!-- Easter 
+        <!-- Celebrations 
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Easter />
         </div>
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Halloween />
+        </div>
+        <div class="absolute inset-0 pointer-events-none z-[1]">
+            <Xmas />
+        </div>
+        <div class="absolute inset-0 pointer-events-none z-[1]">
+            <NewYear />
         </div> -->
         <div
             class="md:hidden fixed top-0 left-0 right-0 z-[100] bg-secondary flex items-center justify-between px-6 py-4 shadow-md cursor-pointer border-double border-b-4 border-white"
