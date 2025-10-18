@@ -66,6 +66,15 @@
                         alt="Sweden"
                     >
                 </button>
+                <button @click="changeLocale('hy')">
+                    <img
+                        src="https://flagcdn.com/w20/am.png"
+                        srcset="https://flagcdn.com/w40/am.png 2x"
+                        width="20"
+                        height="13"
+                        alt="Armenia"
+                    >
+                </button>
             </div>
             <h1 class="font-h1 mt-8 md:text-2xl font-bold text-zinc-50">{{ $t('resetPassword.reset') }}</h1>
 

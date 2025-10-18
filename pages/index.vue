@@ -66,6 +66,15 @@
                         alt="Sweden"
                     >
                 </button>
+                <button @click="changeLocale('hy')">
+                    <img
+                        src="https://flagcdn.com/w20/am.png"
+                        srcset="https://flagcdn.com/w40/am.png 2x"
+                        width="20"
+                        height="13"
+                        alt="Armenia"
+                    >
+                </button>
             </div>
             <h1 class="my-5 md:my-8 text-2xl font-bold text-zinc-50 text-center">{{ $t('homepage.title') }}</h1>
             <div class="mt-2 space-y-2 text-[15.5px] text-zinc-200">
