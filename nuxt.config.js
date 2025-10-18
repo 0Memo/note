@@ -55,7 +55,7 @@ export default defineNuxtConfig({
     preset: "vercel",
   },
 
-  plugins: ["~/plugins/init-locale.client.js"],
+  plugins: ["~/plugins/init-locale.client.js", "~/plugins/pwa-install.client.js"],
 
   compatibilityDate: "2025-04-14",
 

@@ -29,13 +29,13 @@
                     {{ $t('homepage.title') }}
                 </nuxt-link>
             </p>
-            <!-- <button
+            <button
                 v-if="showInstall"
                 @click="installApp"
                 class="mt-6 ml-1 font-semibold text-white transform shadow-2xl cursor-pointer text-md custom-underline underline-purple"
             >
                 {{ $t('common.installApp') }}
-            </button> -->
+            </button>
             <div class="relative z-50 flex flex-wrap justify-center gap-2 mt-8 text-white md:mt-6">
                 <button @click="changeLocale('en')">
                     <img
@@ -973,7 +973,7 @@
                     {{ $t('modal.terms.title') }}
                 </nuxt-link>
             </footer>
-            <!-- <IosInstallBanner /> -->
+            <IosInstallBanner />
         </div>
     </div>
 </template>
@@ -982,7 +982,7 @@
     import MouseTrail from '@/components/MouseTrail.vue'
     import { useI18n } from 'vue-i18n'
     import ConfirmModal from '@/components/ConfirmModal.vue'
-    import { nextTick, ref, computed, onMounted, onBeforeUnmount, watch, onUnmounted } from 'vue'
+    import { nextTick, ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
     import { useDebounceFn } from '@vueuse/core'
     import { useToast } from 'vue-toast-notification'
     import { useRouter } from 'vue-router'
@@ -1147,16 +1147,13 @@
         }
     }
 
-    function installApp() {
+    async function installApp() {
         if (!deferredPrompt.value) return;
+
         deferredPrompt.value.prompt();
-        deferredPrompt.value.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('User accepted the install prompt');
-            }
-            deferredPrompt.value = null;
-            showInstall.value = false;
-        });
+        const { outcome } = await deferredPrompt.value.userChoice
+        deferredPrompt.value = null;
+        showInstall.value = false;
     }
 
     function stripHtmlTags(input) {
