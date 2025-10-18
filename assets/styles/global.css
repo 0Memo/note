@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Kalam:wght@300;400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Ruge+Boogie&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fruktur&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -452,4 +453,79 @@ h2 {
     padding: 0;
     font-size: 8em;
     font-family: "Ruge Boogie";
+} */
+
+/* Halloween
+
+.halloween {
+    position: absolute;
+    bottom: 65px !important;
+    left: 20%;
+    font-family: "Fruktur", cursive;
+    font-size: 12vw;
+    font-weight: 100;
+    color: #0e3742;
+    text-shadow: none;
+    animation: animate 55s infinite linear;
+}
+
+.spider {
+    position: absolute;
+    top: 0;
+    left: 20%;
+    animation: animateSpider 15s ease-in-out infinite;
+    filter: drop-shadow(5px -3px 2px green)
+}
+
+.spiderWeb {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: screen;
+    opacity: 0.4;
+    filter: drop-shadow(6px 10px 4px green)
+}
+
+@keyframes animate {
+
+    0%,
+    18%,
+    20%,
+    50.1%,
+    60%,
+    65.1%,
+    80%,
+    90.1%,
+    92% {
+        color: green;
+        text-shadow: none;
+    }
+
+    18.1%,
+    20.1%,
+    30%,
+    50%,
+    60.1%,
+    65%,
+    80.1%,
+    90%,
+    92.1%,
+    100% {
+        color: green;
+        text-shadow: 0 0 10px #ffac09, 0 0 20px #ffac09, 0 0 40px #ffac09,
+                0 0 80px #ffac09, 0 0 160px #ffac09;
+    }
+}
+
+@keyframes animateSpider {
+
+    0%,
+    100% {
+        transform: translateY(-500px);
+    }
+
+    50% {
+        transform: translateY(0px);
+    }
 } */

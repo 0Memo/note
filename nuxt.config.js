@@ -37,6 +37,7 @@ export default defineNuxtConfig({
       { code: "it", language: "it-IT", name: "Italiano" },
       { code: "sv", language: "sv-SE", name: "Svenska" },
       { code: "ro", language: "ro-RO", name: "Română" },
+      { code: "hy", language: "hy-AM", name: "Հայերեն" },
     ],
     lazy: false,
     vueI18n: resolve("i18n/config.js"),
@@ -55,7 +56,10 @@ export default defineNuxtConfig({
     preset: "vercel",
   },
 
-  plugins: ["~/plugins/init-locale.client.js", "~/plugins/pwa-install.client.js"],
+  plugins: [
+    "~/plugins/init-locale.client.js",
+    "~/plugins/pwa-install.client.js",
+  ],
 
   compatibilityDate: "2025-04-14",
 

@@ -6,7 +6,10 @@
         <!-- Easter 
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Easter />
-        </div>-->
+        </div>
+        <div class="absolute inset-0 pointer-events-none z-[1]">
+            <Halloween />
+        </div> -->
         <div
             class="md:hidden fixed top-0 left-0 right-0 z-[100] bg-secondary flex items-center justify-between px-6 py-4 shadow-md cursor-pointer border-double border-b-4 border-white"
         >
@@ -98,6 +101,15 @@
                         width="20"
                         height="13"
                         alt="Sweden"
+                    >
+                </button>
+                <button @click="changeLocale('hy')">
+                    <img
+                        src="https://flagcdn.com/w20/am.png"
+                        srcset="https://flagcdn.com/w40/am.png 2x"
+                        width="20"
+                        height="13"
+                        alt="Armenia"
                     >
                 </button>
 
@@ -1635,6 +1647,7 @@
             it: 'it-IT',
             ro: 'ro-RO',
             sv: 'sv-SE',
+            hy: 'hy-AM',
             en: 'en-US',
         };
 
@@ -1686,7 +1699,8 @@
 
         recognition.lang = {
             fr: 'fr-FR', es: 'es-ES', pt: 'pt-BR',
-            it: 'it-IT', ro: 'ro-RO', sv: 'sv-SE'
+            it: 'it-IT', ro: 'ro-RO', sv: 'sv-SE',
+            hy: 'hy-AM'
         }[locale.value] || 'en-US'
         recognition.interimResults = false
         recognition.continuous = true
