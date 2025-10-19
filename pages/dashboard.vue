@@ -146,9 +146,9 @@
                     </button>
                     
                     <div v-if="calendarConnected" class="flex items-center gap-1 mt-2 text-sm text-green-400">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                        </svg>
+                        <Validate class="w-4 h-4" />
+                        <Calendar v-if="!isConnectingCalendar" class="w-4 h-4" />
+                        
                         {{ $t('toast.calendar.calendarConnected') }}
                     </div>
                 </div>
@@ -267,16 +267,7 @@
                                                 : 'text-blue-400 hover:text-blue-300 cursor-pointer'
                                         ]"
                                     >
-                                        <svg
-                                            v-if="syncingNoteId !== note.id"
-                                            class="w-4 h-4"
-                                            fill="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"
-                                            />
-                                        </svg>
+                                        <Calendar v-if="syncingNoteId !== note.id" class="w-4 h-4" />
                                         <div
                                             v-else
                                             class="w-4 h-4 border-b-2 border-blue-400 rounded-full animate-spin"
@@ -291,38 +282,30 @@
                                 class="absolute top-0 bottom-0 right-0 flex"
                             >
                                 <button
-                                v-if="calendarConnected"
-                                @click.stop="syncNoteToCalendar(note)"
-                                :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
-                                :class="[
-                                    'w-[70px] flex items-center justify-center transition-colors duration-200',
-                                    syncingNoteId === note.id || note.text === note.lastSyncedText
-                                    ? 'bg-gray-600 cursor-not-allowed'
-                                    : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
-                                ]"
-                                title="Sync to Calendar"
+                                    v-if="calendarConnected"
+                                    @click.stop="syncNoteToCalendar(note)"
+                                    :disabled="syncingNoteId === note.id || note.text === note.lastSyncedText"
+                                    :class="[
+                                        'w-[70px] flex items-center justify-center transition-colors duration-200',
+                                        syncingNoteId === note.id || note.text === note.lastSyncedText
+                                        ? 'bg-gray-600 cursor-not-allowed'
+                                        : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
+                                    ]"
+                                    title="Sync to Calendar"
                                 >
-                                <svg
-                                    v-if="syncingNoteId !== note.id"
-                                    class="w-5 h-5 text-white"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                    d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"
-                                    />
-                                </svg>
-                                <div
-                                    v-else
-                                    class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"
-                                ></div>
+                                    <Calendar v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" />
+                                    <div
+                                        v-else
+                                        class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"
+                                    >
+                                    </div>
                                 </button>
 
                                 <button
-                                @click.stop="confirmDeleteNote(note)"
-                                class="w-[70px] bg-red-600 flex items-center justify-center"
+                                    @click.stop="confirmDeleteNote(note)"
+                                    class="w-[70px] bg-red-600 flex items-center justify-center"
                                 >
-                                <TrashIcon class="text-white" />
+                                    <TrashIcon class="text-white" />
                                 </button>
                             </div>
                             </div>
@@ -383,10 +366,8 @@
                                                     : 'text-blue-400 hover:text-blue-300 cursor-pointer'
                                             ]"
                                         >
-                                        <svg v-if="syncingNoteId !== note.id" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-                                        </svg>
-                                        <div v-else class="w-4 h-4 border-b-2 border-blue-400 rounded-full animate-spin"></div>
+                                            <Calendar v-if="syncingNoteId !== note.id" class="w-4 h-4" />
+                                            <div v-else class="w-4 h-4 border-b-2 border-blue-400 rounded-full animate-spin"></div>
                                         </button>
                                     </div>
                                 </div>
@@ -406,9 +387,7 @@
                                         ]"
                                         title="Sync to Calendar"
                                     >
-                                        <svg v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-                                        </svg>
+                                        <Calendar v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" />
                                         <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
                                     </button>
                                     <!-- Delete Button -->
@@ -479,9 +458,7 @@
                                                     : 'text-blue-400 hover:text-blue-300 cursor-pointer'
                                             ]"
                                         >
-                                            <svg v-if="syncingNoteId !== note.id" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-                                            </svg>
+                                            <Calendar v-if="syncingNoteId !== note.id" class="w-4 h-4" />
                                             <div v-else class="w-4 h-4 border-b-2 border-blue-400 rounded-full animate-spin"></div>
                                         </button>
                                     </div>
@@ -502,9 +479,7 @@
                                         ]"
                                         title="Sync to Calendar"
                                     >
-                                        <svg v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-                                        </svg>
+                                        <Calendar v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" />
                                         <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
                                     </button>
                                     <!-- Delete Button -->
@@ -573,10 +548,8 @@
                                                     : 'text-blue-400 hover:text-blue-300 cursor-pointer'
                                             ]"
                                         >
-                                        <svg v-if="syncingNoteId !== note.id" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-                                        </svg>
-                                        <div v-else class="w-4 h-4 border-b-2 border-blue-400 rounded-full animate-spin"></div>
+                                            <Calendar v-if="syncingNoteId !== note.id" class="w-4 h-4" />
+                                            <div v-else class="w-4 h-4 border-b-2 border-blue-400 rounded-full animate-spin"></div>
                                         </button>
                                     </div>
                                 </div>
@@ -596,9 +569,7 @@
                                         ]"
                                         title="Sync to Calendar"
                                     >
-                                        <svg v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-                                        </svg>
+                                        <Calendar v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" />
                                         <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
                                     </button>
                                     <!-- Delete Button -->
@@ -807,9 +778,7 @@
                                     :disabled="isSyncButtonDisabled"
                                     title="Sync this note to Google Calendar"
                                 >
-                                    <svg v-if="syncingNoteId !== selectedNote.id" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-                                    </svg>
+                                    <Calendar v-if="syncingNoteId !== selectedNote.id" class="w-4 h-4" />
                                     <div v-else class="w-4 h-4 border-b-2 border-white rounded-full animate-spin"></div>
                                     <span class="hidden sm:inline">{{ $t('toast.calendar.syncToCalendar') }}</span>
                                     <span class="inline sm:hidden">Sync</span>
