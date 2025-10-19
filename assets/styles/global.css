@@ -413,6 +413,8 @@ button[data-tooltip][data-position=right1]:before {
     top: 55px;
     left: 25px;
     border-radius: 100%;
+    overflow: hidden;
+    animation: blink 8s infinite ease-in-out;
 }
 
 .body {
@@ -566,6 +568,20 @@ button[data-tooltip][data-position=right1]:before {
 
     100% {
         transform: rotate(0deg);
+    }
+}
+
+@keyframes blink {
+
+    0%,
+    4%,
+    100% {
+        transform: scaleY(1);
+    }
+
+    2%,
+    3% {
+        transform: scaleY(0.1);
     }
 }
 

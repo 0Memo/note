@@ -907,7 +907,7 @@
                                     </button>
                                     
                                 </div>
-                                <div class='toucan-container absolute -top-8 right-4 scale-[0.1] origin-top-right z-10'>
+                                <div class='absolute -top-8 right-4 scale-[0.1] origin-top-right z-10'>
                                     <div class='head'>
                                         <div class='start'></div>
                                         <div class='colorful'></div>
