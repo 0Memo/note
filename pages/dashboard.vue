@@ -147,9 +147,8 @@
                     
                     <div v-if="calendarConnected" class="flex items-center gap-1 mt-2 text-sm text-green-400">
                         <Validate class="w-4 h-4" />
-                        <Calendar v-if="!isConnectingCalendar" class="w-4 h-4" />
-                        
                         {{ $t('toast.calendar.calendarConnected') }}
+                        <Calendar v-if="!isConnectingCalendar" class="w-4 h-4" />
                     </div>
                 </div>
 
