@@ -5,9 +5,7 @@
             :disabled="currentFontSize <= minFontSize"
             class="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-500 text-white p-2 rounded-full transition-colors duration-200"
         >
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M19 13H5v-2h14v2z"/>
-            </svg>
+            <Minus class="w-4 h-4" />
         </button>
         
         <span class="text-white text-sm font-medium min-w-[60px] text-center">
@@ -19,9 +17,7 @@
             :disabled="currentFontSize >= maxFontSize"
             class="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-500 text-white p-2 rounded-full transition-colors duration-200"
         >
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-            </svg>
+            <Plus class="w-4 h-4" />
         </button>
         
         <button

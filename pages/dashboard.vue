@@ -140,9 +140,7 @@
                         :disabled="isConnectingCalendar"
                         class="flex items-center justify-center w-full gap-2 px-4 py-2 font-bold text-white transition-colors duration-200 bg-blue-600 rounded hover:bg-blue-700 disabled:bg-gray-500"
                     >
-                        <svg v-if="!isConnectingCalendar" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-                        </svg>
+                        <Calendar v-if="!isConnectingCalendar" class="w-5 h-5" />
                         <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
                         {{ isConnectingCalendar ? t('toast.calendar.connecting') : (calendarConnected ? t('toast.calendar.calendarConnected') : t('toast.calendar.connectCalendar')) }}
                     </button>
@@ -270,18 +268,18 @@
                                         ]"
                                     >
                                         <svg
-                                        v-if="syncingNoteId !== note.id"
-                                        class="w-4 h-4"
-                                        fill="currentColor"
-                                        viewBox="0 0 24 24"
+                                            v-if="syncingNoteId !== note.id"
+                                            class="w-4 h-4"
+                                            fill="currentColor"
+                                            viewBox="0 0 24 24"
                                         >
                                             <path
                                                 d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"
                                             />
                                         </svg>
                                         <div
-                                        v-else
-                                        class="w-4 h-4 border-b-2 border-blue-400 rounded-full animate-spin"
+                                            v-else
+                                            class="w-4 h-4 border-b-2 border-blue-400 rounded-full animate-spin"
                                         ></div>
                                     </button>
                                 </div>
@@ -646,7 +644,8 @@
                                                 <span
                                                     v-if="note.text.length > 50"
                                                     class="text-zinc-400"
-                                                >...{{ decodeHtmlEntities(stripHtmlTags(note.text)).substring(30, 50) }}
+                                                >
+                                                    ...{{ decodeHtmlEntities(stripHtmlTags(note.text)).substring(30, 50) }}
                                                 </span>
                                             </div>
                                         </div>
@@ -671,10 +670,8 @@
                                                     : 'text-blue-400 hover:text-blue-300 cursor-pointer'
                                             ]"
                                         >
-                                        <svg v-if="syncingNoteId !== note.id" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-                                        </svg>
-                                        <div v-else class="w-4 h-4 border-b-2 border-blue-400 rounded-full animate-spin"></div>
+                                            <Calendar v-if="syncingNoteId !== note.id" class="w-4 h-4" />
+                                            <div v-else class="w-4 h-4 border-b-2 border-blue-400 rounded-full animate-spin"></div>
                                         </button>
                                     </div>
                                 </div>
@@ -694,9 +691,7 @@
                                         ]"
                                         title="Sync to Calendar"
                                     >
-                                        <svg v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-                                        </svg>
+                                        <Calendar v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" />
                                         <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
                                     </button>
                                     <!-- Delete Button -->

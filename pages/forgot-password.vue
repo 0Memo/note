@@ -101,9 +101,9 @@
                 </div>
 
                 <div class="text-zinc-100 mt-6">
-                    <button class="w-full mt-4 bg-purple-900 text-lg px-4 py-2 rounded-2xl font-bold space-x-4">
+                    <button class="w-full mt-4 bg-purple-900 text-lg px-4 py-2 rounded-2xl font-bold space-x-3 flex items-center justify-center">
                         <span>{{ $t('forgotPassword.send') }}</span>
-                        <span>➤</span>
+                        <Send class="w-6 h-6" />
                     </button>
                 </div>
             </form>

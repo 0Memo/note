@@ -110,9 +110,9 @@
                 </div>
 
                 <div class="mt-6 text-zinc-100">
-                    <button class="w-full px-4 py-2 mt-4 space-x-4 text-lg font-bold bg-purple-900 rounded-2xl">
+                    <button class="w-full px-4 py-2 mt-4 text-lg font-bold bg-purple-900 rounded-2xl space-x-3 flex items-center justify-center">
                         <span>{{ $t('login.connect') }}</span>
-                        <span>➤</span>
+                        <Send class="w-6 h-6" />
                     </button>
                 </div>
             </form>

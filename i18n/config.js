@@ -190,7 +190,7 @@ export default defineI18nConfig(() => ({
                 email: "Correo",
                 password: "Contraseña",
                 forgottenPassword: "Contraseña olvidada",
-                connect: "Conexión"
+                connect: "Inicie sesión"
             },
             forgotPassword: {
                 forgotten: "¿Contraseña olvidada?",
@@ -351,7 +351,7 @@ export default defineI18nConfig(() => ({
                 email: "E-mail",
                 password: "Senha",
                 forgottenPassword: "Senha esquecida",
-                connect: "Conexão"
+                connect: "Faça login"
             },
             forgotPassword: {
                 forgotten: "Senha esquecida?",
@@ -512,7 +512,7 @@ export default defineI18nConfig(() => ({
                 email: "Email",
                 password: "Password",
                 forgottenPassword: "Forgotten password",
-                connect: "Connection"
+                connect: "Log in"
             },
             forgotPassword: {
                 forgotten: "Forgot your password?",
