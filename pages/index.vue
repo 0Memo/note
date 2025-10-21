@@ -132,7 +132,9 @@
                 justify-center bg-black bg-opacity-50 z-50
                 transition-opacity duration-500 ease-in-out"
             >
-                <div id="loader"></div>
+                <Transition name="preloader">
+                    <SquirrelSpinner />
+                </Transition>
             </div>
         </div>
 
