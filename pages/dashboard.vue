@@ -42,11 +42,12 @@
                 v-if="showInstall"
                 @click="installApp"
                 class="mt-6 ml-1 font-semibold text-white transform shadow-2xl cursor-pointer text-md custom-underline underline-purple"
+                :aria-label="$t('common.installApp')"
             >
                 {{ $t('common.installApp') }}
             </button>
             <div class="relative z-50 flex flex-wrap justify-center gap-2 mt-8 text-white md:mt-6">
-                <button @click="changeLocale('en')">
+                <button @click="changeLocale('en')" aria-label="English">
                     <img
                         src="https://flagcdn.com/w20/us.png"
                         srcset="https://flagcdn.com/w40/us.png 2x"
@@ -55,7 +56,7 @@
                         alt="United States"
                     >
                 </button>
-                <button @click="changeLocale('es')">
+                <button @click="changeLocale('es')" aria-label="Español">
                     <img
                         src="https://flagcdn.com/w20/es.png"
                         srcset="https://flagcdn.com/w40/es.png 2x"
@@ -64,7 +65,7 @@
                         alt="Spain"
                     >
                 </button>
-                <button @click="changeLocale('fr')">
+                <button @click="changeLocale('fr')" aria-label="Français">
                     <img
                         src="https://flagcdn.com/w20/fr.png"
                         srcset="https://flagcdn.com/w40/fr.png 2x"
@@ -73,7 +74,7 @@
                         alt="France"
                     >
                 </button>
-                <button @click="changeLocale('it')">
+                <button @click="changeLocale('it')" aria-label="Italiano">
                     <img
                         src="https://flagcdn.com/w20/it.png"
                         srcset="https://flagcdn.com/w40/it.png 2x"
@@ -82,7 +83,7 @@
                         alt="Italy"
                     >
                 </button>
-                <button @click="changeLocale('pt')">
+                <button @click="changeLocale('pt')" aria-label="Português">
                     <img
                         src="https://flagcdn.com/w20/br.png"
                         srcset="https://flagcdn.com/w40/br.png 2x"
@@ -91,7 +92,7 @@
                         alt="Brazil"
                     >
                 </button>
-                <button @click="changeLocale('ro')">
+                <button @click="changeLocale('ro')" aria-label="Română">
                     <img
                         src="https://flagcdn.com/w20/ro.png"
                         srcset="https://flagcdn.com/w40/ro.png 2x"
@@ -100,7 +101,7 @@
                         alt="Romania"
                     >
                 </button>
-                <button @click="changeLocale('sv')">
+                <button @click="changeLocale('sv')" aria-label="Svenska">
                     <img
                         src="https://flagcdn.com/w20/se.png"
                         srcset="https://flagcdn.com/w40/se.png 2x"
@@ -109,7 +110,7 @@
                         alt="Sweden"
                     >
                 </button>
-                <button @click="changeLocale('hy')">
+                <button @click="changeLocale('hy')" aria-label="Հայերեն">
                     <img
                         src="https://flagcdn.com/w20/am.png"
                         srcset="https://flagcdn.com/w40/am.png 2x"
@@ -139,6 +140,7 @@
                         @click="connectGoogleCalendar" 
                         :disabled="isConnectingCalendar"
                         class="flex items-center justify-center w-full gap-2 px-4 py-2 font-bold text-white transition-colors duration-200 bg-blue-600 rounded hover:bg-blue-700 disabled:bg-gray-500"
+                        :aria-label="$t('toast.calendar.connectCalendar')"
                     >
                         <Calendar v-if="!isConnectingCalendar" class="w-5 h-5" />
                         <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
@@ -157,6 +159,7 @@
                     v-if="!calendarConnected && savedToken" 
                     @click="reconnectGoogleCalendar"
                     class="px-3 py-1 ml-2 text-sm text-white bg-orange-600 rounded hover:bg-orange-700"
+                    :aria-label="$t('toast.calendar.reconnect')"
                 >
                     {{ $t('toast.calendar.reconnect') }}
                 </button>
@@ -179,6 +182,7 @@
                                 'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
                                 highContrast ? 'bg-purple-600' : 'bg-gray-600'
                             ]"
+                            :aria-label="$t('accessibility.highContrast')"
                         >
                             <span
                                 :class="[
@@ -250,6 +254,7 @@
                                     <button
                                         @click.stop="confirmDeleteNote(note)"
                                         class="items-center justify-center hidden pl-8 md:flex"
+                                        :aria-label="$t('tooltip.deleteNote')"
                                     >
                                         <TrashIcon class="font-bold text-red-500 hover:text-white" />
                                     </button>
@@ -265,6 +270,7 @@
                                                 ? 'text-gray-400 cursor-not-allowed'
                                                 : 'text-blue-400 hover:text-blue-300 cursor-pointer'
                                         ]"
+                                        :aria-label="$t('toast.calendar.syncToCalendar')"
                                     >
                                         <Calendar v-if="syncingNoteId !== note.id" class="w-4 h-4" />
                                         <div
@@ -291,6 +297,7 @@
                                         : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
                                     ]"
                                     title="Sync to Calendar"
+                                    :aria-label="$t('toast.calendar.syncToCalendar')"
                                 >
                                     <Calendar v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" />
                                     <div
@@ -303,6 +310,7 @@
                                 <button
                                     @click.stop="confirmDeleteNote(note)"
                                     class="w-[70px] bg-red-600 flex items-center justify-center"
+                                    :aria-label="$t('tooltip.deleteNote')"
                                 >
                                     <TrashIcon class="text-white" />
                                 </button>
@@ -348,6 +356,7 @@
                                         <button 
                                             @click.stop="confirmDeleteNote(note)"
                                             class="items-center justify-center hidden pl-8 md:flex"
+                                            :aria-label="$t('tooltip.deleteNote')"
                                         >
                                             <TrashIcon class="font-bold text-red-500 hover:text-white" />
                                         </button>
@@ -364,6 +373,7 @@
                                                     ? 'text-gray-400 cursor-not-allowed'
                                                     : 'text-blue-400 hover:text-blue-300 cursor-pointer'
                                             ]"
+                                            :aria-label="$t('toast.calendar.syncToCalendar')"
                                         >
                                             <Calendar v-if="syncingNoteId !== note.id" class="w-4 h-4" />
                                             <div v-else class="w-4 h-4 border-b-2 border-blue-400 rounded-full animate-spin"></div>
@@ -385,6 +395,7 @@
                                             : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
                                         ]"
                                         title="Sync to Calendar"
+                                        :aria-label="$t('toast.calendar.syncToCalendar')"
                                     >
                                         <Calendar v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" />
                                         <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
@@ -393,6 +404,7 @@
                                     <button 
                                         @click.stop="confirmDeleteNote(note)"
                                         class="w-[70px] bg-red-600 flex items-center justify-center"
+                                        :aria-label="$t('tooltip.deleteNote')"
                                     >
                                         <TrashIcon class="text-white" />
                                     </button>
@@ -440,6 +452,7 @@
                                         <button 
                                             @click.stop="confirmDeleteNote(note)"
                                             class="items-center justify-center hidden pl-8 md:flex"
+                                            :aria-label="$t('tooltip.deleteNote')"
                                         >
                                             <TrashIcon class="font-bold text-red-500 hover:text-white" />
                                         </button>
@@ -456,6 +469,7 @@
                                                     ? 'text-gray-400 cursor-not-allowed'
                                                     : 'text-blue-400 hover:text-blue-300 cursor-pointer'
                                             ]"
+                                            :aria-label="$t('toast.calendar.syncToCalendar')"
                                         >
                                             <Calendar v-if="syncingNoteId !== note.id" class="w-4 h-4" />
                                             <div v-else class="w-4 h-4 border-b-2 border-blue-400 rounded-full animate-spin"></div>
@@ -477,6 +491,7 @@
                                             : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
                                         ]"
                                         title="Sync to Calendar"
+                                        :aria-label="$t('toast.calendar.syncToCalendar')"
                                     >
                                         <Calendar v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" />
                                         <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
@@ -485,6 +500,7 @@
                                     <button 
                                         @click.stop="confirmDeleteNote(note)"
                                         class="w-[70px] bg-red-600 flex items-center justify-center"
+                                        :aria-label="$t('tooltip.deleteNote')"
                                     >
                                         <TrashIcon class="text-white" />
                                     </button>
@@ -530,6 +546,7 @@
                                         <button 
                                             @click.stop="confirmDeleteNote(note)"
                                             class="items-center justify-center hidden pl-8 md:flex"
+                                            :aria-label="$t('tooltip.deleteNote')"
                                         >
                                             <TrashIcon class="font-bold text-red-500 hover:text-white" />
                                         </button>
@@ -546,6 +563,7 @@
                                                     ? 'text-gray-400 cursor-not-allowed'
                                                     : 'text-blue-400 hover:text-blue-300 cursor-pointer'
                                             ]"
+                                            :aria-label="$t('toast.calendar.syncToCalendar')"
                                         >
                                             <Calendar v-if="syncingNoteId !== note.id" class="w-4 h-4" />
                                             <div v-else class="w-4 h-4 border-b-2 border-blue-400 rounded-full animate-spin"></div>
@@ -567,6 +585,7 @@
                                             : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
                                         ]"
                                         title="Sync to Calendar"
+                                        :aria-label="$t('toast.calendar.syncToCalendar')"
                                     >
                                         <Calendar v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" />
                                         <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
@@ -575,6 +594,7 @@
                                     <button 
                                         @click.stop="confirmDeleteNote(note)"
                                         class="w-[70px] bg-red-600 flex items-center justify-center"
+                                        :aria-label="$t('tooltip.deleteNote')"
                                     >
                                         <TrashIcon class="text-white" />
                                     </button>
@@ -623,6 +643,7 @@
                                         <button 
                                             @click.stop="confirmDeleteNote(note)"
                                             class="items-center justify-center hidden pl-8 md:flex"
+                                            :aria-label="$t('tooltip.deleteNote')"
                                         >
                                             <TrashIcon class="font-bold text-red-500 hover:text-white" />
                                         </button>
@@ -639,6 +660,7 @@
                                                     ? 'text-gray-400 cursor-not-allowed'
                                                     : 'text-blue-400 hover:text-blue-300 cursor-pointer'
                                             ]"
+                                            :aria-label="$t('toast.calendar.syncToCalendar')"
                                         >
                                             <Calendar v-if="syncingNoteId !== note.id" class="w-4 h-4" />
                                             <div v-else class="w-4 h-4 border-b-2 border-blue-400 rounded-full animate-spin"></div>
@@ -660,6 +682,7 @@
                                             : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
                                         ]"
                                         title="Sync to Calendar"
+                                        :aria-label="$t('toast.calendar.syncToCalendar')"
                                     >
                                         <Calendar v-if="syncingNoteId !== note.id" class="w-5 h-5 text-white" />
                                         <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
@@ -668,6 +691,7 @@
                                     <button 
                                         @click.stop="confirmDeleteNote(note)"
                                         class="w-[70px] bg-red-600 flex items-center justify-center"
+                                        :aria-label="$t('tooltip.deleteNote')"
                                     >
                                         <TrashIcon class="text-white" />
                                     </button>
@@ -688,6 +712,7 @@
                     @click="createNewNote"
                     :data-tooltip="$t('tooltip.createNote')"
                     data-position="right1"
+                    :aria-label="$t('tooltip.createNote')"
                 >
                     <Pencil class="w-10 h-10 font-bold" />
                 </button>
@@ -704,6 +729,7 @@
                     @click="showConfirmModal = true"
                     :data-tooltip="$t('tooltip.deleteNote')"
                     data-position="left1"
+                    :aria-label="$t('tooltip.deleteNote')"
                 >
                     <TrashIcon class="w-10 h-10 font-bold" />
                 </button>
@@ -727,6 +753,7 @@
                                     @click="startTranscription" class="pr-2 text-white shadow-lg focus:outline-none left hover:text-zinc-500"
                                     :data-tooltip="$t('tooltip.dictateNote')"
                                     data-position="left2"
+                                    :aria-label="$t('tooltip.dictateNote')"
                                 >
                                     <Microphone class="relative w-8 h-8 font-bold -top-2"/>
                                 </button>
@@ -734,6 +761,7 @@
                                     @click="readNoteAloud(selectedNote?.text)"  class="pr-2 text-white shadow-lg focus:outline-none top hover:text-zinc-500"
                                     :data-tooltip="$t('tooltip.listenNote')"
                                     data-position="top"
+                                    :aria-label="$t('tooltip.listenNote')"
                                 >
                                     <VoiceReading class="relative w-8 h-8 font-bold -top-2"/>
                                 </button>
@@ -746,10 +774,16 @@
                                                 class="text-black rounded px-2 w-[138px] -ml-4 md:ml-0 md:w-full md:mr-4"
                                             />
                                         
-                                            <button @click="saveDateChange" class="-ml-4 text-xs text-white md:ml-0 custom-underline underline-green md:mr-2 scalable-text">
+                                            <button
+                                                @click="saveDateChange" class="-ml-4 text-xs text-white md:ml-0 custom-underline underline-green md:mr-2 scalable-text"
+                                                :aria-label="$t('notes.confirm')"
+                                            >
                                                 {{ $t('notes.confirm') }}
                                             </button>
-                                            <button @click="toggleDateEdit" class="-ml-4 text-xs text-white md:ml-0 custom-underline underline-red scalable-text">
+                                            <button
+                                                @click="toggleDateEdit" class="-ml-4 text-xs text-white md:ml-0 custom-underline underline-red scalable-text"
+                                                :aria-label="$t('notes.cancel')"
+                                            >
                                                 {{ $t('notes.cancel') }}
                                             </button>
                                         </div>
@@ -757,7 +791,10 @@
                                     <template v-else>
                                         <div class="h-[36px]">
                                             <span>{{ formattedDisplayedDate }}</span>
-                                            <button @click="toggleDateEdit" class="text-xs custom-underline underline-purple md:ml-2 scalable-text">
+                                            <button
+                                                @click="toggleDateEdit" class="text-xs custom-underline underline-purple md:ml-2 scalable-text"
+                                                :aria-label="$t('notes.change')"
+                                            >
                                                 {{ $t('notes.change') }}
                                             </button>
                                         </div>
@@ -776,6 +813,7 @@
                                     ]"
                                     :disabled="isSyncButtonDisabled"
                                     title="Sync this note to Google Calendar"
+                                    :aria-label="$t('toast.calendar.syncToCalendar')"
                                 >
                                     <Calendar v-if="syncingNoteId !== selectedNote.id" class="w-4 h-4" />
                                     <div v-else class="w-4 h-4 border-b-2 border-white rounded-full animate-spin"></div>
@@ -791,6 +829,7 @@
                                         @click="editor.chain().focus().undo().run()"
                                         class="px-2 py-1 text-sm rounded hover:bg-gray-200"
                                         type="button"
+                                        aria-label="Undo"
                                     >
                                         ↶
                                     </button>
@@ -798,6 +837,7 @@
                                         @click="editor.chain().focus().redo().run()"
                                         class="px-2 py-1 text-sm rounded hover:bg-gray-200"
                                         type="button"
+                                        aria-label="Redo"
                                     >
                                         ↷
                                     </button>
@@ -807,6 +847,7 @@
                                         :class="{ 'bg-gray-300': editor.isActive('bold') }"
                                         class="px-2 py-1 text-sm font-medium rounded hover:bg-gray-200"
                                         type="button"
+                                        aria-label="Bold"
                                     >
                                         B
                                     </button>
@@ -815,6 +856,7 @@
                                         :class="{ 'bg-gray-300': editor.isActive('italic') }"
                                         class="px-2 py-1 text-sm italic rounded hover:bg-gray-200"
                                         type="button"
+                                        aria-label="Italic"
                                     >
                                         I
                                     </button>
@@ -823,6 +865,7 @@
                                         :class="{ 'bg-gray-300': editor.isActive('underline') }"
                                         class="px-2 py-1 text-sm underline rounded hover:bg-gray-200"
                                         type="button"
+                                        aria-label="Underline"
                                     >
                                         U
                                     </button>
@@ -832,6 +875,7 @@
                                         :class="{ 'bg-gray-300': editor.isActive({ textAlign: 'left' }) }"
                                         class="px-2 py-1 text-sm rounded hover:bg-gray-200"
                                         type="button"
+                                        aria-label="Align left"
                                     >
                                         ←
                                     </button>
@@ -840,6 +884,7 @@
                                         :class="{ 'bg-gray-300': editor.isActive({ textAlign: 'center' }) }"
                                         class="px-2 py-1 text-sm rounded hover:bg-gray-200"
                                         type="button"
+                                        aria-label="Align center"
                                     >
                                         ↔
                                     </button>
@@ -848,6 +893,7 @@
                                         :class="{ 'bg-gray-300': editor.isActive({ textAlign: 'right' }) }"
                                         class="px-2 py-1 text-sm rounded hover:bg-gray-200"
                                         type="button"
+                                        aria-label="Align right"
                                     >
                                         →
                                     </button>
@@ -857,6 +903,7 @@
                                         :class="{ 'bg-gray-300': editor.isActive('bulletList') }"
                                         class="px-2 py-1 text-sm rounded hover:bg-gray-200"
                                         type="button"
+                                        aria-label="Bullet list"
                                     >
                                         •
                                     </button>
@@ -865,6 +912,7 @@
                                         :class="{ 'bg-gray-300': editor.isActive('orderedList') }"
                                         class="px-2 py-1 text-sm rounded hover:bg-gray-200"
                                         type="button"
+                                        aria-label="Ordered List"
                                     >
                                         1.
                                     </button>
@@ -915,6 +963,7 @@
             <button
                 @click="toggleMouseTrail"
                 class="text-white absolute left-4 md:left-[292px] bottom-0 pb-6 pt-10 md:p-8 hover:text-zinc-500"
+                :aria-label="$t('tooltip.activate')"
             >
                 <!-- Replace with your preferred icon -->
                 <span v-if="showMouseTrail">
@@ -923,6 +972,7 @@
                             class="right"
                             :data-tooltip="$t('tooltip.deactivate')"
                             data-position="right"
+                            :aria-label="$t('tooltip.deactivate')"
                         >
                             <MouseTrailOff class="w-10 h-10 font-bold" />
                         </button>
@@ -934,6 +984,7 @@
                             class="right"
                             :data-tooltip="$t('tooltip.activate')"
                             data-position="right"
+                            :aria-label="$t('tooltip.activate')"
                         >
                             <MouseTrailOn class="w-10 h-10 font-bold" />
                         </button>
@@ -946,6 +997,7 @@
                 @click="logout"
                 :data-tooltip="$t('tooltip.logout')"
                 data-position="left"
+                :aria-label="$t('tooltip.logout')"
             >
                 <Logout class="w-10 h-10 font-bold" />
             </button>
