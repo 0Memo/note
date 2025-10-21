@@ -927,8 +927,8 @@
                                         :placeholder="$t('notes.text')"
                                         class="min-h-[300px]"
                                     />
-                                    <div class="absolute bottom-0 right-0">
-                                        <Dinosaur />
+                                    <div class="absolute bottom-0 -right-1">
+                                        <Leaves class="w-14 h-14" />
                                     </div>
                                 </div>
                                 
