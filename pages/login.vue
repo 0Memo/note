@@ -153,7 +153,9 @@
                 v-if="isLoading"
                 class="absolute inset-0 z-50 flex items-center justify-center transition-opacity duration-500 ease-in-out bg-black bg-opacity-50"
             >
-                <div id="loader"></div>
+                <Transition name="preloader">
+                    <SquirrelSpinner />
+                </Transition>
             </div>
         </div>
 

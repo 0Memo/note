@@ -1978,60 +1978,62 @@
     }
 
     onMounted(async() => {
-        highContrast.value = localStorage.getItem('highContrast') === 'true'
-        applyAccessibilitySettings()
-        // Check for existing calendar connection
-        savedToken.value = localStorage.getItem('googleCalendarToken')
-        if (accessToken.value) {
-            localStorage.setItem('googleCalendarToken', accessToken.value)
-        }
-        if (savedToken.value) {
-            accessToken.value = savedToken.value;
-            const stillValid = await isAccessTokenValid();
-            calendarConnected.value = stillValid;
-
-            if (!stillValid) {
-                $toast.info(t('toast.calendar.reconnect'), { duration: 6000 });
+        const globalLoading = useState('globalLoading')
+        
+        try {
+            highContrast.value = localStorage.getItem('highContrast') === 'true'
+            applyAccessibilitySettings()
+            // Check for existing calendar connection
+            savedToken.value = localStorage.getItem('googleCalendarToken')
+            if (accessToken.value) {
+                localStorage.setItem('googleCalendarToken', accessToken.value)
             }
-        }
+            if (savedToken.value) {
+                accessToken.value = savedToken.value;
+                const stillValid = await isAccessTokenValid();
+                calendarConnected.value = stillValid;
 
-        // Check for OAuth callback
-        const urlParams = new URLSearchParams(window.location.search)
-        const code = urlParams.get('code')
-        if (code) {
-            await handleOAuthCallback(code)
-        }
-
-        // Check URL params for calendar connection status
-        const route = useRoute()
-        if (route.query.calendar_connected === 'true') {
-            calendarConnected.value = true
-            $toast.success(t('toast.calendar.success'))
-            await router.replace({ query: {} })
-        } else if (route.query.error) {
-            $toast.error(t('toast.calendar.connectionFailed'))
-            await router.replace({ query: {} })
-        }
-
-        await checkCalendarConnection()
-
-        // Optionally: automatically try to refresh token if it failed
-        if (!calendarConnected.value) {
-            try {
-                await refreshAccessTokenIfNeeded() // We'll define this next
-                await checkCalendarConnection() // Try again after refresh
-            } catch (err) {
-                console.warn('Could not refresh token:', err)
+                if (!stillValid) {
+                    $toast.info(t('toast.calendar.reconnect'), { duration: 6000 });
+                }
             }
-        }
 
-        updateScreenSize()
-        window.addEventListener('resize', updateScreenSize)
-        window.addEventListener('click', resetSwipe)
+            // Check for OAuth callback
+            const urlParams = new URLSearchParams(window.location.search)
+            const code = urlParams.get('code')
+            if (code) {
+                await handleOAuthCallback(code)
+            }
 
-        isLoading.value = true
+            // Check URL params for calendar connection status
+            const route = useRoute()
+            if (route.query.calendar_connected === 'true') {
+                calendarConnected.value = true
+                $toast.success(t('toast.calendar.success'))
+                await router.replace({ query: {} })
+            } else if (route.query.error) {
+                $toast.error(t('toast.calendar.connectionFailed'))
+                await router.replace({ query: {} })
+            }
 
-        try{
+            await checkCalendarConnection()
+
+            // Optionally: automatically try to refresh token if it failed
+            if (!calendarConnected.value) {
+                try {
+                    await refreshAccessTokenIfNeeded() // We'll define this next
+                    await checkCalendarConnection() // Try again after refresh
+                } catch (err) {
+                    console.warn('Could not refresh token:', err)
+                }
+            }
+
+            updateScreenSize()
+            window.addEventListener('resize', updateScreenSize)
+            window.addEventListener('click', resetSwipe)
+
+            isLoading.value = true
+
             const fetchedNotes = await $fetch('/api/notes')
 
             // ✅ FIXED: Ensure we always set an array
@@ -2065,6 +2067,7 @@
             notes.value = []
         } finally {
             isLoading.value = false
+            globalLoading = false
         }
     })
 

@@ -306,6 +306,74 @@ button[data-tooltip][data-position=right1]:before {
     100% { transform: rotate(360deg); }
 }
 
+/* Squirrel Spinner */
+.preloader {
+    position: fixed;
+    /* covers the viewport */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    /* same as your app background */
+    z-index: 9999;
+    animation: squirrelFadeIn 0.3s ease-in-out;
+}
+
+.preloader-leave-active {
+    transition: opacity 0.8s ease;
+}
+
+.preloader-leave-to {
+    opacity: 0;
+}
+
+@keyframes squirrelFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.squirrel,
+.squirrel_2 {
+    position: absolute;
+    transform: rotate(15deg);
+}
+
+.squirrel img {
+    scale: 0.9;
+    margin-top: 15px;
+}
+
+.squirrel_2 img {
+    scale: 1.1;
+    margin-top: 12px;
+}
+
+.wheel {
+    transform-origin: 40px 40px;
+    animation: wheel-anim 2.5s linear infinite;
+    scale: 2.5;
+}
+
+
+@keyframes wheel-anim {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
 /* Skeleton Loader */
 
 .text-skeleton {
