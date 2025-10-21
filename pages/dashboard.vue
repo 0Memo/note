@@ -892,6 +892,10 @@
                                     {{ saveIndicatorText }}
                                     </div>
                                 </transition>
+
+                                <div aria-live="polite" class="sr-only">
+                                    {{ liveMessage }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1083,8 +1087,10 @@
             const newContent = editor.getHTML()
             if (newContent !== updatedNote.value) {
                 updatedNote.value = newContent
-                showSavingIndicator()
-                debouncedFn()
+                if (!suppressAutoSave) {
+                    showSavingIndicator()
+                    debouncedFn()
+                }
             }
         },
         editorProps: {
@@ -1095,14 +1101,19 @@
         },
     })
 
+    const liveMessage = ref('')
+
     function showSavingIndicator() {
         saveIndicatorType.value = 'saving'
         showSavedIndicator.value = true
+        liveMessage.value = t('toast.saving') || 'Saving...'
     }
 
     function showSavedIndicatorSuccess() {
         saveIndicatorType.value = 'saved'
         showSavedIndicator.value = true
+        liveMessage.value = t('toast.saved') || 'Note saved'
+        playAudioCue('success')
         setTimeout(() => {
             showSavedIndicator.value = false
         }, 2500)
@@ -1111,9 +1122,55 @@
     function showSavedIndicatorError() {
         saveIndicatorType.value = 'error'
         showSavedIndicator.value = true
+        liveMessage.value = t('toast.saveError') || 'Save failed'
+        playAudioCue('error')
         setTimeout(() => {
             showSavedIndicator.value = false
         }, 3000)
+    }
+
+    function playAudioCue(type) {
+        // Use pop.ogg for success
+        if (type === 'success') {
+            const audio = new Audio('/sounds/powerup.wav');
+            audio.volume = 0.4;
+            audio.play().catch(err => console.error('Audio play failed:', err));
+            return;
+        }
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+
+        let frequency = 440;
+        let duration = 0.25;
+        let startVolume = 0.2;
+
+        switch (type) {
+            case 'error':
+            frequency = 180;
+            startVolume = 0.3;
+            duration = 0.4;
+            break;
+            case 'start':
+            frequency = 650;
+            startVolume = 0.2;
+            duration = 0.2;
+            break;
+            case 'stop':
+            frequency = 350;
+            startVolume = 0.2;
+            duration = 0.2;
+            break;
+        }
+
+        oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+        gainNode.gain.setValueAtTime(startVolume, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+        oscillator.connect(gainNode).connect(audioCtx.destination);
+        oscillator.start();
+        oscillator.stop(audioCtx.currentTime + duration);
     }
 
     const isSyncButtonDisabled = computed(() =>
@@ -1443,21 +1500,20 @@
                 credentials: 'include',
             })
 
-            // If backend returns success, update local state
             if (response && response.success) {
-            if (Array.isArray(notes.value)) {
-                const idx = notes.value.findIndex(n => n.id === selectedNote.value.id)
-                if (idx !== -1) {
-                    const now = new Date().toISOString()
-                    notes.value[idx].updatedAt = now
-                    notes.value[idx].text = cleanText
-                    // Only update eventDate when backend sent one
-                    if (response.note?.eventDate) notes.value[idx].eventDate = response.note.eventDate
-                    selectedNote.value.updatedAt = now
-                    selectedNote.value.text = cleanText
+                if (Array.isArray(notes.value)) {
+                    const idx = notes.value.findIndex(n => n.id === selectedNote.value.id)
+                    if (idx !== -1) {
+                        const now = new Date().toISOString()
+                        notes.value[idx].updatedAt = now
+                        notes.value[idx].text = cleanText
+                        // Only update eventDate when backend sent one
+                        if (response.note?.eventDate) notes.value[idx].eventDate = response.note.eventDate
+                        selectedNote.value.updatedAt = now
+                        selectedNote.value.text = cleanText
+                    }
                 }
-            }
-            showSavedIndicatorSuccess()
+                showSavedIndicatorSuccess()
             } else {
                 console.warn('Update responded but success !== true', response)
                 showSavedIndicatorError()
@@ -1468,6 +1524,8 @@
             if (error?.data) console.error('error.data:', error.data)
             if (error?.message) console.error('error.message:', error.message)
             showSavedIndicatorError()
+        } finally {
+            suppressAutoSave = false
         }
     }
 
@@ -1661,32 +1719,44 @@
         }
     }
 
+    let recognition = null
     let isRecognizing = false
+    let didTranscribe = false
+    let suppressAutoSave = false
 
     function startTranscription() {
-        if (isRecognizing) return
-
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
         if (!SpeechRecognition) {
             $toast.error(t('toast.speechRecognition'))
             return
         }
 
-        const recognition = new SpeechRecognition()
+        if (isRecognizing && recognition) {
+            recognition.stop()
+            isRecognizing = false
+            $toast.info(t('toast.stoppedListening'))
+            return
+        }
 
+        recognition = new SpeechRecognition()
         recognition.lang = {
             fr: 'fr-FR', es: 'es-ES', pt: 'pt-BR',
             it: 'it-IT', ro: 'ro-RO', sv: 'sv-SE',
             hy: 'hy-AM'
         }[locale.value] || 'en-US'
+
         recognition.interimResults = false
-        recognition.continuous = true
+        recognition.continuous = false
+
         isRecognizing = true
-        recognition.onstart = () => {
-            $toast.info(t('toast.listening'));
-        };
+        didTranscribe = false
+        $toast.info(t('toast.listening'));
+        playAudioCue('start')
 
         recognition.onresult = async (event) => {
+            suppressAutoSave = true
+            didTranscribe = true
+
             const transcript = event.results[0][0].transcript
             const combined = (updatedNote.value ? updatedNote.value + '\n' : '') + transcript
             updatedNote.value = sanitizeHTML(combined)
@@ -1700,33 +1770,33 @@
                 selectedNote.value.updatedAt = new Date().toISOString();
             }
             $toast.success(t('toast.transcribed'))
-
             showSavingIndicator()
 
             try {
                 await updateNote()
             } catch (e) {
                 console.error("Error updating note after speech:", e)
+                playAudioCue('error')
             }
         }
 
         recognition.onerror = (event) => {
             console.error('Speech recognition error:', event.error)
             isRecognizing = false
-
+            playAudioCue('error')
             switch (event.error) {
-            case 'no-speech':
-                $toast.error(t('toast.noSpeech'))
-                break
-            case 'audio-capture':
-                $toast.error(t('toast.audioError'))
-                break
-            case 'not-allowed':
-                $toast.error(t('toast.permissionError'))
-                break
-            default:
-                $toast.error(t('toast.speechError'))
-                break
+                case 'no-speech':
+                    $toast.error(t('toast.noSpeech'))
+                    break
+                case 'audio-capture':
+                    $toast.error(t('toast.audioError'))
+                    break
+                case 'not-allowed':
+                    $toast.error(t('toast.permissionError'))
+                    break
+                default:
+                    $toast.error(t('toast.speechError'))
+                    break
             }
         }
 
