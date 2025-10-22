@@ -133,7 +133,7 @@
                 transition-opacity duration-500 ease-in-out"
             >
                 <Transition name="preloader">
-                    <SquirrelSpinner />
+                    <div id="loader"></div>
                 </Transition>
             </div>
         </div>

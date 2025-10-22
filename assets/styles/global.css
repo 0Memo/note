@@ -306,10 +306,9 @@ button[data-tooltip][data-position=right1]:before {
     100% { transform: rotate(360deg); }
 }
 
-/* Squirrel Spinner */
+/*! Squirrel Spinner
 .preloader {
     position: fixed;
-    /* covers the viewport */
     top: 0;
     left: 0;
     width: 100vw;
@@ -318,7 +317,6 @@ button[data-tooltip][data-position=right1]:before {
     align-items: center;
     justify-content: center;
     background-color: transparent;
-    /* same as your app background */
     z-index: 9999;
     animation: squirrelFadeIn 0.3s ease-in-out;
 }
@@ -372,7 +370,7 @@ button[data-tooltip][data-position=right1]:before {
     100% {
         transform: rotate(-360deg);
     }
-}
+}  */
 
 /* Skeleton Loader */
 

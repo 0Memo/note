@@ -3,7 +3,7 @@
     <!-- 🐿️ Spinner stays visible while loading -->
     <Transition name="preloader">
       <div v-if="globalLoading" class="preloader">
-        <SquirrelSpinner />
+        <div id="loader"></div>
       </div>
     </Transition>
 
@@ -14,7 +14,6 @@
 
 <script setup>
   import { ref, onMounted, nextTick } from 'vue'
-  import SquirrelSpinner from '@/components/SquirrelSpinner.vue'
   import '~/assets/styles/global.css';
 
   useHead({
