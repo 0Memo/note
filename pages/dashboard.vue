@@ -923,6 +923,7 @@
                                 </div>
                                 <div class='absolute -top-[30px] right-4 scale-[0.1] origin-top-right z-10'>
                                     <Toucan />
+                                    <!-- <AnimatedSkull /> -->
                                 </div>
                                 <div class="relative">
                                     <EditorContent
