@@ -918,6 +918,9 @@
                                     </button>
                                     
                                 </div>
+                                <div class="absolute -top-[31.5px] -left-[195px] md:-left-[200px] scale-[5] origin-top-left z-10">
+                                    <AbstractLeaf2 class="w-20 h-20"/>
+                                </div>
                                 <div class='absolute -top-[30px] right-4 scale-[0.1] origin-top-right z-10'>
                                     <Toucan />
                                 </div>
@@ -927,8 +930,8 @@
                                         :placeholder="$t('notes.text')"
                                         class="min-h-[300px]"
                                     />
-                                    <div class="absolute bottom-0 -right-1">
-                                        <Leaves class="w-14 h-14" />
+                                    <div class="absolute bottom-0 -right-2">
+                                        <Leaves class="w-[50px] h-[50px]" />
                                     </div>
                                 </div>
                                 
