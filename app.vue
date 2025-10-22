@@ -1,35 +1,12 @@
 <template>
   <div>
-    <!-- 🐿️ Spinner stays visible while loading -->
-    <Transition name="preloader">
-      <div v-if="globalLoading" class="preloader">
-        <div id="loader"></div>
-      </div>
-    </Transition>
-
-    <!-- Main app content -->
-    <NuxtPage v-show="!globalLoading" />
+    <NuxtPage />
   </div>
 </template>
 
 <script setup>
-  import { ref, onMounted, nextTick } from 'vue'
+
   import '~/assets/styles/global.css';
-
-  useHead({
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
-  })
-
-  const globalLoading = useState('globalLoading', () => true)
-
-  onMounted(async () => {
-    await nextTick()
-    // Optional fallback timeout
-    setTimeout(() => {
-      if (globalLoading.value) globalLoading.value = false
-    }, 4000)
-  })
-
+  useHead({ link: [ { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' } ] })
+  
 </script>
