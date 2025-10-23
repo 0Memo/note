@@ -25,7 +25,7 @@
             <h2 class="text-2xl font-semibold mt-4">{{ $t('modal.privacy.contact') }}</h2>
             <p class="mb-4">{{ $t('modal.privacy.questions') }}</p>
             <p>
-            <a href="mailto:guillaume.mehats@gmail.com" class="custom-underline underline-purple">
+            <a href="mailto:guillaume.mehats@gmail.com" class="custom-underline">
                 guillaume.mehats@gmail.com
             </a>
             </p>
@@ -33,7 +33,7 @@
             <div class="mt-6 relative z-50">
                 <button
                     @click="goBack"
-                    class="w-full mt-4 bg-purple-900 text-lg px-4 py-2 rounded-2xl font-bold space-x-4 inline-flex justify-center items-center relative z-50"
+                    class="w-full mt-4 bg-purple-900 hover:bg-purple-800 text-lg px-4 py-2 rounded-2xl font-bold space-x-4 inline-flex justify-center items-center relative z-50"
                 >
                     <span>{{ $t('modal.privacy.back') }}</span>
                     <Back class="w-6 h-6" />
@@ -44,7 +44,7 @@
                 <nuxt-link
                     :to="localePath('/')"
                     class="text-white shadow-2xl shadow-purple-900 font-semibold
-                    transform cursor-pointer custom-underline underline-purple">
+                    transform cursor-pointer custom-underline">
                     {{ $t('homepage.title') }}
                 </nuxt-link>
             </p>
@@ -75,7 +75,7 @@
             <h2 class="text-2xl font-semibold mt-4">{{ $t('modal.privacy.contact') }}</h2>
             <p>{{ $t('modal.privacy.questions') }}</p>
             <p>
-                <a href="mailto:guillaume.mehats@gmail.com" class="custom-underline underline-purple">
+                <a href="mailto:guillaume.mehats@gmail.com" class="custom-underline">
                     guillaume.mehats@gmail.com
                 </a>
             </p>
@@ -94,7 +94,7 @@
                 <nuxt-link
                     :to="localePath('/')"
                     class="text-white shadow-2xl shadow-purple-900 font-semibold
-                    transform cursor-pointer custom-underline underline-purple">
+                    transform cursor-pointer custom-underline">
                     {{ $t('homepage.title') }}
                 </nuxt-link>
             </p>

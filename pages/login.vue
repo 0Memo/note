@@ -110,7 +110,7 @@
                 </div>
 
                 <div class="mt-6 text-zinc-100">
-                    <button class="w-full px-4 py-2 mt-4 text-lg font-bold bg-purple-900 rounded-2xl space-x-3 flex items-center justify-center">
+                    <button class="w-full px-4 py-2 mt-4 text-lg font-bold bg-purple-900 hover:bg-purple-800 rounded-2xl space-x-3 flex items-center justify-center">
                         <span>{{ $t('login.connect') }}</span>
                         <Send class="w-6 h-6" />
                     </button>
@@ -137,13 +137,13 @@
             <footer class="fixed bottom-0 flex items-center w-full gap-8 py-1 text-sm text-white bg-transparent md:bottom-8 left-10 md:text-md">
                 <nuxt-link
                     :to="localePath('/privacy')"
-                    class="whitespace-nowrap custom-underline underline-purple"
+                    class="whitespace-nowrap custom-underline"
                 >
                     {{ $t('modal.privacy.title') }}
                 </nuxt-link>
                 <nuxt-link
                     :to="localePath('/terms')"
-                    class="whitespace-nowrap custom-underline underline-purple"
+                    class="whitespace-nowrap custom-underline"
                 >
                     {{ $t('modal.terms.title') }}
                 </nuxt-link>

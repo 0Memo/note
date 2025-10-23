@@ -96,25 +96,46 @@ body {
 }
 
 /* Underline */
-.custom-underline:hover {
+.custom-underline {
     text-decoration-line: underline;
     text-decoration-style: solid;
     text-decoration-thickness: 0.65rem;
     text-underline-offset: -0.2em;
     text-decoration-skip-ink: none;
     text-decoration-skip: none;
+    text-decoration-color: #591B87;
 }
 
-.underline-purple {
+.custom-underline:hover {
     text-decoration-color: #9333ea;
 }
 
 .underline-red {
-    text-decoration-color: #EF4444;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-thickness: 0.65rem;
+    text-underline-offset: -0.2em;
+    text-decoration-skip-ink: none;
+    text-decoration-skip: none;
+    text-decoration-color: red;
+}
+
+.underline-red:hover {
+    text-decoration-color: #ea5757;
 }
 
 .underline-green {
-    text-decoration-color: #22C55E;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-thickness: 0.65rem;
+    text-underline-offset: -0.2em;
+    text-decoration-skip-ink: none;
+    text-decoration-skip: none;
+    text-decoration-color: green;
+}
+
+.underline-green:hover {
+    text-decoration-color: #1eab52;
 }
 
 /* Tooltips */

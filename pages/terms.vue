@@ -27,7 +27,7 @@
                 <nuxt-link
                     :to="localePath('/')"
                     class="text-white shadow-2xl shadow-purple-900 font-semibold
-                    transform cursor-pointer custom-underline underline-purple">
+                    transform cursor-pointer custom-underline">
                     {{ $t('homepage.title') }}
                 </nuxt-link>
             </p>
@@ -59,7 +59,7 @@
                 <nuxt-link
                     :to="localePath('/')"
                     class="text-white shadow-2xl shadow-purple-900 font-semibold
-                    transform cursor-pointer custom-underline underline-purple">
+                    transform cursor-pointer custom-underline">
                     {{ $t('homepage.title') }}
                 </nuxt-link>
             </p>

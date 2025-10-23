@@ -115,7 +115,7 @@
                 </div>
 
                 <div class="text-zinc-100 mt-6">
-                    <button class="w-full mt-4 bg-purple-900 text-lg px-4 py-2 rounded-2xl font-bold space-x-3 flex items-center justify-center">
+                    <button class="w-full mt-4 bg-purple-900 hover:bg-purple-800 text-lg px-4 py-2 rounded-2xl font-bold space-x-3 flex items-center justify-center">
                         <span>{{ $t('register.subscribe') }}</span>
                         <Send class="w-6 h-6" />
                     </button>
@@ -134,13 +134,13 @@
             <footer class="fixed bottom-0 md:bottom-8 left-10 gap-8 py-1 w-full flex items-center text-white bg-transparent text-sm md:text-md">
                 <nuxt-link
                     :to="localePath('/privacy')"
-                    class="whitespace-nowrap custom-underline underline-purple"
+                    class="whitespace-nowrap custom-underline"
                 >
                     {{ $t('modal.privacy.title') }}
                 </nuxt-link>
                 <nuxt-link
                     :to="localePath('/terms')"
-                    class="whitespace-nowrap custom-underline underline-purple"
+                    class="whitespace-nowrap custom-underline"
                 >
                     {{ $t('modal.terms.title') }}
                 </nuxt-link>

@@ -34,14 +34,14 @@
             <p class="relative z-50 mt-6 ml-1 text-md text-zinc-300">
                 <nuxt-link
                     :to="localePath('/')"
-                    class="font-semibold text-white transform shadow-2xl cursor-pointer shadow-purple-900 custom-underline underline-purple scalable-text">
+                    class="font-semibold text-white transform shadow-2xl cursor-pointer shadow-purple-900 custom-underline scalable-text">
                     {{ $t('homepage.title') }}
                 </nuxt-link>
             </p>
             <button
                 v-if="showInstall"
                 @click="installApp"
-                class="mt-6 ml-1 font-semibold text-white transform shadow-2xl cursor-pointer text-md custom-underline underline-purple"
+                class="mt-6 ml-1 font-semibold text-white transform shadow-2xl cursor-pointer text-md custom-underline"
                 :aria-label="$t('common.installApp')"
             >
                 {{ $t('common.installApp') }}
@@ -123,13 +123,13 @@
                 <div class="flex justify-around w-full py-2 md:hidden text-md">
                     <nuxt-link
                         :to="localePath('/privacy')"
-                        class="whitespace-nowrap custom-underline underline-purple"
+                        class="whitespace-nowrap custom-underline"
                     >
                         {{ $t('modal.privacy.title') }}
                     </nuxt-link>
                     <nuxt-link
                         :to="localePath('/terms')"
-                        class="whitespace-nowrap custom-underline underline-purple"
+                        class="whitespace-nowrap custom-underline"
                     >
                         {{ $t('modal.terms.title') }}
                     </nuxt-link>
@@ -775,13 +775,13 @@
                                             />
                                         
                                             <button
-                                                @click="saveDateChange" class="-ml-4 text-xs text-white md:ml-0 custom-underline underline-green md:mr-2 scalable-text"
+                                                @click="saveDateChange" class="-ml-4 text-xs text-white md:ml-0 underline-green md:mr-2 scalable-text"
                                                 :aria-label="$t('notes.confirm')"
                                             >
                                                 {{ $t('notes.confirm') }}
                                             </button>
                                             <button
-                                                @click="toggleDateEdit" class="-ml-4 text-xs text-white md:ml-0 custom-underline underline-red scalable-text"
+                                                @click="toggleDateEdit" class="-ml-4 text-xs text-white md:ml-0 underline-red scalable-text"
                                                 :aria-label="$t('notes.cancel')"
                                             >
                                                 {{ $t('notes.cancel') }}
@@ -792,7 +792,7 @@
                                         <div class="h-[36px]">
                                             <span>{{ formattedDisplayedDate }}</span>
                                             <button
-                                                @click="toggleDateEdit" class="text-xs custom-underline underline-purple md:ml-2 scalable-text"
+                                                @click="toggleDateEdit" class="text-xs custom-underline md:ml-2 scalable-text"
                                                 :aria-label="$t('notes.change')"
                                             >
                                                 {{ $t('notes.change') }}
@@ -1011,13 +1011,13 @@
             >
                 <nuxt-link
                     :to="localePath('/privacy')"
-                    class="whitespace-nowrap custom-underline underline-purple"
+                    class="whitespace-nowrap custom-underline"
                 >
                     {{ $t('modal.privacy.title') }}
                 </nuxt-link>
                 <nuxt-link
                     :to="localePath('/terms')"
-                    class="whitespace-nowrap custom-underline underline-purple"
+                    class="whitespace-nowrap custom-underline"
                 >
                     {{ $t('modal.terms.title') }}
                 </nuxt-link>
