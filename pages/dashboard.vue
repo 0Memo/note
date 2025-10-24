@@ -15,7 +15,16 @@
         </div>
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <NewYear />
-        </div> -->
+        </div>
+        <div class="absolute inset-0 pointer-events-none z-[1]">
+            <ChineseNewYear />
+        </div>
+        <div class="absolute inset-0 pointer-events-none z-[1]">
+            <Diwali />
+        </div>
+        <div class="absolute inset-0 pointer-events-none z-[1]">
+            <HispanicMonth />
+        </div>  -->
         <div
             class="md:hidden fixed top-0 left-0 right-0 z-[100] bg-secondary flex items-center justify-between px-6 py-4 shadow-md cursor-pointer border-double border-b-4 border-white"
         >
@@ -910,7 +919,7 @@
                                     <button
                                         @click="editor.chain().focus().toggleOrderedList().run()"
                                         :class="{ 'bg-gray-300': editor.isActive('orderedList') }"
-                                        class="px-2 py-1 text-sm rounded hover:bg-gray-200"
+                                        class="px-1 md:px-2 py-1 text-sm rounded hover:bg-gray-200"
                                         type="button"
                                         aria-label="Ordered List"
                                     >
@@ -923,7 +932,9 @@
                                 </div>
                                 <div class='absolute -top-[30px] right-4 scale-[0.1] origin-top-right z-10'>
                                     <Toucan />
+                                    <!-- <Diya /> -->
                                     <!-- <AnimatedSkull /> -->
+                                    <!-- <Dragon /> -->
                                 </div>
                                 <div class="relative">
                                     <EditorContent
@@ -931,8 +942,12 @@
                                         :placeholder="$t('notes.text')"
                                         class="min-h-[300px]"
                                     />
+                                    <div class="absolute -top-11 -right-1 md:-right-1">
+                                        <!-- <Llama class="w-[46px] h-[46px]" /> -->
+                                    </div>
                                     <div class="absolute bottom-0 -right-2">
                                         <Leaves class="w-[50px] h-[50px]" />
+                                        <!-- <div id="red-envelope">🧧</div> -->
                                     </div>
                                 </div>
                                 
