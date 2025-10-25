@@ -927,11 +927,16 @@
                                     </button>
                                     
                                 </div>
-                                <div class="absolute -top-[31.5px] -left-[195px] md:-left-[200px] scale-[5] origin-top-left">
-                                    <AbstractLeaf2 class="w-20 h-20"/>
+                                <div class="absolute -top-[31px] -left-[207px] scale-[5] origin-top-left">
+                                    <AbstractLeaf2 class="w-20 h-20 leaf"/>
                                 </div>
-                                <div class='absolute -top-[30px] right-4 scale-[0.1] origin-top-right z-10'>
-                                    <Toucan />
+                                <div class="absolute -top-[53.5px] -left-[178px] scale-[5] origin-top-left rotate-2">
+                                    <AbstractLeaf class="w-20 h-20 leaf"/>
+                                </div>
+                                <div class='absolute -top-[30px] right-4 origin-top-right z-10 toucan-shadow'>
+                                    <div class="scale-[0.1] origin-top-right">
+                                        <Toucan />
+                                    </div>
                                     <!-- <Diya /> -->
                                     <!-- <AnimatedSkull /> -->
                                     <!-- <Dragon /> -->
@@ -946,7 +951,7 @@
                                         <!-- <Llama class="w-[46px] h-[46px]" /> -->
                                     </div>
                                     <div class="absolute bottom-0 -right-2">
-                                        <Leaves class="w-[50px] h-[50px]" />
+                                        <Leaves class="w-[50px] h-[50px] leaves" />
                                         <!-- <div id="red-envelope">🧧</div> -->
                                     </div>
                                 </div>

@@ -44,6 +44,17 @@ body {
     font-size: var(--user-font-size) !important;
 }
 
+/* Leaf effects */
+
+.toucan-shadow {
+    filter:
+        drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.5)) drop-shadow(6px 6px 2px rgba(0, 0, 0, 0.3));
+}
+
+.leaf, .leaves {
+    filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.5));
+}
+
 /*! Hispanic Heritage Month
 #hhm_2025 {
     margin-top: 480px;
@@ -1013,6 +1024,56 @@ button[data-tooltip][data-position=right1]:before {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+/*! Liquid Loader
+.liquidLoader {
+    position: relative;
+    height: 250px;
+    width: 250px;
+    filter: url(#gooey);
+    animation: animate 4s linear infinite;
+}
+
+.liquidLoader span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    transform: rotate(calc(45deg * var(--i)));
+}
+
+.liquidLoader span::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: calc(50% - 20px);
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(45deg, #f3f3f3, #581C87);
+    border-radius: 50%;
+    box-shadow: 0 0 30px #892cd0;
+}
+
+.rotate {
+    animation: animate 4s ease-in-out infinite;
+    animation-delay: calc(-0.2s * var(--j));
+}
+
+@keyframes animate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.svg {
+    width: 0;
+    height: 0;
+} */
 
 /* Skeleton Loader */
 
