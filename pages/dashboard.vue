@@ -188,16 +188,17 @@
                         <button
                             @click="toggleHighContrast"
                             :class="[
-                                'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
-                                highContrast ? 'bg-purple-600' : 'bg-gray-600'
+                                'transition-transform duration-300 focus:outline-none'
                             ]"
                             :aria-label="$t('accessibility.highContrast')"
                         >
-                            <span
-                                :class="[
-                                    'inline-block h-4 w-4 transform rounded-full bg-white transition-transform',
-                                    highContrast ? 'translate-x-6' : 'translate-x-1'
-                                ]"
+                            <ToggleRight
+                                v-if="highContrast"
+                                class="w-14 h-14 text-white transition-transform duration-300 translate-x-[-4px]"
+                            />
+                            <ToggleLeft
+                                v-else
+                                class="w-14 h-14 text-white stransition-transform duration-300 translate-x-[-4px]"
                             />
                         </button>
                     </div>

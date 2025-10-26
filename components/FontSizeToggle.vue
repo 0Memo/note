@@ -5,7 +5,7 @@
             :disabled="currentFontSize <= minFontSize"
             class="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-500 text-white p-2 rounded-full transition-colors duration-200"
         >
-            <Minus class="w-4 h-4" />
+            <Minus class="w-5 h-5" />
         </button>
         
         <span class="text-white text-sm font-medium min-w-[60px] text-center">
@@ -17,7 +17,7 @@
             :disabled="currentFontSize >= maxFontSize"
             class="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-500 text-white p-2 rounded-full transition-colors duration-200"
         >
-            <Plus class="w-4 h-4" />
+            <Plus class="w-5 h-5" />
         </button>
         
         <button
