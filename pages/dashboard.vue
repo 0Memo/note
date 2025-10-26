@@ -930,7 +930,7 @@
                                 <div class="absolute -top-[31px] -left-[207px] scale-[5] origin-top-left">
                                     <AbstractLeaf2 class="w-20 h-20 leaf"/>
                                 </div>
-                                <div class="absolute -top-[53.5px] -left-[178px] scale-[5] origin-top-left rotate-2">
+                                <div class="absolute -top-[54px] -left-[178px] scale-[5] origin-top-left rotate-2 leafContainer">
                                     <AbstractLeaf class="w-20 h-20 leaf"/>
                                 </div>
                                 <div class='absolute -top-[30px] right-4 origin-top-right z-10 toucan-shadow'>
