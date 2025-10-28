@@ -3,13 +3,14 @@
         <ClientOnly>
             <MouseTrail v-if="showMouseTrail" />
         </ClientOnly>
+        <div class="absolute inset-0 pointer-events-none z-[1]">
+            <Halloween />
+        </div>
         <!-- Celebrations 
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Easter />
         </div>
-        <div class="absolute inset-0 pointer-events-none z-[1]">
-            <Halloween />
-        </div>
+        
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Xmas />
         </div>
@@ -928,18 +929,20 @@
                                     </button>
                                     
                                 </div>
-                                <div class="absolute -top-[31px] -left-[207px] scale-[5] origin-top-left">
+                                <!--  <div class="absolute -top-[31px] -left-[207px] scale-[5] origin-top-left">
                                     <AbstractLeaf2 class="w-20 h-20 leaf"/>
                                 </div>
                                 <div class="absolute -top-[54px] -left-[178px] scale-[5] origin-top-left rotate-2 leafContainer">
                                     <AbstractLeaf class="w-20 h-20 leaf"/>
-                                </div>
-                                <div class='absolute -top-[30px] right-4 origin-top-right z-10 toucan-shadow'>
-                                    <div class="scale-[0.1] origin-top-right">
-                                        <Toucan />
+                                </div> -->
+                                <div class='absolute -top-[65px] md:-top-[90px] -right-3 md:-right-9 origin-top-right z-10 toucan-shadow'>
+                                    <div class="scale-[0.3] md:scale-[0.5] origin-top-right">
+                                        <AnimatedSkull />
                                     </div>
                                     <!-- <Diya /> -->
-                                    <!-- <AnimatedSkull /> -->
+                                    <!-- <div class="scale-[0.1] origin-top-right">
+                                        <Toucan />
+                                    </div> -->
                                     <!-- <Dragon /> -->
                                 </div>
                                 <div class="relative">
@@ -951,10 +954,10 @@
                                     <div class="absolute -top-11 -right-1 md:-right-1">
                                         <!-- <Llama class="w-[46px] h-[46px]" /> -->
                                     </div>
-                                    <div class="absolute bottom-0 -right-2">
-                                        <Leaves class="w-[50px] h-[50px] leaves" />
-                                        <!-- <div id="red-envelope">🧧</div> -->
-                                    </div>
+                                    <!-- <div class="absolute bottom-0 -right-2">
+                                            <Leaves class="w-[50px] h-[50px] leaves" />
+                                            <div id="red-envelope">🧧</div>
+                                        </div> -->
                                 </div>
                                 
                                 <!-- ✅ Green check indicator -->

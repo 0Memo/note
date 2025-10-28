@@ -1475,7 +1475,7 @@ button[data-tooltip][data-position=right1]:before {
     }
 }
 
-/*! Animated Skull
+/*! Animated Skull  */
 #skull {
     height: 400px;
     width: 400px;
@@ -1524,7 +1524,7 @@ button[data-tooltip][data-position=right1]:before {
 
 #skull:active #tongue {
     transform: translateY(-20px);
-} */
+}
 
 /*! Skull
 .craneo {
@@ -1775,7 +1775,7 @@ h2 {
     font-family: "Ruge Boogie";
 } */
 
-/*! Halloween
+/*! Halloween  */
 
 .halloween {
     position: absolute;
@@ -1848,7 +1848,7 @@ h2 {
     50% {
         transform: translateY(0px);
     }
-} */
+}
 
 /*! Xmas
 
