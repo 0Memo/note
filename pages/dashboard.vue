@@ -1292,7 +1292,7 @@
         localStorage.setItem('userNickname', settings.nickname)
         
         showSettingsModal.value = false
-        $toast.success(t('toast.settingsSaved'))
+        $toast.success(t('modal.settingsSaved'))
     }
 
     const isSyncButtonDisabled = computed(() =>
@@ -1433,36 +1433,6 @@
 
     const handleConfirmDelete = async () => {
         showConfirmModal.value = false
-        try {
-            const noteId = noteToDelete.value?.id || selectedNote.value.id
-            await $fetch(`/api/notes/${noteId}`, {
-                method: 'DELETE',
-            })
-
-            notes.value = notes.value.filter(n => n.id !== noteId)
-            
-            // Reset swipe state
-            swipedNoteId.value = null
-            
-            // If we deleted the currently selected note, select another one
-            if (selectedNote.value.id === noteId) {
-                selectedNote.value = notes.value[0] || {}
-                updatedNote.value = selectedNote.value?.text || ''
-                if (editor.value && selectedNote.value?.text) {
-                    editor.value.commands.setContent(selectedNote.value.text)
-                }
-            }
-            
-            noteToDelete.value = null
-            $toast.success(t('toast.noteDeletion'))
-        } catch (error) {
-            console.error("Erreur suppression:", error)
-            $toast.error(t('toast.deletionError'))
-        }
-    }
-
-    const handleConfirmSettings = async () => {
-        showSettingsModal.value = false
         try {
             const noteId = noteToDelete.value?.id || selectedNote.value.id
             await $fetch(`/api/notes/${noteId}`, {

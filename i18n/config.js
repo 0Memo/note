@@ -73,6 +73,7 @@ export default defineI18nConfig(() => ({
                 confirm: "Confirmer?",
                 yes: "Oui",
                 no: "Non",
+                settingsSaved: "Paramètres enregistrés",
                 privacy: {
                     title: "Politique de confidentialité",
                     explanation: "Cette politique de confidentialité explique comment Memo's Notes collecte, utilise, protège et stocke les données des utilisateurs.",                    
@@ -239,6 +240,7 @@ export default defineI18nConfig(() => ({
                 confirm: "¿Confirmar?",
                 yes: "Sí",
                 no: "No",
+                settingsSaved: "Configuración guardada",
                 privacy: {
                     title: "Política de privacidad",
                     explanation: "Esta Política de Privacidad explica cómo Memo's Notes recopila, utiliza, protege y almacena los datos de los usuarios.",                    
@@ -405,6 +407,7 @@ export default defineI18nConfig(() => ({
                 confirm: "Confirmar?",
                 yes: "Sim",
                 no: "Não",
+                settingsSaved: "Configurações salvas",
                 privacy: {
                     title: "Política de Privacidade",
                     explanation: "Esta Política de Privacidade explica como o Memo's Notes coleta, usa, protege e armazena os dados dos usuários.",                    
@@ -571,6 +574,7 @@ export default defineI18nConfig(() => ({
                 confirm: "Confirm?",
                 yes: "Yes",
                 no: "No",
+                settingsSaved: "Settings saved",
                 privacy: {
                     title: "Privacy Policy",
                     explanation: "This Privacy Policy explains how Memo's Notes collects, uses, protects, and stores user data.",                    
@@ -737,6 +741,7 @@ export default defineI18nConfig(() => ({
                 confirm: "Confermi?",
                 yes: "Sì",
                 no: "No",
+                settingsSaved: "Impostazioni salvate",
                 privacy: {
                     title: "Informativa sulla privacy",
                     explanation: "Questa Informativa sulla Privacy spiega come Memo's Notes raccoglie, utilizza, protegge e conserva i dati degli utenti.",                    
@@ -903,6 +908,7 @@ export default defineI18nConfig(() => ({
                 confirm: "Bekräfta?",
                 yes: "Ja",
                 no: "Nej",
+                settingsSaved: "Inställningar sparade",
                 privacy: {
                     title: "Integritetspolicy",
                     explanation: "Denna integritetspolicy förklarar hur Memo's Notes samlar in, använder, skyddar och lagrar användardata.",                    
@@ -1069,6 +1075,7 @@ export default defineI18nConfig(() => ({
                 confirm: "Confirmi?",
                 yes: "Da",
                 no: "Nu",
+                settingsSaved: "Setări salvate",
                 privacy: {
                     title: "Politica de confidențialitate",
                     explanation: "Această Politică de Confidențialitate explică modul în care Memo's Notes colectează, utilizează, protejează și stochează datele utilizatorilor.",                    
@@ -1235,6 +1242,7 @@ export default defineI18nConfig(() => ({
                 confirm: "Հաստատե՞լ",
                 yes: "Այո",
                 no: "Ոչ",
+                settingsSaved: "Կարգավորումները պահպանվել են",
                 privacy: {
                     title: "Գաղտնիություն",
                     explanation: "Այս քաղաքականությունը բացատրում է, թե ինչպես է Memo's Notes-ը հավաքում, օգտագործում և պահպանում օգտվողի տվյալները։",
