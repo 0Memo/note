@@ -6,10 +6,10 @@
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Halloween />
         </div>
-        <div class="absolute top-16 md:-top-4 -left-2 md:left-[600px]">
+        <!-- <div class="absolute top-16 md:-top-4 -left-2 md:left-[600px]">
             <Vampire class="w-24 h-24 md:w-52 md:h-52" />
         </div>
-        <!-- Celebrations 
+        Celebrations 
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Easter />
         </div>
