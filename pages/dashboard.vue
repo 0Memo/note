@@ -6,6 +6,9 @@
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Halloween />
         </div>
+        <div class="absolute top-16 md:-top-4 -left-2 md:left-[600px] z-[1]">
+            <Vampire class="w-24 h-24 md:w-52 md:h-52" />
+        </div>
         <!-- Celebrations 
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Easter />
@@ -951,13 +954,16 @@
                                         :placeholder="$t('notes.text')"
                                         class="min-h-[300px]"
                                     />
-                                    <div class="absolute -top-11 -right-1 md:-right-1">
-                                        <!-- <Llama class="w-[46px] h-[46px]" /> -->
+                                    <div class="absolute bottom-10 right-9">
+                                        <Pumpkin class="w-[50px] h-[50px]" />
                                     </div>
-                                    <!-- <div class="absolute bottom-0 -right-2">
-                                            <Leaves class="w-[50px] h-[50px] leaves" />
-                                            <div id="red-envelope">🧧</div>
+                                    <!--<div class="absolute -top-11 -right-1 md:-right-1">
+                                            <Llama class="w-[46px] h-[46px]" /> 
                                         </div> -->
+                                        <!--<div class="absolute bottom-0 -right-2">
+                                                <Leaves class="w-[50px] h-[50px] leaves" />
+                                                <div id="red-envelope">🧧</div>
+                                            </div> -->
                                 </div>
                                 
                                 <!-- ✅ Green check indicator -->
