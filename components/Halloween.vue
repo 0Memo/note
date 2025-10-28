@@ -12,7 +12,7 @@
             <span style="--i:9;">n</span>
         </h2>
         <img src="https://assets.codepen.io/7773162/spider.png" class="spider hidden md:block">
-        <img src="https://assets.codepen.io/7773162/spiderWeb.png" class="spiderWeb">
+        <img src="https://assets.codepen.io/7773162/spiderWeb.png" class="spiderWeb hidden md:block">
     </div>
 </template>
 

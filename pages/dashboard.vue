@@ -6,10 +6,10 @@
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Halloween />
         </div>
-        <!-- <div class="absolute top-16 md:-top-4 -left-2 md:left-[600px]">
+        <div class="absolute top-16 md:-top-4 -left-2 md:left-[600px]">
             <Vampire class="w-24 h-24 md:w-52 md:h-52" />
         </div>
-        Celebrations 
+        <!-- Celebrations 
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Easter />
         </div>
@@ -938,7 +938,7 @@
                                 <div class="absolute -top-[54px] -left-[178px] scale-[5] origin-top-left rotate-2 leafContainer">
                                     <AbstractLeaf class="w-20 h-20 leaf"/>
                                 </div> -->
-                                <div class='absolute -top-[65px] md:-top-[90px] -right-3 md:-right-9 origin-top-right z-10 toucan-shadow'>
+                                <div class='absolute -top-[65px] md:-top-[90px] -right-3 md:-right-9 origin-top-right toucan-shadow'>
                                     <div class="scale-[0.3] md:scale-[0.5] origin-top-right">
                                         <AnimatedSkull />
                                     </div>
