@@ -4,6 +4,7 @@ export default defineI18nConfig(() => ({
     fallbackLocale: "en",
     messages: {
         fr: {
+            greetings: "Salut",
             homepage: {
                 title: "Page d'accueil",
                 welcome: "Bienvenue sur Memo's Notes !",
@@ -65,6 +66,9 @@ export default defineI18nConfig(() => ({
                 logout: "Déconnexion"
             },
             modal: {
+                settings: "Paramètres",
+                nickname: "Pseudo",
+                nicknameHere: "Votre pseudo ici",
                 definitive: "Suppression définitive",
                 confirm: "Confirmer?",
                 yes: "Oui",
@@ -166,6 +170,7 @@ export default defineI18nConfig(() => ({
             newYear: "Bonne Année!"
         },
         es: {
+            greetings: "¡Hola",
             homepage: {
                 title: "Página principal",
                 welcome: "¡Bienvenido a Memo's Notes!",
@@ -227,6 +232,9 @@ export default defineI18nConfig(() => ({
                 logout: "Cerrar sesión"
             },
             modal: {
+                settings: "Configuración",
+                nickname: "Apodo",
+                nicknameHere: "Su apodo aquí",
                 definitive: "Supresión definitiva",
                 confirm: "¿Confirmar?",
                 yes: "Sí",
@@ -235,7 +243,7 @@ export default defineI18nConfig(() => ({
                     title: "Política de privacidad",
                     explanation: "Esta Política de Privacidad explica cómo Memo's Notes recopila, utiliza, protege y almacena los datos de los usuarios.",                    
                     collect: "1. Qué información recopilamos",
-                    choice: "Si elige conectar tu Calendario de Google, solicitamos acceso astu cuenta de Google mediante OAuth. Específicamente, solicitamos el siguiente alcance: https://www.googleapis.com/auth/calendar.events",                    
+                    choice: "Si elige conectar tu Calendario de Google, solicitamos acceso a tu cuenta de Google mediante OAuth. Específicamente, solicitamos el siguiente alcance: https://www.googleapis.com/auth/calendar.events",                    
                     data: "2. Cómo usamos sus datos",
                     permission: "Usamos este permiso únicamente para crear, actualizar o eliminar eventos del calendario que representen sus notas personales. No accedemos, almacenamos ni analizamos ningún otro evento de su calendario.",                    
                     storage: "3. Almacenamiento y protección de datos",
@@ -328,6 +336,7 @@ export default defineI18nConfig(() => ({
             newYear: "¡Feliz Año Nuevo!"
         },
         pt: {
+            greetings: "Oi",
             homepage: {
                 title: "Página inicial",
                 welcome: "Bem-vindo ao Memo's Notes!",
@@ -389,6 +398,9 @@ export default defineI18nConfig(() => ({
                 logout: "Sair"
             },
             modal: {
+                settings: "Configurações",
+                nickname: "Apelido",
+                nicknameHere: "Seu apelido aqui",
                 definitive: "Supressão definitiva",
                 confirm: "Confirmar?",
                 yes: "Sim",
@@ -490,6 +502,7 @@ export default defineI18nConfig(() => ({
             newYear: "Feliz Ano Novo!"
         },
         en: {
+            greetings: "Hi",
             homepage: {
                 title: "Homepage",
                 welcome: "Welcome to Memo's Notes!",
@@ -551,6 +564,9 @@ export default defineI18nConfig(() => ({
                 logout: "Log out"
             },
             modal: {
+                settings: "Settings",
+                nickname: "Nickname",
+                nicknameHere: "Your nickname here",
                 definitive: "Definitive deletion",
                 confirm: "Confirm?",
                 yes: "Yes",
@@ -652,6 +668,7 @@ export default defineI18nConfig(() => ({
             newYear: "Happy New Year!"
         },
         it: {
+            greetings: "Ciao",
             homepage: {
                 title: "Pagina iniziale",
                 welcome: "Benvenuto su Memo's Notes!",
@@ -713,6 +730,9 @@ export default defineI18nConfig(() => ({
                 logout: "Disconnetti"
             },
             modal: {
+                settings: "Impostazioni",
+                nickname: "Soprannome",
+                nicknameHere: "Il tuo soprannome qui",
                 definitive: "Eliminazione definitiva",
                 confirm: "Confermi?",
                 yes: "Sì",
@@ -814,6 +834,7 @@ export default defineI18nConfig(() => ({
             newYear: "Felice Anno Nuovo!"
         },
         sv: {
+            greetings: "Hej",
             homepage: {
                 title: "Startsida",
                 welcome: "Välkommen till Memo's Notes!",
@@ -875,6 +896,9 @@ export default defineI18nConfig(() => ({
                 logout: "Logga ut"
             },
             modal: {
+                settings: "Inställningar",
+                nickname: "Smeknamn",
+                nicknameHere: "Ditt smeknamn här",
                 definitive: "Slutgiltig radering",
                 confirm: "Bekräfta?",
                 yes: "Ja",
@@ -976,6 +1000,7 @@ export default defineI18nConfig(() => ({
             newYear: "Gott Nytt År!"
         },
         ro: {
+            greetings: "Salut",
             homepage: {
                 title: "Pagina principală",
                 welcome: "Bine ai venit la Memo's Notes!",
@@ -1037,6 +1062,9 @@ export default defineI18nConfig(() => ({
                 logout: "Deconectează-te"
             },
             modal: {
+                settings: "Setări",
+                nickname: "Poreclă",
+                nicknameHere: "Porecla ta aici",
                 definitive: "Ștergere definitivă",
                 confirm: "Confirmi?",
                 yes: "Da",
@@ -1138,6 +1166,7 @@ export default defineI18nConfig(() => ({
             newYear: "An Nou Fericit!"
         },
         hy: {
+            greetings: "Բարև",
             homepage: {
                 title: "Գլխավոր էջ",
                 welcome: "Բարի գալուստ Memo's Notes հավելված։",
@@ -1199,6 +1228,9 @@ export default defineI18nConfig(() => ({
                 logout: "Դուրս գալ"
             },
             modal: {
+                settings: "Կարգավորումներ",
+                nickname: "Մականուն",
+                nicknameHere: "Քո մականունը այստեղ",
                 definitive: "Վերջնական ջնջում",
                 confirm: "Հաստատե՞լ",
                 yes: "Այո",

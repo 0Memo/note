@@ -44,13 +44,25 @@
             }"
         >
             <Logo @click="toggleSidebar" class="cursor-pointer" />
-            <p class="relative z-50 mt-6 ml-1 text-md text-zinc-300">
+            <p class="relative flex flex-wrap justify-evenly md:justify-between gap-36 md:gap-0 z-50 mt-6 ml-1 text-md text-zinc-300">
+                
                 <nuxt-link
                     :to="localePath('/')"
-                    class="font-semibold text-white transform shadow-2xl cursor-pointer shadow-purple-900 custom-underline scalable-text">
-                    {{ $t('homepage.title') }}
+                    class="text-white hover:text-zinc-500 shadow-lg">
+                    <House class="w-8 h-8" />
                 </nuxt-link>
+                <button
+                    class="text-white hover:text-zinc-500 shadow-lg"
+                    @click="showSettingsModal = true"
+                >
+                    <Settings class="w-8 h-8" />
+                </button>
             </p>
+            <div class="mt-4">
+                <span v-if="userNickname" class="font-semibold text-white text-lg self-center transform cursor-pointer shadow-2xl shadow-purple-900 scalable-text">
+                    {{ $t('greetings')}} {{ userNickname }}!
+                </span>
+            </div>
             <button
                 v-if="showInstall"
                 @click="installApp"
@@ -730,6 +742,16 @@
                 >
                     <Pencil class="w-10 h-10 font-bold" />
                 </button>
+                <SettingsModal
+                    :visible="showSettingsModal"
+                    :nickname="userNickname"
+                    :bgColor="appBgColor"
+                    :textColor="appTextColor"
+                    @save="handleSaveSettings"
+                    :title="$t('modal.definitive')"
+                    :message="$t('modal.confirm')"
+                    @cancel="showSettingsModal = false"
+                />
                 <ConfirmModal
                     :visible="showConfirmModal"
                     :title="$t('modal.definitive')"
@@ -1259,6 +1281,20 @@
         oscillator.stop(audioCtx.currentTime + duration);
     }
 
+    const showSettingsModal = ref(false)
+    const userNickname = ref('')
+    const appBgColor = ref('#030303')
+    const appTextColor = ref('white')
+
+    // Handle settings save
+    const handleSaveSettings = (settings) => {
+        userNickname.value = settings.nickname
+        localStorage.setItem('userNickname', settings.nickname)
+        
+        showSettingsModal.value = false
+        $toast.success(t('toast.settingsSaved'))
+    }
+
     const isSyncButtonDisabled = computed(() =>
         syncingNoteId.value === selectedNote.value?.id || isNoteUnchanged.value
     )
@@ -1397,6 +1433,36 @@
 
     const handleConfirmDelete = async () => {
         showConfirmModal.value = false
+        try {
+            const noteId = noteToDelete.value?.id || selectedNote.value.id
+            await $fetch(`/api/notes/${noteId}`, {
+                method: 'DELETE',
+            })
+
+            notes.value = notes.value.filter(n => n.id !== noteId)
+            
+            // Reset swipe state
+            swipedNoteId.value = null
+            
+            // If we deleted the currently selected note, select another one
+            if (selectedNote.value.id === noteId) {
+                selectedNote.value = notes.value[0] || {}
+                updatedNote.value = selectedNote.value?.text || ''
+                if (editor.value && selectedNote.value?.text) {
+                    editor.value.commands.setContent(selectedNote.value.text)
+                }
+            }
+            
+            noteToDelete.value = null
+            $toast.success(t('toast.noteDeletion'))
+        } catch (error) {
+            console.error("Erreur suppression:", error)
+            $toast.error(t('toast.deletionError'))
+        }
+    }
+
+    const handleConfirmSettings = async () => {
+        showSettingsModal.value = false
         try {
             const noteId = noteToDelete.value?.id || selectedNote.value.id
             await $fetch(`/api/notes/${noteId}`, {
@@ -2012,6 +2078,10 @@
     }
 
     onMounted(async() => {
+        const savedNickname = localStorage.getItem('userNickname')
+        
+        if (savedNickname) userNickname.value = savedNickname
+
         const globalLoading = useState('globalLoading')
         
         try {
