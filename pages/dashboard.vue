@@ -2070,16 +2070,16 @@
             console.log('[v0] Editor HTML content:', htmlContent)
             
             if (!htmlContent || htmlContent === '<p></p>' || htmlContent.trim() === '') {
-            $toast.error(t('toast.emptyNote') || 'Note is empty')
-            isGeneratingPdf.value = false
-            return
+                $toast.error(t('toast.emptyNote') || 'Note is empty')
+                isGeneratingPdf.value = false
+                return
             }
             
             // Create PDF
             const pdf = new jsPDF({
-            orientation: 'portrait',
-            unit: 'mm',
-            format: 'a4'
+                orientation: 'portrait',
+                unit: 'mm',
+                format: 'a4'
             })
             
             // PDF dimensions
@@ -2094,7 +2094,36 @@
             pdf.setFont('helvetica', 'bold')
             const title = selectedNote.value.title || t('toast.note')
             pdf.text(title, margin, yPosition)
-            yPosition += 15
+            yPosition += 10
+
+            const noteDate = selectedNote.value.eventDate
+
+            if (noteDate) {
+                pdf.setFontSize(11)
+                pdf.setFont('helvetica', 'normal')
+                pdf.setTextColor(100, 100, 100) // Gray color for date
+                
+                // Format the date
+                let formattedDate = ''
+                try {
+                    const dateObj = new Date(noteDate)
+                    // Format as: Month Day, Year (e.g., "January 15, 2024")
+                    formattedDate = dateObj.toLocaleDateString(locale.value || 'en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                    })
+                } catch (e) {
+                    // If date parsing fails, use the raw date value
+                    formattedDate = noteDate.toString()
+                }
+                
+                pdf.text(formattedDate, margin, yPosition)
+                pdf.setTextColor(0, 0, 0) // Reset to black for content
+                yPosition += 8
+            }
+                
+            yPosition += 7
             
             // Parse HTML content
             const tempDiv = document.createElement('div')
