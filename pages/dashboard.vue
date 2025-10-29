@@ -2091,13 +2091,56 @@
             const margin = 20
             const maxWidth = pageWidth - (margin * 2)
             let yPosition = margin
-            
-            // Add title
-            pdf.setFontSize(20)
-            pdf.setFont('helvetica', 'bold')
-            const title = selectedNote.value.title || t('toast.note')
-            pdf.text(title, margin, yPosition)
-            yPosition += 10
+
+            // 🖼️ Add notes.png icon + title on same line
+            try {
+                const imageUrl = '/icons/notes.png'
+                const image = await fetch(imageUrl)
+                const blob = await image.blob()
+                const reader = new FileReader()
+                const base64Data = await new Promise(resolve => {
+                    reader.onloadend = () => resolve(reader.result)
+                    reader.readAsDataURL(blob)
+                })
+
+                // 🧭 Positioning
+                const imageWidth = 10 // smaller to match text line height
+                const imageHeight = 10
+                const imageY = yPosition - 6 // lift it a bit to align with text baseline
+
+                // Draw image at the left
+                pdf.addImage(base64Data, 'PNG', margin, imageY, imageWidth, imageHeight)
+
+                // 🔤 Draw the title next to the image
+                pdf.setFontSize(20)
+                pdf.setFont('helvetica', 'bold')
+
+                const titleBase = selectedNote.value.title || t('toast.note')
+
+                // Start text a bit to the right of the image
+                const textStartX = margin + imageWidth + 4
+
+                if (userNickname.value) {
+                    // Draw title
+                    pdf.text(titleBase, textStartX, yPosition)
+
+                    // Measure width of title
+                    const titleWidth = pdf.getTextWidth(titleBase)
+
+                    // Draw "by <nickname>" in italic
+                    pdf.setFont('helvetica', 'italic')
+                    const byText = ` by ${userNickname.value}`
+                    pdf.text(byText, textStartX + titleWidth, yPosition)
+                } else {
+                    pdf.text(titleBase, textStartX, yPosition)
+                }
+
+                // Add bottom spacing after title line
+                yPosition += 15
+
+            } catch (err) {
+                console.warn('⚠️ Could not load notes.png icon:', err)
+            }
 
             const noteDate = selectedNote.value.eventDate
 
