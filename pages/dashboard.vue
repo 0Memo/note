@@ -952,7 +952,15 @@
                                     >
                                         1.
                                     </button>
-                                    
+                                    <button
+                                        @click="downloadAsPdf"
+                                        :disabled="isGeneratingPdf || !selectedNote"
+                                        class="pr-32 md:pr-0 md:-ml-2 rounded hover:bg-zinc-700 text-black hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors ml-auto stroke-[black] hover:stroke-[white] duration-300"
+                                        :aria-label="$t('editor.downloadPdf') || 'Download as PDF'"
+                                        :title="$t('toast.downloadPdf') || 'Download as PDF'"
+                                    >
+                                        <PDF class="w-8 h-8" />
+                                    </button>
                                 </div>
                                 <!--  <div class="absolute -top-[31px] -left-[207px] scale-[5] origin-top-left">
                                     <AbstractLeaf2 class="w-20 h-20 leaf"/>
@@ -1102,6 +1110,7 @@
     import { Underline } from '@tiptap/extension-underline'
     import FontSizeToggle from '@/components/FontSizeToggle.vue'
     import { definePageMeta } from '#imports'
+    import jsPDF from 'jspdf'
 
     definePageMeta({
         middleware: ['auth'],
@@ -1144,6 +1153,7 @@
     const manualDate = ref('')
     const showSavedIndicator = ref(false)
     const saveIndicatorType = ref('saving')
+    const isGeneratingPdf = ref(false)
 
     const saveIndicatorClass = computed(() => {
         switch (saveIndicatorType.value) {
@@ -2045,6 +2055,173 @@
         setTimeout(() => {
             showSavedIndicator.value = false
         }, 1500)
+    }
+
+    const downloadAsPdf = async () => {
+        if (!editor.value || !selectedNote.value) {
+            $toast.error(t('notes.selectNoteFirst') || 'Please select a note first')
+            return
+        }
+
+        try {
+            isGeneratingPdf.value = true
+            
+            const htmlContent = editor.value.getHTML()
+            console.log('[v0] Editor HTML content:', htmlContent)
+            
+            if (!htmlContent || htmlContent === '<p></p>' || htmlContent.trim() === '') {
+            $toast.error(t('toast.emptyNote') || 'Note is empty')
+            isGeneratingPdf.value = false
+            return
+            }
+            
+            // Create PDF
+            const pdf = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4'
+            })
+            
+            // PDF dimensions
+            const pageWidth = pdf.internal.pageSize.getWidth()
+            const pageHeight = pdf.internal.pageSize.getHeight()
+            const margin = 20
+            const maxWidth = pageWidth - (margin * 2)
+            let yPosition = margin
+            
+            // Add title
+            pdf.setFontSize(20)
+            pdf.setFont('helvetica', 'bold')
+            const title = selectedNote.value.title || t('toast.note')
+            pdf.text(title, margin, yPosition)
+            yPosition += 15
+            
+            // Parse HTML content
+            const tempDiv = document.createElement('div')
+            tempDiv.innerHTML = htmlContent
+            
+            // Function to add new page if needed
+            const checkPageBreak = (lineHeight) => {
+            if (yPosition + lineHeight > pageHeight - margin) {
+                pdf.addPage()
+                yPosition = margin
+                return true
+            }
+            return false
+            }
+            
+            // Function to extract text from element
+            const extractText = (element) => {
+            let text = ''
+            element.childNodes.forEach(node => {
+                if (node.nodeType === Node.TEXT_NODE) {
+                text += node.textContent
+                } else if (node.nodeType === Node.ELEMENT_NODE) {
+                if (node.tagName === 'BR') {
+                    text += '\n'
+                } else {
+                    text += extractText(node)
+                }
+                }
+            })
+            return text
+            }
+            
+            // Process each element
+            const processElement = (element) => {
+            const tagName = element.tagName?.toLowerCase()
+            
+            if (tagName === 'h1' || tagName === 'h2' || tagName === 'h3') {
+                checkPageBreak(12)
+                pdf.setFontSize(tagName === 'h1' ? 18 : tagName === 'h2' ? 16 : 14)
+                pdf.setFont('helvetica', 'bold')
+                const text = extractText(element)
+                const lines = pdf.splitTextToSize(text, maxWidth)
+                lines.forEach(line => {
+                checkPageBreak(8)
+                pdf.text(line, margin, yPosition)
+                yPosition += 8
+                })
+                yPosition += 4
+                pdf.setFontSize(12)
+                pdf.setFont('helvetica', 'normal')
+            } else if (tagName === 'p') {
+                checkPageBreak(7)
+                const text = extractText(element)
+                if (text.trim()) {
+                pdf.setFontSize(12)
+                pdf.setFont('helvetica', 'normal')
+                const lines = pdf.splitTextToSize(text, maxWidth)
+                lines.forEach(line => {
+                    checkPageBreak(7)
+                    pdf.text(line, margin, yPosition)
+                    yPosition += 7
+                })
+                yPosition += 3
+                }
+            } else if (tagName === 'ul' || tagName === 'ol') {
+                const items = element.querySelectorAll('li')
+                items.forEach((li, index) => {
+                checkPageBreak(7)
+                const text = extractText(li)
+                const bullet = tagName === 'ul' ? '• ' : `${index + 1}. `
+                pdf.setFontSize(12)
+                pdf.setFont('helvetica', 'normal')
+                const lines = pdf.splitTextToSize(bullet + text, maxWidth - 5)
+                lines.forEach((line, lineIndex) => {
+                    checkPageBreak(7)
+                    pdf.text(line, margin + (lineIndex > 0 ? 5 : 0), yPosition)
+                    yPosition += 7
+                })
+                })
+                yPosition += 3
+            } else if (tagName === 'table') {
+                // Simple table rendering
+                const rows = element.querySelectorAll('tr')
+                rows.forEach(row => {
+                checkPageBreak(10)
+                const cells = row.querySelectorAll('td, th')
+                let xPos = margin
+                const cellWidth = maxWidth / cells.length
+                cells.forEach(cell => {
+                    const text = extractText(cell)
+                    pdf.setFontSize(10)
+                    pdf.setFont('helvetica', cell.tagName === 'TH' ? 'bold' : 'normal')
+                    pdf.text(text.substring(0, 30), xPos, yPosition)
+                    xPos += cellWidth
+                })
+                yPosition += 8
+                })
+                yPosition += 5
+            } else if (element.children.length > 0) {
+                // Process child elements
+                Array.from(element.children).forEach(child => {
+                processElement(child)
+                })
+            }
+            }
+            
+            // Process all elements
+            Array.from(tempDiv.children).forEach(child => {
+            processElement(child)
+            })
+            
+            console.log('[v0] PDF generation complete')
+            
+            const filename = `${selectedNote.value.title || 'note'}.pdf`
+            .replace(/[^a-z0-9]/gi, '_')
+            .toLowerCase()
+            
+            pdf.save(filename)
+            
+            isGeneratingPdf.value = false
+            $toast.success(t('toast.pdfDownloaded') || 'PDF downloaded successfully!')
+            
+        } catch (error) {
+            console.error('[v0] Error generating PDF:', error)
+            $toast.error(t('toast.pdfError') || 'Error generating PDF')
+            isGeneratingPdf.value = false
+        }
     }
 
     onMounted(async() => {

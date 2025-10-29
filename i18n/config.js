@@ -106,6 +106,7 @@ export default defineI18nConfig(() => ({
                 reset: "Réinitialiser"
             },
             toast: {
+                note: "Note",
                 register: "L'utilisateur a été créé",
                 language: "La langue a été changée: ",
                 welcome: "Bienvenue!",
@@ -128,6 +129,10 @@ export default defineI18nConfig(() => ({
                 saving: "Enregistrement...",
                 saved: "Note enregistrée",
                 saveError: "Erreur",
+                emptyNote: "La note est vide",
+                downloadPdf: "Télécharger le PDF",
+                pdfDownloaded: "PDF téléchargé avec succès",
+                pdfError: "Erreur lors de la génération du PDF",
                 calendar: {
                     warning: "Votre consentement sera requis pour connecter Google Agenda",
                     connectCalendar: "Connecter Google Agenda",
@@ -273,6 +278,7 @@ export default defineI18nConfig(() => ({
                 reset: "Restablecer"
             },
             toast: {
+                note: "Nota",
                 register: "El usuario ha sido creado",
                 language: "El idioma ha sido cambiado a: ",
                 welcome: "¡Bienvenido!",
@@ -295,6 +301,10 @@ export default defineI18nConfig(() => ({
                 saving: "Guardando...",
                 saved: "Nota guardada",
                 saveError: "Error",
+                emptyNote: "La nota está vacía",
+                downloadPdf: "Descargar PDF",
+                pdfDownloaded: "PDF descargado correctamente",
+                pdfError: "Error al generar el PDF",
                 calendar: {
                     warning: "Se requerirá su consentimiento para conectar con Google Calendar",
                     connectCalendar: "Conectar Google Calendar",
@@ -440,6 +450,7 @@ export default defineI18nConfig(() => ({
                 reset: "Redefinir"
             },
             toast: {
+                note: "Nota",
                 register: "Usuário criado com sucesso",
                 language: "Idioma alterado para: ",
                 welcome: "Bem-vindo!",
@@ -462,6 +473,10 @@ export default defineI18nConfig(() => ({
                 saving: "Salvando...",
                 saved: "Nota salva",
                 saveError: "Erro",
+                emptyNote: "A note está vazia",
+                downloadPdf: "Baixar PDF",
+                pdfDownloaded: "PDF baixado com sucesso",
+                pdfError: "Erro ao gerar o PDF",
                 calendar: {
                     warning: "Seu consentimento será necessário para conectar ao Google Agenda",
                     connectCalendar: "Conectar o Google Agenda",
@@ -607,6 +622,7 @@ export default defineI18nConfig(() => ({
                 reset: "Reset"
             },
             toast: {
+                note: "Note",
                 register: "User has been created",
                 language: "Language has been changed to: ",
                 welcome: "Welcome!",
@@ -629,6 +645,10 @@ export default defineI18nConfig(() => ({
                 saving: "Saving...",
                 saved: "Note saved",
                 saveError: "Error",
+                emptyNote: "Note is empty",
+                downloadPdf: "Download PDF",
+                pdfDownloaded: "PDF downloaded successfully",
+                pdfError: "Error generating PDF",
                 calendar: {
                     warning: "Your consent will be required to connect to Google Calendar",
                     connectCalendar: "Connect Google Calendar",
@@ -774,6 +794,7 @@ export default defineI18nConfig(() => ({
                 reset: "Ripristina"
             },
             toast: {
+                note: "Nota",
                 register: "Utente creato con successo",
                 language: "Lingua cambiata in: ",
                 welcome: "Benvenuto!",
@@ -796,6 +817,10 @@ export default defineI18nConfig(() => ({
                 saving: "Salvando...",
                 saved: "Nota salvata",
                 saveError: "Errore",
+                emptyNote: "La nota è vuota",
+                downloadPdf: "Scarica PDF",
+                pdfDownloaded: "PDF scaricato con successo",
+                pdfError: "Errore durante la generazione del PDF",
                 calendar: {
                     warning: "Il tuo consenso sarà richiesto per connettersi a Google Calendar",
                     connectCalendar: "Connetti Google Calendar",
@@ -941,6 +966,7 @@ export default defineI18nConfig(() => ({
                 reset: "Återställ"
             },
             toast: {
+                note: "Anteckning",
                 register: "Användare har skapats",
                 language: "Språket har ändrats till: ",
                 welcome: "Välkommen!",
@@ -963,6 +989,10 @@ export default defineI18nConfig(() => ({
                 saving: "Sparar...",
                 saved: "Anteckning sparad",
                 saveError: "Fel",
+                emptyNote: "Anteckningen är tom",
+                downloadPdf: "Ladda ner PDF",
+                pdfDownloaded: "PDF har laddats ner framgångsrikt",
+                pdfError: "Fel vid generering av PDF",
                 calendar: {
                     warning: "Ditt samtycke krävs för att ansluta till Google Kalender",
                     connectCalendar: "Anslut Google Kalender",
@@ -1108,6 +1138,7 @@ export default defineI18nConfig(() => ({
                 reset: "Resetare"
             },
             toast: {
+                note: "Notiță",
                 register: "Utilizatorul a fost creat",
                 language: "Limba a fost schimbată în: ",
                 welcome: "Bine ai venit!",
@@ -1130,6 +1161,10 @@ export default defineI18nConfig(() => ({
                 saving: "Se salvează...",
                 saved: "Notiță salvată",
                 saveError: "Eroare",
+                emptyNote: "Notița este goală",
+                downloadPdf: "Descarcă PDF",
+                pdfDownloaded: "PDF descărcat cu succes",
+                pdfError: "Eroare la generarea fișierului PDF",
                 calendar: {
                     warning: "Consimțământul tău va fi necesar pentru a te conecta la Google Calendar",
                     connectCalendar: "Conectează Google Calendar",
@@ -1275,6 +1310,7 @@ export default defineI18nConfig(() => ({
                 reset: "Զրոյացնել"
             },
             toast: {
+                note: "Նշում",
                 register: "Օգտվողը ստեղծված է",
                 language: "Լեզուն փոխվել է՝ ",
                 welcome: "Բարի գալուստ!",
@@ -1297,6 +1333,10 @@ export default defineI18nConfig(() => ({
                 saving: "Պահպանում է...",
                 saved: "Նշումը պահպանվել է",
                 saveError: "Սխալ",
+                emptyNote: "Նշումը դատարկ է",
+                downloadPdf: "Ներբեռնել PDF-ը",
+                pdfDownloaded: "PDF-ը հաջողությամբ ներբեռնվեց",
+                pdfError: "Սխալ՝ PDF ստեղծելու ընթացքում",
                 calendar: {
                     warning: "Ձեր համաձայնությունը կպահանջվի Google Օրացույցին միանալու համար",
                     connectCalendar: "Միացնել Google Օրացույցը",

@@ -43,6 +43,14 @@ export default defineNuxtConfig({
     vueI18n: resolve("i18n/config.js"),
   },
 
+  eslint: {
+    config: {
+      rules: {
+        "react-hooks/rules-of-hooks": "off",
+      },
+    },
+  },
+
   postcss: {
     plugins: {
       tailwindcss: {},
