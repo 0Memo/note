@@ -860,7 +860,7 @@
                         </div>
                         <div class="relative my-4 bg-[#d5c7e2] border-purple-900 rounded-md p-4 -ml-[8.75rem] md:-ml-5 shadow-lg w-[22.5rem] md:w-full min-h-[300px]">
                             <div class="overflow-hidden text-black bg-white border border-white rounded-lg">
-                                <div v-if="editor" class="flex flex-wrap gap-1 p-2 text-black shadow-md rounded-tl-md rounded-tr-md md:gap-2 bg-gray-50">
+                                <div v-if="editor" class="flex flex-wrap gap-1 p-2 text-black shadow-md rounded-tl-md rounded-tr-md md:gap-2 bg-gray-50 z-20">
                                     <button
                                         @click="editor.chain().focus().undo().run()"
                                         class="px-2 py-1 text-sm rounded hover:bg-gray-200"
@@ -960,8 +960,8 @@
                                 <div class="absolute -top-[54px] -left-[178px] scale-[5] origin-top-left rotate-2 leafContainer">
                                     <AbstractLeaf class="w-20 h-20 leaf"/>
                                 </div> -->
-                                <div class='absolute -top-[65px] md:-top-[90px] -right-3 md:-right-9 origin-top-right toucan-shadow'>
-                                    <div class="scale-[0.3] md:scale-[0.5] origin-top-right">
+                                <div class='absolute -top-[15px] md:-top-[90px] -right-8 md:-right-9 origin-top-right toucan-shadow pointer-events-none md:pointer-events-auto z-0 md:z-10'>
+                                    <div class="scale-[0.5] md:scale-[0.6] origin-top-right opacity-90 md:opacity-100">
                                         <AnimatedSkull />
                                     </div>
                                     <!-- <Diya /> -->
