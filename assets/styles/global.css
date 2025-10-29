@@ -8,6 +8,10 @@
     font-family: 'TACOM';
     src: url('../fonts/TACOM.ttf') format('truetype');
 }
+@font-face {
+    font-family: 'Claymont';
+    src: url('../fonts/ClaymontDemoRegular.ttf') format('truetype');
+}
 
 @tailwind base;
 @tailwind components;

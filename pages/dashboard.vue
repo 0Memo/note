@@ -59,8 +59,11 @@
                 </button>
             </p>
             <div class="mt-4">
-                <span v-if="userNickname" class="font-semibold text-white text-lg self-center transform cursor-pointer shadow-2xl shadow-purple-900 scalable-text">
-                    {{ $t('greetings')}} {{ userNickname }}!
+                <span v-if="userNickname" class="font-semibold text-white text-lg self-center transform shadow-2xl shadow-purple-900 scalable-text">
+                    {{ $t('greetings')}}
+                    <span class="font-claymont text-xl">
+                        {{ userNickname }}
+                    </span>!
                 </span>
             </div>
             <button

@@ -21,6 +21,7 @@ export default {
       button: ["Kalam"],
       footer: ["Kalam"],
       tacom: ["TACOM"],
+      claymont: ["Claymont"],
       sans: ["ui-sans-serif", "system-ui"],
       serif: ["ui-serif", "Georgia"],
     },
