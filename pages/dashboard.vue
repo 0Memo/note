@@ -30,7 +30,7 @@
             <HispanicMonth />
         </div>  -->
         <div
-            class="md:hidden fixed top-0 left-0 right-0 z-[100] bg-secondary flex items-center justify-between px-6 py-4 shadow-md cursor-pointer border-double border-b-4 border-white"
+            class="md:hidden fixed top-0 left-0 right-0 z-[100] custom-bg-secondary flex items-center justify-between px-6 py-4 shadow-md cursor-pointer border-double border-b-4 border-white"
         >
             <NavbarLogo />
         </div>
@@ -59,11 +59,12 @@
                 </button>
             </p>
             <div class="mt-4">
-                <span v-if="userNickname" class="font-semibold text-white text-lg self-center transform shadow-2xl shadow-purple-900 scalable-text">
+                <span v-if="userNickname" class="flex flex-wrap justify-start md:justify-center font-semibold text-white text-lg self-center transform shadow-2xl shadow-purple-900 scalable-text">
                     {{ $t('greetings')}}
-                    <span class="font-claymont text-xl">
+                    <span class="font-claymont text-xl mt-4 md:mt-0">
                         {{ userNickname }}
                     </span>!
+                    <Saturn class="w-6 h-6 ml-2" />
                 </span>
             </div>
             <button
@@ -732,7 +733,7 @@
             </template>
         </div>
 
-        <div class="w-full overflow-y-scroll bg-secondary md:overflow-y-auto">
+        <div class="w-full overflow-y-scroll custom-bg-secondary md:overflow-y-auto">
             <div class="flex items-start justify-between p-8 mt-16 text-white md:mt-0">
                 <button
                     class="gap-3 right
@@ -748,8 +749,8 @@
                 <SettingsModal
                     :visible="showSettingsModal"
                     :nickname="userNickname"
-                    :bgColor="appBgColor"
-                    :textColor="appTextColor"
+                    :textColor="customTextColor"
+                    :bgSecondary="customBgSecondary"
                     @save="handleSaveSettings"
                     :title="$t('modal.definitive')"
                     :message="$t('modal.confirm')"
@@ -1152,8 +1153,13 @@
     const isSyncing = ref(false)
     const accessToken = ref(null)
     const syncingNoteId = ref(null)
+
     const editingDate = ref(false)
     const manualDate = ref('')
+
+    const customTextColor = ref('white')
+    const customBgSecondary = ref('#1d073a')
+
     const showSavedIndicator = ref(false)
     const saveIndicatorType = ref('saving')
     const isGeneratingPdf = ref(false)
@@ -1302,10 +1308,34 @@
     // Handle settings save
     const handleSaveSettings = (settings) => {
         userNickname.value = settings.nickname
+        customTextColor.value = settings.textColor
+        customBgSecondary.value = settings.bgSecondary
         localStorage.setItem('userNickname', settings.nickname)
+        localStorage.setItem('customTextColor', settings.textColor)
+        localStorage.setItem('customBgSecondary', settings.bgSecondary)
+
+        applyCustomSettings()
         
         showSettingsModal.value = false
         $toast.success(t('modal.settingsSaved'))
+    }
+
+    const applyCustomSettings = () => {
+        const root = document.documentElement
+        
+        // Apply text and icon color
+        if (customTextColor.value === 'black') {
+            root.style.setProperty('--custom-text-color', '#000000')
+            root.style.setProperty('--custom-icon-color', '#000000')
+            document.body.classList.add('custom-dark-text')
+        } else {
+            root.style.setProperty('--custom-text-color', '#ffffff')
+            root.style.setProperty('--custom-icon-color', '#ffffff')
+            document.body.classList.remove('custom-dark-text')
+        }
+        
+        // Apply bg-secondary color
+        root.style.setProperty('--custom-bg-secondary', customBgSecondary.value)
     }
 
     const isSyncButtonDisabled = computed(() =>
@@ -2301,8 +2331,15 @@
 
     onMounted(async() => {
         const savedNickname = localStorage.getItem('userNickname')
-        
         if (savedNickname) userNickname.value = savedNickname
+
+        const savedTextColor = localStorage.getItem('customTextColor')
+        if (savedTextColor) customTextColor.value = savedTextColor
+
+        const savedBgSecondary = localStorage.getItem('customBgSecondary')
+        if (savedBgSecondary) customBgSecondary.value = savedBgSecondary
+        
+        applyCustomSettings()
 
         const globalLoading = useState('globalLoading')
         
