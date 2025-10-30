@@ -737,7 +737,7 @@
             <div class="flex items-start justify-between p-8 mt-16 text-white md:mt-0">
                 <button
                     class="gap-3 right
-                    text-white hover:text-zinc-500 shadow-lg
+                    text-white hover:text-zinc-500
                     absolute left-[7.5rem] bottom-8 md:static"
                     @click="createNewNote"
                     :data-tooltip="$t('tooltip.createNote')"
@@ -764,7 +764,7 @@
                     @cancel="showConfirmModal = false"
                 />
                 <button
-                    class="hover:text-zinc-500 left shadow-lg absolute
+                    class="hover:text-zinc-500 left absolute
                     right-[7.5rem] md:static bottom-8 md:right-8"
                     @click="showConfirmModal = true"
                     :data-tooltip="$t('tooltip.deleteNote')"
@@ -790,7 +790,7 @@
                         <div class="-ml-14 sm:ml-0 w-fit">
                             <div class="flex flex-row items-center gap-2 mb-8 text-lg">
                                 <button
-                                    @click="startTranscription" class="pr-2 text-white shadow-lg focus:outline-none left hover:text-zinc-500"
+                                    @click="startTranscription" class="pr-2 text-white focus:outline-none left hover:text-zinc-500"
                                     :data-tooltip="$t('tooltip.dictateNote')"
                                     data-position="left2"
                                     :aria-label="$t('tooltip.dictateNote')"
@@ -798,7 +798,7 @@
                                     <Microphone class="relative w-8 h-8 font-bold -top-2"/>
                                 </button>
                                 <button
-                                    @click="readNoteAloud(selectedNote?.text)"  class="pr-2 text-white shadow-lg focus:outline-none top hover:text-zinc-500"
+                                    @click="readNoteAloud(selectedNote?.text)"  class="pr-2 text-white focus:outline-none top hover:text-zinc-500"
                                     :data-tooltip="$t('tooltip.listenNote')"
                                     data-position="top"
                                     :aria-label="$t('tooltip.listenNote')"
