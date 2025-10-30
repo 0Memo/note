@@ -57,15 +57,28 @@ body {
 }
 
 /* Custom text color - applies when user selects black text */
-.custom-dark-text .text-white,
-.custom-dark-text .text-zinc-300,
-.custom-dark-text .text-zinc-200 {
+.main-content-area.custom-dark-text .text-white,
+.main-content-area.custom-dark-text .text-zinc-300,
+.main-content-area.custom-dark-text .text-zinc-200,
+.main-content-area.custom-dark-text .text-zinc-100 {
     color: var(--custom-text-color) !important;
 }
 
 /* Custom icon color */
-.custom-dark-text svg {
+.main-content-area.custom-dark-text svg {
     color: var(--custom-icon-color) !important;
+}
+
+/* Exclude specific elements from custom text color */
+.main-content-area.custom-dark-text .excludeFromColorToggle .text-white,
+.main-content-area.custom-dark-text .excludeFromColorToggle .text-zinc-300,
+.main-content-area.custom-dark-text .excludeFromColorToggle .text-zinc-200,
+.main-content-area.custom-dark-text .excludeFromColorToggle .text-zinc-100 {
+    color: #ffffff !important;
+}
+
+.main-content-area.custom-dark-text .excludeFromColorToggle svg {
+    color: #ffffff !important;
 }
 
 /* High contrast mode */

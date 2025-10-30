@@ -733,7 +733,10 @@
             </template>
         </div>
 
-        <div class="w-full overflow-y-scroll custom-bg-secondary md:overflow-y-auto">
+        <div
+            ref="mainContentArea"
+            class="w-full overflow-y-scroll custom-bg-secondary md:overflow-y-auto main-content-area"
+        >
             <div class="flex items-start justify-between p-8 mt-16 text-white md:mt-0">
                 <button
                     class="gap-3 right
@@ -746,16 +749,18 @@
                 >
                     <Pencil class="w-10 h-10 font-bold" />
                 </button>
-                <SettingsModal
-                    :visible="showSettingsModal"
-                    :nickname="userNickname"
-                    :textColor="customTextColor"
-                    :bgSecondary="customBgSecondary"
-                    @save="handleSaveSettings"
-                    :title="$t('modal.definitive')"
-                    :message="$t('modal.confirm')"
-                    @cancel="showSettingsModal = false"
-                />
+                <div class="excludeFromColorToggle">
+                    <SettingsModal
+                        :visible="showSettingsModal"
+                        :nickname="userNickname"
+                        :textColor="customTextColor"
+                        :bgSecondary="customBgSecondary"
+                        @save="handleSaveSettings"
+                        :title="$t('modal.definitive')"
+                        :message="$t('modal.confirm')"
+                        @cancel="showSettingsModal = false"
+                    />
+                </div>
                 <ConfirmModal
                     :visible="showConfirmModal"
                     :title="$t('modal.definitive')"
@@ -1159,6 +1164,7 @@
 
     const customTextColor = ref('white')
     const customBgSecondary = ref('#1d073a')
+    const mainContentArea = ref(null)
 
     const showSavedIndicator = ref(false)
     const saveIndicatorType = ref('saving')
@@ -1322,20 +1328,20 @@
 
     const applyCustomSettings = () => {
         const root = document.documentElement
-        
-        // Apply text and icon color
-        if (customTextColor.value === 'black') {
-            root.style.setProperty('--custom-text-color', '#000000')
-            root.style.setProperty('--custom-icon-color', '#000000')
-            document.body.classList.add('custom-dark-text')
-        } else {
-            root.style.setProperty('--custom-text-color', '#ffffff')
-            root.style.setProperty('--custom-icon-color', '#ffffff')
-            document.body.classList.remove('custom-dark-text')
-        }
-        
-        // Apply bg-secondary color
+
         root.style.setProperty('--custom-bg-secondary', customBgSecondary.value)
+
+        if (mainContentArea.value) {
+            if (customTextColor.value === 'black') {
+                root.style.setProperty('--custom-text-color', '#000000')
+                root.style.setProperty('--custom-icon-color', '#000000')
+                mainContentArea.value.classList.add('custom-dark-text')
+            } else {
+                root.style.setProperty('--custom-text-color', '#ffffff')
+                root.style.setProperty('--custom-icon-color', '#ffffff')
+                mainContentArea.value.classList.remove('custom-dark-text')
+            }
+        }
     }
 
     const isSyncButtonDisabled = computed(() =>
@@ -2432,6 +2438,9 @@
             isLoading.value = false
             globalLoading = false
         }
+
+        await nextTick()
+        applyCustomSettings()
     })
 
     const refreshAccessTokenIfNeeded = async () => {
