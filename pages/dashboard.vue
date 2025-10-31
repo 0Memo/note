@@ -776,7 +776,7 @@
                     data-position="left1"
                     :aria-label="$t('tooltip.deleteNote')"
                 >
-                    <TrashIcon class="w-10 h-10 font-bold" />
+                    <TrashIcon class="w-12 h-12 font-bold" />
                 </button>
             </div>
 
@@ -977,7 +977,7 @@
                                 <div class="absolute -top-[54px] -left-[178px] scale-[5] origin-top-left rotate-2 leafContainer">
                                     <AbstractLeaf class="w-20 h-20 leaf"/>
                                 </div> -->
-                                <div class='absolute -top-[15px] md:-top-[90px] -right-8 md:-right-9 origin-top-right toucan-shadow pointer-events-none md:pointer-events-auto z-0 md:z-10'>
+                                <div class='absolute -top-[45px] md:-top-[90px] -right-4 md:-right-9 origin-top-right toucan-shadow pointer-events-none md:pointer-events-auto z-0 md:z-10'>
                                     <div class="scale-[0.5] md:scale-[0.6] origin-top-right opacity-90 md:opacity-100">
                                         <AnimatedSkull />
                                     </div>
