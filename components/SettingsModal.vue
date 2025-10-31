@@ -1,9 +1,9 @@
 <template>
     <div v-if="visible" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
         <div class="bg-[#030303] p-6 rounded-lg shadow-lg w-96">
-            <p class="text-lg font-semibold mb-4 text-zinc-100">{{ $t('modal.settings')}}</p>
+            <p class="text-lg font-bold mb-4 text-zinc-100">{{ $t('modal.settings')}}</p>
             <div class="mb-6">
-                <label class="block text-zinc-100 mb-2 text-sm">{{ $t('modal.nickname')}}</label>
+                <label class="block text-zinc-100 mb-2 text-md font-semibold">{{ $t('modal.nickname')}}</label>
                 <input
                     v-model="localNickname"
                     type="text"
@@ -14,7 +14,7 @@
             </div>
 
             <div class="mb-6">
-                <label class="block text-zinc-100 mb-2 text-sm">{{ $t('modal.textIconColor') }}</label>
+                <label class="block text-zinc-100 mb-2 text-md font-semibold">{{ $t('modal.textIconColor') }}</label>
                 <div class="flex items-center justify-between">
                     <span class="text-sm text-zinc-100">{{ $t('modal.colorMode') }}</span>
                     <button
@@ -34,7 +34,7 @@
                 </div>
                 <div
                     :class="localTextColor === 'white'
-                        ? 'mt-2 text-xs text-zinc-100 border border-white bg-black p-1 rounded w-40'
+                        ? 'mt-2 text-xs text-zinc-100 border border-x-white border-y-black bg-black p-1 rounded w-40'
                         : 'mt-2 text-xs text-black border border-black bg-white p-1 rounded w-40'"
                 >
                     {{ localTextColor === 'white' ? $t('modal.whiteText') : $t('modal.blackText') }}
@@ -42,7 +42,7 @@
             </div>
 
             <div class="mb-6">
-                <label class="block text-zinc-100 mb-2 text-sm">{{ $t('modal.bgSecondaryColor') }}</label>
+                <label class="block text-zinc-100 mb-2 text-md font-semibold">{{ $t('modal.bgSecondaryColor') }}</label>
                 <div class="flex items-center gap-3">
                     <input
                         v-model="localBgSecondary"
@@ -59,7 +59,7 @@
                 </div>
                 <button
                     @click="resetBgSecondary"
-                    class="mt-2 text-xs text-zinc-50 hover:text-zinc-200 whitespace-nowrap custom-underline"
+                    class="mt-2 text-xs text-zinc-50 hover:text-zinc-200 whitespace-nowrap custom-underline tracking-wide"
                 >
                     {{ $t('modal.resetDefault') }}
                 </button>
