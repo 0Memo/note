@@ -2096,6 +2096,15 @@
         }, 1500)
     }
 
+    const pdfDate = (date) => {
+        const formattedDate = date.toLocaleDateString(locale.value || 'en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        })
+        return `${t('notes.today')} ~ ${formattedDate}`
+    }
+
     const downloadAsPdf = async () => {
         if (!editor.value || !selectedNote.value) {
             $toast.error(t('notes.selectNoteFirst') || 'Please select a note first')
@@ -2167,6 +2176,14 @@
                     pdf.setFont('helvetica', 'italic')
                     const byText = ` by ${userNickname.value}`
                     pdf.text(byText, textStartX + titleWidth, yPosition)
+
+                    yPosition += 8 // Move down for the date
+                    pdf.setFont('helvetica', 'normal')
+                    pdf.setFontSize(12)
+                    pdf.setTextColor(100, 100, 100) // Gray color for date
+                    const currentDate = pdfDate(new Date())
+                    pdf.text(currentDate, textStartX, yPosition)
+                    pdf.setTextColor(0, 0, 0)
                 } else {
                     pdf.text(titleBase, textStartX, yPosition)
                 }
@@ -2204,9 +2221,9 @@
                     const dateObj = new Date(noteDate)
                     // Format as: Month Day, Year (e.g., "January 15, 2024")
                     formattedDate = dateObj.toLocaleDateString(locale.value || 'en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
                     })
                 } catch (e) {
                     // If date parsing fails, use the raw date value
@@ -2217,7 +2234,7 @@
                 pdf.setTextColor(0, 0, 0) // Reset to black for content
                 yPosition += 8
             }
-                
+
             yPosition += 7
             
             // Parse HTML content
