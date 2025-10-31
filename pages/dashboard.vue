@@ -59,12 +59,12 @@
                 </button>
             </p>
             <div class="mt-4">
-                <span v-if="userNickname" class="flex flex-wrap justify-start md:justify-center font-semibold text-white text-lg self-center transform shadow-2xl shadow-purple-900 scalable-text">
+                <span v-if="userNickname" class="flex flex-wrap justify-start md:justify-center font-semibold text-white text-lg self-center transform scalable-text">
                     {{ $t('greetings')}}
                     <span class="font-claymont text-xl mt-4 md:mt-0">
                         {{ userNickname }}
                     </span>!
-                    <Saturn class="w-6 h-6 ml-2" />
+                    <Saturn class="w-8 h-8 ml-2" />
                 </span>
             </div>
             <button
