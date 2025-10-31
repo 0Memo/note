@@ -2140,9 +2140,9 @@
                 })
 
                 // 🧭 Positioning
-                const imageWidth = 10 // smaller to match text line height
+                const imageWidth = 10
                 const imageHeight = 10
-                const imageY = yPosition - 6 // lift it a bit to align with text baseline
+                const imageY = yPosition - 6
 
                 // Draw image at the left
                 pdf.addImage(base64Data, 'PNG', margin, imageY, imageWidth, imageHeight)
@@ -2170,12 +2170,25 @@
                 } else {
                     pdf.text(titleBase, textStartX, yPosition)
                 }
-
-                // Add bottom spacing after title line
                 yPosition += 15
 
             } catch (err) {
-                console.warn('⚠️ Could not load notes.png icon:', err)
+                console.error('[v0] Error loading image:', error)
+                pdf.setFontSize(20)
+                pdf.setFont('helvetica', 'bold')
+                const titleBase = selectedNote.value.title || t('toast.note')
+                
+                if (userNickname.value) {
+                    pdf.text(titleBase, margin, yPosition)
+                    const titleWidth = pdf.getTextWidth(titleBase)
+                    pdf.setFont('helvetica', 'italic')
+                    const byText = ` by ${userNickname.value}`
+                    pdf.text(byText, margin + titleWidth, yPosition)
+                } else {
+                    pdf.text(titleBase, margin, yPosition)
+                }
+                
+                yPosition += 12
             }
 
             const noteDate = selectedNote.value.eventDate
@@ -2213,114 +2226,113 @@
             
             // Function to add new page if needed
             const checkPageBreak = (lineHeight) => {
-            if (yPosition + lineHeight > pageHeight - margin) {
-                pdf.addPage()
-                yPosition = margin
-                return true
-            }
-            return false
+                if (yPosition + lineHeight > pageHeight - margin) {
+                    pdf.addPage()
+                    yPosition = margin
+                    return true
+                }
+                return false
             }
             
             // Function to extract text from element
             const extractText = (element) => {
-            let text = ''
-            element.childNodes.forEach(node => {
-                if (node.nodeType === Node.TEXT_NODE) {
-                text += node.textContent
-                } else if (node.nodeType === Node.ELEMENT_NODE) {
-                if (node.tagName === 'BR') {
-                    text += '\n'
-                } else {
-                    text += extractText(node)
-                }
-                }
-            })
-            return text
+                let text = ''
+                element.childNodes.forEach(node => {
+                    if (node.nodeType === Node.TEXT_NODE) {
+                        text += node.textContent
+                    } else if (node.nodeType === Node.ELEMENT_NODE) {
+                        if (node.tagName === 'BR') {
+                            text += '\n'
+                        } else {
+                            text += extractText(node)
+                        }
+                    }
+                })
+                return text
             }
             
             // Process each element
             const processElement = (element) => {
-            const tagName = element.tagName?.toLowerCase()
-            
-            if (tagName === 'h1' || tagName === 'h2' || tagName === 'h3') {
-                checkPageBreak(12)
-                pdf.setFontSize(tagName === 'h1' ? 18 : tagName === 'h2' ? 16 : 14)
-                pdf.setFont('helvetica', 'bold')
-                const text = extractText(element)
-                const lines = pdf.splitTextToSize(text, maxWidth)
-                lines.forEach(line => {
-                checkPageBreak(8)
-                pdf.text(line, margin, yPosition)
-                yPosition += 8
-                })
-                yPosition += 4
-                pdf.setFontSize(12)
-                pdf.setFont('helvetica', 'normal')
-            } else if (tagName === 'p') {
-                checkPageBreak(7)
-                const text = extractText(element)
-                if (text.trim()) {
-                pdf.setFontSize(12)
-                pdf.setFont('helvetica', 'normal')
-                const lines = pdf.splitTextToSize(text, maxWidth)
-                lines.forEach(line => {
+                const tagName = element.tagName?.toLowerCase()
+                
+                if (tagName === 'h1' || tagName === 'h2' || tagName === 'h3') {
+                    checkPageBreak(12)
+                    pdf.setFontSize(tagName === 'h1' ? 18 : tagName === 'h2' ? 16 : 14)
+                    pdf.setFont('helvetica', 'bold')
+                    const text = extractText(element)
+                    const lines = pdf.splitTextToSize(text, maxWidth)
+                    lines.forEach(line => {
+                        checkPageBreak(8)
+                        pdf.text(line, margin, yPosition)
+                        yPosition += 8
+                    })
+                    yPosition += 4
+                    pdf.setFontSize(12)
+                    pdf.setFont('helvetica', 'normal')
+                } else if (tagName === 'p') {
                     checkPageBreak(7)
-                    pdf.text(line, margin, yPosition)
-                    yPosition += 7
-                })
-                yPosition += 3
+                    const text = extractText(element)
+                    if (text.trim()) {
+                        pdf.setFontSize(12)
+                        pdf.setFont('helvetica', 'normal')
+                        const lines = pdf.splitTextToSize(text, maxWidth)
+                        lines.forEach(line => {
+                            checkPageBreak(7)
+                            pdf.text(line, margin, yPosition)
+                            yPosition += 7
+                        })
+                        yPosition += 3
+                    }
+                } else if (tagName === 'ul' || tagName === 'ol') {
+                    const items = element.querySelectorAll('li')
+                    items.forEach((li, index) => {
+                        checkPageBreak(7)
+                        const text = extractText(li)
+                        const bullet = tagName === 'ul' ? '• ' : `${index + 1}. `
+                        pdf.setFontSize(12)
+                        pdf.setFont('helvetica', 'normal')
+                        const lines = pdf.splitTextToSize(bullet + text, maxWidth - 5)
+                        lines.forEach((line, lineIndex) => {
+                            checkPageBreak(7)
+                            pdf.text(line, margin + (lineIndex > 0 ? 5 : 0), yPosition)
+                            yPosition += 7
+                        })
+                    })
+                    yPosition += 3
+                } else if (tagName === 'table') {
+                    // Simple table rendering
+                    const rows = element.querySelectorAll('tr')
+                    rows.forEach(row => {
+                        checkPageBreak(10)
+                        const cells = row.querySelectorAll('td, th')
+                        let xPos = margin
+                        const cellWidth = maxWidth / cells.length
+                        cells.forEach(cell => {
+                            const text = extractText(cell)
+                            pdf.setFontSize(10)
+                            pdf.setFont('helvetica', cell.tagName === 'TH' ? 'bold' : 'normal')
+                            pdf.text(text.substring(0, 30), xPos, yPosition)
+                            xPos += cellWidth
+                        })
+                        yPosition += 8
+                    })
+                    yPosition += 5
+                } else if (element.children.length > 0) {
+                    // Process child elements
+                    Array.from(element.children).forEach(child => {
+                    processElement(child)
+                    })
                 }
-            } else if (tagName === 'ul' || tagName === 'ol') {
-                const items = element.querySelectorAll('li')
-                items.forEach((li, index) => {
-                checkPageBreak(7)
-                const text = extractText(li)
-                const bullet = tagName === 'ul' ? '• ' : `${index + 1}. `
-                pdf.setFontSize(12)
-                pdf.setFont('helvetica', 'normal')
-                const lines = pdf.splitTextToSize(bullet + text, maxWidth - 5)
-                lines.forEach((line, lineIndex) => {
-                    checkPageBreak(7)
-                    pdf.text(line, margin + (lineIndex > 0 ? 5 : 0), yPosition)
-                    yPosition += 7
-                })
-                })
-                yPosition += 3
-            } else if (tagName === 'table') {
-                // Simple table rendering
-                const rows = element.querySelectorAll('tr')
-                rows.forEach(row => {
-                checkPageBreak(10)
-                const cells = row.querySelectorAll('td, th')
-                let xPos = margin
-                const cellWidth = maxWidth / cells.length
-                cells.forEach(cell => {
-                    const text = extractText(cell)
-                    pdf.setFontSize(10)
-                    pdf.setFont('helvetica', cell.tagName === 'TH' ? 'bold' : 'normal')
-                    pdf.text(text.substring(0, 30), xPos, yPosition)
-                    xPos += cellWidth
-                })
-                yPosition += 8
-                })
-                yPosition += 5
-            } else if (element.children.length > 0) {
-                // Process child elements
-                Array.from(element.children).forEach(child => {
-                processElement(child)
-                })
-            }
             }
             
             // Process all elements
             Array.from(tempDiv.children).forEach(child => {
-            processElement(child)
+                processElement(child)
             })
             
             console.log('[v0] PDF generation complete')
             
-            const filename = `${selectedNote.value.title || 'note'}.pdf`
-            .replace(/[^a-z0-9]/gi, '_')
+            const filename = `note.pdf`
             .toLowerCase()
             
             pdf.save(filename)
