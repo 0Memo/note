@@ -145,7 +145,7 @@
                     </div>
                 </div>
         
-                <div class="flex justify-around w-full py-2 text-md mb-6">
+                <div class="flex justify-around w-full py-2 text-md mb-6 text-white">
                     <nuxt-link :to="localePath('/privacy')" class="whitespace-nowrap custom-underline">
                         {{ $t('modal.privacy.title') }}
                     </nuxt-link>
