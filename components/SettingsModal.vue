@@ -1,6 +1,6 @@
 <template>
     <div v-if="visible" class="fixed inset-0 z-[100] flex items-start md:items-center overflow-y-auto justify-center bg-black md:bg-opacity-50 p-4">
-        <div class="settings-modal bg-[#030303] p-6 rounded-lg shadow-lg w-full max-w-md md:max-w-lg max-h-[calc(100vh-2rem)] md:max-h-[calc(100vh-4rem)] relative overflow-y-auto">
+        <div class="bg-[#030303] p-6 rounded-lg shadow-lg w-full max-w-md md:max-w-lg max-h-[calc(100vh-2rem)] md:max-h-[calc(100vh-4rem)] relative overflow-y-auto">
             <button
                 @click="$emit('cancel')"
                 class="absolute top-3 right-6 text-zinc-200 hover:text-white text-lg font-bold"

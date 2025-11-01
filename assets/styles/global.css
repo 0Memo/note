@@ -61,39 +61,6 @@ body {
     background-color: var(--custom-bg-secondary) !important;
 }
 
-.main-content-area.custom-dark-text .settings-modal,
-.main-content-area.custom-dark-text .settings-modal * {
-    color: inherit !important;
-    background-color: inherit !important;
-    border-color: inherit !important;
-    fill: currentColor !important;
-}
-
-/* Custom text color - applies when user selects black text */
-.main-content-area.custom-dark-text .text-white,
-.main-content-area.custom-dark-text .text-zinc-300,
-.main-content-area.custom-dark-text .text-zinc-200,
-.main-content-area.custom-dark-text .text-zinc-100 {
-    color: var(--custom-text-color) !important;
-}
-
-/* Custom icon color */
-.main-content-area.custom-dark-text svg {
-    color: var(--custom-icon-color) !important;
-}
-
-/* Exclude specific elements from custom text color */
-.main-content-area.custom-dark-text .excludeFromColorToggle .text-white,
-.main-content-area.custom-dark-text .excludeFromColorToggle .text-zinc-300,
-.main-content-area.custom-dark-text .excludeFromColorToggle .text-zinc-200,
-.main-content-area.custom-dark-text .excludeFromColorToggle .text-zinc-100 {
-    color: #ffffff !important;
-}
-
-.main-content-area.custom-dark-text .excludeFromColorToggle svg {
-    color: #ffffff !important;
-}
-
 /* High contrast mode */
 .high-contrast {
     --bg-primary: #000000;
@@ -116,6 +83,8 @@ body {
 
 .high-contrast .text-zinc-300,
 .high-contrast .text-zinc-200,
+.high-contrast .text-zinc-100,
+.high-contrast .text-zinc-50,
 .high-contrast .whitespace-nowrap,
 .high-contrast button.scalable-text,
 .high-contrast a.scalable-text,
