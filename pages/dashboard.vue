@@ -257,7 +257,7 @@
                             <div
                                 class="p-4 transition-transform duration-300 rounded-lg cursor-pointer"
                                 :class="{
-                                'bg-[#581C87]': note.id === selectedNote.id,
+                                'bg-[#581C87] ': note.id === selectedNote.id,
                                 'hover:bg-[#581C87]/50': note.id !== selectedNote.id,
                                 'transform translate-x-[-70px]': swipedNoteId === note.id && !isDesktop,
                                 }"
@@ -266,6 +266,10 @@
                                 @touchmove="handleTouchMove($event, note.id)"
                                 @touchend="handleTouchEnd(note.id)"
                             >
+                                <Bookmark
+                                    v-if="note.id === selectedNote.id"
+                                    class="absolute top-[11.5px] -left-1 -translate-y-1/2 w-6 h-6 text-yellow-300 drop-shadow-lg"
+                                />
                                 <div class="flex items-center justify-between">
                                     <div class="flex-1 min-w-0">
                                         <h3 class="font-bold truncate scalable-text">{{ decodeHtmlEntities(stripHtmlTags(note.text)).substring(0, 30) }}</h3>
@@ -1035,26 +1039,26 @@
 
             <button
                 @click="toggleMouseTrail"
-                class="text-white absolute left-4 md:left-[292px] bottom-0 pb-6 pt-10 md:p-8 hover:text-zinc-500"
+                class=""
                 :aria-label="$t('tooltip.activate')"
             >
                 <!-- Replace with your preferred icon -->
                 <span v-if="showMouseTrail">
                     <ClientOnly>
                         <button
-                            class="right"
+                            class="right text-white absolute left-4 md:left-[292px] bottom-0 pb-6 pt-10 md:p-8 hover:text-zinc-500"
                             :data-tooltip="$t('tooltip.deactivate')"
                             data-position="right"
                             :aria-label="$t('tooltip.deactivate')"
                         >
-                            <MouseTrailOff class="w-10 h-10 font-bold" />
+                            <MouseTrailOff class="w-14 h-14 font-bold" />
                         </button>
                     </ClientOnly>
                 </span>
                 <span v-else>
                     <ClientOnly>
                         <button
-                            class="right"
+                            class="right text-white absolute left-6 md:left-[301px] bottom-2 pb-6 pt-10 md:p-8 hover:text-zinc-500"
                             :data-tooltip="$t('tooltip.activate')"
                             data-position="right"
                             :aria-label="$t('tooltip.activate')"
