@@ -1,18 +1,18 @@
 <template>
     <Teleport to="body">
         <div v-if="visible" class="fixed inset-0 z-[100] flex items-start md:items-center overflow-y-auto justify-center bg-black md:bg-opacity-50 p-4">
-            <div class="bg-[#030303] p-6 rounded-lg shadow-lg w-full max-w-md md:max-w-lg max-h-[calc(100vh-2rem)] md:max-h-[calc(100vh-4rem)] relative overflow-y-auto">
+            <div class="bg-[#030303] p-6 rounded-lg shadow-lg w-full max-w-md md:max-w-lg max-h-[calc(100vh-2rem)] md:max-h-[calc(100vh-4rem)] relative">
                 <button
                     @click="$emit('cancel')"
-                    class="absolute top-3 right-6 text-zinc-200 hover:text-white text-lg font-bold"
+                    class="absolute top-0 right-6 text-zinc-200 hover:text-white text-lg font-bold"
                     aria-label="Close modal"
                 >
                     <Close class="w-5 h-5" />
                 </button>
         
-                <p class="text-lg font-bold mb-4 text-zinc-100">{{ $t('modal.settings')}}</p>
-                <div class="mb-6">
-                    <label class="block text-zinc-100 mb-2 text-md font-semibold">{{ $t('modal.nickname')}}</label>
+                <p class="text-lg font-bold mb-2 -mt-6 md:mt-0 text-zinc-100">{{ $t('modal.settings')}}</p>
+                <div class="mb-6 flex items-center gap-6">
+                    <label class="block text-zinc-100 text-md font-semibold">{{ $t('modal.nickname')}}</label>
                     <input
                         v-model="localNickname"
                         type="text"
@@ -22,10 +22,16 @@
                     />
                 </div>
         
-                <div class="mb-6">
+                <div class="mb-4">
                     <label class="block text-zinc-100 mb-2 text-md font-semibold">{{ $t('modal.textIconColor') }}</label>
                     <div class="flex items-center justify-between">
-                        <span class="text-sm text-zinc-100">{{ $t('modal.colorMode') }}</span>
+                        <div
+                        :class="localTextColor === 'white'
+                            ? 'text-xs text-zinc-100 border border-x-white border-y-black bg-black p-1 rounded w-40'
+                            : 'text-xs text-black border border-black bg-white p-1 rounded w-40'"
+                    >
+                        {{ localTextColor === 'white' ? $t('modal.whiteText') : $t('modal.blackText') }}
+                    </div>
                         <button
                             @click="toggleTextColor"
                             :class="['transition-transform duration-300 focus:outline-none']"
@@ -41,16 +47,10 @@
                             />
                         </button>
                     </div>
-                    <div
-                        :class="localTextColor === 'white'
-                            ? 'mt-2 text-xs text-zinc-100 border border-x-white border-y-black bg-black p-1 rounded w-40'
-                            : 'mt-2 text-xs text-black border border-black bg-white p-1 rounded w-40'"
-                    >
-                        {{ localTextColor === 'white' ? $t('modal.whiteText') : $t('modal.blackText') }}
-                    </div>
+                    
                 </div>
         
-                <div class="mb-6">
+                <div class="mb-4">
                     <label class="block text-zinc-100 mb-2 text-md font-semibold">{{ $t('modal.bgSecondaryColor') }}</label>
                     <div class="flex items-center gap-3">
                         <input
@@ -74,19 +74,19 @@
                     </button>
                 </div>
         
-                <div class="flex justify-between gap-3 px-6 py-4 border-b-4 border-zinc-700">
-                    <p class="text-zinc-100">{{ message }}</p>
-                    <div class="flex justify-end gap-3 text-zinc-50">
+                <div class="flex justify-between gap-3 px-6 py-2 border-b-4 border-dashed border-zinc-700">
+                    <p class="text-zinc-100 mb-2">{{ message }}</p>
+                    <div class="flex justify-end gap-3 text-zinc-50 mb-2">
                         <button
                             @click="$emit('cancel')"
-                            class="px-4 py-2 border-2 border-transparent rounded bg-red-600
+                            class="px-4 border-2 border-transparent rounded bg-red-600
                             hover:bg-zinc-50 hover:text-red-600 hover:border-red-600"
                         >
                             {{ $t('modal.no')}}
                         </button>
                         <button
                             @click="handleSave"
-                            class="px-4 py-2 border-2 border-transparent rounded bg-green-600
+                            class="px-4 border-2 border-transparent rounded bg-green-600
                             hover:bg-zinc-50 hover:text-green-600 hover:border-green-600"
                         >
                             {{ $t('modal.yes')}}
@@ -94,8 +94,8 @@
                     </div>
                 </div>
         
-                <div class="w-full mt-10 mb-6">
-                    <p class="text-lg font-bold mb-4 text-zinc-100">Click & Action</p>
+                <div class="w-full mt-3 md:mt-6 mb-4">
+                    <p class="text-lg font-bold text-zinc-100 mb-2">Click & Action</p>
                     <button
                         @click="connectGoogleCalendar"
                         :disabled="isConnectingCalendar"
@@ -123,29 +123,29 @@
                     {{ $t('toast.calendar.reconnect') }}
                 </button>
         
-                <div class="p-4 mt-6 rounded-lg bg-secondary mb-6">
+                <div class="p-4 md:mt-4 rounded-lg bg-secondary mb-4">
                     <h3 class="mb-3 font-semibold text-white scalable-text">
                         {{ $t('accessibility.accessibility') }}
                     </h3>
                     <FontSizeToggle />
                     
                     <!-- High Contrast Toggle -->
-                    <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center justify-between md:my-4">
                         <label class="text-sm text-white scalable-text">
-                        {{ $t('accessibility.highContrast') }}
+                            {{ $t('accessibility.highContrast') }}
                         </label>
                         <button
-                        @click="toggleHighContrast"
-                        :class="['transition-transform duration-300 focus:outline-none']"
-                        :aria-label="$t('accessibility.highContrast')"
+                            @click="toggleHighContrast"
+                            :class="['transition-transform duration-300 focus:outline-none']"
+                            :aria-label="$t('accessibility.highContrast')"
                         >
-                        <ToggleRight v-if="highContrast" class="w-14 h-14 text-white transition-transform duration-300" />
-                        <ToggleLeft v-else class="w-14 h-14 text-white transition-transform duration-300" />
+                            <ToggleRight v-if="highContrast" class="w-14 h-14 text-white transition-transform duration-300" />
+                            <ToggleLeft v-else class="w-14 h-14 text-white transition-transform duration-300" />
                         </button>
                     </div>
                 </div>
         
-                <div class="flex justify-around w-full py-2 text-md mb-6 text-white">
+                <div class="flex justify-around w-full text-md text-white">
                     <nuxt-link :to="localePath('/privacy')" class="whitespace-nowrap custom-underline">
                         {{ $t('modal.privacy.title') }}
                     </nuxt-link>

@@ -1,5 +1,5 @@
 <template>
-    <div class="font-size-controls flex items-center gap-2 mb-4">
+    <div class="font-size-controls flex items-center gap-2 mb-2 md:mb-4">
         <button
             @click="decreaseFontSize"
             :disabled="currentFontSize <= minFontSize"
