@@ -228,43 +228,93 @@
         localBgSecondary.value = '#1d073a'
     }
 
-    const connectGoogleCalendar = async () => {
-        isConnectingCalendar.value = true
+    const checkCalendarConnection = async () => {
+        const token = localStorage.getItem('googleCalendarToken')
+        if (!token) {
+            calendarConnected.value = false
+            return
+        }
+
         try {
-            const response = await fetch(`${config.public.apiBaseUrl}/api/auth/google`, {
-            credentials: 'include',
-            })
-            const data = await response.json()
-            if (data.url) {
-            window.location.href = data.url
+            await $fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=1', {
+            headers: {
+                Authorization: `Bearer ${token}`
             }
+            })
+            calendarConnected.value = true
         } catch (error) {
-            console.error('Error connecting to Google Calendar:', error)
-            $toast.error(t('toast.calendar.errorConnecting'))
-        } finally {
-            isConnectingCalendar.value = false
+            console.warn('❌ Google Calendar token expired or invalid:', error?.response?._data || error.message)
+            calendarConnected.value = false
         }
     }
 
-    const reconnectGoogleCalendar = async () => {
-        isConnectingCalendar.value = true
+    if (calendarConnected.value) {
+        savedToken.value = null
+    }
+
+    const reconnectGoogleCalendar = () => {
+        localStorage.removeItem('googleCalendarToken')
+        calendarConnected.value = false
+
+        connectGoogleCalendar()
+    }
+
+    const isAccessTokenValid = async () => {
         try {
-            const response = await fetch(`${config.public.apiBaseUrl}/api/auth/google/reconnect`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ token: savedToken.value }),
+            const response = await $fetch('/api/auth/check-calendar-status');
+            return response.status === 'connected';
+        } catch (error) {
+            console.error('Error checking token status:', error);
+            return false;
+        }
+    };
+
+    const connectGoogleCalendar = () => {
+        isConnectingCalendar.value = true
+        
+        const clientId = config.public.googleClientId
+        const redirectUri = encodeURIComponent(`${config.public.baseURL}/auth/callback`)
+        const scope = encodeURIComponent('https://www.googleapis.com/auth/calendar.events')
+        
+        const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&access_type=offline&prompt=consent&include_granted_scopes=true`
+        
+        $toast.info(t('toast.calendar.warning'), {
+            duration: 8000
+        })
+        
+        setTimeout(() => {
+            window.location.href = url
+        }, 2000)
+    }
+
+    const handleOAuthCallback = async (code) => {
+        try {
+            isConnectingCalendar.value = true
+            
+            // Exchange code for access token
+            const response = await $fetch('/api/auth/google-calendar', {
+                method: 'POST',
+                body: { code }
             })
-            const data = await response.json()
-            if (data.success) {
-            calendarConnected.value = true
-            $toast.success(t('toast.calendar.reconnected'))
+            
+            if (response.access_token) {
+                accessToken.value = response.access_token
+                localStorage.setItem('googleCalendarToken', response.access_token)
+
+                if (!response.refresh_token) {
+                    calendarConnected.value = false;
+                    $toast.error(t('toast.calendar.refreshToken'));
+                    return;
+                }
+
+                calendarConnected.value = true                
+                $toast.success(t('toast.calendar.success'))                
+                // Clean up URL
+                window.history.replaceState({}, document.title, window.location.pathname)
             }
         } catch (error) {
-            console.error('Error reconnecting to Google Calendar:', error)
-            $toast.error(t('toast.calendar.errorReconnecting'))
+            console.error('Error handling OAuth callback:', error)
+            $toast.error(t('toast.calendar.connectionFailed'))
         } finally {
             isConnectingCalendar.value = false
         }
