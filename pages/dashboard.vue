@@ -30,27 +30,180 @@
             <HispanicMonth />
         </div>  -->
         <div
-            class="md:hidden fixed top-0 left-0 right-0 z-[100] custom-bg-secondary flex items-center justify-between px-6 py-4 shadow-md cursor-pointer border-double border-b-4 border-white"
+            class="md:hidden fixed top-0 left-0 right-0 z-[100] custom-bg-secondary flex flex-nowrap items-center justify-between px-6 py-4 shadow-md cursor-pointer border-double border-b-4 border-white text-white  gap-2"
         >
             <NavbarLogo />
+            <button @click="changeLocale('en')" aria-label="English">
+                <img
+                    src="https://flagcdn.com/w20/us.png"
+                    srcset="https://flagcdn.com/w40/us.png 2x"
+                    width="20"
+                    height="13"
+                    alt="United States"
+                >
+            </button>
+            <button @click="changeLocale('es')" aria-label="Español">
+                <img
+                    src="https://flagcdn.com/w20/es.png"
+                    srcset="https://flagcdn.com/w40/es.png 2x"
+                    width="20"
+                    height="13"
+                    alt="Spain"
+                >
+            </button>
+            <button @click="changeLocale('fr')" aria-label="Français">
+                <img
+                    src="https://flagcdn.com/w20/fr.png"
+                    srcset="https://flagcdn.com/w40/fr.png 2x"
+                    width="20"
+                    height="13"
+                    alt="France"
+                >
+            </button>
+            <button @click="changeLocale('it')" aria-label="Italiano">
+                <img
+                    src="https://flagcdn.com/w20/it.png"
+                    srcset="https://flagcdn.com/w40/it.png 2x"
+                    width="20"
+                    height="13"
+                    alt="Italy"
+                >
+            </button>
+            <button @click="changeLocale('pt')" aria-label="Português">
+                <img
+                    src="https://flagcdn.com/w20/br.png"
+                    srcset="https://flagcdn.com/w40/br.png 2x"
+                    width="20"
+                    height="13"
+                    alt="Brazil"
+                >
+            </button>
+            <button @click="changeLocale('ro')" aria-label="Română">
+                <img
+                    src="https://flagcdn.com/w20/ro.png"
+                    srcset="https://flagcdn.com/w40/ro.png 2x"
+                    width="20"
+                    height="13"
+                    alt="Romania"
+                >
+            </button>
+            <button @click="changeLocale('sv')" aria-label="Svenska">
+                <img
+                    src="https://flagcdn.com/w20/se.png"
+                    srcset="https://flagcdn.com/w40/se.png 2x"
+                    width="20"
+                    height="13"
+                    alt="Sweden"
+                >
+            </button>
+            <button @click="changeLocale('hy')" aria-label="Հայերեն">
+                <img
+                    src="https://flagcdn.com/w20/am.png"
+                    srcset="https://flagcdn.com/w40/am.png 2x"
+                    width="20"
+                    height="13"
+                    alt="Armenia"
+                >
+            </button>
         </div>
         <!-- Mobile + Desktop Sidebar -->
         <div
-            class="fixed md:static top-0 w-full left-0 z-50 h-full md:h-auto md:w-[338px] bg-[#030303] p-8 overflow-y-scroll md:overflow-y-auto transition-transform duration-300"
+            class="fixed md:static top-0 w-full left-0 z-50 h-full md:h-auto md:w-[338px] bg-[#030303] p-8 md:overflow-y-auto transition-transform duration-300"
             :class="{
                 'translate-x-0': sidebarOpen || isDesktop,
                 '-translate-x-full md:translate-x-0': !sidebarOpen && !isDesktop,
                 'bg-[#030303]/95 backdrop-blur-md': !isDesktop, // translucent overlay look
             }"
         >
-            <Logo @click="toggleSidebar" class="cursor-pointer" />
-            <p class="relative flex flex-wrap justify-evenly md:justify-between gap-36 md:gap-0 z-50 mt-6 ml-1 text-md text-zinc-300">
-                
+            <div class="hidden md:flex flex-wrap items-start justify-between px-6 py-4 gap-y-3">
+                <Logo @click="toggleSidebar" class="cursor-pointer w-full" />
+                <div class="flex flex-nowrap gap-x-2 scale-[1.5]">
+                    <button @click="changeLocale('en')" aria-label="English">
+                        <img
+                            src="https://flagcdn.com/w20/us.png"
+                            srcset="https://flagcdn.com/w40/us.png 2x"
+                            width="20"
+                            height="13"
+                            alt="United States"
+                        >
+                    </button>
+                    <button @click="changeLocale('es')" aria-label="Español">
+                        <img
+                            src="https://flagcdn.com/w20/es.png"
+                            srcset="https://flagcdn.com/w40/es.png 2x"
+                            width="20"
+                            height="13"
+                            alt="Spain"
+                        >
+                    </button>
+                    <button @click="changeLocale('fr')" aria-label="Français">
+                        <img
+                            src="https://flagcdn.com/w20/fr.png"
+                            srcset="https://flagcdn.com/w40/fr.png 2x"
+                            width="20"
+                            height="13"
+                            alt="France"
+                        >
+                    </button>
+                    <button @click="changeLocale('it')" aria-label="Italiano">
+                        <img
+                            src="https://flagcdn.com/w20/it.png"
+                            srcset="https://flagcdn.com/w40/it.png 2x"
+                            width="20"
+                            height="13"
+                            alt="Italy"
+                        >
+                    </button>
+                    <button @click="changeLocale('pt')" aria-label="Português">
+                        <img
+                            src="https://flagcdn.com/w20/br.png"
+                            srcset="https://flagcdn.com/w40/br.png 2x"
+                            width="20"
+                            height="13"
+                            alt="Brazil"
+                        >
+                    </button>
+                    <button @click="changeLocale('ro')" aria-label="Română">
+                        <img
+                            src="https://flagcdn.com/w20/ro.png"
+                            srcset="https://flagcdn.com/w40/ro.png 2x"
+                            width="20"
+                            height="13"
+                            alt="Romania"
+                        >
+                    </button>
+                    <button @click="changeLocale('sv')" aria-label="Svenska">
+                        <img
+                            src="https://flagcdn.com/w20/se.png"
+                            srcset="https://flagcdn.com/w40/se.png 2x"
+                            width="20"
+                            height="13"
+                            alt="Sweden"
+                        >
+                    </button>
+                    <button @click="changeLocale('hy')" aria-label="Հայերեն">
+                        <img
+                            src="https://flagcdn.com/w20/am.png"
+                            srcset="https://flagcdn.com/w40/am.png 2x"
+                            width="20"
+                            height="13"
+                            alt="Armenia"
+                        >
+                    </button>
+                </div>
+            </div>
+            <p class="relative flex flex-wrap justify-between md:gap-0 z-50 mt-12 md:mt-6 ml-1 text-md text-zinc-300">
                 <nuxt-link
                     :to="localePath('/')"
                     class="text-white hover:text-zinc-500 shadow-lg">
                     <House class="w-8 h-8" />
                 </nuxt-link>
+                <span v-if="userNickname" class="flex flex-wrap justify-start md:justify-center font-semibold text-white text-lg self-center transform scalable-text mt-1 md:mt-0">
+                    {{ $t('greetings')}}
+                    <span class="font-claymont text-sm md:text-xl mt-4 md:mt-0">
+                        {{ userNickname }}
+                    </span>!
+                </span>
                 <button
                     class="text-white hover:text-zinc-500 shadow-lg"
                     @click="showSettingsModal = true"
@@ -58,15 +211,7 @@
                     <Settings class="w-8 h-8" />
                 </button>
             </p>
-            <div class="mt-4">
-                <span v-if="userNickname" class="flex flex-wrap justify-start md:justify-center font-semibold text-white text-lg self-center transform scalable-text">
-                    {{ $t('greetings')}}
-                    <span class="font-claymont text-xl mt-4 md:mt-0">
-                        {{ userNickname }}
-                    </span>!
-                    <Saturn class="w-8 h-8 ml-2" />
-                </span>
-            </div>
+            
             <button
                 v-if="showInstall"
                 @click="installApp"
@@ -75,155 +220,6 @@
             >
                 {{ $t('common.installApp') }}
             </button>
-            <div class="relative z-50 flex flex-wrap justify-center gap-2 mt-8 text-white md:mt-6">
-                <button @click="changeLocale('en')" aria-label="English">
-                    <img
-                        src="https://flagcdn.com/w20/us.png"
-                        srcset="https://flagcdn.com/w40/us.png 2x"
-                        width="20"
-                        height="13"
-                        alt="United States"
-                    >
-                </button>
-                <button @click="changeLocale('es')" aria-label="Español">
-                    <img
-                        src="https://flagcdn.com/w20/es.png"
-                        srcset="https://flagcdn.com/w40/es.png 2x"
-                        width="20"
-                        height="13"
-                        alt="Spain"
-                    >
-                </button>
-                <button @click="changeLocale('fr')" aria-label="Français">
-                    <img
-                        src="https://flagcdn.com/w20/fr.png"
-                        srcset="https://flagcdn.com/w40/fr.png 2x"
-                        width="20"
-                        height="13"
-                        alt="France"
-                    >
-                </button>
-                <button @click="changeLocale('it')" aria-label="Italiano">
-                    <img
-                        src="https://flagcdn.com/w20/it.png"
-                        srcset="https://flagcdn.com/w40/it.png 2x"
-                        width="20"
-                        height="13"
-                        alt="Italy"
-                    >
-                </button>
-                <button @click="changeLocale('pt')" aria-label="Português">
-                    <img
-                        src="https://flagcdn.com/w20/br.png"
-                        srcset="https://flagcdn.com/w40/br.png 2x"
-                        width="20"
-                        height="13"
-                        alt="Brazil"
-                    >
-                </button>
-                <button @click="changeLocale('ro')" aria-label="Română">
-                    <img
-                        src="https://flagcdn.com/w20/ro.png"
-                        srcset="https://flagcdn.com/w40/ro.png 2x"
-                        width="20"
-                        height="13"
-                        alt="Romania"
-                    >
-                </button>
-                <button @click="changeLocale('sv')" aria-label="Svenska">
-                    <img
-                        src="https://flagcdn.com/w20/se.png"
-                        srcset="https://flagcdn.com/w40/se.png 2x"
-                        width="20"
-                        height="13"
-                        alt="Sweden"
-                    >
-                </button>
-                <button @click="changeLocale('hy')" aria-label="Հայերեն">
-                    <img
-                        src="https://flagcdn.com/w20/am.png"
-                        srcset="https://flagcdn.com/w40/am.png 2x"
-                        width="20"
-                        height="13"
-                        alt="Armenia"
-                    >
-                </button>
-
-                <div class="flex justify-around w-full py-2 md:hidden text-md">
-                    <nuxt-link
-                        :to="localePath('/privacy')"
-                        class="whitespace-nowrap custom-underline"
-                    >
-                        {{ $t('modal.privacy.title') }}
-                    </nuxt-link>
-                    <nuxt-link
-                        :to="localePath('/terms')"
-                        class="whitespace-nowrap custom-underline"
-                    >
-                        {{ $t('modal.terms.title') }}
-                    </nuxt-link>
-                </div>
-
-                <div class="w-full mt-4">
-                    <button 
-                        @click="connectGoogleCalendar" 
-                        :disabled="isConnectingCalendar"
-                        class="flex items-center justify-center w-full gap-2 px-4 py-2 font-bold text-white transition-colors duration-200 bg-blue-600 rounded hover:bg-blue-700 disabled:bg-gray-500"
-                        :aria-label="$t('toast.calendar.connectCalendar')"
-                    >
-                        <Calendar v-if="!isConnectingCalendar" class="w-5 h-5" />
-                        <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
-                        {{ isConnectingCalendar ? t('toast.calendar.connecting') : (calendarConnected ? t('toast.calendar.calendarConnected') : t('toast.calendar.connectCalendar')) }}
-                    </button>
-                    
-                    <div v-if="calendarConnected" class="flex items-center gap-1 mt-2 text-sm text-green-400">
-                        <Validate class="w-4 h-4" />
-                        {{ $t('toast.calendar.calendarConnected') }}
-                        <Calendar v-if="!isConnectingCalendar" class="w-4 h-4" />
-                    </div>
-                </div>
-
-                <!-- Add this button next to your existing calendar buttons -->
-                <button 
-                    v-if="!calendarConnected && savedToken" 
-                    @click="reconnectGoogleCalendar"
-                    class="px-3 py-1 ml-2 text-sm text-white bg-orange-600 rounded hover:bg-orange-700"
-                    :aria-label="$t('toast.calendar.reconnect')"
-                >
-                    {{ $t('toast.calendar.reconnect') }}
-                </button>
-
-                <div class="p-4 mt-6 rounded-lg bg-secondary">
-                    <h3 class="mb-3 font-semibold text-white scalable-text">
-                        {{ $t('accessibility.accessibility') }}
-                    </h3>
-                    
-                    <FontSizeToggle />
-                    
-                    <!-- High Contrast Toggle -->
-                    <div class="flex items-center justify-between mb-3">
-                        <label class="text-sm text-white scalable-text">
-                            {{ $t('accessibility.highContrast') }}
-                        </label>
-                        <button
-                            @click="toggleHighContrast"
-                            :class="[
-                                'transition-transform duration-300 focus:outline-none'
-                            ]"
-                            :aria-label="$t('accessibility.highContrast')"
-                        >
-                            <ToggleRight
-                                v-if="highContrast"
-                                class="w-14 h-14 text-white transition-transform duration-300 translate-x-[-4px]"
-                            />
-                            <ToggleLeft
-                                v-else
-                                class="w-14 h-14 text-white stransition-transform duration-300 translate-x-[-4px]"
-                            />
-                        </button>
-                    </div>
-                </div>
-            </div>
 
             <template v-if="isLoading">
                 <!-- Show a few skeleton loaders -->
@@ -1047,7 +1043,7 @@
             </template>
 
             <div
-                class="md:hidden fixed bottom-[5.5rem] right-0 z-[100] flex items-center justify-between px-6 py-4cursor-pointer"
+                class="md:hidden fixed bottom-[5.5rem] right-0 z-50 flex items-center justify-between px-6 py-4cursor-pointer"
                 @click="toggleSidebar"
             >
                 <ClickLogo class="bg-[#9333ea] p-2 rounded-full shadow-md " />

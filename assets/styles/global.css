@@ -47,6 +47,11 @@ body {
     border: 0;
 }
 
+.overscroll-contain {
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
 .scalable-text {
     font-size: var(--user-font-size) !important;
 }
@@ -54,6 +59,14 @@ body {
 /* Custom bg-secondary class */
 .custom-bg-secondary {
     background-color: var(--custom-bg-secondary) !important;
+}
+
+.main-content-area.custom-dark-text .settings-modal,
+.main-content-area.custom-dark-text .settings-modal * {
+    color: inherit !important;
+    background-color: inherit !important;
+    border-color: inherit !important;
+    fill: currentColor !important;
 }
 
 /* Custom text color - applies when user selects black text */
