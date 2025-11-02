@@ -56,6 +56,17 @@ body {
     font-size: var(--user-font-size) !important;
 }
 
+#wave div {
+    color: black;
+    font-size: 20vh;
+    line-height: 100%;
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    filter: drop-shadow(0 0 50px black);
+}
+
 /* Custom bg-secondary class */
 .custom-bg-secondary {
     background-color: var(--custom-bg-secondary) !important;

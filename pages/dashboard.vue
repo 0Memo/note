@@ -13,7 +13,6 @@
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Easter />
         </div>
-        
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Xmas />
         </div>
@@ -1045,14 +1044,14 @@
                                     <AbstractLeaf class="w-20 h-20 leaf"/>
                                 </div> -->
                                 <div class='absolute -top-[45px] md:-top-[90px] -right-4 md:-right-9 origin-top-right toucan-shadow pointer-events-none md:pointer-events-auto z-0 md:z-10'>
-                                    <div class="scale-[0.5] md:scale-[0.6] origin-top-right opacity-90 md:opacity-100">
-                                        <AnimatedSkull />
-                                    </div>
-                                    <!-- <Diya /> -->
+                                    <!--<div class="scale-[0.5] md:scale-[0.6] origin-top-right opacity-90 md:opacity-100">
+                                            <AnimatedSkull />
+                                        </div>
+                                        <Diya />
+                                        <Dragon /> -->
                                     <!-- <div class="scale-[0.1] origin-top-right">
                                         <Toucan />
                                     </div> -->
-                                    <!-- <Dragon /> -->
                                 </div>
                                 <div class="relative">
                                     <EditorContent
@@ -1060,16 +1059,20 @@
                                         :placeholder="$t('notes.text')"
                                         class="min-h-[300px]"
                                     />
-                                    <div class="absolute bottom-10 right-9">
-                                        <Pumpkin class="w-[50px] h-[50px]" />
+
+                                    <div class="absolute -bottom-28 -right-12">
+                                        <Calavera class="w-48 h-48" />
                                     </div>
-                                    <!--<div class="absolute -top-11 -right-1 md:-right-1">
+                                    <!--<div class="absolute bottom-10 right-9">
+                                            <Pumpkin class="w-[50px] h-[50px]" />
+                                        </div>
+                                        <div class="absolute -top-11 -right-1 md:-right-1">
                                             <Llama class="w-[46px] h-[46px]" /> 
+                                        </div>
+                                        <div class="absolute bottom-0 -right-2">
+                                            <Leaves class="w-[50px] h-[50px] leaves" />
+                                            <div id="red-envelope">🧧</div>
                                         </div> -->
-                                        <!--<div class="absolute bottom-0 -right-2">
-                                                <Leaves class="w-[50px] h-[50px] leaves" />
-                                                <div id="red-envelope">🧧</div>
-                                            </div> -->
                                 </div>
                                 
                                 <!-- ✅ Green check indicator -->
