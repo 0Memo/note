@@ -192,13 +192,13 @@
                     </button>
                 </div>
             </div>
-            <p class="relative flex flex-wrap justify-between md:gap-0 z-50 mt-12 md:mt-6 ml-1 text-md text-zinc-300">
+            <p class="relative flex flex-wrap justify-between md:gap-0 z-50 mt-14 md:mt-6 ml-1 text-md text-zinc-300">
                 <nuxt-link
                     :to="localePath('/')"
                     class="text-white hover:text-zinc-500 shadow-lg">
                     <House class="w-8 h-8" />
                 </nuxt-link>
-                <span v-if="userNickname" class="flex flex-wrap justify-start md:justify-center font-semibold text-white text-lg self-center transform scalable-text mt-1 md:mt-0">
+                <span v-if="userNickname" class="flex flex-wrap justify-start md:justify-center font-semibold text-white text-lg self-center transform scalable-text mt-2 md:mt-0">
                     {{ $t('greetings')}}
                     <span class="font-claymont text-sm md:text-xl mt-4 md:mt-0">
                         {{ userNickname }}
@@ -232,8 +232,59 @@
             </template>
 
             <template v-else>
+                <div class="hidden md:block">
+                    <div class="mt-3 md:mt-6 mb-4">
+                        <button
+                            @click="connectGoogleCalendar"
+                            :disabled="isConnectingCalendar"
+                            class="flex items-center justify-center w-full gap-2 px-4 py-2 font-bold text-white transition-colors duration-200 bg-blue-600 rounded hover:bg-blue-700 disabled:bg-gray-500"
+                            :aria-label="$t('toast.calendar.connectCalendar')"
+                        >
+                            <Calendar v-if="!isConnectingCalendar" class="w-5 h-5" />
+                            <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
+                            {{ isConnectingCalendar ? t('toast.calendar.connecting') : (calendarConnected ? t('toast.calendar.calendarConnected') : t('toast.calendar.connectCalendar')) }}
+                        </button>
+                        <div v-if="calendarConnected" class="flex items-center gap-1 mt-2 text-sm text-green-400">
+                            <Validate class="w-4 h-4" />
+                            {{ $t('toast.calendar.calendarConnected') }}
+                            <Calendar v-if="!isConnectingCalendar" class="w-4 h-4" />
+                        </div>
+                    </div>
+                    
+                    <!-- Added reconnect button from dashboard -->
+                    <button
+                        v-if="!calendarConnected && savedToken"
+                        @click="reconnectGoogleCalendar"
+                        class="px-3 py-1 ml-2 text-sm text-white bg-orange-600 rounded hover:bg-orange-700"
+                        :aria-label="$t('toast.calendar.reconnect')"
+                    >
+                        {{ $t('toast.calendar.reconnect') }}
+                    </button>
+                    
+                    <div class="p-4 md:mt-4 rounded-lg bg-secondary mb-4">
+                        <h3 class="mb-3 font-semibold text-white scalable-text">
+                            {{ $t('accessibility.accessibility') }}
+                        </h3>
+                        <FontSizeToggle />
+                        
+                        <!-- High Contrast Toggle -->
+                        <div class="flex items-center justify-between md:my-4">
+                            <label class="text-sm text-white scalable-text">
+                                {{ $t('accessibility.highContrast') }}
+                            </label>
+                            <button
+                                @click="toggleHighContrast"
+                                :class="['transition-transform duration-300 focus:outline-none']"
+                                :aria-label="$t('accessibility.highContrast')"
+                            >
+                                <ToggleRight v-if="highContrast" class="w-14 h-14 text-white transition-transform duration-300" />
+                                <ToggleLeft v-else class="w-14 h-14 text-white transition-transform duration-300" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <div
-                    class="notes-container max-h-[550px] overflow-y-auto md:overflow-y-visible"
+                    class="notes-container h-[calc(100vh-250px)] overflow-y-auto md:overflow-y-visible"
                     ref="notesContainer"
                     @touchstart="handleTouchStartY"
                     @touchmove="handleTouchMoveY"

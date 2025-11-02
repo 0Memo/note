@@ -4,13 +4,13 @@
             <div class="bg-[#030303] p-6 rounded-lg shadow-lg w-full max-w-md md:max-w-lg max-h-[calc(100vh-2rem)] md:max-h-[calc(100vh-4rem)] relative">
                 <button
                     @click="$emit('cancel')"
-                    class="absolute top-0 right-6 text-zinc-200 hover:text-white text-lg font-bold"
+                    class="md:hidden absolute -top-1 right-6 text-zinc-200 hover:text-white text-lg font-bold"
                     aria-label="Close modal"
                 >
-                    <Close class="w-5 h-5" />
+                    <Close class="w-4 h-4" />
                 </button>
         
-                <p class="text-lg font-bold mb-2 -mt-6 md:mt-0 text-zinc-100">{{ $t('modal.settings')}}</p>
+                <p class="text-lg font-bold mb-2 -mt-8 md:mt-0 text-zinc-100">{{ $t('modal.settings')}}</p>
                 <div class="mb-6 flex items-center gap-6">
                     <label class="block text-zinc-100 text-md font-semibold">{{ $t('modal.nickname')}}</label>
                     <input
@@ -23,7 +23,7 @@
                 </div>
         
                 <div class="mb-4">
-                    <label class="block text-zinc-100 mb-2 text-md font-semibold">{{ $t('modal.textIconColor') }}</label>
+                    <label class="block text-zinc-100 text-md font-semibold">{{ $t('modal.textIconColor') }}</label>
                     <div class="flex items-center justify-between">
                         <div
                         :class="localTextColor === 'white'
@@ -74,7 +74,7 @@
                     </button>
                 </div>
         
-                <div class="flex justify-between gap-3 px-6 py-2 border-b-4 border-dashed border-zinc-700">
+                <div class="flex justify-between gap-3 px-6 py-2 border-b-4 md:border-none border-dashed border-zinc-700">
                     <p class="text-zinc-100 mb-2">{{ message }}</p>
                     <div class="flex justify-end gap-3 text-zinc-50 mb-2">
                         <button
@@ -94,54 +94,56 @@
                     </div>
                 </div>
         
-                <div class="w-full mt-3 md:mt-6 mb-4">
-                    <p class="text-lg font-bold text-zinc-100 mb-2">Click & Action</p>
-                    <button
-                        @click="connectGoogleCalendar"
-                        :disabled="isConnectingCalendar"
-                        class="flex items-center justify-center w-full gap-2 px-4 py-2 font-bold text-white transition-colors duration-200 bg-blue-600 rounded hover:bg-blue-700 disabled:bg-gray-500"
-                        :aria-label="$t('toast.calendar.connectCalendar')"
-                    >
-                        <Calendar v-if="!isConnectingCalendar" class="w-5 h-5" />
-                        <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
-                        {{ isConnectingCalendar ? t('toast.calendar.connecting') : (calendarConnected ? t('toast.calendar.calendarConnected') : t('toast.calendar.connectCalendar')) }}
-                    </button>
-                    <div v-if="calendarConnected" class="flex items-center gap-1 mt-2 text-sm text-green-400">
-                        <Validate class="w-4 h-4" />
-                        {{ $t('toast.calendar.calendarConnected') }}
-                        <Calendar v-if="!isConnectingCalendar" class="w-4 h-4" />
-                    </div>
-                </div>
-        
-                <!-- Added reconnect button from dashboard -->
-                <button
-                    v-if="!calendarConnected && savedToken"
-                    @click="reconnectGoogleCalendar"
-                    class="px-3 py-1 ml-2 text-sm text-white bg-orange-600 rounded hover:bg-orange-700"
-                    :aria-label="$t('toast.calendar.reconnect')"
-                >
-                    {{ $t('toast.calendar.reconnect') }}
-                </button>
-        
-                <div class="p-4 md:mt-4 rounded-lg bg-secondary mb-4">
-                    <h3 class="mb-3 font-semibold text-white scalable-text">
-                        {{ $t('accessibility.accessibility') }}
-                    </h3>
-                    <FontSizeToggle />
-                    
-                    <!-- High Contrast Toggle -->
-                    <div class="flex items-center justify-between md:my-4">
-                        <label class="text-sm text-white scalable-text">
-                            {{ $t('accessibility.highContrast') }}
-                        </label>
+                <div class="block md:hidden">
+                    <div class="w-full mt-3 md:mt-6 mb-4">
+                        <p class="text-lg font-bold text-zinc-100 mb-2">Click & Action</p>
                         <button
-                            @click="toggleHighContrast"
-                            :class="['transition-transform duration-300 focus:outline-none']"
-                            :aria-label="$t('accessibility.highContrast')"
+                            @click="connectGoogleCalendar"
+                            :disabled="isConnectingCalendar"
+                            class="flex items-center justify-center w-full gap-2 px-4 py-2 font-bold text-white transition-colors duration-200 bg-blue-600 rounded hover:bg-blue-700 disabled:bg-gray-500"
+                            :aria-label="$t('toast.calendar.connectCalendar')"
                         >
-                            <ToggleRight v-if="highContrast" class="w-14 h-14 text-white transition-transform duration-300" />
-                            <ToggleLeft v-else class="w-14 h-14 text-white transition-transform duration-300" />
+                            <Calendar v-if="!isConnectingCalendar" class="w-5 h-5" />
+                            <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
+                            {{ isConnectingCalendar ? t('toast.calendar.connecting') : (calendarConnected ? t('toast.calendar.calendarConnected') : t('toast.calendar.connectCalendar')) }}
                         </button>
+                        <div v-if="calendarConnected" class="flex items-center gap-1 mt-2 text-sm text-green-400">
+                            <Validate class="w-4 h-4" />
+                            {{ $t('toast.calendar.calendarConnected') }}
+                            <Calendar v-if="!isConnectingCalendar" class="w-4 h-4" />
+                        </div>
+                    </div>
+                    
+                    <!-- Added reconnect button from dashboard -->
+                    <button
+                        v-if="!calendarConnected && savedToken"
+                        @click="reconnectGoogleCalendar"
+                        class="px-3 py-1 ml-2 text-sm text-white bg-orange-600 rounded hover:bg-orange-700"
+                        :aria-label="$t('toast.calendar.reconnect')"
+                    >
+                        {{ $t('toast.calendar.reconnect') }}
+                    </button>
+                    
+                    <div class="p-4 md:mt-4 rounded-lg bg-secondary mb-4">
+                        <h3 class="mb-3 font-semibold text-white scalable-text">
+                            {{ $t('accessibility.accessibility') }}
+                        </h3>
+                        <FontSizeToggle />
+                        
+                        <!-- High Contrast Toggle -->
+                        <div class="flex items-center justify-between md:my-4">
+                            <label class="text-sm text-white scalable-text">
+                                {{ $t('accessibility.highContrast') }}
+                            </label>
+                            <button
+                                @click="toggleHighContrast"
+                                :class="['transition-transform duration-300 focus:outline-none']"
+                                :aria-label="$t('accessibility.highContrast')"
+                            >
+                                <ToggleRight v-if="highContrast" class="w-14 h-14 text-white transition-transform duration-300" />
+                                <ToggleLeft v-else class="w-14 h-14 text-white transition-transform duration-300" />
+                            </button>
+                        </div>
                     </div>
                 </div>
         

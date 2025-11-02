@@ -1,32 +1,36 @@
 <template>
-    <div class="font-size-controls flex items-center gap-2 mb-2 md:mb-4">
-        <button
-            @click="decreaseFontSize"
-            :disabled="currentFontSize <= minFontSize"
-            class="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-500 text-white p-2 rounded-full transition-colors duration-200"
-        >
-            <Minus class="w-5 h-5" />
-        </button>
+    <div class="font-size-controls flex md:flex-wrap items-center gap-2 mb-2 md:mb-4">
+        <div class="flex flex-nowrap">
+            <button
+                @click="decreaseFontSize"
+                :disabled="currentFontSize <= minFontSize"
+                class="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-500 text-white p-2 rounded-full transition-colors duration-200"
+            >
+                <Minus class="w-5 h-5" />
+            </button>
+            
+            <span class="text-white text-sm font-medium min-w-[60px] text-center">
+                {{ Math.round((currentFontSize / baseFontSize) * 100) }}%
+            </span>
+            
+            <button
+                @click="increaseFontSize"
+                :disabled="currentFontSize >= maxFontSize"
+                class="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-500 text-white p-2 rounded-full transition-colors duration-200"
+            >
+                <Plus class="w-5 h-5" />
+            </button>
+        </div>
         
-        <span class="text-white text-sm font-medium min-w-[60px] text-center">
-            {{ Math.round((currentFontSize / baseFontSize) * 100) }}%
-        </span>
-        
-        <button
-            @click="increaseFontSize"
-            :disabled="currentFontSize >= maxFontSize"
-            class="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-500 text-white p-2 rounded-full transition-colors duration-200"
-        >
-            <Plus class="w-5 h-5" />
-        </button>
-        
-        <button
-            @click="resetFontSize"
-            class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded text-xs transition-colors duration-200"
-            :title="$t('accessibility.reset')"
-        >
-            {{ $t('accessibility.reset') }}
-        </button>
+        <div class="w-full">
+            <button
+                @click="resetFontSize"
+                class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded text-xs transition-colors duration-200"
+                :title="$t('accessibility.reset')"
+            >
+                {{ $t('accessibility.reset') }}
+            </button>
+        </div>
     </div>
 </template>
 
