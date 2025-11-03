@@ -418,7 +418,7 @@ button[data-tooltip][data-position=right1]:before {
     }
 }
 
-/*! Leaf effects
+/*! Leaf effects */
 
 .toucan-shadow {
     filter:
@@ -537,7 +537,7 @@ button[data-tooltip][data-position=right1]:before {
     100% {
         transform: rotate(0deg);
     }
-} */
+}
 
 /*! Hispanic Heritage Month
 #hhm_2025 {
@@ -1274,7 +1274,7 @@ button[data-tooltip][data-position=right1]:before {
     height: 0;
 } */
 
-/*! Toucan
+/*! Toucan */
 
 .head {
     display: flex;
@@ -1500,9 +1500,9 @@ button[data-tooltip][data-position=right1]:before {
     3% {
         transform: scaleY(0.1);
     }
-} */
+}
 
-/*! Vampire */
+/*! Vampire
 
 .cls-1 {
     fill: #290b23;
@@ -1561,7 +1561,7 @@ button[data-tooltip][data-position=right1]:before {
     50% {
         transform: skewX(3deg) rotate(5deg)
     }
-}
+} */
 
 /*! Pumpkin
 
