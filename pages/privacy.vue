@@ -38,7 +38,7 @@
                     <span>{{ $t('modal.privacy.back') }}</span>
                     <Back class="w-6 h-6" />
                 </button> -->
-                <button class="pill-button mt-6 text-white w-full">
+                <button @click="goBack" class="pill-button mt-6 text-white w-full">
                     <div class="pill-wrap">
                         <p>
                             <span>✧</span>
@@ -98,7 +98,7 @@
                     <span>{{ $t('modal.privacy.back') }}</span>
                     <Back class="w-6 h-6" />
                 </button> -->
-                <button class="pill-button mt-6 text-white w-full">
+                <button @click="goBack" class="pill-button mt-6 text-white w-full">
                     <div class="pill-wrap">
                         <p>
                             <span>✧</span>

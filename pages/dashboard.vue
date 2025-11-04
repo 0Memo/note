@@ -200,13 +200,13 @@
                     </nuxt-link>
                     <span
                         class="absolute -top-4 left-12 invisible md:group-hover:visible opacity-0 md:group-hover:opacity-100 transition
-                        bg-[#040109e8] text-white uppercase font-bold border-b-4 border-b-[#d5c7e2] text-[10px] rounded-[5px] tracking-wide px-[10px] py-[15px] whitespace-nowrap shadow-md">
+                        bg-[#040109f0] text-white uppercase font-bold border-b-4 border-b-[#d5c7e2] text-[10px] rounded-[5px] tracking-wide px-[10px] py-[15px] whitespace-nowrap shadow-md z-10">
                         {{ $t('homepage.title') }}
                     </span>
                 </div>
-                <span v-if="userNickname" class="flex flex-wrap justify-start md:justify-center font-semibold text-white text-lg self-center transform scalable-text mt-2 md:mt-0">
+                <span v-if="userNickname" class="flex flex-wrap justify-start font-semibold text-white text-md self-center transform scalable-text mt-2 md:mt-2">
                     {{ $t('greetings')}}
-                    <span class="font-claymont text-sm md:text-xl mt-4 md:mt-0">
+                    <span class="font-claymont text-sm md:text-md mt-4 md:mt-0">
                         {{ userNickname }}
                     </span>!
                 </span>
@@ -219,7 +219,7 @@
                     </button>
                     <span
                         class="absolute -top-4 right-12 invisible md:group-hover:visible opacity-0 md:group-hover:opacity-100 transition
-                            bg-[#040109e8] text-white uppercase font-bold border-b-4 border-b-[#d5c7e2] text-[10px] rounded-[5px] tracking-wide px-[10px] py-[15px] whitespace-nowrap shadow-md">
+                        bg-[#040109f0] text-white uppercase font-bold border-b-4 border-b-[#d5c7e2] text-[10px] rounded-[5px] tracking-wide px-[10px] py-[15px] whitespace-nowrap shadow-md">
                         {{ $t('modal.settings') }}
                     </span>
                 </div>
