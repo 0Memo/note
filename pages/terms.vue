@@ -23,12 +23,14 @@
                 </button> -->
                 <button @click="goBack" class="pill-button regular-pill-button mt-6 text-white w-full">
                     <div class="pill-wrap">
-                        <p>
-                            <span>✧</span>
-                            <span>✦</span>
-                            {{ $t('modal.terms.back') }}
-                            <Back class="w-6 h-6" />
-                        </p>
+                        <div class="pill-content">
+                            <p>
+                                <span>✧</span>
+                                <span>✦</span>
+                                {{ $t('modal.terms.back') }}
+                                <Back class="w-6 h-6" />
+                            </p>
+                        </div>
                     </div>
                 </button>
             </div>

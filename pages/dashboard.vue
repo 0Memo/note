@@ -1157,7 +1157,7 @@
             <button
                 @click="toggleSidebar"
                 class="pill-button regular-pill-button logo-button mt-6 text-white md:hidden
-                fixed bottom-[90px] -right-52 z-50 flex px-6 py-4 cursor-pointer
+                fixed bottom-[90px] -right-[222px] z-50 flex px-6 py-4 cursor-pointer
                 scale-[0.5] hover:scale-[0.5]"
             >
                 <div class="pill-wrap">
