@@ -146,7 +146,7 @@ body {
     text-decoration-color: #1eab52;
 }
 
-/*! Tooltips */
+/*? Tooltips */
 
 button[data-tooltip]::before {
     content: "\f09a";
@@ -263,7 +263,7 @@ button[data-tooltip][data-position=right1]:before {
     }
 }
 
-/*! End of tooltips */
+/*? End of tooltips */
 
 .fade-enter-active,
 .fade-leave-active {
@@ -275,7 +275,7 @@ button[data-tooltip][data-position=right1]:before {
     opacity: 0;
 }
 
-/*! Logo animation */
+/*? Logo animation */
 
 .logoPath {
     stroke: #fff;
@@ -427,7 +427,7 @@ button[data-tooltip][data-position=right1]:before {
         drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.5)) drop-shadow(6px 6px 2px rgba(0, 0, 0, 0.3));
 }
 
-/*! Leaf effects */
+/*? Leaf effects */
 
 .leafContainer {
     border-radius: 8px;
@@ -1180,7 +1180,7 @@ button[data-tooltip][data-position=right1]:before {
     height: 0;
 } */
 
-/*! Toucan */
+/*? Toucan */
 
 .head {
     display: flex;
@@ -1718,7 +1718,7 @@ h2 {
     font-family: "Ruge Boogie";
 } */
 
-/*! Halloween  */
+/*! Halloween
 
 .halloween {
     position: absolute;
@@ -1791,7 +1791,7 @@ h2 {
     50% {
         transform: translateY(0px);
     }
-}
+} */
 
 /*! Xmas
 
