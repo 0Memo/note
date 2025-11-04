@@ -76,8 +76,7 @@
         
                 <div class="gap-3 py-2 border-b-4 md:border-none border-dashed border-zinc-700">
                     <p class="text-zinc-100 -my-3">{{ message }}</p>
-                    <div class="flex justify-center gap-3 text-zinc-50 mb-2">
-                        
+                    <div class="flex justify-center gap-3 text-zinc-50 mb-2 text-md md:text-xl">
                         <button @click="$emit('cancel')" class="pill-button no-pill-button mt-6 text-white w-50">
                             <div class="pill-wrap">
                                 <p>
