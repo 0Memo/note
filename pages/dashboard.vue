@@ -199,7 +199,7 @@
                         <House class="w-8 h-8" />
                     </nuxt-link>
                     <span
-                        class="absolute -top-14 left-0 invisible md:group-hover:visible opacity-0 md:group-hover:opacity-100 transition
+                        class="absolute -top-4 left-12 invisible md:group-hover:visible opacity-0 md:group-hover:opacity-100 transition
                         bg-[#040109e8] text-white uppercase font-bold border-b-4 border-b-[#d5c7e2] text-[10px] rounded-[5px] tracking-wide px-[10px] py-[15px] whitespace-nowrap shadow-md">
                         {{ $t('homepage.title') }}
                     </span>
@@ -218,7 +218,7 @@
                         <Settings class="w-8 h-8" />
                     </button>
                     <span
-                        class="absolute -top-14 right-0 invisible md:group-hover:visible opacity-0 md:group-hover:opacity-100 transition
+                        class="absolute -top-4 right-12 invisible md:group-hover:visible opacity-0 md:group-hover:opacity-100 transition
                             bg-[#040109e8] text-white uppercase font-bold border-b-4 border-b-[#d5c7e2] text-[10px] rounded-[5px] tracking-wide px-[10px] py-[15px] whitespace-nowrap shadow-md">
                         {{ $t('modal.settings') }}
                     </span>
