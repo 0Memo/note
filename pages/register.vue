@@ -114,12 +114,22 @@
                     >
                 </div>
 
-                <div class="text-zinc-100 mt-6">
+                <!-- <div class="text-zinc-100 mt-6">
                     <button class="w-full mt-4 bg-purple-900 hover:bg-purple-800 text-lg px-4 py-2 rounded-2xl font-bold space-x-3 flex items-center justify-center">
                         <span>{{ $t('register.subscribe') }}</span>
                         <Send class="w-6 h-6" />
                     </button>
-                </div>
+                </div> -->
+                <button class="pill-button mt-6 text-white w-full">
+                    <div class="pill-wrap">
+                        <p>
+                            <span>✧</span>
+                            <span>✦</span>
+                            {{ $t('register.subscribe') }}
+                            <Send class="w-6 h-6" />
+                        </p>
+                    </div>
+                </button>
             </form>
 
             <p class="mt-6 ml-1 text-md text-zinc-300">

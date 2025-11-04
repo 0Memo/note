@@ -109,12 +109,22 @@
                     >
                 </div>
 
-                <div class="mt-6 text-zinc-100">
+                <!-- <div class="mt-6 text-zinc-100">
                     <button class="w-full px-4 py-2 mt-4 text-lg font-bold bg-purple-900 hover:bg-purple-800 rounded-2xl space-x-3 flex items-center justify-center">
                         <span>{{ $t('login.connect') }}</span>
                         <Send class="w-6 h-6" />
                     </button>
-                </div>
+                </div> -->
+                <button class="pill-button mt-6 text-white w-full">
+                    <div class="pill-wrap">
+                        <p>
+                            <span>✧</span>
+                            <span>✦</span>
+                            {{ $t('login.connect') }}
+                            <Send class="w-6 h-6" />
+                        </p>
+                    </div>
+                </button>
             </form>
 
             <div class="flex flex-row gap-8">

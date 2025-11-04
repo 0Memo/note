@@ -192,23 +192,37 @@
                 </div>
             </div>
             <p class="relative flex flex-wrap justify-between md:gap-0 z-50 mt-14 md:mt-6 ml-1 text-md text-zinc-300">
-                <nuxt-link
-                    :to="localePath('/')"
-                    class="text-white hover:text-zinc-500 shadow-lg">
-                    <House class="w-8 h-8" />
-                </nuxt-link>
+                <div class="relative group">
+                    <nuxt-link
+                        :to="localePath('/')"
+                        class="text-white hover:text-zinc-500 shadow-lg">
+                        <House class="w-8 h-8" />
+                    </nuxt-link>
+                    <span
+                        class="absolute -top-14 left-0 invisible md:group-hover:visible opacity-0 md:group-hover:opacity-100 transition
+                        bg-[#040109e8] text-white uppercase font-bold border-b-4 border-b-[#d5c7e2] text-[10px] rounded-[5px] tracking-wide px-[10px] py-[15px] whitespace-nowrap shadow-md">
+                        {{ $t('homepage.title') }}
+                    </span>
+                </div>
                 <span v-if="userNickname" class="flex flex-wrap justify-start md:justify-center font-semibold text-white text-lg self-center transform scalable-text mt-2 md:mt-0">
                     {{ $t('greetings')}}
                     <span class="font-claymont text-sm md:text-xl mt-4 md:mt-0">
                         {{ userNickname }}
                     </span>!
                 </span>
-                <button
-                    class="text-white hover:text-zinc-500 shadow-lg"
-                    @click="showSettingsModal = true"
-                >
-                    <Settings class="w-8 h-8" />
-                </button>
+                <div class="relative group">
+                    <button
+                        class="text-white hover:text-zinc-500 shadow-lg"
+                        @click="showSettingsModal = true"
+                    >
+                        <Settings class="w-8 h-8" />
+                    </button>
+                    <span
+                        class="absolute -top-14 right-0 invisible md:group-hover:visible opacity-0 md:group-hover:opacity-100 transition
+                            bg-[#040109e8] text-white uppercase font-bold border-b-4 border-b-[#d5c7e2] text-[10px] rounded-[5px] tracking-wide px-[10px] py-[15px] whitespace-nowrap shadow-md">
+                        {{ $t('modal.settings') }}
+                    </span>
+                </div>
             </p>
             
             <button
