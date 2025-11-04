@@ -191,7 +191,7 @@
                     </button>
                 </div>
             </div>
-            <p class="relative flex flex-wrap justify-between md:gap-0 z-50 mt-14 md:mt-6 ml-1 text-md text-zinc-300">
+            <div class="relative flex flex-wrap justify-between md:gap-0 z-50 mt-14 md:mt-6 ml-1 text-md text-zinc-300">
                 <div class="relative group">
                     <nuxt-link
                         :to="localePath('/')"
@@ -223,7 +223,7 @@
                         {{ $t('modal.settings') }}
                     </span>
                 </div>
-            </p>
+            </div>
             
             <button
                 v-if="showInstall"
@@ -1111,12 +1111,17 @@
                 </div>
             </template>
 
-            <div
+            <!-- <div
                 class="md:hidden fixed bottom-[5.5rem] right-0 z-50 flex items-center justify-between px-6 py-4cursor-pointer"
                 @click="toggleSidebar"
             >
                 <ClickLogo class="bg-[#9333ea] p-2 rounded-full shadow-md " />
-            </div>
+            </div>-->
+            <button @click="toggleSidebar" class="pill-button mt-6 text-white md:hidden fixed bottom-[90px] -right-52 z-50 flex px-6 py-4 cursor-pointer scale-[0.5] hover:scale-[0.5]">
+                <div class="pill-wrap">
+                    <ClickLogo />
+                </div>
+            </button>
 
             <button
                 @click="toggleMouseTrail"
