@@ -178,9 +178,11 @@ body {
 }
 .no-pill-button {
     background-color: #ac2a2a;
+    width: 90px !important;
 }
 .yes-pill-button {
     background-color: #179b47;
+    width: 90px !important;
 }
 
 .pill-button .pill-wrap {
