@@ -109,7 +109,7 @@
                     <span>{{ $t('modal.terms.back')}}</span>
                     <Back class="w-6 h-6" />
                 </button> -->
-                <button @click="goBack" class="pill-button text-white w-full">
+                <button @click="goBack" class="pill-button regular-pill-button text-white w-full">
                     <div class="pill-wrap">
                         <p>
                             <span>✧</span>

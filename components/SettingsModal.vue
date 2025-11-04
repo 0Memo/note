@@ -74,30 +74,50 @@
                     </button>
                 </div>
         
-                <div class="flex justify-between gap-3 px-6 py-2 border-b-4 md:border-none border-dashed border-zinc-700">
-                    <p class="text-zinc-100 mb-2">{{ message }}</p>
-                    <div class="flex justify-end gap-3 text-zinc-50 mb-2">
-                        <button
+                <div class="gap-3 py-2 border-b-4 md:border-none border-dashed border-zinc-700">
+                    <p class="text-zinc-100 -my-3">{{ message }}</p>
+                    <div class="flex justify-center gap-3 text-zinc-50 mb-2">
+                        
+                        <button @click="$emit('cancel')" class="pill-button no-pill-button mt-6 text-white w-50">
+                            <div class="pill-wrap">
+                                <p>
+                                    <span>✧</span>
+                                    <span>✦</span>
+                                    {{ $t('modal.no')}}
+                                </p>
+                            </div>
+                        </button>
+                        <button @click="handleSave" class="pill-button yes-pill-button mt-6 text-white w-50">
+                            <div class="pill-wrap">
+                                <p>
+                                    <span>✧</span>
+                                    <span>✦</span>
+                                    {{ $t('modal.yes')}}
+                                </p>
+                            </div>
+                        </button>
+                        <!-- <button
                             @click="$emit('cancel')"
-                            class="px-4 border-2 border-transparent rounded bg-red-600
+                            class="px-4 py-2 border-2 border-transparent rounded bg-red-600
                             hover:bg-zinc-50 hover:text-red-600 hover:border-red-600"
                         >
                             {{ $t('modal.no')}}
                         </button>
                         <button
                             @click="handleSave"
-                            class="px-4 border-2 border-transparent rounded bg-green-600
+                            class="px-4 py-2 border-2 border-transparent rounded bg-green-600
                             hover:bg-zinc-50 hover:text-green-600 hover:border-green-600"
                         >
                             {{ $t('modal.yes')}}
-                        </button>
+                        </button> -->
+                        
                     </div>
                 </div>
         
                 <div class="block md:hidden">
                     <div class="w-full mt-3 md:mt-6 mb-4">
-                        <p class="text-lg font-bold text-zinc-100 mb-2">Click & Action</p>
-                        <button
+                        <p class="text-lg font-bold text-zinc-100 -mb-4">Click & Action</p>
+                        <!-- <button
                             @click="connectGoogleCalendar"
                             :disabled="isConnectingCalendar"
                             class="flex items-center justify-center w-full gap-2 px-4 py-2 font-bold text-white transition-colors duration-200 bg-blue-600 rounded hover:bg-blue-700 disabled:bg-gray-500"
@@ -106,6 +126,21 @@
                             <Calendar v-if="!isConnectingCalendar" class="w-5 h-5" />
                             <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
                             {{ isConnectingCalendar ? t('toast.calendar.connecting') : (calendarConnected ? t('toast.calendar.calendarConnected') : t('toast.calendar.connectCalendar')) }}
+                        </button> -->
+                        <button
+                            @click="connectGoogleCalendar"
+                            :disabled="isConnectingCalendar"
+                            class="pill-button calendar-pill-button mt-6 text-white w-full"
+                            :aria-label="$t('toast.calendar.connectCalendar')"
+
+                        >
+                            <div class="pill-wrap">
+                                <p>
+                                    <Calendar v-if="!isConnectingCalendar" class="w-5 h-5" />
+                                    <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
+                                    {{ isConnectingCalendar ? t('toast.calendar.connecting') : (calendarConnected ? t('toast.calendar.calendarConnected') : t('toast.calendar.connectCalendar')) }}
+                                </p>
+                            </div>
                         </button>
                         <div v-if="calendarConnected" class="flex items-center gap-1 mt-2 text-sm text-green-400">
                             <Validate class="w-4 h-4" />
@@ -114,7 +149,7 @@
                         </div>
                     </div>
                     
-                    <!-- Added reconnect button from dashboard -->
+                    <!-- Added reconnect button from dashboard
                     <button
                         v-if="!calendarConnected && savedToken"
                         @click="reconnectGoogleCalendar"
@@ -122,6 +157,21 @@
                         :aria-label="$t('toast.calendar.reconnect')"
                     >
                         {{ $t('toast.calendar.reconnect') }}
+                    </button> -->
+                    <button
+                        v-if="!calendarConnected && savedToken"
+                        @click="reconnectGoogleCalendar"
+                        class="pill-button reconnect-pill-button mt-6 text-white w-full"
+                        :aria-label="$t('toast.calendar.reconnect')"
+
+                    >
+                        <div class="pill-wrap">
+                            <p>
+                                <span>✧</span>
+                                <span>✦</span>
+                                {{ $t('toast.calendar.reconnect') }}
+                            </p>
+                        </div>
                     </button>
                     
                     <div class="p-4 md:mt-4 rounded-lg bg-secondary mb-4">

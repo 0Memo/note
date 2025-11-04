@@ -154,17 +154,44 @@ body {
     border: 0;
     position: relative;
     border-radius: 100px;
-    background-color: #7e22ce;
     transition: all 0.2s ease;
+}
+
+.logo-button {
+    border: 2px solid white;
+}
+
+.regular-pill-button {
+    background-color: #2A1051;
+}
+.calendar-pill-button {
+    background-color: #2563eb;
+}
+.reconnect-pill-button {
+    background-color: #ea580c;
+}
+.no-pill-button {
+    background-color: #ac2a2a;
+}
+.yes-pill-button {
+    background-color: #179b47;
 }
 
 .pill-button .pill-wrap {
     font-size: 18px;
     font-weight: 500;
-    padding: 10px 45px;
+    padding: 10px 30px;
     border-radius: inherit;
     position: relative;
     overflow: hidden;
+}
+
+.calendar-pill-button .pill-wrap {
+    font-size: 12px;
+}
+
+.pill-button .pill-wrap p {
+    mask-image: none;
 }
 
 .pill-button .pill-wrap p span:nth-child(2) {

@@ -106,7 +106,7 @@
                         <Send class="w-6 h-6" />
                     </button>
                 </div> -->
-                <button class="pill-button mt-6 text-white w-full">
+                <button class="pill-button regular-pill-button mt-6 text-white w-full">
                     <div class="pill-wrap">
                         <p>
                             <span>✧</span>

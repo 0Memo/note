@@ -247,7 +247,7 @@
             <template v-else>
                 <div class="hidden md:block">
                     <div class="mt-3 md:mt-6 mb-4">
-                        <button
+                        <!-- <button
                             @click="connectGoogleCalendar"
                             :disabled="isConnectingCalendar"
                             class="flex items-center justify-center w-full gap-2 px-4 py-2 font-bold text-white transition-colors duration-200 bg-blue-600 rounded hover:bg-blue-700 disabled:bg-gray-500"
@@ -256,7 +256,29 @@
                             <Calendar v-if="!isConnectingCalendar" class="w-5 h-5" />
                             <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
                             {{ isConnectingCalendar ? t('toast.calendar.connecting') : (calendarConnected ? t('toast.calendar.calendarConnected') : t('toast.calendar.connectCalendar')) }}
-                        </button>
+                        </button> -->
+                        <div class="relative group">
+                            <button
+                                @click="connectGoogleCalendar"
+                                :disabled="isConnectingCalendar"
+                                class="pill-button calendar-pill-button mt-0 text-white w-full"
+                                :aria-label="$t('toast.calendar.connectCalendar')"
+                            
+                            >
+                                <div class="pill-wrap">
+                                    <p>
+                                        <Calendar v-if="!isConnectingCalendar" class="w-5 h-5" />
+                                        <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
+                                        {{ isConnectingCalendar ? t('toast.calendar.connecting') : (calendarConnected ? t('toast.calendar.calendarConnected') : t('toast.calendar.connectCalendar')) }}
+                                    </p>
+                                </div>
+                            </button>
+                            <span
+                                class="absolute top-10 left-12 invisible md:group-hover:visible opacity-0 md:group-hover:opacity-100 transition
+                                bg-[#040109f0] text-white uppercase font-bold border-b-4 border-b-[#d5c7e2] text-[10px] rounded-[5px] tracking-wide px-[10px] py-[15px] whitespace-nowrap shadow-md z-10">
+                                {{ $t('toast.calendar.connect') }}
+                            </span>
+                        </div>
                         <div v-if="calendarConnected" class="flex items-center gap-1 mt-2 text-sm text-green-400">
                             <Validate class="w-4 h-4" />
                             {{ $t('toast.calendar.calendarConnected') }}
@@ -264,7 +286,7 @@
                         </div>
                     </div>
                     
-                    <!-- Added reconnect button from dashboard -->
+                    <!-- Added reconnect button from dashboard
                     <button
                         v-if="!calendarConnected && savedToken"
                         @click="reconnectGoogleCalendar"
@@ -272,6 +294,21 @@
                         :aria-label="$t('toast.calendar.reconnect')"
                     >
                         {{ $t('toast.calendar.reconnect') }}
+                    </button> -->
+                    <button
+                        v-if="!calendarConnected && savedToken"
+                        @click="reconnectGoogleCalendar"
+                        class="pill-button reconnect-pill-button mt-6 text-white w-full"
+                        :aria-label="$t('toast.calendar.reconnect')"
+
+                    >
+                        <div class="pill-wrap">
+                            <p>
+                                <span>✧</span>
+                                <span>✦</span>
+                                {{ $t('toast.calendar.reconnect') }}
+                            </p>
+                        </div>
                     </button>
                     
                     <div class="p-4 md:mt-4 rounded-lg bg-secondary mb-4">
@@ -1117,7 +1154,12 @@
             >
                 <ClickLogo class="bg-[#9333ea] p-2 rounded-full shadow-md " />
             </div>-->
-            <button @click="toggleSidebar" class="pill-button mt-6 text-white md:hidden fixed bottom-[90px] -right-52 z-50 flex px-6 py-4 cursor-pointer scale-[0.5] hover:scale-[0.5]">
+            <button
+                @click="toggleSidebar"
+                class="pill-button regular-pill-button logo-button mt-6 text-white md:hidden
+                fixed bottom-[90px] -right-52 z-50 flex px-6 py-4 cursor-pointer
+                scale-[0.5] hover:scale-[0.5]"
+            >
                 <div class="pill-wrap">
                     <ClickLogo />
                 </div>

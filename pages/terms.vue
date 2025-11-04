@@ -2,7 +2,7 @@
     <div class="bg-secondary text-white min-h-screen px-4 py-8
     block md:flex md:items-center md:justify-center">
         <!-- Outer card: hidden on mobile, visible on md+ -->
-        <div class="hidden md:block bg-[#2a1051] rounded-2xl p-8 max-w-xl w-full text-center shadow-md mx-auto">
+        <div class="hidden md:block bg-[#030303] rounded-2xl p-8 max-w-xl w-full text-center shadow-md mx-auto">
             <Logo class="mx-auto mb-6" />
 
             <h1 class="text-3xl font-bold mb-4">
@@ -13,7 +13,7 @@
             <p class="mb-4">{{ $t('modal.terms.features') }}</p>
             <p class="mb-4">{{ $t('modal.terms.app') }}</p>
 
-            <div class="mt-6 relative z-50">
+            <div class="mt-6 relative z-50 overflow-visible">
                 <!-- <button
                     @click="goBack"
                     class="inline-flex items-center justify-center bg-purple-900 hover:bg-purple-800 transition text-lg px-6 py-2 rounded-2xl font-bold space-x-2"
@@ -21,7 +21,7 @@
                     <span>{{ $t('modal.terms.back')}}</span>
                     <Back class="w-6 h-6" />
                 </button> -->
-                <button @click="goBack" class="pill-button mt-6 text-white w-full">
+                <button @click="goBack" class="pill-button regular-pill-button mt-6 text-white w-full">
                     <div class="pill-wrap">
                         <p>
                             <span>✧</span>
@@ -33,7 +33,7 @@
                 </button>
             </div>
 
-            <p class="mt-6 ml-1 text-md text-zinc-300 relative z-50">
+            <p class="mt-6 ml-1 text-md text-zinc-300 relative z-50 overflow-visible">
                 <nuxt-link
                     :to="localePath('/')"
                     class="text-white shadow-2xl shadow-purple-900 font-semibold
@@ -63,7 +63,7 @@
                     <span>{{ $t('modal.terms.back')}}</span>
                     <Back class="w-6 h-6" />
                 </button> -->
-                <button @click="goBack" class="pill-button mt-6 text-white w-full">
+                <button @click="goBack" class="pill-button regular-pill-button mt-6 text-white w-full">
                     <div class="pill-wrap">
                         <p>
                             <span>✧</span>

@@ -1,7 +1,7 @@
 <template>
     <div class="h-full min-h-[100dvh] overflow-y-auto bg-secondary text-white px-4 py-8">
         <!-- Outer card: hidden on mobile, visible on md+ -->
-        <div class="hidden md:block bg-[#2a1051] rounded-2xl p-8 max-w-xl w-full text-center shadow-md mx-auto">
+        <div class="hidden md:block bg-[#030303] rounded-2xl p-8 max-w-xl w-full text-center shadow-md mx-auto">
             <Logo class="mx-auto mb-6" />
 
             <h1 class="text-3xl font-bold my-4">{{ $t('modal.privacy.title') }}</h1>
@@ -38,7 +38,7 @@
                     <span>{{ $t('modal.privacy.back') }}</span>
                     <Back class="w-6 h-6" />
                 </button> -->
-                <button @click="goBack" class="pill-button mt-6 text-white w-full">
+                <button @click="goBack" class="pill-button regular-pill-button mt-6 text-white w-full">
                     <div class="pill-wrap">
                         <p>
                             <span>✧</span>
@@ -98,7 +98,7 @@
                     <span>{{ $t('modal.privacy.back') }}</span>
                     <Back class="w-6 h-6" />
                 </button> -->
-                <button @click="goBack" class="pill-button mt-6 text-white w-full">
+                <button @click="goBack" class="pill-button regular-pill-button mt-6 text-white w-full">
                     <div class="pill-wrap">
                         <p>
                             <span>✧</span>

@@ -141,7 +141,8 @@ export default defineI18nConfig(() => ({
                 pdfError: "Erreur lors de la génération du PDF",
                 calendar: {
                     warning: "Votre consentement sera requis pour connecter Google Agenda",
-                    connectCalendar: "Connecter Google Agenda",
+                    connect: "Connecter",
+                    connectCalendar: "Google Agenda",
                     connecting: "Connexion à Google Agenda...",
                     wait: "Veuillez patienter pendant que nous configurons l'intégration de votre agenda.",
                     connected: "Connexion réussie !",
@@ -319,7 +320,8 @@ export default defineI18nConfig(() => ({
                 pdfError: "Error al generar el PDF",
                 calendar: {
                     warning: "Se requerirá su consentimiento para conectar con Google Calendar",
-                    connectCalendar: "Conectar Google Calendar",
+                    connect: "Conectar",
+                    connectCalendar: "Google Calendar",
                     connecting: "Conectando con Google Calendar...",
                     wait: "Por favor, espere mientras configuramos la integración de su calendario.",
                     connected: "¡Conectado con éxito!",
@@ -497,7 +499,8 @@ export default defineI18nConfig(() => ({
                 pdfError: "Erro ao gerar o PDF",
                 calendar: {
                     warning: "Seu consentimento será necessário para conectar ao Google Agenda",
-                    connectCalendar: "Conectar o Google Agenda",
+                    connect: "Conectar",
+                    connectCalendar: "Google Agenda",
                     connecting: "Conectando ao Google Agenda...",
                     wait: "Por favor, aguarde enquanto configuramos a integração do seu calendário.",
                     connected: "Conectado com sucesso!",
@@ -675,7 +678,8 @@ export default defineI18nConfig(() => ({
                 pdfError: "Error generating PDF",
                 calendar: {
                     warning: "Your consent will be required to connect to Google Calendar",
-                    connectCalendar: "Connect Google Calendar",
+                    connect: "Connect",
+                    connectCalendar: "Google Calendar",
                     connecting: "Connecting to Google Calendar...",
                     wait: "Please wait while we set up your calendar integration.",
                     connected: "Successfuly Connected!",
@@ -853,7 +857,8 @@ export default defineI18nConfig(() => ({
                 pdfError: "Errore durante la generazione del PDF",
                 calendar: {
                     warning: "Il tuo consenso sarà richiesto per connettersi a Google Calendar",
-                    connectCalendar: "Connetti Google Calendar",
+                    connect: "Connetti",
+                    connectCalendar: "Google Calendar",
                     connecting: "Connessione a Google Calendar...",
                     wait: "Attendere mentre configuriamo l'integrazione del calendario.",
                     connected: "Connesso con successo!",
@@ -1031,7 +1036,8 @@ export default defineI18nConfig(() => ({
                 pdfError: "Fel vid generering av PDF",
                 calendar: {
                     warning: "Ditt samtycke krävs för att ansluta till Google Kalender",
-                    connectCalendar: "Anslut Google Kalender",
+                    connect: "Anslut",
+                    connectCalendar: "Google Kalender",
                     connecting: "Ansluter till Google Kalender...",
                     wait: "Vänligen vänta medan vi ställer in din kalenderintegration.",
                     connected: "Ansluten framgångsrikt!",
@@ -1209,7 +1215,8 @@ export default defineI18nConfig(() => ({
                 pdfError: "Eroare la generarea fișierului PDF",
                 calendar: {
                     warning: "Consimțământul tău va fi necesar pentru a te conecta la Google Calendar",
-                    connectCalendar: "Conectează Google Calendar",
+                    connect: "Conectează",
+                    connectCalendar: "Google Calendar",
                     connecting: "Se conectează la Google Calendar...",
                     wait: "Te rugăm să aștepți în timp ce configurăm integrarea calendarului.",
                     connected: "Conectare reușită!",
@@ -1387,7 +1394,8 @@ export default defineI18nConfig(() => ({
                 pdfError: "Սխալ՝ PDF ստեղծելու ընթացքում",
                 calendar: {
                     warning: "Ձեր համաձայնությունը կպահանջվի Google Օրացույցին միանալու համար",
-                    connectCalendar: "Միացնել Google Օրացույցը",
+                    connect: "Միացնել",
+                    connectCalendar: "Google Օրացույց",
                     connecting: "Միանում է Google Օրացույցին...",
                     wait: "Խնդրում ենք սպասել, մինչ պատրաստվում է ինտեգրումը։",
                     connected: "Հաջողությամբ միացված է!",
