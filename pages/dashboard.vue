@@ -935,7 +935,7 @@
                         </div>
                         <div class="relative my-4 bg-[#d5c7e2] border-purple-900 rounded-md p-4 -ml-[8.75rem] md:-ml-5 shadow-lg w-[22.5rem] md:w-full min-h-[300px]">
                             <div class="overflow-hidden text-black bg-white border border-white rounded-lg">
-                                <div v-if="editor" class="flex flex-wrap gap-1 p-2 text-black shadow-md rounded-tl-md rounded-tr-md md:gap-2 bg-gray-50 z-20">
+                                <div v-if="editor" class="flex flex-wrap gap-1 p-2 text-black shadow-md rounded-tl-md rounded-tr-md md:gap-2 bg-gray-50 z-[50] relative">
                                     <button
                                         @click="editor.chain().focus().undo().run()"
                                         class="px-2 py-1 text-sm rounded hover:bg-gray-200"
@@ -1034,13 +1034,13 @@
                                         :aria-label="$t('editor.downloadPdf') || 'Download as PDF'"
                                         :title="$t('toast.downloadPdf') || 'Download as PDF'"
                                     >
-                                        <PDF class="w-8 h-8" />
+                                        <PDF class="w-6 h-6 md:w-8 md:h-8" />
                                     </button>
                                 </div>
-                                <div class="absolute -top-[31px] -left-[207px] scale-[5] origin-top-left">
+                                <div class="absolute -top-[30.25px] -left-[202px] scale-[5] z-[10] origin-top-left">
                                     <AbstractLeaf2 class="w-20 h-20 leaf"/>
                                 </div>
-                                <div class="absolute -top-[54px] -left-[178px] scale-[5] origin-top-left rotate-2 leafContainer">
+                                <div class="absolute -top-[54px] -left-[179px] scale-[5] origin-top-left rotate-2 z-[5]">
                                     <AbstractLeaf class="w-20 h-20 leaf"/>
                                 </div>
                                 <!--<div class="scale-[0.5] md:scale-[0.6] origin-top-right opacity-90 md:opacity-100">
@@ -1050,10 +1050,12 @@
                                     <Diya />
                                     <Dragon />
                                 </div> -->
-                                <div class='absolute -top-[30px] right-4 scale-[0.1] origin-top-right z-10'>
-                                    <Toucan />
+                                <div class='absolute -top-[30px] right-4 origin-top-right z-10 toucan-shadow'>
+                                    <div class="scale-[0.1] origin-top-right">
+                                        <Toucan />
+                                    </div>
                                 </div>
-                                <div class="relative">
+                                <div class="relative z-[50]">
                                     <EditorContent
                                         :editor="editor" 
                                         :placeholder="$t('notes.text')"
