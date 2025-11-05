@@ -910,7 +910,7 @@
                 <div class="text-white p-8 max-w-[40%] mx-auto font-bodyTest">
                     <div v-if="selectedNote && selectedNote.id">
                         <div class="-ml-14 sm:ml-0 w-fit">
-                            <div class="flex flex-row items-center gap-2 mb-8 text-lg">
+                            <div class="flex flex-row items-center mb-8 text-lg">
                                 <button
                                     @click="startTranscription" class="pr-2 text-white focus:outline-none left hover:text-zinc-500"
                                     :data-tooltip="$t('tooltip.dictateNote')"
@@ -920,7 +920,7 @@
                                     <Microphone class="relative w-8 h-8 font-bold -top-2"/>
                                 </button>
                                 <button
-                                    @click="readNoteAloud(selectedNote?.text)"  class="pr-2 text-white focus:outline-none top hover:text-zinc-500"
+                                    @click="readNoteAloud(selectedNote?.text)"  class="pr-5 text-white focus:outline-none top hover:text-zinc-500"
                                     :data-tooltip="$t('tooltip.listenNote')"
                                     data-position="top"
                                     :aria-label="$t('tooltip.listenNote')"
@@ -929,25 +929,26 @@
                                 </button>
                                 <div class="flex items-center gap-2 min-h-[36px] w-full">
                                     <template v-if="editingDate">
-                                        <div class="flex flex-col space-y-1 md:space-y-0 md:flex-row h-[36px]">
+                                        <div class="flex flex-col space-y-0 md:space-y-0 md:flex-row h-[36px]">
                                             <input
                                                 type="date"
                                                 v-model="manualDate"
                                                 class="text-black rounded px-2 w-[138px] -ml-4 md:ml-0 md:w-full md:mr-4"
                                             />
-                                        
-                                            <button
-                                                @click="saveDateChange" class="-ml-4 text-xs text-white md:ml-0 underline-green md:mr-2 scalable-text"
-                                                :aria-label="$t('notes.confirm')"
-                                            >
-                                                {{ $t('notes.confirm') }}
-                                            </button>
-                                            <button
-                                                @click="toggleDateEdit" class="-ml-4 text-xs text-white md:ml-0 underline-red scalable-text"
-                                                :aria-label="$t('notes.cancel')"
-                                            >
-                                                {{ $t('notes.cancel') }}
-                                            </button>
+                                            <div class="flex flex-col md:flex-row gap-2 md:gap-0">
+                                                <button
+                                                    @click="saveDateChange" class="-ml-10 text-xs text-white md:ml-0 underline-green md:mr-2 scalable-text"
+                                                    :aria-label="$t('notes.confirm')"
+                                                >
+                                                    {{ $t('notes.confirm') }}
+                                                </button>
+                                                <button
+                                                    @click="toggleDateEdit" class="-ml-[50px] text-xs text-white md:ml-0 underline-red scalable-text"
+                                                    :aria-label="$t('notes.cancel')"
+                                                >
+                                                    {{ $t('notes.cancel') }}
+                                                </button>
+                                            </div>
                                         </div>
                                     </template>
                                     <template v-else>
@@ -1101,7 +1102,7 @@
                                     <Diya />
                                     <Dragon />
                                 </div> -->
-                                <div class='absolute -top-[30px] right-4 origin-top-right z-10 toucan-shadow'>
+                                <div class='absolute -top-[30px] right-4 origin-top-right z-10 toucan-shadow pointer-events-none'>
                                     <div class="scale-[0.1] origin-top-right">
                                         <Toucan />
                                     </div>
