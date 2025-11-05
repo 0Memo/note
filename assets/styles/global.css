@@ -269,21 +269,21 @@ body {
             rgba(0, 0, 0, 0) 100%);
 }
 
-.pill-button:hover .pill-wrap::before {
+.pill-button:active .pill-wrap::before {
     transform: translateY(-5%);
 }
 
-.pill-button:hover .pill-wrap::after {
+.pill-button:active .pill-wrap::after {
     opacity: 0.4;
     transform: translateY(5%);
 }
 
-.pill-button:hover .pill-wrap p {
+.pill-button:active .pill-wrap p {
     transform: translateY(-4%);
 }
 
 .pill-button:active {
-    transform: translateY(4px);
+    transform: none;
 }
 
 /*? Tooltips */
