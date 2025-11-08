@@ -231,6 +231,17 @@
 
     const highContrast = ref(false)
 
+    const googleCalendarTokenCookie = useCookie('googleCalendarToken', {
+        maxAge: 60 * 60 * 24 * 365,
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production'
+    })
+
+    const highContrastCookie = useCookie('highContrast', {
+        maxAge: 60 * 60 * 24 * 365,
+        sameSite: 'lax'
+    })
+
     // Update local values when props change
     watch(() => props.visible, (newVal) => {
         if (newVal) {
@@ -244,7 +255,12 @@
     }
 
     onMounted(async () => {
-        savedToken.value = localStorage.getItem('googleCalendarToken')
+        savedToken.value = googleCalendarTokenCookie.value || null
+        highContrast.value = highContrastCookie.value === 'true' || highContrastCookie.value === true
+
+        if (highContrast.value) {
+            document.documentElement.classList.add('high-contrast')
+        }
         if (savedToken.value) {
             try {
                 await checkCalendarConnection()
@@ -255,7 +271,7 @@
     })
 
     const checkCalendarConnection = async () => {
-        const token = localStorage.getItem('googleCalendarToken')
+        const token = googleCalendarTokenCookie.value
         if (!token) {
             calendarConnected.value = false
             return
@@ -279,7 +295,7 @@
     }
 
     const reconnectGoogleCalendar = () => {
-        localStorage.removeItem('googleCalendarToken')
+        googleCalendarTokenCookie.value = null
         calendarConnected.value = false
 
         connectGoogleCalendar()
@@ -324,8 +340,7 @@
             })
             
             if (response.access_token) {
-                accessToken.value = response.access_token
-                localStorage.setItem('googleCalendarToken', response.access_token)
+                googleCalendarTokenCookie.value = response.access_token
 
                 if (!response.refresh_token) {
                     calendarConnected.value = false;
@@ -353,7 +368,6 @@
         } else {
             document.documentElement.classList.remove('high-contrast')
         }
-        const highContrastCookie = useCookie('highContrast', { maxAge: 60 * 60 * 24 * 365 })
         highContrastCookie.value = highContrast.value
     }
 
