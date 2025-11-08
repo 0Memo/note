@@ -103,11 +103,13 @@
             })
             
             if (response.access_token) {
-                const accessToken = useCookie('google_access_token')
-                const refreshToken = useCookie('google_refresh_token')
+                // Store the token
+                localStorage.setItem('googleCalendarToken', response.access_token)
                 
-                accessToken.value = response.access_token
-                if (response.refresh_token) refreshToken.value = response.refresh_token
+                // Store refresh token if available
+                if (response.refresh_token) {
+                    localStorage.setItem('googleCalendarRefreshToken', response.refresh_token)
+                }
                 
                 success.value = true
                 $toast.success(t('toast.calendar.success'))
