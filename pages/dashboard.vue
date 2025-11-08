@@ -1853,6 +1853,7 @@
     }
 
     const reconnectGoogleCalendar = () => {
+        accessToken.value = null
         googleCalendarTokenCookie.value = null
         calendarConnected.value = false
 
@@ -2514,9 +2515,11 @@
                 accessToken.value = token
                 try {
                     const stillValid = await isAccessTokenValid();
-                } catch (e) {
                     calendarConnected.value = stillValid;
+                } catch (e) {
                     $toast.info(t('toast.calendar.reconnect'), { duration: 6000 });
+                    console.error('Token check failed', e);
+                    calendarConnected.value = false;
                 }
             }
 
@@ -2604,7 +2607,7 @@
 
         const refreshed = await $fetch('/api/refresh-token')
         if (refreshed?.access_token) {
-            googleCalendarTokenCookie.value = response.access_token
+            googleCalendarTokenCookie.value = refreshed.access_token
         } else {
             throw new Error('Failed to refresh token')
         }
