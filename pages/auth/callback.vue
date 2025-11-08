@@ -103,9 +103,9 @@
             })
             
             if (response.access_token) {
-                const accessToken = useCookie('googleCalendarToken')
-                const refreshToken = useCookie('googleCalendarRefreshToken')
-
+                const accessToken = useCookie('google_access_token')
+                const refreshToken = useCookie('google_refresh_token')
+                
                 accessToken.value = response.access_token
                 if (response.refresh_token) refreshToken.value = response.refresh_token
                 
