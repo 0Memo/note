@@ -182,7 +182,7 @@
 </template>
 
 <script setup>
-    import { ref, watch } from 'vue'
+    import { ref, watch, onMounted } from 'vue'
     import { useI18n } from 'vue-i18n'
     import { useLocalePath } from '#i18n'
     import { useRouter } from 'vue-router'
@@ -222,24 +222,20 @@
     })
     const emit = defineEmits(['save', 'cancel'])
 
-    const googleCalendarTokenCookie = useCookie('googleCalendarToken', { 
-        maxAge: 60 * 60 * 24 * 30,
-    })
-    const savedToken = ref(googleCalendarTokenCookie.value) // Initialize from cookie
-
-    // High Contrast Cookie
-    const highContrastCookie = useCookie('highContrast', { 
-        maxAge: 60 * 60 * 24 * 365, // 1 year
-        // secure: true,
-        // sameSite: 'lax',
-    })
-    const highContrast = ref(highContrastCookie.value === 'true' ? true : false)
-
     const localNickname = ref(props.nickname)
     const localBgSecondary = ref(props.bgSecondary)
-
     const calendarConnected = ref(false)
     const isConnectingCalendar = ref(false)
+    const savedToken = ref(null)
+    const highContrast = ref(false)
+
+    const googleCalendarTokenCookie = useCookie('googleCalendarToken', {
+    maxAge: 60 * 60 * 24 * 365
+    })
+
+    const highContrastCookie = useCookie('highContrast', {
+    maxAge: 60 * 60 * 24 * 365
+    })
 
     // Update local values when props change
     watch(() => props.visible, (newVal) => {
@@ -257,18 +253,8 @@
         document.documentElement.classList.add('high-contrast')
     }
 
-    onMounted(async () => {
-        if (savedToken.value) {
-            try {
-                await checkCalendarConnection()
-            } catch (err) {
-                console.warn('Could not verify calendar token:', err)
-            }
-        }
-    })
-
     const checkCalendarConnection = async () => {
-        const token = savedToken.value
+        const token = googleCalendarTokenCookie.value
         if (!token) {
             calendarConnected.value = false
             return
@@ -285,13 +271,27 @@
             console.warn('❌ Google Calendar token expired or invalid:', error?.response?._data || error.message)
             calendarConnected.value = false
             googleCalendarTokenCookie.value = null 
-            savedToken.value = null
         }
     }
 
+    onMounted(async () => {
+        savedToken.value = googleCalendarTokenCookie.value
+        if (savedToken.value) {
+            try {
+                await checkCalendarConnection()
+            } catch (err) {
+                console.warn('Could not verify calendar token:', err)
+            }
+        }
+        if (highContrastCookie.value === 'true' || highContrastCookie.value === true) {
+            highContrast.value = true
+            document.documentElement.classList.add('high-contrast')
+        }
+    })
+
     const reconnectGoogleCalendar = () => {
         googleCalendarTokenCookie.value = null
-        savedToken.value = null
+        calendarConnected.value = false
         calendarConnected.value = false
 
         connectGoogleCalendar()
@@ -337,7 +337,6 @@
             
             if (response.access_token) {
                 googleCalendarTokenCookie.value = response.access_token
-                savedToken.value = response.access_token
 
                 if (!response.refresh_token) {
                     calendarConnected.value = false;
