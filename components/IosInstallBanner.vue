@@ -19,6 +19,13 @@
     const shouldShow = ref(false)
     const { t, locale } = useI18n()
     const localePath = useLocalePath()
+
+    const dismissedCookie = useCookie('ios-pwa-dismissed', {
+        default: () => 'false',
+        maxAge: 60 * 60 * 24 * 30,
+        sameSite: 'lax',
+        secure: true,
+    })
     
     const isIos = () => {
         const userAgent = window.navigator.userAgent.toLowerCase()
@@ -29,12 +36,12 @@
     
     const dismiss = () => {
         shouldShow.value = false
-        localStorage.setItem('ios-pwa-dismissed', 'true')
+        dismissedCookie.value = 'true'
     }
     
     onMounted(() => {
-        if (isIos() && !isInStandaloneMode() && !localStorage.getItem('ios-pwa-dismissed')) {
-        shouldShow.value = true
+        if (isIos() && !isInStandaloneMode() && dismissedCookie.value !== 'true') {
+            shouldShow.value = true
         }
     })
     </script>

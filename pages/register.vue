@@ -186,9 +186,16 @@
     const { $toast } = useNuxtApp()
     const isLoading = ref(false)
 
+    const localeCookie = useCookie('locale', {
+        default: () => 'en',
+        maxAge: 60 * 60 * 24 * 365,
+        sameSite: 'lax',
+        secure: import.meta.client,
+    })
+
     function changeLocale(newLocale) {
         locale.value = newLocale
-        localStorage.setItem('locale', newLocale)
+        localeCookie.value = newLocale
         $toast.success(`${t('toast.language')}${newLocale}`)
 
         const path = `/${newLocale}/register`

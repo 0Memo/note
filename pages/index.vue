@@ -164,9 +164,16 @@
     const { $toast } = useNuxtApp()
     const isLoading = ref(false)
 
+    const localeCookie = useCookie('locale', {
+        default: () => 'en',
+        maxAge: 60 * 60 * 24 * 365, // 1 year
+        sameSite: 'lax',
+        secure: import.meta.client,
+    })
+
     function changeLocale(newLocale) {
         locale.value = newLocale
-        localStorage.setItem('locale', newLocale)
+        localeCookie.value = newLocale
         $toast.success(`${t('toast.language')}${newLocale}`)
 
         const path = `/${newLocale}/`
@@ -178,7 +185,7 @@
             if (window.history.length > 1) {
                 window.history.back()
             } else {
-                window.location.href = localePath('/') // fallback to homepage
+                window.location.href = localePath('/')
             }
         }
     }

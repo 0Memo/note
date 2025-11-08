@@ -40,36 +40,14 @@
     const baseFontSize = 16
     const minFontSize = 12
     const maxFontSize = 24
-    const currentFontSize = ref(baseFontSize)
-
-    onMounted(() => {
-        const savedSize = localStorage.getItem('userFontSize')
-        if (savedSize) {
-            currentFontSize.value = parseInt(savedSize)
-            applyFontSize()
-        }
+    const fontSizeCookie = useCookie('userFontSize', {
+        default: () => baseFontSize.toString(),
+        maxAge: 60 * 60 * 24 * 365,
+        sameSite: 'lax',
+        secure: true,
     })
 
-    watch(currentFontSize, (newSize) => {
-        localStorage.setItem('userFontSize', newSize.toString())
-        applyFontSize()
-    })
-
-    function increaseFontSize() {
-        if (currentFontSize.value < maxFontSize) {
-            currentFontSize.value += 2
-        }
-    }
-
-    function decreaseFontSize() {
-        if (currentFontSize.value > minFontSize) {
-            currentFontSize.value -= 2
-        }
-    }
-
-    function resetFontSize() {
-        currentFontSize.value = baseFontSize
-    }
+    const currentFontSize = ref(parseInt(fontSizeCookie.value) || baseFontSize)
 
     function applyFontSize() {
         document.documentElement.style.setProperty('--user-font-size', `${currentFontSize.value}px`)
@@ -91,5 +69,30 @@
             const baseSize = parseFloat(getComputedStyle(el).fontSize) || 18
             el.style.fontSize = `${baseSize * scale}px`
         })
+    }
+
+    onMounted(() => {
+        applyFontSize()
+    })
+
+    watch(currentFontSize, (newSize) => {
+        fontSizeCookie.value = newSize.toString()
+        applyFontSize()
+    })
+
+    function increaseFontSize() {
+        if (currentFontSize.value < maxFontSize) {
+            currentFontSize.value += 2
+        }
+    }
+
+    function decreaseFontSize() {
+        if (currentFontSize.value > minFontSize) {
+            currentFontSize.value -= 2
+        }
+    }
+
+    function resetFontSize() {
+        currentFontSize.value = baseFontSize
     }
 </script>
