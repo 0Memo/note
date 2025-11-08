@@ -222,14 +222,24 @@
     })
     const emit = defineEmits(['save', 'cancel'])
 
+    const googleCalendarTokenCookie = useCookie('googleCalendarToken', { 
+        maxAge: 60 * 60 * 24 * 30,
+    })
+    const savedToken = ref(googleCalendarTokenCookie.value) // Initialize from cookie
+
+    // High Contrast Cookie
+    const highContrastCookie = useCookie('highContrast', { 
+        maxAge: 60 * 60 * 24 * 365, // 1 year
+        // secure: true,
+        // sameSite: 'lax',
+    })
+    const highContrast = ref(highContrastCookie.value === 'true' ? true : false)
+
     const localNickname = ref(props.nickname)
     const localBgSecondary = ref(props.bgSecondary)
 
     const calendarConnected = ref(false)
     const isConnectingCalendar = ref(false)
-    const savedToken = ref(null)
-
-    const highContrast = ref(false)
 
     // Update local values when props change
     watch(() => props.visible, (newVal) => {
@@ -243,8 +253,11 @@
         localBgSecondary.value = '#1d073a'
     }
 
+    if (highContrast.value) {
+        document.documentElement.classList.add('high-contrast')
+    }
+
     onMounted(async () => {
-        savedToken.value = localStorage.getItem('googleCalendarToken')
         if (savedToken.value) {
             try {
                 await checkCalendarConnection()
@@ -255,7 +268,7 @@
     })
 
     const checkCalendarConnection = async () => {
-        const token = localStorage.getItem('googleCalendarToken')
+        const token = savedToken.value
         if (!token) {
             calendarConnected.value = false
             return
@@ -263,23 +276,22 @@
 
         try {
             await $fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=1', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             })
             calendarConnected.value = true
         } catch (error) {
             console.warn('❌ Google Calendar token expired or invalid:', error?.response?._data || error.message)
             calendarConnected.value = false
+            googleCalendarTokenCookie.value = null 
+            savedToken.value = null
         }
     }
 
-    if (calendarConnected.value) {
-        savedToken.value = null
-    }
-
     const reconnectGoogleCalendar = () => {
-        localStorage.removeItem('googleCalendarToken')
+        googleCalendarTokenCookie.value = null
+        savedToken.value = null
         calendarConnected.value = false
 
         connectGoogleCalendar()
@@ -324,8 +336,8 @@
             })
             
             if (response.access_token) {
-                accessToken.value = response.access_token
-                localStorage.setItem('googleCalendarToken', response.access_token)
+                googleCalendarTokenCookie.value = response.access_token
+                savedToken.value = response.access_token
 
                 if (!response.refresh_token) {
                     calendarConnected.value = false;
@@ -353,8 +365,7 @@
         } else {
             document.documentElement.classList.remove('high-contrast')
         }
-        const highContrastCookie = useCookie('highContrast', { maxAge: 60 * 60 * 24 * 365 })
-        highContrastCookie.value = highContrast.value
+        highContrastCookie.value = highContrast.value.toString()
     }
 
     const handleSave = () => {
