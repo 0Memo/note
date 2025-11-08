@@ -222,23 +222,20 @@
     })
     const emit = defineEmits(['save', 'cancel'])
 
-    const nicknameCookie = useCookie('nickname', { maxAge: 60 * 60 * 24 * 365 })
-    const bgSecondaryCookie = useCookie('bgSecondary', { maxAge: 60 * 60 * 24 * 365, default: '#1d073a' })
-
-    const localNickname = ref(nicknameCookie.value || '')
-    const localBgSecondary = ref(bgSecondaryCookie.value)
+    const localNickname = ref(props.nickname)
+    const localBgSecondary = ref(props.bgSecondary)
 
     const calendarConnected = ref(false)
     const isConnectingCalendar = ref(false)
     const savedToken = ref(null)
 
-    const highContrast = useCookie('highContrast', { maxAge: 60 * 60 * 24 * 365, default: false })
+    const highContrast = ref(false)
 
     // Update local values when props change
     watch(() => props.visible, (newVal) => {
         if (newVal) {
-            localNickname.value = nicknameCookie.value || ''
-            localBgSecondary.value = bgSecondaryCookie.value
+            localNickname.value = props.nickname
+            localBgSecondary.value = props.bgSecondary
         }
     })
 
@@ -255,8 +252,6 @@
                 console.warn('Could not verify calendar token:', err)
             }
         }
-
-        if (highContrast.value) document.documentElement.classList.add('high-contrast')
     })
 
     const checkCalendarConnection = async () => {
@@ -358,12 +353,11 @@
         } else {
             document.documentElement.classList.remove('high-contrast')
         }
+        const highContrastCookie = useCookie('highContrast', { maxAge: 60 * 60 * 24 * 365 })
+        highContrastCookie.value = highContrast.value
     }
 
     const handleSave = () => {
-        nicknameCookie.value = localNickname.value
-        bgSecondaryCookie.value = localBgSecondary.value
-        
         emit('save', {
             nickname: localNickname.value,
             bgSecondary: localBgSecondary.value
