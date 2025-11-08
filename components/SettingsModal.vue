@@ -46,7 +46,7 @@
                     </button>
                 </div>
         
-                <div class="gap-3 py-4 border-b-4 md:border-none border-dashed border-zinc-700">
+                <div class="gap-3 py-6 border-b-4 md:border-none border-dashed border-zinc-700">
                     <p class="text-zinc-100 -my-3">{{ message }}</p>
                     <div class="flex justify-center gap-3 text-zinc-50 mb-2 text-md md:text-xl">
                         <button @click="$emit('cancel')" class="pill-button no-pill-button mt-6 text-white w-50">
@@ -87,7 +87,7 @@
         
                 <div class="block md:hidden">
                     <div class="w-full mt-3 md:mt-6 mb-4">
-                        <p class="text-lg font-bold text-zinc-100 -mb-4">Click & Action</p>
+                        <p class="text-lg font-bold text-zinc-100 mb-2">Click & Action</p>
                         <!-- <button
                             @click="connectGoogleCalendar"
                             :disabled="isConnectingCalendar"
