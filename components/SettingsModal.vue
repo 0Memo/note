@@ -10,7 +10,7 @@
                     <Close class="w-4 h-4" />
                 </button>
         
-                <p class="text-lg font-bold mb-6 -mt-8 md:mt-0 text-zinc-100">{{ $t('modal.settings')}}</p>
+                <p class="text-lg font-bold mb-6 -mt-6 md:mt-0 text-zinc-100">{{ $t('modal.settings')}}</p>
                 <div class="mb-6 flex items-center gap-6">
                     <label class="block text-zinc-100 text-md font-semibold">{{ $t('modal.nickname')}}</label>
                     <input
@@ -132,7 +132,7 @@
                     <button
                         v-if="!calendarConnected && savedToken"
                         @click="reconnectGoogleCalendar"
-                        class="pill-button reconnect-pill-button mt-6 text-white w-full"
+                        class="pill-button reconnect-pill-button mt-6 text-white w-full mb-4"
                         :aria-label="$t('toast.calendar.reconnect')"
 
                     >
@@ -145,7 +145,7 @@
                         </div>
                     </button>
                     
-                    <div class="p-4 md:mt-4 rounded-lg bg-secondary mb-4">
+                    <div class="px-4 py-6 md:mt-4 rounded-lg bg-secondary mb-4">
                         <h3 class="mb-3 font-semibold text-white scalable-text">
                             {{ $t('accessibility.accessibility') }}
                         </h3>
