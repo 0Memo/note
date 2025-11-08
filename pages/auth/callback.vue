@@ -67,6 +67,9 @@
     const success = ref(false)
     const errorMessage = ref('')
 
+    const accessTokenCookie = useCookie('google_access_token', { readonly: true })
+    const refreshTokenCookie = useCookie('google_refresh_token', { readonly: true })
+
     // Make sure user is logged in
     definePageMeta({
         middleware: ['auth'],
@@ -103,21 +106,17 @@
             })
             
             if (response.access_token) {
-                // Store the token
-                localStorage.setItem('googleCalendarToken', response.access_token)
-                
-                // Store refresh token if available
-                if (response.refresh_token) {
-                    localStorage.setItem('googleCalendarRefreshToken', response.refresh_token)
+                if (accessTokenCookie.value) {
+                    success.value = true
+                    $toast.success(t('toast.calendar.success'))
+                    
+                    // Redirect to notes after a short delay
+                    setTimeout(() => {
+                        goToNotes()
+                    }, 2000)
+                } else {
+                    throw new Error('Cookie was not set')
                 }
-                
-                success.value = true
-                $toast.success(t('toast.calendar.success'))
-                
-                // Redirect to notes after a short delay
-                setTimeout(() => {
-                    goToNotes()
-                }, 2000)
             } else {
                 throw new Error('No access token received')
             }
