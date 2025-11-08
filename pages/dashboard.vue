@@ -1447,7 +1447,10 @@
     const bgSecondaryCookie = useCookie('customBgSecondary', { sameSite: 'lax' })
     const highContrastCookie = useCookie('highContrast', { sameSite: 'lax' })
 
-    const googleCalendarTokenCookie = useCookie('googleCalendarToken', { sameSite: 'lax' })
+    const googleCalendarTokenCookie = useCookie('googleCalendarToken', {
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        secure: process.env.NODE_ENV === 'production',
+    })
 
     // Handle settings save
     const handleSaveSettings = (settings) => {
@@ -2506,11 +2509,13 @@
             highContrast.value = highContrastCookie.value === 'true'
             applyAccessibilitySettings()
             // Check for existing calendar connection
-            if (googleCalendarTokenCookie.value) {
-                accessToken.value = googleCalendarTokenCookie.value
-                const stillValid = await isAccessTokenValid();
-                calendarConnected.value = stillValid;
-                if (!stillValid) {
+            const token = googleCalendarTokenCookie.value
+            if (token) {
+                accessToken.value = token
+                try {
+                    const stillValid = await isAccessTokenValid();
+                } catch (e) {
+                    calendarConnected.value = stillValid;
                     $toast.info(t('toast.calendar.reconnect'), { duration: 6000 });
                 }
             }
