@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig(); // Moved to top to satisfy hook rule
 
     if (!query.code) {
-        return sendRedirect(event, "/?error=no_code");
+        return sendRedirect(event, "/auth/callback?error=no_code");
     }
 
     const redirectUri = `${config.public.baseURL}/auth/callback`; // Note: baseURL not baseUrl
@@ -30,23 +30,34 @@ export default defineEventHandler(async (event) => {
         // Store tokens in cookies
         setCookie(event, "google_access_token", tokenRes.access_token, {
             httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
             path: "/",
             maxAge: tokenRes.expires_in || 3600, // Use the actual expiry time
         });
 
         // Store refresh token if available
         if (tokenRes.refresh_token) {
-        setCookie(event, "google_refresh_token", tokenRes.refresh_token, {
-            httpOnly: true,
-            path: "/",
-            maxAge: 60 * 60 * 24 * 30, // 30 days
-        });
+            setCookie(event, "google_refresh_token", tokenRes.refresh_token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "lax",
+                path: "/",
+                maxAge: 60 * 60 * 24 * 30, // 30 days
+            });
         }
 
         // Redirect to app homepage with success indicator
-        return sendRedirect(event, "/?calendar_connected=true");
+        return sendRedirect(event, "/auth/callback?calendar_connected=true");
     } catch (error) {
         console.error("OAuth token exchange error:", error);
-        return sendRedirect(event, "/?error=token_exchange_failed");
+        const msg =
+            error?.response?._data?.error_description ||
+            error.message ||
+            "unknown";
+        return sendRedirect(
+            event,
+            `/auth/callback?error=${encodeURIComponent(msg)}`
+        );
     }
 });

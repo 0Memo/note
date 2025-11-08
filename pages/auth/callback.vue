@@ -69,7 +69,6 @@
     const errorMessage = ref('')
 
     const accessTokenCookie = useCookie('google_access_token', { readonly: true })
-    const refreshTokenCookie = useCookie('google_refresh_token', { readonly: true })
 
     // Make sure user is logged in
     definePageMeta({
@@ -79,55 +78,33 @@
     const code = ref(null)
     const error = ref(null)
 
-    onMounted(() => {
-        code.value = route.query.code
-        error.value = route.query.error
+    onMounted(async () => {
+        const urlError = route.query.error
+        const connected = route.query.calendar_connected === 'true'
 
-        handleAuthResponse()
-    })
-
-    const handleAuthResponse = async () => {
-        if (error.value) {
+        if (urlError) {
             isProcessing.value = false
-            errorMessage.value = 'Authorization was cancelled or failed.'
+            errorMessage.value = urlError === 'no_code' ? 'No authorization code' : 'Token exchange failed'
             return
         }
-        
-        if (!code.value) {
-            isProcessing.value = false
-            errorMessage.value = 'No authorization code received from Google.'
-            return
-        }
-        
-        try {
-            // Exchange the code for an access token
-            const response = await $fetch('/api/auth/google-calendar', {
-                method: 'POST',
-                body: { code: code.value }
-            })
-            
-            if (response.access_token) {
-                if (accessTokenCookie.value) {
-                    success.value = true
-                    $toast.success(t('toast.calendar.success'))
-                    
-                    // Redirect to notes after a short delay
-                    setTimeout(() => {
-                        goToNotes()
-                    }, 2000)
-                } else {
-                    throw new Error('Cookie was not set')
-                }
+
+        if (connected) {
+            // Success: cookies were set by callback.get.js
+            if (accessTokenCookie.value) {
+            success.value = true
+            $toast.success(t('toast.calendar.success'))
+            setTimeout(() => goToNotes(), 2000)
             } else {
-                throw new Error('No access token received')
+            // Fallback: should not happen, but just in case
+            errorMessage.value = 'Connection succeeded but token missing'
             }
-        } catch (error) {
-            console.error('OAuth callback error:', error)
-            errorMessage.value = error.message || 'Failed to connect to Google Calendar'
-        } finally {
-            isProcessing.value = false
+        } else {
+            // No success flag → something went wrong
+            errorMessage.value = 'Connection failed or was cancelled'
         }
-    }
+
+        isProcessing.value = false
+    })
 
     const goToNotes = () => {
         router.push(localePath('/dashboard'))
