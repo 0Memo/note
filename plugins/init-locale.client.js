@@ -15,6 +15,6 @@ export default defineNuxtPlugin((nuxtApp) => {
         $i18n.locale.value = routeLocale;
         localeCookie.value = routeLocale;
     } else if (localeCookie.value && $i18n.locale.value !== localeCookie.value) {
-        $i18n.locale.value = savedLocale;
+        $i18n.locale.value = localeCookie.value;
     }
 });
