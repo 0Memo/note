@@ -222,41 +222,29 @@
     })
     const emit = defineEmits(['save', 'cancel'])
 
-    // === Cookies (SSR-safe) ===
-    const nicknameCookie = useCookie('user-nickname', { default: () => '', maxAge: 60 * 60 * 24 * 365, path: '/' })
-    const bgSecondaryCookie = useCookie('bg-secondary', { default: () => '#1d073a', maxAge: 60 * 60 * 24 * 365, path: '/' })
-    const highContrastCookie = useCookie('highContrast', { default: () => false, maxAge: 60 * 60 * 24 * 365, path: '/' })
-    const googleCalendarTokenCookie = useCookie('googleCalendarToken', { maxAge: 60 * 60 * 24 * 365, path: '/' }) // access token
+    const localNickname = ref(props.nickname)
+    const localBgSecondary = ref(props.bgSecondary)
 
-    // === Local refs (synced with cookies) ===
-    const localNickname = ref(nicknameCookie.value || props.nickname)
-    const localBgSecondary = ref(bgSecondaryCookie.value || props.bgSecondary)
-    const highContrast = ref(highContrastCookie.value === true || highContrastCookie.value === 'true')
     const calendarConnected = ref(false)
     const isConnectingCalendar = ref(false)
-    const savedToken = ref(googleCalendarTokenCookie.value)
+    const savedToken = ref(null)
 
-    // Apply high contrast on load
-    if (highContrast.value) {
-        document.documentElement.classList.add('high-contrast')
-    }
+    const highContrast = ref(false)
 
     // Update local values when props change
     watch(() => props.visible, (newVal) => {
         if (newVal) {
-            localNickname.value = props.nickname || nicknameCookie.value || ''
-            localBgSecondary.value = props.bgSecondary || bgSecondaryCookie.value || '#1d073a'
+            localNickname.value = props.nickname
+            localBgSecondary.value = props.bgSecondary
         }
     })
-
-    watch(localNickname, (val) => { nicknameCookie.value = val })
-    watch(localBgSecondary, (val) => { bgSecondaryCookie.value = val })
 
     const resetBgSecondary = () => {
         localBgSecondary.value = '#1d073a'
     }
 
     onMounted(async () => {
+        savedToken.value = localStorage.getItem('googleCalendarToken')
         if (savedToken.value) {
             try {
                 await checkCalendarConnection()
@@ -267,7 +255,7 @@
     })
 
     const checkCalendarConnection = async () => {
-        const token = googleCalendarTokenCookie.value
+        const token = localStorage.getItem('googleCalendarToken')
         if (!token) {
             calendarConnected.value = false
             return
@@ -283,13 +271,15 @@
         } catch (error) {
             console.warn('❌ Google Calendar token expired or invalid:', error?.response?._data || error.message)
             calendarConnected.value = false
-            googleCalendarTokenCookie.value = null
         }
     }
 
-    const reconnectGoogleCalendar = () => {
-        googleCalendarTokenCookie.value = null
+    if (calendarConnected.value) {
         savedToken.value = null
+    }
+
+    const reconnectGoogleCalendar = () => {
+        localStorage.removeItem('googleCalendarToken')
         calendarConnected.value = false
 
         connectGoogleCalendar()
@@ -334,8 +324,8 @@
             })
             
             if (response.access_token) {
-                googleCalendarTokenCookie.value = response.access_token
-                savedToken.value = response.access_token
+                accessToken.value = response.access_token
+                localStorage.setItem('googleCalendarToken', response.access_token)
 
                 if (!response.refresh_token) {
                     calendarConnected.value = false;
@@ -358,23 +348,19 @@
 
     const toggleHighContrast = () => {
         highContrast.value = !highContrast.value
-        highContrastCookie.value = highContrast.value
         if (highContrast.value) {
             document.documentElement.classList.add('high-contrast')
         } else {
             document.documentElement.classList.remove('high-contrast')
         }
+        const highContrastCookie = useCookie('highContrast', { maxAge: 60 * 60 * 24 * 365 })
+        highContrastCookie.value = highContrast.value
     }
 
     const handleSave = () => {
-        nicknameCookie.value = localNickname.value
-        bgSecondaryCookie.value = localBgSecondary.value
-
         emit('save', {
             nickname: localNickname.value,
             bgSecondary: localBgSecondary.value
         })
     }
-
-    defineExpose({ handleOAuthCallback })
 </script>
