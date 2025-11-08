@@ -56,6 +56,7 @@
     import { useRoute, useRouter } from 'vue-router'
     import { useToast } from 'vue-toast-notification'
     import { useLocalePath } from '#i18n'
+    import { useCookie } from '#app'
 
     const route = useRoute()
     const router = useRouter()
@@ -67,19 +68,27 @@
     const success = ref(false)
     const errorMessage = ref('')
 
+    const googleCalendarTokenCookie = useCookie('googleCalendarToken', { 
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+    })
+
+    const googleCalendarRefreshTokenCookie = useCookie('googleCalendarRefreshToken', { 
+        maxAge: 60 * 60 * 24 * 365 * 10,
+    })
+
     // Make sure user is logged in
     definePageMeta({
-    middleware: ['auth'],
+        middleware: ['auth'],
     })
 
     const code = ref(null)
     const error = ref(null)
 
     onMounted(() => {
-    code.value = route.query.code
-    error.value = route.query.error
+        code.value = route.query.code
+        error.value = route.query.error
 
-    handleAuthResponse()
+        handleAuthResponse()
     })
 
     const handleAuthResponse = async () => {
@@ -103,12 +112,10 @@
         })
         
         if (response.access_token) {
-            // Store the token
-            localStorage.setItem('googleCalendarToken', response.access_token)
-            
-            // Store refresh token if available
+            googleCalendarTokenCookie.value = response.access_token 
+
             if (response.refresh_token) {
-                localStorage.setItem('googleCalendarRefreshToken', response.refresh_token)
+                googleCalendarRefreshTokenCookie.value = response.refresh_token
             }
             
             success.value = true
