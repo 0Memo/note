@@ -56,6 +56,7 @@
     import { useRoute, useRouter } from 'vue-router'
     import { useToast } from 'vue-toast-notification'
     import { useLocalePath } from '#i18n'
+    import { useCookie } from '#app'
 
     const route = useRoute()
     const router = useRouter()
