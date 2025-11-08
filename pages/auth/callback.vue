@@ -69,17 +69,17 @@
 
     // Make sure user is logged in
     definePageMeta({
-        middleware: ['auth'],
+    middleware: ['auth'],
     })
 
     const code = ref(null)
     const error = ref(null)
 
     onMounted(() => {
-        code.value = route.query.code
-        error.value = route.query.error
+    code.value = route.query.code
+    error.value = route.query.error
 
-        handleAuthResponse()
+    handleAuthResponse()
     })
 
     const handleAuthResponse = async () => {
