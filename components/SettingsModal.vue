@@ -211,10 +211,6 @@
             type: String,
             default: '#1d073a'
         },
-        textColor: {
-            type: String,
-            default: 'white'
-        },
         title: {
             type: String,
             default: "Confirmation"
@@ -234,7 +230,8 @@
 
     const calendarConnected = ref(false)
     const isConnectingCalendar = ref(false)
-    const savedToken = useCookie('googleCalendarToken')
+    const savedToken = ref(null)
+
     const highContrast = useCookie('highContrast', { maxAge: 60 * 60 * 24 * 365, default: false })
 
     // Update local values when props change
@@ -250,6 +247,7 @@
     }
 
     onMounted(async () => {
+        savedToken.value = localStorage.getItem('googleCalendarToken')
         if (savedToken.value) {
             try {
                 await checkCalendarConnection()
@@ -257,10 +255,12 @@
                 console.warn('Could not verify calendar token:', err)
             }
         }
+
+        if (highContrast.value) document.documentElement.classList.add('high-contrast')
     })
 
     const checkCalendarConnection = async () => {
-        const token = savedToken.value
+        const token = localStorage.getItem('googleCalendarToken')
         if (!token) {
             calendarConnected.value = false
             return
@@ -284,7 +284,7 @@
     }
 
     const reconnectGoogleCalendar = () => {
-        savedToken.value = null
+        localStorage.removeItem('googleCalendarToken')
         calendarConnected.value = false
 
         connectGoogleCalendar()
@@ -329,7 +329,8 @@
             })
             
             if (response.access_token) {
-                savedToken.value = response.access_token
+                accessToken.value = response.access_token
+                localStorage.setItem('googleCalendarToken', response.access_token)
 
                 if (!response.refresh_token) {
                     calendarConnected.value = false;
@@ -357,11 +358,12 @@
         } else {
             document.documentElement.classList.remove('high-contrast')
         }
-        const highContrastCookie = useCookie('highContrast', { maxAge: 60 * 60 * 24 * 365 })
-        highContrastCookie.value = highContrast.value
     }
 
     const handleSave = () => {
+        nicknameCookie.value = localNickname.value
+        bgSecondaryCookie.value = localBgSecondary.value
+        
         emit('save', {
             nickname: localNickname.value,
             bgSecondary: localBgSecondary.value
