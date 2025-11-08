@@ -1295,7 +1295,6 @@
     const editingDate = ref(false)
     const manualDate = ref('')
 
-    const customTextColor = ref('white')
     const customBgSecondary = ref('#1d073a')
     const mainContentArea = ref(null)
 
@@ -1446,12 +1445,13 @@
 
     // Handle settings save
     const handleSaveSettings = (settings) => {
+        const nicknameCookie = useCookie('userNickname', { sameSite: 'lax' })
+        const bgSecondaryCookie = useCookie('customBgSecondary', { sameSite: 'lax' })
+        nicknameCookie.value = settings.nickname
+        bgSecondaryCookie.value = settings.bgSecondary
+
         userNickname.value = settings.nickname
-        customTextColor.value = settings.textColor
         customBgSecondary.value = settings.bgSecondary
-        localStorage.setItem('userNickname', settings.nickname)
-        localStorage.setItem('customTextColor', settings.textColor)
-        localStorage.setItem('customBgSecondary', settings.bgSecondary)
 
         applyCustomSettings()
         
@@ -1463,18 +1463,6 @@
         const root = document.documentElement
 
         root.style.setProperty('--custom-bg-secondary', customBgSecondary.value)
-
-        if (mainContentArea.value) {
-            if (customTextColor.value === 'black') {
-                root.style.setProperty('--custom-text-color', '#000000')
-                root.style.setProperty('--custom-icon-color', '#000000')
-                mainContentArea.value.classList.add('custom-dark-text')
-            } else {
-                root.style.setProperty('--custom-text-color', '#ffffff')
-                root.style.setProperty('--custom-icon-color', '#ffffff')
-                mainContentArea.value.classList.remove('custom-dark-text')
-            }
-        }
     }
 
     const isSyncButtonDisabled = computed(() =>
@@ -2498,14 +2486,13 @@
     }
 
     onMounted(async() => {
-        const savedNickname = localStorage.getItem('userNickname')
-        if (savedNickname) userNickname.value = savedNickname
+        const savedNickname = useCookie('userNickname')
+        if (savedNickname.value) userNickname.value = savedNickname.value
 
-        const savedTextColor = localStorage.getItem('customTextColor')
-        if (savedTextColor) customTextColor.value = savedTextColor
+        const savedBgSecondary = useCookie('customBgSecondary')
+        if (savedBgSecondary.value) customBgSecondary.value = savedBgSecondary.value
 
-        const savedBgSecondary = localStorage.getItem('customBgSecondary')
-        if (savedBgSecondary) customBgSecondary.value = savedBgSecondary
+        document.documentElement.style.setProperty('--custom-bg-secondary', customBgSecondary.value)
         
         applyCustomSettings()
 

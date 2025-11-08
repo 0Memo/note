@@ -10,7 +10,7 @@
                     <Close class="w-4 h-4" />
                 </button>
         
-                <p class="text-lg font-bold mb-2 -mt-8 md:mt-0 text-zinc-100">{{ $t('modal.settings')}}</p>
+                <p class="text-lg font-bold mb-6 -mt-8 md:mt-0 text-zinc-100">{{ $t('modal.settings')}}</p>
                 <div class="mb-6 flex items-center gap-6">
                     <label class="block text-zinc-100 text-md font-semibold">{{ $t('modal.nickname')}}</label>
                     <input
@@ -22,35 +22,7 @@
                     />
                 </div>
         
-                <div class="mb-4">
-                    <label class="block text-zinc-100 text-md font-semibold">{{ $t('modal.textIconColor') }}</label>
-                    <div class="flex items-center justify-between">
-                        <div
-                        :class="localTextColor === 'white'
-                            ? 'text-xs text-zinc-100 border border-x-white border-y-black bg-black p-1 rounded w-40'
-                            : 'text-xs text-black border border-black bg-white p-1 rounded w-40'"
-                    >
-                        {{ localTextColor === 'white' ? $t('modal.whiteText') : $t('modal.blackText') }}
-                    </div>
-                        <button
-                            @click="toggleTextColor"
-                            :class="['transition-transform duration-300 focus:outline-none']"
-                            :aria-label="$t('modal.textIconColor')"
-                        >
-                            <ToggleRight 
-                                v-if="localTextColor === 'white'" 
-                                class="w-14 h-14 text-white transition-transform duration-300"
-                            />
-                            <ToggleLeft 
-                                v-else 
-                                class="w-14 h-14 text-white transition-transform duration-300"
-                            />
-                        </button>
-                    </div>
-                    
-                </div>
-        
-                <div class="mb-4">
+                <div class="mb-6">
                     <label class="block text-zinc-100 mb-2 text-md font-semibold">{{ $t('modal.bgSecondaryColor') }}</label>
                     <div class="flex items-center gap-3">
                         <input
@@ -74,7 +46,7 @@
                     </button>
                 </div>
         
-                <div class="gap-3 py-2 border-b-4 md:border-none border-dashed border-zinc-700">
+                <div class="gap-3 py-4 border-b-4 md:border-none border-dashed border-zinc-700">
                     <p class="text-zinc-100 -my-3">{{ message }}</p>
                     <div class="flex justify-center gap-3 text-zinc-50 mb-2 text-md md:text-xl">
                         <button @click="$emit('cancel')" class="pill-button no-pill-button mt-6 text-white w-50">
