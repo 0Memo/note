@@ -1539,7 +1539,7 @@
         const jwtCookie = useCookie('NoteJWT')
         jwtCookie.value = null
         // Clear calendar connection on logout
-        localStorage.removeItem('googleCalendarToken')
+        googleCalendarTokenCookie.value = null
         calendarConnected.value = false
         accessToken.value = null
         navigateTo(localePath('/login'))
@@ -1654,7 +1654,7 @@
         try {
             syncingNoteId.value = note.id
 
-            const token = localStorage.getItem('googleCalendarToken')
+            const token = googleCalendarTokenCookie.value
             if (!token) {
                 calendarConnected.value = false
                 $toast.error(t('toast.calendar.expired'))
@@ -1731,7 +1731,7 @@
             if (error.status === 401) {
                 calendarConnected.value = false
                 accessToken.value = null
-                localStorage.removeItem('googleCalendarToken')
+                googleCalendarTokenCookie.value = null
                 $toast.error(t('toast.calendar.expired'))
             } else {
                 $toast.error(t('toast.calendar.failed') + (error.message || 'Unknown error'))
@@ -1826,7 +1826,7 @@
     }
 
     const checkCalendarConnection = async () => {
-        const token = localStorage.getItem('googleCalendarToken')
+        const token = googleCalendarTokenCookie.value
         if (!token) {
             calendarConnected.value = false
             return
@@ -1850,7 +1850,7 @@
     }
 
     const reconnectGoogleCalendar = () => {
-        localStorage.removeItem('googleCalendarToken')
+        googleCalendarTokenCookie.value = null
         calendarConnected.value = false
 
         connectGoogleCalendar()
@@ -2193,7 +2193,7 @@
             
             if (response.access_token) {
                 accessToken.value = response.access_token
-                localStorage.setItem('googleCalendarToken', response.access_token)
+                googleCalendarTokenCookie.value = response.access_token
 
                 if (!response.refresh_token) {
                     calendarConnected.value = false;
@@ -2506,9 +2506,9 @@
             highContrast.value = highContrastCookie.value === 'true'
             applyAccessibilitySettings()
             // Check for existing calendar connection
-            savedToken.value = localStorage.getItem('googleCalendarToken')
+            savedToken.value = googleCalendarTokenCookie.value
             if (accessToken.value) {
-                localStorage.setItem('googleCalendarToken', accessToken.value)
+                googleCalendarTokenCookie.value = accessToken.value
             }
             if (savedToken.value) {
                 accessToken.value = savedToken.value;
@@ -2604,7 +2604,7 @@
 
         const refreshed = await $fetch('/api/refresh-token')
         if (refreshed?.access_token) {
-            localStorage.setItem('googleCalendarToken', refreshed.access_token)
+            googleCalendarTokenCookie.value = refreshed.access_token
         } else {
             throw new Error('Failed to refresh token')
         }

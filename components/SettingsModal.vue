@@ -226,46 +226,41 @@
     })
     const emit = defineEmits(['save', 'cancel'])
 
-    const localNickname = ref(props.nickname)
-    const localBgSecondary = ref(props.bgSecondary)
-    const localTextColor = ref(props.textColor)
+    const nicknameCookie = useCookie('nickname', { maxAge: 60 * 60 * 24 * 365 })
+    const bgSecondaryCookie = useCookie('bgSecondary', { maxAge: 60 * 60 * 24 * 365, default: '#1d073a' })
+
+    const localNickname = ref(nicknameCookie.value || '')
+    const localBgSecondary = ref(bgSecondaryCookie.value)
 
     const calendarConnected = ref(false)
     const isConnectingCalendar = ref(false)
-    const savedToken = ref(null)
-
-    const highContrast = ref(false)
+    const savedToken = useCookie('googleCalendarToken')
+    const highContrast = useCookie('highContrast', { maxAge: 60 * 60 * 24 * 365, default: false })
 
     // Update local values when props change
     watch(() => props.visible, (newVal) => {
         if (newVal) {
-            localNickname.value = props.nickname
-            localBgSecondary.value = props.bgSecondary
-            localTextColor.value = props.textColor
+            localNickname.value = nicknameCookie.value || ''
+            localBgSecondary.value = bgSecondaryCookie.value
         }
     })
-
-    const toggleTextColor = () => {
-        localTextColor.value = localTextColor.value === 'white' ? 'black' : 'white'
-    }
 
     const resetBgSecondary = () => {
         localBgSecondary.value = '#1d073a'
     }
 
     onMounted(async () => {
-        savedToken.value = localStorage.getItem('googleCalendarToken')
         if (savedToken.value) {
             try {
-            await checkCalendarConnection()
+                await checkCalendarConnection()
             } catch (err) {
-            console.warn('Could not verify calendar token:', err)
+                console.warn('Could not verify calendar token:', err)
             }
         }
     })
 
     const checkCalendarConnection = async () => {
-        const token = localStorage.getItem('googleCalendarToken')
+        const token = savedToken.value
         if (!token) {
             calendarConnected.value = false
             return
@@ -289,7 +284,7 @@
     }
 
     const reconnectGoogleCalendar = () => {
-        localStorage.removeItem('googleCalendarToken')
+        savedToken.value = null
         calendarConnected.value = false
 
         connectGoogleCalendar()
@@ -334,8 +329,7 @@
             })
             
             if (response.access_token) {
-                accessToken.value = response.access_token
-                localStorage.setItem('googleCalendarToken', response.access_token)
+                savedToken.value = response.access_token
 
                 if (!response.refresh_token) {
                     calendarConnected.value = false;
@@ -370,8 +364,7 @@
     const handleSave = () => {
         emit('save', {
             nickname: localNickname.value,
-            bgSecondary: localBgSecondary.value,
-            textColor: localTextColor.value
+            bgSecondary: localBgSecondary.value
         })
     }
 </script>
