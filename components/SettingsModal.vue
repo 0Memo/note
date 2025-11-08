@@ -182,7 +182,7 @@
 </template>
 
 <script setup>
-    import { ref, watch, onMounted } from 'vue'
+    import { ref, watch } from 'vue'
     import { useI18n } from 'vue-i18n'
     import { useLocalePath } from '#i18n'
     import { useRouter } from 'vue-router'
@@ -224,18 +224,12 @@
 
     const localNickname = ref(props.nickname)
     const localBgSecondary = ref(props.bgSecondary)
+
     const calendarConnected = ref(false)
     const isConnectingCalendar = ref(false)
     const savedToken = ref(null)
+
     const highContrast = ref(false)
-
-    const googleCalendarTokenCookie = useCookie('googleCalendarToken', {
-    maxAge: 60 * 60 * 24 * 365
-    })
-
-    const highContrastCookie = useCookie('highContrast', {
-    maxAge: 60 * 60 * 24 * 365
-    })
 
     // Update local values when props change
     watch(() => props.visible, (newVal) => {
@@ -249,33 +243,8 @@
         localBgSecondary.value = '#1d073a'
     }
 
-    if (highContrast.value) {
-        document.documentElement.classList.add('high-contrast')
-    }
-
-    const checkCalendarConnection = async () => {
-        const token = googleCalendarTokenCookie.value
-        if (!token) {
-            calendarConnected.value = false
-            return
-        }
-
-        try {
-            await $fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=1', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            calendarConnected.value = true
-        } catch (error) {
-            console.warn('❌ Google Calendar token expired or invalid:', error?.response?._data || error.message)
-            calendarConnected.value = false
-            googleCalendarTokenCookie.value = null 
-        }
-    }
-
     onMounted(async () => {
-        savedToken.value = googleCalendarTokenCookie.value
+        savedToken.value = localStorage.getItem('googleCalendarToken')
         if (savedToken.value) {
             try {
                 await checkCalendarConnection()
@@ -283,15 +252,34 @@
                 console.warn('Could not verify calendar token:', err)
             }
         }
-        if (highContrastCookie.value === 'true' || highContrastCookie.value === true) {
-            highContrast.value = true
-            document.documentElement.classList.add('high-contrast')
-        }
     })
 
+    const checkCalendarConnection = async () => {
+        const token = localStorage.getItem('googleCalendarToken')
+        if (!token) {
+            calendarConnected.value = false
+            return
+        }
+
+        try {
+            await $fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=1', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+            })
+            calendarConnected.value = true
+        } catch (error) {
+            console.warn('❌ Google Calendar token expired or invalid:', error?.response?._data || error.message)
+            calendarConnected.value = false
+        }
+    }
+
+    if (calendarConnected.value) {
+        savedToken.value = null
+    }
+
     const reconnectGoogleCalendar = () => {
-        googleCalendarTokenCookie.value = null
-        calendarConnected.value = false
+        localStorage.removeItem('googleCalendarToken')
         calendarConnected.value = false
 
         connectGoogleCalendar()
@@ -336,7 +324,8 @@
             })
             
             if (response.access_token) {
-                googleCalendarTokenCookie.value = response.access_token
+                accessToken.value = response.access_token
+                localStorage.setItem('googleCalendarToken', response.access_token)
 
                 if (!response.refresh_token) {
                     calendarConnected.value = false;
@@ -364,7 +353,8 @@
         } else {
             document.documentElement.classList.remove('high-contrast')
         }
-        highContrastCookie.value = highContrast.value.toString()
+        const highContrastCookie = useCookie('highContrast', { maxAge: 60 * 60 * 24 * 365 })
+        highContrastCookie.value = highContrast.value
     }
 
     const handleSave = () => {
