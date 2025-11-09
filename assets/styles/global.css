@@ -173,6 +173,9 @@ body {
 .calendar-pill-button {
     background-color: #2563eb;
 }
+.connected-pill-button {
+    background-color: #179b47;
+}
 .reconnect-pill-button {
     background-color: #ea580c;
 }
