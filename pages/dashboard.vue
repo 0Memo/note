@@ -1543,8 +1543,7 @@
         const jwtCookie = useCookie('NoteJWT')
         jwtCookie.value = null
         // Clear calendar connection on logout
-        const calendarTokenCookie = useCookie('googleCalendarToken')
-        calendarTokenCookie.value = null
+        googleCalendarTokenCookie.value = null
         calendarConnected.value = false
         accessToken.value = null
         navigateTo(localePath('/login'))
@@ -1851,10 +1850,6 @@
             console.warn('❌ Google Calendar token expired or invalid:', error?.response?._data || error.message)
             calendarConnected.value = false
         }
-    }
-
-    if (calendarConnected.value) {
-        savedToken.value = null
     }
 
     const reconnectGoogleCalendar = () => {
@@ -2201,7 +2196,8 @@
             })
             
             if (response.access_token) {
-                calendarTokenCookie.value = response.access_token
+                googleCalendarTokenCookie.value = response.access_token
+                accessToken.value = response.access_token
 
                 calendarConnected.value = true                
                 $toast.success(t('toast.calendar.success'))                
@@ -2508,19 +2504,18 @@
             highContrast.value = highContrastCookie.value === 'true'
             applyAccessibilitySettings()
             // Check for existing calendar connection
-            const calendarTokenCookie = useCookie('googleCalendarToken')
-            savedToken.value = calendarTokenCookie.value
-            if (accessToken.value) {
-                calendarTokenCookie.value = accessToken.value
-            }
-            if (savedToken.value) {
-                accessToken.value = savedToken.value;
-                const stillValid = await isAccessTokenValid();
-                calendarConnected.value = stillValid;
+            const token = googleCalendarTokenCookie.value
 
+            if (token) {
+                accessToken.value = token
+                const stillValid = await isAccessTokenValid()
+                calendarConnected.value = stillValid
+                
                 if (!stillValid) {
-                    $toast.info(t('toast.calendar.reconnect'), { duration: 6000 });
+                    $toast.info(t('toast.calendar.reconnect'), { duration: 8000 })
                 }
+            } else {
+                calendarConnected.value = false
             }
 
             // Check for OAuth callback
