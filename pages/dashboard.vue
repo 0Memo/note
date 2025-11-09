@@ -261,27 +261,15 @@
                             <button
                                 @click="connectGoogleCalendar"
                                 :disabled="isConnectingCalendar"
-                                class="pill-button calendar-pill-button mt-0 text-white w-full flex items-center justify-center gap-2"
+                                class="pill-button calendar-pill-button mt-0 text-white w-full"
                                 :aria-label="$t('toast.calendar.connectCalendar')"
-                                :class="{
-                                'bg-green-600 hover:bg-green-700': googleCalendarTokenCookie.value,
-                                'bg-purple-600 hover:bg-purple-700': !googleCalendarTokenCookie.value
-                                }"
                             
                             >
                                 <div class="pill-wrap">
-                                    <p class="flex items-center gap-2">
+                                    <p>
                                         <Calendar v-if="!isConnectingCalendar" class="w-5 h-5" />
                                         <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
-                                        <span v-if="googleCalendarTokenCookie.value">
-                                            {{ t('toast.calendar.calendarConnected') }}
-                                        </span>
-                                        <span v-else-if="isConnectingCalendar">
-                                            {{ t('toast.calendar.connecting') }}
-                                        </span>
-                                        <span v-else>
-                                            {{ t('toast.calendar.connectCalendar') }}
-                                        </span>
+                                        {{ isConnectingCalendar ? t('toast.calendar.connecting') : (calendarConnected ? t('toast.calendar.calendarConnected') : t('toast.calendar.connectCalendar')) }}
                                     </p>
                                 </div>
                             </button>
@@ -1843,20 +1831,18 @@
         const calendarTokenCookie = useCookie('googleCalendarToken')
         const token = calendarTokenCookie.value
         if (!token) {
-            calendarConnected.value = false
             return
         }
 
         try {
             await $fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=1', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             })
-            calendarConnected.value = true
         } catch (error) {
             console.warn('❌ Google Calendar token expired or invalid:', error?.response?._data || error.message)
-            calendarConnected.value = false
+            calendarTokenCookie.value = null
         }
     }
 
@@ -2213,12 +2199,11 @@
                 calendarTokenCookie.value = response.access_token
 
                 if (!response.refresh_token) {
-                    calendarConnected.value = false;
+                    calendarTokenCookie.value = null;
                     $toast.error(t('toast.calendar.refreshToken'));
                     return;
                 }
 
-                calendarConnected.value = true                
                 $toast.success(t('toast.calendar.success'))                
                 // Clean up URL
                 window.history.replaceState({}, document.title, window.location.pathname)
@@ -2531,9 +2516,9 @@
             if (savedToken.value) {
                 accessToken.value = savedToken.value;
                 const stillValid = await isAccessTokenValid();
-                calendarConnected.value = stillValid;
 
                 if (!stillValid) {
+                    calendarTokenCookie.value = null
                     $toast.info(t('toast.calendar.reconnect'), { duration: 6000 });
                 }
             }
@@ -2548,7 +2533,6 @@
             // Check URL params for calendar connection status
             const route = useRoute()
             if (route.query.calendar_connected === 'true') {
-                calendarConnected.value = true
                 $toast.success(t('toast.calendar.success'))
                 await router.replace({ query: {} })
             } else if (route.query.error) {
@@ -2559,7 +2543,7 @@
             await checkCalendarConnection()
 
             // Optionally: automatically try to refresh token if it failed
-            if (!calendarConnected.value) {
+            if (!calendarTokenCookie.value) {
                 try {
                     await refreshAccessTokenIfNeeded() // We'll define this next
                     await checkCalendarConnection() // Try again after refresh
