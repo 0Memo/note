@@ -1266,13 +1266,6 @@
     import { definePageMeta } from '#imports'
     import jsPDF from 'jspdf'
 
-    watchEffect(() => {
-        console.log('🔴 [DEBUG] googleCalendarTokenCookie.value →', googleCalendarTokenCookie.value)
-        console.log('🔴 [DEBUG] calendarConnected.value →', calendarConnected.value)
-        console.log('🔴 [DEBUG] accessToken.value →', accessToken.value)
-        console.log('🔴 [DEBUG] template should show →', calendarConnected.value ? 'Calendar Connected' : 'Connect Calendar')
-    })
-
     definePageMeta({
         middleware: ['auth'],
     })
@@ -1307,14 +1300,10 @@
     // New calendar-related refs
     const isConnectingCalendar = ref(false)
     const googleCalendarTokenCookie = useCookie('googleCalendarToken', { sameSite: 'lax', })
-    const calendarConnected = ref(false)
+    const calendarConnected = computed(() => { return googleCalendarTokenCookie.value !== null && googleCalendarTokenCookie.value !== undefined && googleCalendarTokenCookie.value !== '' })
     const isSyncing = ref(false)
     const accessToken = ref(null)
     const syncingNoteId = ref(null)
-
-    watch(googleCalendarTokenCookie, (token) => {
-        calendarConnected.value = !!token
-    }, { immediate: true })
 
     const editingDate = ref(false)
     const manualDate = ref('')
@@ -1561,7 +1550,8 @@
         const jwtCookie = useCookie('NoteJWT')
         jwtCookie.value = null
         // Clear calendar connection on logout
-        googleCalendarTokenCookie.value = null
+        const calendarTokenCookie = useCookie('googleCalendarToken')
+        calendarTokenCookie.value = null
         calendarConnected.value = false
         accessToken.value = null
         navigateTo(localePath('/login'))
@@ -2214,8 +2204,15 @@
             })
             
             if (response.access_token) {
-                googleCalendarTokenCookie.value = response.access_token
                 accessToken.value = response.access_token
+                const calendarTokenCookie = useCookie('googleCalendarToken')
+                calendarTokenCookie.value = response.access_token
+
+                if (!response.refresh_token) {
+                    calendarConnected.value = false;
+                    $toast.error(t('toast.calendar.refreshToken'));
+                    return;
+                }
 
                 calendarConnected.value = true                
                 $toast.success(t('toast.calendar.success'))                
@@ -2522,18 +2519,19 @@
             highContrast.value = highContrastCookie.value === 'true'
             applyAccessibilitySettings()
             // Check for existing calendar connection
-            const token = googleCalendarTokenCookie.value
+            const calendarTokenCookie = useCookie('googleCalendarToken')
+            savedToken.value = calendarTokenCookie.value
+            if (accessToken.value) {
+                calendarTokenCookie.value = accessToken.value
+            }
+            if (savedToken.value) {
+                accessToken.value = savedToken.value;
+                const stillValid = await isAccessTokenValid();
+                calendarConnected.value = stillValid;
 
-            if (token) {
-                accessToken.value = token
-                const stillValid = await isAccessTokenValid()
-                calendarConnected.value = stillValid
-                
                 if (!stillValid) {
-                    $toast.info(t('toast.calendar.reconnect'), { duration: 8000 })
+                    $toast.info(t('toast.calendar.reconnect'), { duration: 6000 });
                 }
-            } else {
-                calendarConnected.value = false
             }
 
             // Check for OAuth callback
