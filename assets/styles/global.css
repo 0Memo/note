@@ -207,7 +207,7 @@ body {
     align-items: center;
 }
 
-.no-pill-button .pill-wrap, .yes-pill-button .pill-wrap, .calendar-pill-button .pill-wrap, .reconnect-pill-button .pill-wrap {
+.connected-pill-button .pill-wrap, .no-pill-button .pill-wrap, .yes-pill-button .pill-wrap, .calendar-pill-button .pill-wrap, .reconnect-pill-button .pill-wrap {
     font-size: 12px;
 }
 
