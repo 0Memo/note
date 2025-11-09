@@ -1288,7 +1288,9 @@
     // New calendar-related refs
     const isConnectingCalendar = ref(false)
     const googleCalendarTokenCookie = useCookie('googleCalendarToken', { sameSite: 'lax', })
-    const calendarConnected = computed(() => { return googleCalendarTokenCookie.value !== null && googleCalendarTokenCookie.value !== undefined && googleCalendarTokenCookie.value !== '' })
+    const calendarConnected = computed(() => {
+        return !!googleCalendarTokenCookie.value
+    })
     const isSyncing = ref(false)
     const accessToken = ref(null)
     const syncingNoteId = ref(null)
@@ -1831,18 +1833,20 @@
         const calendarTokenCookie = useCookie('googleCalendarToken')
         const token = calendarTokenCookie.value
         if (!token) {
+            calendarConnected.value = false
             return
         }
 
         try {
             await $fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=1', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
             })
+            calendarConnected.value = true
         } catch (error) {
             console.warn('❌ Google Calendar token expired or invalid:', error?.response?._data || error.message)
-            calendarTokenCookie.value = null
+            calendarConnected.value = false
         }
     }
 
@@ -2199,11 +2203,12 @@
                 calendarTokenCookie.value = response.access_token
 
                 if (!response.refresh_token) {
-                    calendarTokenCookie.value = null;
+                    calendarConnected.value = false;
                     $toast.error(t('toast.calendar.refreshToken'));
                     return;
                 }
 
+                calendarConnected.value = true                
                 $toast.success(t('toast.calendar.success'))                
                 // Clean up URL
                 window.history.replaceState({}, document.title, window.location.pathname)
@@ -2516,9 +2521,9 @@
             if (savedToken.value) {
                 accessToken.value = savedToken.value;
                 const stillValid = await isAccessTokenValid();
+                calendarConnected.value = stillValid;
 
                 if (!stillValid) {
-                    calendarTokenCookie.value = null
                     $toast.info(t('toast.calendar.reconnect'), { duration: 6000 });
                 }
             }
@@ -2533,6 +2538,7 @@
             // Check URL params for calendar connection status
             const route = useRoute()
             if (route.query.calendar_connected === 'true') {
+                calendarConnected.value = true
                 $toast.success(t('toast.calendar.success'))
                 await router.replace({ query: {} })
             } else if (route.query.error) {
@@ -2543,7 +2549,7 @@
             await checkCalendarConnection()
 
             // Optionally: automatically try to refresh token if it failed
-            if (!calendarTokenCookie.value) {
+            if (!calendarConnected.value) {
                 try {
                     await refreshAccessTokenIfNeeded() // We'll define this next
                     await checkCalendarConnection() // Try again after refresh
