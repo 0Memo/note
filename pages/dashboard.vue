@@ -1129,7 +1129,7 @@
                                 <transition name="fade">
                                     <div v-if="showSavedIndicator" 
                                         :class="saveIndicatorClass"
-                                        class="absolute px-3 py-1 text-sm rounded-md shadow bottom-3 right-4">
+                                        class="absolute px-3 py-1 text-sm rounded-md shadow bottom-3 right-4 z-10">
                                     {{ saveIndicatorText }}
                                     </div>
                                 </transition>
