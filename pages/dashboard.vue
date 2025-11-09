@@ -261,16 +261,27 @@
                             <button
                                 @click="connectGoogleCalendar"
                                 :disabled="isConnectingCalendar"
-                                class="pill-button calendar-pill-button mt-0 text-white w-full"
+                                class="pill-button calendar-pill-button mt-0 text-white w-full flex items-center justify-center gap-2"
                                 :aria-label="$t('toast.calendar.connectCalendar')"
-                                :class="{ 'bg-green-600': calendarConnected, 'opacity-90': calendarConnected }"
+                                :class="{
+                                'bg-green-600 hover:bg-green-700': googleCalendarTokenCookie.value,
+                                'bg-purple-600 hover:bg-purple-700': !googleCalendarTokenCookie.value
+                                }"
                             
                             >
                                 <div class="pill-wrap">
-                                    <p>
+                                    <p class="flex items-center gap-2">
                                         <Calendar v-if="!isConnectingCalendar" class="w-5 h-5" />
                                         <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
-                                        {{ isConnectingCalendar ? t('toast.calendar.connecting') : (calendarConnected ? t('toast.calendar.calendarConnected') : t('toast.calendar.connectCalendar')) }}
+                                        <span v-if="googleCalendarTokenCookie.value">
+                                            {{ t('toast.calendar.calendarConnected') }}
+                                        </span>
+                                        <span v-else-if="isConnectingCalendar">
+                                            {{ t('toast.calendar.connecting') }}
+                                        </span>
+                                        <span v-else>
+                                            {{ t('toast.calendar.connectCalendar') }}
+                                        </span>
                                     </p>
                                 </div>
                             </button>
@@ -1254,6 +1265,13 @@
     import FontSizeToggle from '@/components/FontSizeToggle.vue'
     import { definePageMeta } from '#imports'
     import jsPDF from 'jspdf'
+
+    watchEffect(() => {
+        console.log('🔴 [DEBUG] googleCalendarTokenCookie.value →', googleCalendarTokenCookie.value)
+        console.log('🔴 [DEBUG] calendarConnected.value →', calendarConnected.value)
+        console.log('🔴 [DEBUG] accessToken.value →', accessToken.value)
+        console.log('🔴 [DEBUG] template should show →', calendarConnected.value ? 'Calendar Connected' : 'Connect Calendar')
+    })
 
     definePageMeta({
         middleware: ['auth'],
