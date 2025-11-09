@@ -262,8 +262,7 @@
                                 @click="connectGoogleCalendar"
                                 :disabled="isConnectingCalendar"
                                 :class="[
-                                    'pill-button mt-0 text-white w-full',
-                                    calendarConnected ? 'connected-pill-button' : 'calendar-pill-button'
+                                    calendarConnected ? 'pill-button connected-pill-button mt-0 text-white w-ful' : 'pill-button calendar-pill-button mt-0 text-white w-ful'
                                 ]"
                                 :aria-label="$t('toast.calendar.connectCalendar')"
                             
