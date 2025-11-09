@@ -1121,7 +1121,7 @@
                                         <div id="red-envelope">🧧</div>
                                     </div> -->
                                     <div class="absolute bottom-0 -right-2">
-                                        <Leaves class="w-[50px] h-[50px] leaves" />
+                                        <Leaves class="w-[70px] h-[70px] leaves pointer-events-none" />
                                     </div>
                                 </div>
                                 
