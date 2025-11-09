@@ -1860,6 +1860,10 @@
         }
     }
 
+    if (calendarConnected.value) {
+        savedToken.value = null
+    }
+
     const reconnectGoogleCalendar = () => {
         const calendarTokenCookie = useCookie('googleCalendarToken')
         calendarTokenCookie.value = null
