@@ -263,6 +263,7 @@
                                 :disabled="isConnectingCalendar"
                                 class="pill-button calendar-pill-button mt-0 text-white w-full"
                                 :aria-label="$t('toast.calendar.connectCalendar')"
+                                :class="{ 'bg-green-600': calendarConnected, 'opacity-90': calendarConnected }"
                             
                             >
                                 <div class="pill-wrap">
@@ -1288,10 +1289,14 @@
     // New calendar-related refs
     const isConnectingCalendar = ref(false)
     const googleCalendarTokenCookie = useCookie('googleCalendarToken', { sameSite: 'lax', })
-    const calendarConnected = computed(() => { return googleCalendarTokenCookie.value !== null && googleCalendarTokenCookie.value !== undefined && googleCalendarTokenCookie.value !== '' })
+    const calendarConnected = ref(false)
     const isSyncing = ref(false)
     const accessToken = ref(null)
     const syncingNoteId = ref(null)
+
+    watch(googleCalendarTokenCookie, (token) => {
+        calendarConnected.value = !!token
+    }, { immediate: true })
 
     const editingDate = ref(false)
     const manualDate = ref('')
@@ -2196,15 +2201,7 @@
             })
             
             if (response.access_token) {
-                accessToken.value = response.access_token
-                const calendarTokenCookie = useCookie('googleCalendarToken')
                 calendarTokenCookie.value = response.access_token
-
-                if (!response.refresh_token) {
-                    calendarConnected.value = false;
-                    $toast.error(t('toast.calendar.refreshToken'));
-                    return;
-                }
 
                 calendarConnected.value = true                
                 $toast.success(t('toast.calendar.success'))                
