@@ -67,12 +67,12 @@ body {
     filter: drop-shadow(0 0 50px black);
 }
 
-/* Custom bg-secondary class */
+/*? Custom bg-secondary class */
 .custom-bg-secondary {
     background-color: var(--custom-bg-secondary) !important;
 }
 
-/* High contrast mode */
+/*? High contrast mode */
 .high-contrast {
     --bg-primary: #000000;
     --bg-secondary: #1a1a1a;
@@ -103,7 +103,7 @@ body {
     color: var(--text-secondary) !important;
 }
 
-/* Underline */
+/*? Underline */
 .custom-underline {
     text-decoration-line: underline;
     text-decoration-style: solid;
@@ -146,7 +146,7 @@ body {
     text-decoration-color: #1eab52;
 }
 
-/* Custom button*/
+/*? Custom button*/
 
 .pill-button {
     outline: none;
@@ -452,7 +452,7 @@ button[data-tooltip][data-position=right1]:before {
     }
 }
 
-/* Spinner */
+/*? Spinner */
 
 @keyframes fadeIn {
     from {
@@ -485,14 +485,14 @@ button[data-tooltip][data-position=right1]:before {
     }
 }
 
-/* Tiptap */
+/*? Tiptap */
 
 .tiptap {
     :first-child {
         margin-top: 0;
     }
 
-    /* List styles */
+    /*? List styles */
     ul {
         list-style: circle
     }
@@ -513,7 +513,7 @@ button[data-tooltip][data-position=right1]:before {
     }
 }
 
-/* Skeleton Loader */
+/*? Skeleton Loader */
 
 .text-skeleton {
     background-color: #e0e0e0;
@@ -561,13 +561,6 @@ button[data-tooltip][data-position=right1]:before {
     100% {
         opacity: 1;
     }
-}
-
-/* Toucan */
-
-.toucan-shadow {
-    filter:
-        drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.5)) drop-shadow(6px 6px 2px rgba(0, 0, 0, 0.3));
 }
 
 /*? Leaf effects */
@@ -1549,6 +1542,11 @@ button[data-tooltip][data-position=right1]:before {
     3% {
         transform: scaleY(0.1);
     }
+}
+
+.toucan-shadow {
+    filter:
+        drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.5)) drop-shadow(6px 6px 2px rgba(0, 0, 0, 0.3));
 }
 
 /*! Vampire
