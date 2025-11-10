@@ -360,10 +360,6 @@
                                 @touchmove="handleTouchMove($event, note.id)"
                                 @touchend="handleTouchEnd(note.id)"
                             >
-                                <Bookmark
-                                    v-if="note.id === selectedNote.id"
-                                    class="absolute top-[11.5px] -left-1 -translate-y-1/2 w-6 h-6 text-yellow-300 drop-shadow-lg"
-                                />
                                 <div class="flex items-center justify-between">
                                     <div class="flex-1 min-w-0">
                                         <h3 class="font-bold truncate scalable-text">{{ decodeHtmlEntities(stripHtmlTags(note.text)).substring(0, 30) }}</h3>
@@ -468,10 +464,6 @@
                                     @touchmove="handleTouchMove($event, note.id)"
                                     @touchend="handleTouchEnd(note.id)"
                                 >
-                                    <Bookmark
-                                        v-if="note.id === selectedNote.id"
-                                        class="absolute top-[11.5px] -left-1 -translate-y-1/2 w-6 h-6 text-yellow-300 drop-shadow-lg"
-                                    />
                                     <div class="flex items-center justify-between">
                                         <div class="flex-1 min-w-0">
                                             <h3 class="font-bold truncate scalable-text">{{ decodeHtmlEntities(stripHtmlTags(note.text)).substring(0, 30) }}</h3>
@@ -566,10 +558,6 @@
                                     @touchmove="handleTouchMove($event, note.id)"
                                     @touchend="handleTouchEnd(note.id)"
                                 >
-                                    <Bookmark
-                                        v-if="note.id === selectedNote.id"
-                                        class="absolute top-[11.5px] -left-1 -translate-y-1/2 w-6 h-6 text-yellow-300 drop-shadow-lg"
-                                    />
                                     <div class="flex items-center justify-between">
                                         <div class="flex-1 min-w-0">
                                             <h3 class="font-bold truncate scalable-text">{{ decodeHtmlEntities(stripHtmlTags(note.text)).substring(0, 30) }}</h3>
@@ -666,10 +654,6 @@
                                     @touchmove="handleTouchMove($event, note.id)"
                                     @touchend="handleTouchEnd(note.id)"
                                 >
-                                    <Bookmark
-                                        v-if="note.id === selectedNote.id"
-                                        class="absolute top-[11.5px] -left-1 -translate-y-1/2 w-6 h-6 text-yellow-300 drop-shadow-lg"
-                                    />
                                     <div class="flex items-center justify-between">
                                         <div class="flex-1 min-w-0">
                                             <h3 class="font-bold truncate scalable-text">{{ decodeHtmlEntities(stripHtmlTags(note.text)).substring(0, 30) }}</h3>
@@ -764,10 +748,6 @@
                                     @touchmove="handleTouchMove($event, note.id)"
                                     @touchend="handleTouchEnd(note.id)"
                                 >
-                                    <Bookmark
-                                        v-if="note.id === selectedNote.id"
-                                        class="absolute top-[11.5px] -left-1 -translate-y-1/2 w-6 h-6 text-yellow-300 drop-shadow-lg"
-                                    />
                                     <div class="flex items-center justify-between">
                                         <div class="flex-1 min-w-0">
                                             <h3 class="font-bold truncate scalable-text">{{ decodeHtmlEntities(stripHtmlTags(note.text)).substring(0, 30) }}</h3>
