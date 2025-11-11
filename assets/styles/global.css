@@ -48,6 +48,34 @@
     font-family: 'Zhabuki';
     src: url('../fonts/zhabuki-demo.regular.otf') format('truetype');
 }
+@font-face {
+    font-family: 'Whispering';
+    src: url('../fonts/whispering-signature-personal-use.regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Ideas';
+    src: url('../fonts/ideas.regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Holista';
+    src: url('../fonts/holista-demo.regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'FranciscoLL';
+    src: url('../fonts/franciscolucas.llana.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Fighter';
+    src: url('../fonts/fighter-attack-personal-use.regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Snow';
+    src: url('../fonts/christmas-snowflake-personal.regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Apricote';
+    src: url('../fonts/apricote-smoothie.regular.otf') format('truetype');
+}
 
 @tailwind base;
 @tailwind components;
