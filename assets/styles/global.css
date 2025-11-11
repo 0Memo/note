@@ -12,6 +12,42 @@
     font-family: 'Claymont';
     src: url('../fonts/ClaymontDemoRegular.ttf') format('truetype');
 }
+@font-face {
+    font-family: 'Amigo';
+    src: url('../fonts/amigo.regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Easter';
+    src: url('../fonts/easter-day.regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Halloween';
+    src: url('../fonts/halloween-party.regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'JoyeuxNoel';
+    src: url('../fonts/pwjoyeuxnoel.medium.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'ScaryPumpkin';
+    src: url('../fonts/scary-pumpkin.regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Natal';
+    src: url('../fonts/selamat-pesta-natal.regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Shivaraja';
+    src: url('../fonts/shivaraja.regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Windhavi';
+    src: url('../fonts/windhavi.regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Zhabuki';
+    src: url('../fonts/zhabuki-demo.regular.otf') format('truetype');
+}
 
 @tailwind base;
 @tailwind components;
