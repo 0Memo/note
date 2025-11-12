@@ -1658,12 +1658,14 @@
 
             const sanitizedText = sanitizeHTML(note.text || '')
 
+            const freshNote = notes.value.find(n => n.id === note.id) || note
+
             const eventData = {
-                id: note.id,
+                id: freshNote.id,
                 title: decodeHtmlEntities(stripHtmlTags(sanitizedText)).substring(0, 50) || 'Untitled Note',
-                text: note.text || '',
+                text: freshNote.text || '',
                 date: finalDateISO,
-                eventId: note.calendarEventId || null
+                eventId: freshNote.calendarEventId || note.eventId || null
             }
 
             const response = await $fetch('/api/notes/sync-calendar', {

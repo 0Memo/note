@@ -13,6 +13,17 @@ export default defineEventHandler(async (event) => {
             return { success: false, error: "Note is empty" };
         }
 
+        const dbNote = await prisma.note.findUnique({
+            where: { id: note.id },
+            select: { calendarEventId: true },
+        });
+
+        const eventId =
+            note.eventId ||
+            note.calendarEventId ||
+            dbNote?.calendarEventId ||
+            null;
+
         const jwtCookie = getCookie(event, "NoteJWT");
         if (!jwtCookie) {
             return { error: "Not authenticated" };
@@ -22,8 +33,6 @@ export default defineEventHandler(async (event) => {
         if (!googleAccessToken) {
             return { error: "Google Calendar not connected", status: 401 };
         }
-
-        const eventId = note.eventId || note.calendarEventId || null;
 
         const start = new Date(note.date)
         const end = new Date(start.getTime() + 30 * 60 * 1000)
