@@ -114,8 +114,8 @@
                 'bg-[#030303]/95 backdrop-blur-md': !isDesktop, // translucent overlay look
             }"
         >
-            <div class="hidden md:flex flex-wrap items-start justify-between px-6 py-4 gap-y-3">
-                <Logo @click="toggleSidebar" class="cursor-pointer w-full" />
+            <div class="flex-wrap items-start justify-between hidden px-6 py-4 md:flex gap-y-3">
+                <Logo @click="toggleSidebar" class="w-full cursor-pointer" />
                 <div class="flex flex-nowrap gap-x-2 scale-[1.5]">
                     <button @click="changeLocale('en')" aria-label="English">
                         <img
@@ -191,11 +191,11 @@
                     </button>
                 </div>
             </div>
-            <div class="relative flex flex-wrap justify-between md:gap-0 z-50 mt-14 md:mt-6 ml-1 text-md text-zinc-300">
+            <div class="relative z-50 flex flex-wrap justify-between ml-1 md:gap-0 mt-14 md:mt-6 text-md text-zinc-300">
                 <div class="relative group">
                     <nuxt-link
                         :to="localePath('/')"
-                        class="text-white hover:text-zinc-500 shadow-lg">
+                        class="text-white shadow-lg hover:text-zinc-500">
                         <House class="w-8 h-8" />
                     </nuxt-link>
                     <span
@@ -204,15 +204,15 @@
                         {{ $t('homepage.title') }}
                     </span>
                 </div>
-                <span v-if="userNickname" class="flex flex-wrap justify-start font-semibold text-white text-md self-center transform scalable-text mt-2 md:mt-2">
+                <span v-if="userNickname" class="flex flex-wrap self-center justify-start mt-2 font-semibold text-white transform text-md scalable-text md:mt-2">
                     {{ $t('greetings')}}
-                    <span class="font-claymont text-sm md:text-md mt-4 md:mt-0">
+                    <span class="mt-4 text-sm font-claymont md:text-md md:mt-0">
                         {{ userNickname }}
                     </span>!
                 </span>
                 <div class="relative group">
                     <button
-                        class="text-white hover:text-zinc-500 shadow-lg"
+                        class="text-white shadow-lg hover:text-zinc-500"
                         @click="showSettingsModal = true"
                     >
                         <Settings class="w-8 h-8" />
@@ -246,7 +246,7 @@
 
             <template v-else>
                 <div class="hidden md:block">
-                    <div class="mt-3 md:mt-6 mb-4">
+                    <div class="mt-3 mb-4 md:mt-6">
                         <!-- <button
                             @click="connectGoogleCalendar"
                             :disabled="isConnectingCalendar"
@@ -295,7 +295,7 @@
                     <button
                         v-if="!calendarConnected && savedToken"
                         @click="reconnectGoogleCalendar"
-                        class="pill-button reconnect-pill-button mt-6 text-white w-full"
+                        class="w-full mt-6 text-white pill-button reconnect-pill-button"
                         :aria-label="$t('toast.calendar.reconnect')"
 
                     >
@@ -308,7 +308,7 @@
                         </div>
                     </button>
                     
-                    <div class="p-4 md:mt-4 rounded-lg bg-secondary mb-4">
+                    <div class="p-4 mb-4 rounded-lg md:mt-4 bg-secondary">
                         <h3 class="mb-3 font-semibold text-white scalable-text">
                             {{ $t('accessibility.accessibility') }}
                         </h3>
@@ -324,8 +324,8 @@
                                 :class="['transition-transform duration-300 focus:outline-none']"
                                 :aria-label="$t('accessibility.highContrast')"
                             >
-                                <ToggleRight v-if="highContrast" class="w-14 h-14 text-white transition-transform duration-300" />
-                                <ToggleLeft v-else class="w-14 h-14 text-white transition-transform duration-300" />
+                                <ToggleRight v-if="highContrast" class="text-white transition-transform duration-300 w-14 h-14" />
+                                <ToggleLeft v-else class="text-white transition-transform duration-300 w-14 h-14" />
                             </button>
                         </div>
                     </div>
@@ -912,7 +912,7 @@
                                                 v-model="manualDate"
                                                 class="text-black rounded px-2 w-[138px] -ml-4 md:ml-0 md:w-full md:mr-4"
                                             />
-                                            <div class="flex flex-col md:flex-row gap-2 md:gap-0">
+                                            <div class="flex flex-col gap-2 md:flex-row md:gap-0">
                                                 <button
                                                     @click="saveDateChange" class="-ml-10 text-xs text-white md:ml-0 underline-green md:mr-2 scalable-text"
                                                     :aria-label="$t('notes.confirm')"
@@ -964,7 +964,7 @@
                         </div>
                         <div class="relative my-4 bg-[#d5c7e2] border-purple-900 rounded-md p-4 -ml-[8.75rem] md:-ml-5 shadow-lg w-[22.5rem] md:w-full min-h-[300px]">
                             <div class="overflow-hidden text-black bg-white border border-white rounded-lg">
-                                <div v-if="editor" class="flex flex-wrap gap-1 p-2 text-black shadow-md rounded-tl-md rounded-tr-md md:gap-2 bg-gray-50 z-40 relative">
+                                <div v-if="editor" class="relative z-40 flex flex-wrap gap-1 p-2 text-black shadow-md rounded-tl-md rounded-tr-md md:gap-2 bg-gray-50">
                                     <button
                                         @click="editor.chain().focus().undo().run()"
                                         class="px-2 py-1 text-sm rounded hover:bg-gray-200"
@@ -1050,7 +1050,7 @@
                                     <button
                                         @click="editor.chain().focus().toggleOrderedList().run()"
                                         :class="{ 'bg-gray-300': editor.isActive('orderedList') }"
-                                        class="px-1 md:px-2 py-1 text-sm rounded hover:bg-gray-200"
+                                        class="px-1 py-1 text-sm rounded md:px-2 hover:bg-gray-200"
                                         type="button"
                                         aria-label="Ordered List"
                                     >
@@ -1109,7 +1109,7 @@
                                 <transition name="fade">
                                     <div v-if="showSavedIndicator" 
                                         :class="saveIndicatorClass"
-                                        class="absolute px-3 py-1 text-sm rounded-md shadow bottom-3 right-4 z-10">
+                                        class="absolute z-10 px-3 py-1 text-sm rounded-md shadow bottom-3 right-4">
                                     {{ saveIndicatorText }}
                                     </div>
                                 </transition>
@@ -1157,7 +1157,7 @@
                             data-position="right"
                             :aria-label="$t('tooltip.deactivate')"
                         >
-                            <MouseTrailOff class="w-14 h-14 font-bold" />
+                            <MouseTrailOff class="font-bold w-14 h-14" />
                         </button>
                     </ClientOnly>
                 </span>
@@ -1677,7 +1677,7 @@
                 return
             }
 
-            if (response.eventId && !note.calendarEventId) {
+            if (response.eventId) {
                 note.calendarEventId = response.eventId
             }
 
@@ -1685,6 +1685,7 @@
                 ...note,
                 lastSyncedText: note.text,
                 lastSyncedDate: note.eventDate || note.updatedAt,
+                calendarEventId: note.calendarEventId,
             }
 
             const index = notes.value.findIndex((n) => n.id === note.id)
