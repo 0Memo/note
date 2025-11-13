@@ -108,13 +108,6 @@
                         :style="{ borderRadius: '255px 15px 225px 15px / 15px 225px 15px 255px' }"
                     >
                 </div>
-
-                <!-- <div class="mt-6 text-zinc-100">
-                    <button class="w-full px-4 py-2 mt-4 text-lg font-bold bg-purple-900 hover:bg-purple-800 rounded-2xl space-x-3 flex items-center justify-center">
-                        <span>{{ $t('login.connect') }}</span>
-                        <Send class="w-6 h-6" />
-                    </button>
-                </div> -->
                 <button class="pill-button regular-pill-button mt-6 text-white w-full">
                     <div class="pill-wrap">
                         <p>

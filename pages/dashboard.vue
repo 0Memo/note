@@ -114,7 +114,7 @@
             :class="{
                 'translate-x-0': sidebarOpen || isDesktop,
                 '-translate-x-full md:translate-x-0': !sidebarOpen && !isDesktop,
-                'bg-[#030303]/95 backdrop-blur-md': !isDesktop, // translucent overlay look
+                'bg-[#030303]/95 backdrop-blur-md': !isDesktop,
             }"
         >
             <div class="flex-wrap items-start justify-between hidden px-6 py-4 md:flex gap-y-3">
@@ -250,16 +250,6 @@
             <template v-else>
                 <div class="hidden md:block">
                     <div class="mt-3 mb-4 md:mt-6">
-                        <!-- <button
-                            @click="connectGoogleCalendar"
-                            :disabled="isConnectingCalendar"
-                            class="flex items-center justify-center w-full gap-2 px-4 py-2 font-bold text-white transition-colors duration-200 bg-blue-600 rounded hover:bg-blue-700 disabled:bg-gray-500"
-                            :aria-label="$t('toast.calendar.connectCalendar')"
-                        >
-                            <Calendar v-if="!isConnectingCalendar" class="w-5 h-5" />
-                            <div v-else class="w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
-                            {{ isConnectingCalendar ? t('toast.calendar.connecting') : (calendarConnected ? t('toast.calendar.calendarConnected') : t('toast.calendar.connectCalendar')) }}
-                        </button> -->
                         <div class="relative group">
                             <button
                                 @click="connectGoogleCalendar"
@@ -286,15 +276,7 @@
                         </div>
                     </div>
                     
-                    <!-- Added reconnect button from dashboard
-                    <button
-                        v-if="!calendarConnected && savedToken"
-                        @click="reconnectGoogleCalendar"
-                        class="px-3 py-1 ml-2 text-sm text-white bg-orange-600 rounded hover:bg-orange-700"
-                        :aria-label="$t('toast.calendar.reconnect')"
-                    >
-                        {{ $t('toast.calendar.reconnect') }}
-                    </button> -->
+                    <!-- Added reconnect button from dashboard -->
                     <button
                         v-if="!calendarConnected && savedToken"
                         @click="reconnectGoogleCalendar"
@@ -1111,6 +1093,9 @@
                                     </div>
                                     <div class="absolute -bottom-6 right-0">
                                         <PrinceFly class="w-[150px] h-[150px] leaves pointer-events-none" />
+                                    </div>
+                                    <div class="absolute bottom-0 -right-2">
+                                        <Velitas class="w-[150px] h-[150px] leaves pointer-events-none" />
                                     </div> -->
                                     <div class="absolute bottom-0 -right-2">
                                         <Leaves class="w-[70px] h-[70px] leaves pointer-events-none" />
@@ -1139,12 +1124,6 @@
                 </div>
             </template>
 
-            <!-- <div
-                class="md:hidden fixed bottom-[5.5rem] right-0 z-50 flex items-center justify-between px-6 py-4cursor-pointer"
-                @click="toggleSidebar"
-            >
-                <ClickLogo class="bg-[#9333ea] p-2 rounded-full shadow-md " />
-            </div>-->
             <button
                 @click="toggleSidebar"
                 class="pill-button regular-pill-button logo-button mt-6 text-white md:hidden
@@ -1161,7 +1140,6 @@
                 class=""
                 :aria-label="$t('tooltip.activate')"
             >
-                <!-- Replace with your preferred icon -->
                 <span v-if="showMouseTrail">
                     <ClientOnly>
                         <button
