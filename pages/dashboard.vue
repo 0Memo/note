@@ -3,6 +3,9 @@
         <ClientOnly>
             <MouseTrail v-if="showMouseTrail" />
         </ClientOnly>
+        <!--<div class="absolute inset-0 pointer-events-none z-[1]">
+            <Novena class="w-full h-full" />
+        </div> -->
         <!-- <div class="absolute inset-0 pointer-events-none z-[1]">
             <Halloween />
         </div>
@@ -1099,10 +1102,20 @@
                                     <div class="absolute -top-11 -right-1 md:-right-1">
                                         <Llama class="w-[46px] h-[46px]" />
                                         <div id="red-envelope">🧧</div>
+                                    </div>
+                                    <div class="absolute bottom-0 -right-2">
+                                        <Novena class="w-[70px] h-[70px] leaves pointer-events-none" />
+                                    </div>
+                                    <div class="absolute bottom-0 -right-2">
+                                        <Prince class="w-[110px] h-[110px] leaves pointer-events-none" />
+                                    </div>
+                                    <div class="absolute -bottom-6 right-0">
+                                        <PrinceFly class="w-[150px] h-[150px] leaves pointer-events-none" />
                                     </div> -->
                                     <div class="absolute bottom-0 -right-2">
                                         <Leaves class="w-[70px] h-[70px] leaves pointer-events-none" />
                                     </div>
+                                    
                                 </div>
                                 
                                 <!-- ✅ Green check indicator -->
