@@ -9,7 +9,7 @@
             </g>
         </svg>
     </div> -->
-    <div class="tree">
+    <div class="tree pointer-events-none z-10">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 131 140">
             <path d="m49.35 6.37-1.88-.93-1.85 1.01.32-2.07-1.54-1.43 2.08-.34.9-1.9.96 1.86 2.1.25-1.48 1.5z" style="--no:100;fill:#d8e540;stroke:#d8e540;"/>
             <path d="m129.54 125.15-.82-.26-.68.53-.01-.86-.71-.48.81-.28.23-.83.52.7.86-.04-.5.7z" style="--no: 1; transform: scale(222);"/>
