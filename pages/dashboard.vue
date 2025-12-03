@@ -1096,9 +1096,12 @@
                                     </div>
                                     <div class="absolute bottom-0 -right-2">
                                         <Velitas class="w-[150px] h-[150px] leaves pointer-events-none" />
-                                    </div> -->
+                                    </div>
                                     <div class="absolute bottom-0 -right-2">
                                         <Leaves class="w-[70px] h-[70px] leaves pointer-events-none" />
+                                    </div> -->
+                                    <div class="absolute -bottom-6 -right-8">
+                                        <Santa class="w-[220px] h-[220px] leaves pointer-events-none" />
                                     </div>
                                     
                                 </div>
