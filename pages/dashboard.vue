@@ -1063,10 +1063,15 @@
                                     <div class='absolute -top-[45px] md:-top-[90px] -right-4 md:-right-9 origin-top-right toucan-shadow pointer-events-none md:pointer-events-auto z-0 md:z-10'>
                                     <Diya />
                                     <Dragon />
-                                </div> -->
+                                </div>
                                 <div class='absolute -top-[30px] right-4 origin-top-right z-10 toucan-shadow pointer-events-none'>
                                     <div class="scale-[0.1] origin-top-right">
                                         <Toucan />
+                                    </div>
+                                </div> -->
+                                <div class='absolute -top-[28px] right-4 origin-top-right z-10 toucan-shadow pointer-events-none'>
+                                    <div class="scale-[0.15] origin-top-right">
+                                        <Candle />
                                     </div>
                                 </div>
                                 <div class="relative z-10">
