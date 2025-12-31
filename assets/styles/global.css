@@ -2120,7 +2120,7 @@ h2 {
     }
 } */
 
-/*! Xmas */
+/*! Xmas
 
 #snow {
     background: none;
@@ -2248,9 +2248,9 @@ h2 {
     100% {
         transform: translateY(0px) scale(0);
     }
-}
+} */
 
-/*! New Year
+/*! New Year */
 
 .fire0 {
     top: 35%;
@@ -4218,4 +4218,4 @@ h2 {
     text-align: center;
     width: 100%;
     transform: scale(1.6);
-} */
+}

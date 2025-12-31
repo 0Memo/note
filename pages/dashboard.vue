@@ -4,12 +4,15 @@
             <MouseTrail v-if="showMouseTrail" />
         </ClientOnly>
         <div class="absolute inset-0 pointer-events-none z-[1]">
+            <NewYear />
+        </div>
+        <!-- <div class="absolute inset-0 pointer-events-none z-[1]">
             <Xmas />
         </div>
-        <!--<div class="absolute inset-0 pointer-events-none z-[1]">
+        <div class="absolute inset-0 pointer-events-none z-[1]">
             <Novena class="w-full h-full" />
-        </div> -->
-        <!-- <div class="absolute inset-0 pointer-events-none z-[1]">
+        </div>
+        <div class="absolute inset-0 pointer-events-none z-[1]">
             <Halloween />
         </div>
         <div class="absolute top-16 md:-top-4 -left-2 md:left-[600px]">
@@ -19,9 +22,7 @@
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Easter />
         </div>
-        <div class="absolute inset-0 pointer-events-none z-[1]">
-            <NewYear />
-        </div>
+        
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <ChineseNewYear />
         </div>
@@ -1096,19 +1097,19 @@
                                     <div class="absolute bottom-0 -right-2">
                                         <Prince class="w-[110px] h-[110px] leaves pointer-events-none" />
                                     </div>
-                                    <div class="absolute -bottom-6 right-0">
+                                    <div class="absolute right-0 -bottom-6">
                                         <PrinceFly class="w-[150px] h-[150px] leaves pointer-events-none" />
                                     </div>
                                     <div class="absolute bottom-0 -right-2">
                                         <Velitas class="w-[150px] h-[150px] leaves pointer-events-none" />
                                     </div>
-                                    <div class="absolute bottom-0 -right-2">
-                                        <Leaves class="w-[70px] h-[70px] leaves pointer-events-none" />
-                                    </div> -->
+                                    
                                     <div class="absolute -bottom-6 -right-8">
                                         <Santa class="w-[220px] h-[220px] leaves pointer-events-none" />
+                                    </div> -->
+                                    <div class="absolute bottom-0 -right-2">
+                                        <Leaves class="w-[70px] h-[70px] leaves pointer-events-none" />
                                     </div>
-                                    
                                 </div>
                                 
                                 <!-- ✅ Green check indicator -->
