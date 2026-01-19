@@ -1425,24 +1425,19 @@ button[data-tooltip][data-position=right1]:before {
     position: relative;
     width: 140px;
     height: 140px;
-    border-top-right-radius: 100%;
-    border-top: 35px solid black;
-    box-sizing: border-box;
-    border-right: 35px solid black;
+    overflow: hidden;
 }
 
 .eye::before {
-    display: block;
     content: "";
-    background: #e1e0de;
-    width: 35px;
-    height: 35px;
     position: absolute;
     top: 55px;
     left: 25px;
+    width: 35px;
+    height: 35px;
+    background: #e1e0de;
     border-radius: 100%;
-    overflow: hidden;
-    animation: blink 8s infinite ease-in-out;
+    /* animation: blink 8s infinite ease-in-out;*/
 }
 
 .body {
@@ -1599,12 +1594,12 @@ button[data-tooltip][data-position=right1]:before {
     0%,
     4%,
     100% {
-        transform: scaleY(1);
+        height: 35px;
     }
 
     2%,
     3% {
-        transform: scaleY(0.1);
+        height: 2px;
     }
 }
 
