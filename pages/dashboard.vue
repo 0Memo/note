@@ -3,10 +3,11 @@
         <ClientOnly>
             <MouseTrail v-if="showMouseTrail" />
         </ClientOnly>
+        <!--
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <NewYear />
         </div>
-        <!-- <div class="absolute inset-0 pointer-events-none z-[1]">
+        <div class="absolute inset-0 pointer-events-none z-[1]">
             <Xmas />
         </div>
         <div class="absolute inset-0 pointer-events-none z-[1]">
@@ -1058,23 +1059,25 @@
                                 <div class="absolute -top-[54px] -left-[179px] scale-[5] origin-top-left rotate-2 z-[5]">
                                     <AbstractLeaf class="w-20 h-20 leaf"/>
                                 </div>
-                                <!--<div class="scale-[0.5] md:scale-[0.6] origin-top-right opacity-90 md:opacity-100">
-                                        <AnimatedSkull />
-                                    </div>
-                                    <div class='absolute -top-[45px] md:-top-[90px] -right-4 md:-right-9 origin-top-right toucan-shadow pointer-events-none md:pointer-events-auto z-0 md:z-10'>
+                                <!--
+                                <div class="scale-[0.5] md:scale-[0.6] origin-top-right opacity-90 md:opacity-100">
+                                    <AnimatedSkull />
+                                </div>
+                                <div class='absolute -top-[45px] md:-top-[90px] -right-4 md:-right-9 origin-top-right toucan-shadow pointer-events-none md:pointer-events-auto z-0 md:z-10'>
                                     <Diya />
                                     <Dragon />
                                 </div>
-                                <div class='absolute -top-[30px] right-4 origin-top-right z-10 toucan-shadow pointer-events-none'>
-                                    <div class="scale-[0.1] origin-top-right">
-                                        <Toucan />
-                                    </div>
-                                </div> -->
                                 <div class='absolute -top-[28px] right-4 origin-top-right z-10 toucan-shadow pointer-events-none'>
                                     <div class="scale-[0.15] origin-top-right">
                                         <Candle />
                                     </div>
+                                </div> -->
+                                <div class='absolute -top-[30px] right-4 origin-top-right z-10 toucan-shadow pointer-events-none'>
+                                    <div class="scale-[0.1] origin-top-right">
+                                        <Toucan />
+                                    </div>
                                 </div>
+                                
                                 <div class="relative z-10">
                                     <EditorContent
                                         :editor="editor" 
