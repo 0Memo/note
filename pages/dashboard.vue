@@ -3,6 +3,10 @@
         <ClientOnly>
             <MouseTrail v-if="showMouseTrail" />
         </ClientOnly>
+
+        <div class="absolute inset-0 pointer-events-none z-[1]">
+            <ChineseNewYear />
+        </div>
         <!--
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <NewYear />
@@ -24,9 +28,7 @@
             <Easter />
         </div>
         
-        <div class="absolute inset-0 pointer-events-none z-[1]">
-            <ChineseNewYear />
-        </div>
+        
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Diwali />
         </div>
@@ -1071,10 +1073,15 @@
                                     <div class="scale-[0.15] origin-top-right">
                                         <Candle />
                                     </div>
-                                </div> -->
+                                </div>
                                 <div class='absolute -top-[30px] right-4 origin-top-right z-10 toucan-shadow pointer-events-none'>
                                     <div class="scale-[0.1] origin-top-right">
                                         <Toucan />
+                                    </div>
+                                </div> -->
+                                <div class='absolute -top-[60px] right-4 origin-top-right z-10 toucan-shadow pointer-events-none'>
+                                    <div class="scale-[0.8] origin-top-right">
+                                        <Dragon class="w-[120px] h-[120px] leaves pointer-events-none" />
                                     </div>
                                 </div>
                                 
@@ -1109,9 +1116,12 @@
                                     
                                     <div class="absolute -bottom-6 -right-8">
                                         <Santa class="w-[220px] h-[220px] leaves pointer-events-none" />
-                                    </div> -->
+                                    </div>
                                     <div class="absolute bottom-0 -right-2">
                                         <Leaves class="w-[70px] h-[70px] leaves pointer-events-none" />
+                                    </div> -->
+                                    <div class="absolute top-40 -right-1 md:-right-1">
+                                        <div id="red-envelope">🧧</div>
                                     </div>
                                 </div>
                                 
