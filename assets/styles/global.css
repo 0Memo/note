@@ -964,7 +964,7 @@ button[data-tooltip][data-position=right1]:before {
     }
 } */
 
-/*? Chinese New year */
+/*? Chinese New year
 #red-envelope {
     font-size: 100px;
 }
@@ -1180,7 +1180,7 @@ button[data-tooltip][data-position=right1]:before {
     100% {
         -webkit-transform: rotate(-10deg);
     }
-}
+} */
 
 /*! Diwali
 .diwali-container {
