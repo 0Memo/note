@@ -3,9 +3,6 @@
         <ClientOnly>
             <MouseTrail v-if="showMouseTrail" />
         </ClientOnly>
-        <div class="absolute inset-0 pointer-events-none z-[1]">
-            <Easter />
-        </div>
         <!--
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <ChineseNewYear />
@@ -26,7 +23,9 @@
             <Vampire class="w-24 h-24 md:w-52 md:h-52" />
         </div>
         Celebrations 
-        
+        <div class="absolute inset-0 pointer-events-none z-[1]">
+            <Easter />
+        </div>
         
         
         <div class="absolute inset-0 pointer-events-none z-[1]">
