@@ -1090,9 +1090,6 @@
                                         :placeholder="$t('notes.text')"
                                         class="min-h-[300px]"
                                     />
-                                    <div class="absolute bottom-0 -right-2">
-                                        <Prince class="w-[110px] h-[110px] leaves pointer-events-none" />
-                                    </div>
                                     <!--<div class="absolute -bottom-28 -right-12">
                                         <Calavera class="w-48 h-48" />
                                     </div>
@@ -1119,10 +1116,10 @@
                                     </div>
                                     <div class="absolute top-40 -right-1 md:-right-1">
                                         <div id="red-envelope">🧧</div>
-                                    </div>
+                                    </div> -->
                                     <div class="absolute bottom-0 -right-2">
                                         <Leaves class="w-[70px] h-[70px] leaves pointer-events-none" />
-                                    </div> -->
+                                    </div>
                                     
                                 </div>
                                 
