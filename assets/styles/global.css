@@ -647,17 +647,36 @@ button[data-tooltip][data-position=right1]:before {
 
 /*! Hispanic Heritage Month  */
 #hhm_2025 {
-    margin-top: 480px;
-    margin-left: 130px;
-    transform: scale(0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 437px;
+    transform-origin: center top;
 }
 
-@media (max-width: 767px) {
-
+/* Mobile */
+@media screen and (max-width: 767px) {
     #hhm_2025 {
-        margin-top: 320px;
-        margin-left: 0;
+        top: 420px;
+        left: 0;
         transform: scale(0.45);
+    }
+}
+
+/* TABLET: 768–1023 */
+@media screen and (min-width: 768px) {
+    #hhm_2025 {
+        top:  350px;
+        left: 500px;
+        transform: scale(0.3);
+    }
+}
+
+/* Desktop */
+@media screen and (min-width: 1537px) {
+    #hhm_2025 {
+        left: 600px;
     }
 }
 
