@@ -30,10 +30,10 @@
         
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Diwali />
-        </div>
+        </div>  -->
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <HispanicMonth />
-        </div>  -->
+        </div>
         <div
             class="md:hidden fixed top-0 left-0 right-0 z-[100] custom-bg-secondary flex flex-nowrap items-center justify-between px-6 py-4 shadow-md cursor-pointer border-double border-b-4 border-white text-white  gap-2"
         >
@@ -1096,9 +1096,7 @@
                                     <div class="absolute bottom-10 right-9">
                                         <Pumpkin class="w-[50px] h-[50px]" />
                                     </div>
-                                    <div class="absolute -top-11 -right-1 md:-right-1">
-                                        <Llama class="w-[46px] h-[46px]" />
-                                    </div>
+                                    
                                     <div class="absolute bottom-0 -right-2">
                                         <Novena class="w-[70px] h-[70px] leaves pointer-events-none" />
                                     </div>
@@ -1116,11 +1114,13 @@
                                     </div>
                                     <div class="absolute top-40 -right-1 md:-right-1">
                                         <div id="red-envelope">🧧</div>
-                                    </div> -->
+                                    </div>
                                     <div class="absolute bottom-0 -right-2">
                                         <Leaves class="w-[70px] h-[70px] leaves pointer-events-none" />
+                                    </div> -->
+                                    <div class="absolute bottom-0 -right-2">
+                                        <Llama class="w-[80px] h-[80px]" />
                                     </div>
-                                    
                                 </div>
                                 
                                 <!-- ✅ Green check indicator -->
