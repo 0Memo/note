@@ -645,7 +645,7 @@ button[data-tooltip][data-position=right1]:before {
     transform: rotate(-1deg);
 }
 
-/*! Hispanic Heritage Month  */
+/*! Hispanic Heritage Month
 #hhm_2025 {
     position: absolute;
     top: 0;
@@ -655,7 +655,6 @@ button[data-tooltip][data-position=right1]:before {
     transform-origin: center top;
 }
 
-/* Mobile */
 @media screen and (max-width: 767px) {
     #hhm_2025 {
         top: 420px;
@@ -664,7 +663,6 @@ button[data-tooltip][data-position=right1]:before {
     }
 }
 
-/* TABLET: 768–1023 */
 @media screen and (min-width: 768px) {
     #hhm_2025 {
         top:  350px;
@@ -673,7 +671,6 @@ button[data-tooltip][data-position=right1]:before {
     }
 }
 
-/* Desktop */
 @media screen and (min-width: 1537px) {
     #hhm_2025 {
         left: 600px;
@@ -981,7 +978,7 @@ button[data-tooltip][data-position=right1]:before {
     100% {
         opacity: 1;
     }
-}
+} */
 
 /*? Chinese New year
 #red-envelope {
