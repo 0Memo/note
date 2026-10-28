@@ -16,12 +16,8 @@
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Novena class="w-full h-full" />
         </div>
-        <div class="absolute inset-0 pointer-events-none z-[1]">
-            <Halloween />
-        </div>
-        <div class="absolute top-16 md:-top-4 -left-2 md:left-[600px]">
-            <Vampire class="w-24 h-24 md:w-52 md:h-52" />
-        </div>
+        
+        
         Celebrations 
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <Easter />
@@ -34,6 +30,12 @@
         <div class="absolute inset-0 pointer-events-none z-[1]">
             <HispanicMonth />
         </div>  -->
+        <div class="absolute inset-0 pointer-events-none z-[1]">
+            <Halloween />
+        </div>
+        <div class="absolute top-16 md:-top-4 -left-2 md:left-[600px]">
+            <Vampire class="w-24 h-24 md:w-52 md:h-52" />
+        </div>
         <div
             class="md:hidden fixed top-0 left-0 right-0 z-[100] custom-bg-secondary flex flex-nowrap items-center justify-between px-6 py-4 shadow-md cursor-pointer border-double border-b-4 border-white text-white  gap-2"
         >
@@ -1060,11 +1062,11 @@
                                 <div class="absolute -top-[54px] -left-[179px] scale-[5] origin-top-left rotate-2 z-[5]">
                                     <AbstractLeaf class="w-20 h-20 leaf"/>
                                 </div>
-                                <!--
+                                
                                 <div class="scale-[0.5] md:scale-[0.6] origin-top-right opacity-90 md:opacity-100">
                                     <AnimatedSkull />
                                 </div>
-                                <div class='absolute -top-[45px] md:-top-[90px] -right-4 md:-right-9 origin-top-right toucan-shadow pointer-events-none md:pointer-events-auto z-0 md:z-10'>
+                                <!-- <div class='absolute -top-[45px] md:-top-[90px] -right-4 md:-right-9 origin-top-right toucan-shadow pointer-events-none md:pointer-events-auto z-0 md:z-10'>
                                     <Diya />
                                     <Dragon />
                                 </div>
@@ -1077,12 +1079,12 @@
                                     <div class="scale-[0.8] origin-top-right">
                                         <Dragon class="w-[120px] h-[120px] leaves pointer-events-none" />
                                     </div>
-                                </div> -->
+                                </div>
                                 <div class='absolute -top-[30px] right-4 origin-top-right z-10 toucan-shadow pointer-events-none'>
                                     <div class="scale-[0.1] origin-top-right">
                                         <Toucan />
                                     </div>
-                                </div>
+                                </div> -->
                                 
                                 <div class="relative z-10">
                                     <EditorContent
@@ -1093,9 +1095,7 @@
                                     <!--<div class="absolute -bottom-28 -right-12">
                                         <Calavera class="w-48 h-48" />
                                     </div>
-                                    <div class="absolute bottom-10 right-9">
-                                        <Pumpkin class="w-[50px] h-[50px]" />
-                                    </div>
+                                    
                                     
                                     <div class="absolute bottom-0 -right-2">
                                         <Novena class="w-[70px] h-[70px] leaves pointer-events-none" />
@@ -1117,10 +1117,13 @@
                                     </div>
                                     <div class="absolute bottom-0 -right-2">
                                         <Llama class="w-[80px] h-[80px]" />
-                                    </div> -->
+                                    </div>
                                     <div class="absolute bottom-0 -right-2">
                                         <Leaves class="w-[70px] h-[70px] leaves pointer-events-none" />
-                                    </div> 
+                                    </div> -->
+                                    <div class="absolute bottom-10 right-9">
+                                        <Pumpkin class="w-[50px] h-[50px]" />
+                                    </div>
                                 </div>
                                 
                                 <!-- ✅ Green check indicator -->
