@@ -1062,9 +1062,10 @@
                                 <div class="absolute -top-[54px] -left-[179px] scale-[5] origin-top-left rotate-2 z-[5]">
                                     <AbstractLeaf class="w-20 h-20 leaf"/>
                                 </div>
-                                
-                                <div class="scale-[0.5] md:scale-[0.6] origin-top-right opacity-90 md:opacity-100">
-                                    <AnimatedSkull />
+                                <div class='absolute -top-[70px] md:-top-[90px] -right-4 md:-right-9 origin-top-right toucan-shadow pointer-events-none md:pointer-events-auto z-0 md:z-10'>
+                                    <div class="scale-[0.5] md:scale-[0.6] origin-top-right opacity-90 md:opacity-100">
+                                        <AnimatedSkull />
+                                    </div>
                                 </div>
                                 <!-- <div class='absolute -top-[45px] md:-top-[90px] -right-4 md:-right-9 origin-top-right toucan-shadow pointer-events-none md:pointer-events-auto z-0 md:z-10'>
                                     <Diya />
